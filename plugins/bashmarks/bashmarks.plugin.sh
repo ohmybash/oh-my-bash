@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Copyright (c) 2014, NNToan - http://about.me/nntoan
 # All rights reserved.
 #
