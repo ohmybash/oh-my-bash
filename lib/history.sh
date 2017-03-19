@@ -1,3 +1,5 @@
+shopt -s histappend # append to bash_history if Terminal.app quits
+
 ## Command history configuration
 if [ -z "$HISTFILE" ]; then
     HISTFILE=$HOME/.bash_history
