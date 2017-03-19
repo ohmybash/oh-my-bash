@@ -3,7 +3,7 @@
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from http://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
 
-typeset -AHg FX FG BG
+typeset -Ag FX FG BG
 
 FX=(
     reset     "%{^[[00m%}"
