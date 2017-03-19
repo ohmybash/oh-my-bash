@@ -32,6 +32,7 @@ then
   printf '%s\n' '                        /____/                            '
   printf "${BLUE}%s\n" "Hooray! Oh My Bash has been updated and/or is at the current version."
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/nntoan/oh-my-bash"
+  source $HOME/.bashrc
 else
   printf "${RED}%s${NORMAL}\n" 'There was an error updating. Try again later?'
 fi

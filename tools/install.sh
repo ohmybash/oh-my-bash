@@ -85,7 +85,6 @@ main() {
   printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/nntoan/oh-my-bash"
   source $HOME/.bashrc
-  env bash
 }
 
 
