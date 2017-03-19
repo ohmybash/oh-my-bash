@@ -65,7 +65,9 @@ done
 
 # Load all of your custom configurations from custom/
 for config_file in $OSH_CUSTOM/*.sh; do
-  source $config_file
+  if [ -f config_file ]; then
+    source $config_file
+  fi
 done
 unset config_file
 
