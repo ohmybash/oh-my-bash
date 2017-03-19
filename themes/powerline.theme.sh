@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-__nntoan() {
+__powerline() {
 
     # Unicode symbols
     readonly PS_SYMBOL_DARWIN=''
@@ -106,5 +106,5 @@ __nntoan() {
     PROMPT_COMMAND=ps1
 }
 
-__nntoan
-unset __nntoan
+__powerline
+unset __powerline
