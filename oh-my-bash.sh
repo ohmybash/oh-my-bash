@@ -38,7 +38,7 @@ is_plugin() {
 }
 # Add all defined plugins to fpath. This must be done
 # before running compinit.
-for plugin in $plugins; do
+for plugin in ${plugins[@]}; do
   if is_plugin $OSH_CUSTOM $plugin; then
     fpath=($OSH_CUSTOM/plugins/$plugin $fpath)
   elif is_plugin $OSH $plugin; then
@@ -55,7 +55,7 @@ else
 fi
 
 # Load all of the plugins that were defined in ~/.bashrc
-for plugin in $plugins; do
+for plugin in ${plugins[@]}; do
   if [ -f $OSH_CUSTOM/plugins/$plugin/$plugin.plugin.sh ]; then
     source $OSH_CUSTOM/plugins/$plugin/$plugin.plugin.sh
   elif [ -f $OSH/plugins/$plugin/$plugin.plugin.sh ]; then
