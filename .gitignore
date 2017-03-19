@@ -1,11 +1,14 @@
 # custom files
-custom/
-!custom/plugins/example
-!custom/example.sh
+/custom
+!/custom/gitkeep
+!/custom/plugins/example
+!/custom/example.sh
 
 # temp files directories
-cache/
-log/
+/cache
+/log
+!/cache/.gitkeep
+!/log/.gitkeep
 
 # disabled files
 *.disabled
