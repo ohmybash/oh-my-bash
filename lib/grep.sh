@@ -25,4 +25,4 @@ alias grep="grep $GREP_OPTIONS"
 # clean up
 unset GREP_OPTIONS
 unset VCS_FOLDERS
-unfunction grep-flag-available
+#unfunction grep-flag-available

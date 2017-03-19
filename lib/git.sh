@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Outputs current branch info in prompt format
 function git_prompt_info() {
   local ref
@@ -15,12 +17,12 @@ function parse_git_dirty() {
   FLAGS=('--porcelain')
   if [[ "$(command git config --get oh-my-bash.hide-dirty)" != "1" ]]; then
     if [[ $POST_1_7_2_GIT -gt 0 ]]; then
-      FLAGS+='--ignore-submodules=dirty'
+      FLAGS+=( '--ignore-submodules=dirty' )
     fi
     if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
-      FLAGS+='--untracked-files=no'
+      FLAGS+=( '--untracked-files=no' )
     fi
-    STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
+    STATUS=$(command git status "${FLAGS[@]}" 2> /dev/null | tail -n1)
   fi
   if [[ -n $STATUS ]]; then
     echo "$OSH_THEME_GIT_PROMPT_DIRTY"
@@ -31,8 +33,9 @@ function parse_git_dirty() {
 
 # Gets the difference between the local and remote branches
 function git_remote_status() {
-    local remote ahead behind git_remote_status git_remote_status_detailed
-    remote=${$(command git rev-parse --verify ${hook_com[branch]}@{upstream} --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+    local remote ahead behind git_remote_status git_remote_status_detailed git_remote_origin
+    git_remote_origin=$(command git rev-parse --verify ${hook_com[branch]}@{upstream} --symbolic-full-name 2>/dev/null)
+    remote=${git_remote_origin/refs\/remotes\//}
     if [[ -n ${remote} ]]; then
         ahead=$(command git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
         behind=$(command git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
@@ -214,4 +217,4 @@ function git_current_user_email() {
 # This is unlikely to change so make it all statically assigned
 POST_1_7_2_GIT=$(git_compare_version "1.7.2")
 # Clean up the namespace slightly by removing the checker function
-unfunction git_compare_version
+#unfunction git_compare_version

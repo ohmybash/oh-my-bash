@@ -16,9 +16,6 @@ function take() {
 }
 
 function open_command() {
-  emulate -L zsh
-  setopt shwordsplit
-
   local open_cmd
 
   # define the open command

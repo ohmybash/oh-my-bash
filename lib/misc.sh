@@ -1,5 +1,5 @@
 ## jobs
-setopt long_list_jobs
+#setopt long_list_jobs
 
 ## pager
 env_default PAGER 'less'
@@ -22,4 +22,4 @@ if [[ -z "$LC_CTYPE" && -z "$LC_ALL" ]]; then
 fi
 
 # recognize comments
-setopt interactivecomments
+#setopt interactivecomments
