@@ -217,4 +217,4 @@ function git_current_user_email() {
 # This is unlikely to change so make it all statically assigned
 #POST_1_7_2_GIT=$(git_compare_version "1.7.2")
 # Clean up the namespace slightly by removing the checker function
-#unfunction git_compare_version
+#unset -f git_compare_version
