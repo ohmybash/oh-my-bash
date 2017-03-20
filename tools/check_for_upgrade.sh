@@ -7,7 +7,7 @@ function _current_epoch() {
 }
 
 function _update_osh_update() {
-  echo "LAST_EPOCH=$(_current_epoch)" >! ~/.osh-update
+  echo "LAST_EPOCH=$(_current_epoch)" >| ~/.osh-update
 }
 
 function _upgrade_osh() {
@@ -42,7 +42,7 @@ if mkdir "$OSH/log/update.lock" 2>/dev/null; then
       if [ "$DISABLE_UPDATE_PROMPT" = "true" ]; then
         _upgrade_osh
       else
-        echo "[Oh My Zsh] Would you like to check for updates? [Y/n]: \c"
+        echo "[Oh My Bash] Would you like to check for updates? [Y/n]: \c"
         read line
         if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
           _upgrade_osh

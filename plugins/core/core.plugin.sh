@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 #  ---------------------------------------------------------------------------
 #
 #  Description:  This file holds all my BASH configurations and aliases

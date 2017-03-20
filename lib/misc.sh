@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ## jobs
 #setopt long_list_jobs
 

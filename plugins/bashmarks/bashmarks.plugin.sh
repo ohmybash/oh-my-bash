@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-# Copyright (c) 2014, NNToan - http://about.me/nntoan
+# Copyright (c) 2015, Toan Nguyen - https://nntoan.github.io
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted provided
@@ -45,59 +44,59 @@ GREEN="0;33m"
 
 # main function
 function bm {
-        option="${1}"
-        case ${option} in
-                # save current directory to bookmarks [ bm -a BOOKMARK_NAME ]
-                -a)
-                        _save_bookmark "$2"
-                ;;
-                # delete bookmark [ bm -d BOOKMARK_NAME ]
-                -d)
-                        _delete_bookmark "$2"
-                ;;
-                # jump to bookmark [ bm -g BOOKMARK_NAME ]
-                -g)
-                        _goto_bookmark "$2"
-                ;;
-                # print bookmark [ bm -p BOOKMARK_NAME ]
-                -p)
-                        _print_bookmark "$2"
-                ;;
-                # show bookmark list [ bm -l ]
-                -l)
-                        _list_bookmark
-                ;;
-                # help [ bm -h ]
-                *)
-                        echo 'USAGE:'
-                        echo 'bm -a <bookmark_name> - Saves the current directory as "bookmark_name"'
-                        echo 'bm -g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
-                        echo 'bm -p <bookmark_name> - Prints the directory associated with "bookmark_name"'
-                        echo 'bm -d <bookmark_name> - Deletes the bookmark'
-                        echo 'bm -l                 - Lists all available bookmarks'
-                        kill -SIGINT $$
-                        exit 1
-                ;;
-        esac
+  option="${1}"
+  case ${option} in
+    # save current directory to bookmarks [ bm -a BOOKMARK_NAME ]
+    -a)
+      _save_bookmark "$2"
+    ;;
+    # delete bookmark [ bm -d BOOKMARK_NAME ]
+    -d)
+      _delete_bookmark "$2"
+    ;;
+    # jump to bookmark [ bm -g BOOKMARK_NAME ]
+    -g)
+      _goto_bookmark "$2"
+    ;;
+    # print bookmark [ bm -p BOOKMARK_NAME ]
+    -p)
+      _print_bookmark "$2"
+    ;;
+    # show bookmark list [ bm -l ]
+    -l)
+      _list_bookmark
+    ;;
+    # help [ bm -h ]
+    *)
+      echo 'USAGE:'
+      echo 'bm -a <bookmark_name> - Saves the current directory as "bookmark_name"'
+      echo 'bm -g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
+      echo 'bm -p <bookmark_name> - Prints the directory associated with "bookmark_name"'
+      echo 'bm -d <bookmark_name> - Deletes the bookmark'
+      echo 'bm -l                 - Lists all available bookmarks'
+      kill -SIGINT $$
+      exit 1
+    ;;
+  esac
 }
 
 # save current directory to bookmarks
 function _save_bookmark {
-    _bookmark_name_valid "$@"
-    if [ -z "$exit_message" ]; then
-        _purge_line "$SDIRS" "export DIR_$1="
-        CURDIR=$(echo $PWD| sed "s#^$HOME#\$HOME#g")
-        echo "export DIR_$1=\"$CURDIR\"" >> $SDIRS
-    fi
+  _bookmark_name_valid "$@"
+  if [ -z "$exit_message" ]; then
+    _purge_line "$SDIRS" "export DIR_$1="
+    CURDIR=$(echo $PWD| sed "s#^$HOME#\$HOME#g")
+    echo "export DIR_$1=\"$CURDIR\"" >> $SDIRS
+  fi
 }
 
 # delete bookmark
 function _delete_bookmark {
-    _bookmark_name_valid "$@"
-    if [ -z "$exit_message" ]; then
-        _purge_line "$SDIRS" "export DIR_$1="
-        unset "DIR_$1"
-    fi
+  _bookmark_name_valid "$@"
+  if [ -z "$exit_message" ]; then
+    _purge_line "$SDIRS" "export DIR_$1="
+    unset "DIR_$1"
+  fi
 }
 
 # jump to bookmark
@@ -157,42 +156,42 @@ function _comp {
 
 # ZSH completion command
 function _compzsh {
-    reply=($(_l))
+  reply=($(_l))
 }
 
 # safe delete line from sdirs
 function _purge_line {
-    if [ -s "$1" ]; then
-        # safely create a temp file
-        t=$(mktemp -t bashmarks.XXXXXX) || exit 1
-        trap "rm -f -- '$t'" EXIT
+  if [ -s "$1" ]; then
+    # safely create a temp file
+    t=$(mktemp -t bashmarks.XXXXXX) || exit 1
+    trap "/bin/rm -f -- '$t'" EXIT
 
-        # purge line
-        sed "/$2/d" "$1" > "$t"
-        mv "$t" "$1"
+    # purge line
+    sed "/$2/d" "$1" > "$t"
+    /bin/mv "$t" "$1"
 
-        # cleanup temp file
-        rm -f -- "$t"
-        trap - EXIT
-    fi
+    # cleanup temp file
+    /bin/rm -f -- "$t"
+    trap - EXIT
+  fi
 }
 
 # bind completion command for g,p,d to _comp
 if [ $ZSH_VERSION ]; then
-    compctl -K _compzsh bm -g
-    compctl -K _compzsh bm -p
-    compctl -K _compzsh bm -d
-    compctl -K _compzsh g
-    compctl -K _compzsh p
-    compctl -K _compzsh d
+  compctl -K _compzsh bm -g
+  compctl -K _compzsh bm -p
+  compctl -K _compzsh bm -d
+  compctl -K _compzsh g
+  compctl -K _compzsh p
+  compctl -K _compzsh d
 else
-    shopt -s progcomp
-    complete -F _comp bm -g
-    complete -F _comp bm -p
-    complete -F _comp bm -d
-    complete -F _comp g
-    complete -F _comp p
-    complete -F _comp d
+  shopt -s progcomp
+  complete -F _comp bm -g
+  complete -F _comp bm -p
+  complete -F _comp bm -d
+  complete -F _comp g
+  complete -F _comp p
+  complete -F _comp d
 fi
 
 alias s='bm -a'       # Save a bookmark [bookmark_name]

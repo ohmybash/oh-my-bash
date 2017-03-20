@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Use colors, but only if connected to a terminal, and that terminal
 # supports them.
 if which tput >/dev/null 2>&1; then
