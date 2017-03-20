@@ -23,4 +23,4 @@ if [[ -z "$LC_CTYPE" && -z "$LC_ALL" ]]; then
 fi
 
 # recognize comments
-#setopt interactivecomments
+shopt interactivecomments

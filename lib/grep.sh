@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # is x grep argument available?
-grep-flag-available() {
+grep_flag_available() {
     echo | grep $1 "" >/dev/null 2>&1
 }
 
