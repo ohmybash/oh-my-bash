@@ -158,10 +158,10 @@ is_confirmed() {
 # fi
 #
 type_exists() {
-if [ "$(type -P "$1")" ]; then
-  return 0
-fi
-return 1
+  if [ "$(type -P "$1")" ]; then
+    return 0
+  fi
+  return 1
 }
 
 #
@@ -170,10 +170,10 @@ return 1
 # Usage: if is_os 'darwin'; then
 #
 is_os() {
-if [[ "${OSTYPE}" == $1* ]]; then
-  return 0
-fi
-return 1
+  if [[ "${OSTYPE}" == $1* ]]; then
+    return 0
+  fi
+  return 1
 }
 
 #

@@ -1,7 +1,10 @@
 # custom files
-/custom/
+!/custom/aliases/example.aliases.sh
+!/custom/completion/example.completion.sh
 !/custom/plugins/example/
+!/custom/themes/example/
 !/custom/example.sh
+/custom/
 
 # temp files directories
 /cache/

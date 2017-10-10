@@ -65,6 +65,20 @@ for plugin in ${plugins[@]}; do
   fi
 done
 
+# Load all of the completion & aliases files in ~/.oh-my-bash/{completion,aliases}
+# that end in .completion.sh & .aliases.sh
+# TIP: Add files you don't want in git to .gitignore
+for alias_file in $OSH/aliases/*.sh; do
+  custom_alias_file="${OSH_CUSTOM}/aliases/${alias_file:t}"
+  [ -f "${custom_alias_file}" ] && alias_file=${custom_alias_file}
+  source $alias_file
+done
+for completion_file in $OSH/completion/*.sh; do
+  custom_completion_file="${OSH_CUSTOM}/completion/${completion_file:t}"
+  [ -f "${custom_completion_file}" ] && completion_file=${custom_completion_file}
+  source $completion_file
+done
+
 # Load all of your custom configurations from custom/
 for config_file in $OSH_CUSTOM/*.sh; do
   if [ -f config_file ]; then
@@ -72,23 +86,54 @@ for config_file in $OSH_CUSTOM/*.sh; do
   fi
 done
 unset config_file
+# Load all of your custom aliases from custom/
+for alias_file in $OSH_CUSTOM/*.sh; do
+  if [ -f alias_file ]; then
+    source $alias_file
+  fi
+done
+unset alias_file
+# Load all of your custom completions from custom/
+for completion_file in $OSH_CUSTOM/*.sh; do
+  if [ -f completion_file ]; then
+    source $completion_file
+  fi
+done
+unset completion_file
+
+# Load colors first so they can be use in base theme
+source "${OSH}/themes/colours.theme.sh"
+source "${OSH}/themes/base.theme.sh"
 
 # Load the theme
 if [ "$OSH_THEME" = "random" ]; then
-  themes=($OSH/themes/*theme.sh)
+  themes=($OSH/themes/*/*theme.sh)
   N=${#themes[@]}
-  ((N=(RANDOM%N)+1))
+  ((N=(RANDOM%N)))
   RANDOM_THEME=${themes[$N]}
   source "$RANDOM_THEME"
   echo "[oh-my-bash] Random theme '$RANDOM_THEME' loaded..."
 else
   if [ ! "$OSH_THEME" = ""  ]; then
-    if [ -f "$OSH_CUSTOM/$OSH_THEME.theme.sh" ]; then
-      source "$OSH_CUSTOM/$OSH_THEME.theme.sh"
-    elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME.theme.sh" ]; then
-      source "$OSH_CUSTOM/themes/$OSH_THEME.theme.sh"
+    if [ -f "$OSH_CUSTOM/$OSH_THEME/$OSH_THEME.theme.sh" ]; then
+      source "$OSH_CUSTOM/$OSH_THEME/$OSH_THEME.theme.sh"
+    elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh" ]; then
+      source "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh"
     else
-      source "$OSH/themes/$OSH_THEME.theme.sh"
+      source "$OSH/themes/$OSH_THEME/$OSH_THEME.theme.sh"
     fi
   fi
 fi
+
+if [[ $PROMPT ]]; then
+    export PS1="\["$PROMPT"\]"
+fi
+
+if ! type_exists '__git_ps1' ; then
+  source "$OSH/tools/git-prompt.sh"
+fi
+
+# Adding Support for other OSes
+PREVIEW="less"
+[ -s /usr/bin/gloobus-preview ] && PREVIEW="gloobus-preview"
+[ -s /Applications/Preview.app ] && PREVIEW="/Applications/Preview.app"
