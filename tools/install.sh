@@ -56,7 +56,7 @@ main() {
       exit 1
     fi
   fi
-  env git clone --depth=1 https://github.com/nntoan/oh-my-bash.git $OSH || {
+  env git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git $OSH || {
     printf "Error: git clone of oh-my-bash repo failed\n"
     exit 1
   }
@@ -83,7 +83,7 @@ main() {
   printf '%s\n' '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ '
   printf '%s\n' '                        /____/                            .... is now installed!'
   printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
-  printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/nntoan/oh-my-bash"
+  printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
   source $HOME/.bashrc
 }
 

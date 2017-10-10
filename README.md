@@ -25,20 +25,20 @@ Oh My Bash is installed by running one of the following commands in your termina
 #### via curl
 
 ```shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/nntoan/oh-my-bash/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 ```
 
 #### via wget
 
 ```shell
-sh -c "$(wget https://raw.githubusercontent.com/nntoan/oh-my-bash/master/tools/install.sh -O -)"
+sh -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"
 ```
 
 ## Using Oh My Bash
 
 ### Plugins
 
-Oh My Bash comes with a shit load of plugins to take advantage of. You can take a look in the [plugins](https://github.com/nntoan/oh-my-bash/tree/master/plugins) directory and/or the [wiki](https://github.com/nntoan/oh-my-bash/wiki/Plugins) to see what's currently available.
+Oh My Bash comes with a shit load of plugins to take advantage of. You can take a look in the [plugins](https://github.com/ohmybash/oh-my-bash/tree/master/plugins) directory and/or the [wiki](https://github.com/ohmybash/oh-my-bash/wiki/Plugins) to see what's currently available.
 
 #### Enabling Plugins
 
@@ -56,7 +56,7 @@ Most plugins (should! we're working on this) include a __README__, which documen
 
 ### Themes
 
-We'll admit it. Early in the Oh My Bash world, we may have gotten a bit too theme happy. We have over one hundred themes now bundled. Most of them have [screenshots](https://wiki.github.com/nntoan/oh-my-bash/themes) on the wiki. Check them out!
+We'll admit it. Early in the Oh My Bash world, we may have gotten a bit too theme happy. We have over one hundred themes now bundled. Most of them have [screenshots](https://wiki.github.com/ohmybash/oh-my-bash/themes) on the wiki. Check them out!
 
 #### Selecting a Theme
 
@@ -73,14 +73,14 @@ To use a different theme, simply change the value to match the name of your desi
 ```shell
 OSH_THEME="agnoster" # (this is one of the fancy ones)
 # you might need to install a special Powerline font on your console's host for this to work
-# see https://github.com/nntoan/oh-my-bash/wiki/Themes#agnoster
+# see https://github.com/ohmybash/oh-my-bash/wiki/Themes#agnoster
 ```
 
 Open up a new terminal window and your prompt should look something like this:
 
 ![Agnoster theme](https://cloud.githubusercontent.com/assets/2618447/6316862/70f58fb6-ba03-11e4-82c9-c083bf9a6574.png)
 
-In case you did not find a suitable theme for your needs, please have a look at the wiki for [more of them](https://github.com/nntoan/oh-my-bash/wiki/External-themes).
+In case you did not find a suitable theme for your needs, please have a look at the wiki for [more of them](https://github.com/ohmybash/oh-my-bash/wiki/External-themes).
 
 If you're feeling feisty, you can let the computer select one randomly for you each time you open a new terminal window.
 
@@ -104,7 +104,7 @@ The default location is `~/.oh-my-bash` (hidden in your home directory)
 If you'd like to change the install directory with the `OSH` environment variable, either by running `export OSH=/your/path` before installing, or by setting it before the end of the install pipeline like this:
 
 ```shell
-export OSH="$HOME/.dotfiles/oh-my-bash"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/nntoan/oh-my-bash/master/tools/install.sh)"
+export OSH="$HOME/.dotfiles/oh-my-bash"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 ```
 
 #### Manual Installation
@@ -112,7 +112,7 @@ export OSH="$HOME/.dotfiles/oh-my-bash"; sh -c "$(curl -fsSL https://raw.githubu
 ##### 1. Clone the repository:
 
 ```shell
-git clone git://github.com/nntoan/oh-my-bash.git ~/.oh-my-bash
+git clone git://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash
 ```
 
 ##### 2. *Optionally*, backup your existing `~/.bashrc` file:
@@ -188,11 +188,11 @@ If you want to uninstall `oh-my-bash`, just run `uninstall_oh_my_bash` from the 
 
 I'm far from being a [Bash](https://www.gnu.org/software/bash/) expert and suspect there are many ways to improve – if you have ideas on how to make the configuration easier to maintain (and faster), don't hesitate to fork and send pull requests!
 
-We also need people to test out pull-requests. So take a look through [the open issues](https://github.com/nntoan/oh-my-bash/issues) and help where you can.
+We also need people to test out pull-requests. So take a look through [the open issues](https://github.com/ohmybash/oh-my-bash/issues) and help where you can.
 
 ### Do NOT send us themes
 
-We have (more than) enough themes for the time being. Please add your theme to the [external themes](https://github.com/nntoan/oh-my-bash/wiki/External-themes) wiki page.
+We have (more than) enough themes for the time being. Please add your theme to the [external themes](https://github.com/ohmybash/oh-my-bash/wiki/External-themes) wiki page.
 
 ## Contributors
 
