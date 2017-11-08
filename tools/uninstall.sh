@@ -22,7 +22,7 @@ if [ -f $HOME/.bashrc.pre-oh-my-bash ] || [ -h $HOME/.bashrc.pre-oh-my-bash ]; t
   fi
 
   mv $HOME/.bashrc.pre-oh-my-bash $HOME/.bashrc;
-  . $HOME/.bashrc
+  exec bash; source $HOME/.bashrc
 
   echo "Your original bash config was restored. Please restart your session."
 else
