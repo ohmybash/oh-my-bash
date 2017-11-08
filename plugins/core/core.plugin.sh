@@ -179,14 +179,14 @@ ffe () { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name end
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
     ii() {
-        echo -e "\nYou are logged on ${red}$HOST"
-        echo -e "\nAdditionnal information:$NC " ; uname -a
-        echo -e "\n${red}Users logged on:$NC " ; w -h
-        echo -e "\n${red}Current date :$NC " ; date
-        echo -e "\n${red}Machine stats :$NC " ; uptime
-        #echo -e "\n${red}Current network location :$NC " ; scselect
-        echo -e "\n${red}Public facing IP Address :$NC " ;myip
-        #echo -e "\n${red}DNS Configuration:$NC " ; scutil --dns
+        echo -e "\\nYou are logged on ${red}$HOST"
+        echo -e "\\nAdditionnal information:$NC " ; uname -a
+        echo -e "\\n${red}Users logged on:$NC " ; w -h
+        echo -e "\\n${red}Current date :$NC " ; date
+        echo -e "\\n${red}Machine stats :$NC " ; uptime
+        [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${red}Current network location :$NC " ; scselect
+        echo -e "\\n${red}Public facing IP Address :$NC " ;myip
+        [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${red}DNS Configuration:$NC " ; scutil --dns
         echo
     }
 
@@ -216,7 +216,6 @@ ffe () { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name end
             else
                 du -hd 1
             fi
-
         elif [ $(uname) = "Linux" ]; then
             if [ -n "$1" ]; then
                 du -h --max-depth=1 "$1"

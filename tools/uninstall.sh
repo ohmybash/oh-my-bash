@@ -7,21 +7,21 @@ if [ "$confirmation" != y ] && [ "$confirmation" != Y ]; then
 fi
 
 echo "Removing ~/.oh-my-bash"
-if [ -d ~/.oh-my-bash ]; then
-  rm -rf ~/.oh-my-bash
+if [ -d $HOME/.oh-my-bash ]; then
+  rm -rf $HOME/.oh-my-bash
 fi
 
 echo "Looking for original bash config..."
-if [ -f ~/.bashrc.pre-oh-my-bash ] || [ -h ~/.bashrc.pre-oh-my-bash ]; then
-  echo "Found ~/.bashrc.pre-oh-my-bash -- Restoring to ~/.bashrc";
+if [ -f $HOME/.bash_profile.pre-oh-my-bash ] || [ -h $HOME/.bash_profile.pre-oh-my-bash ]; then
+  echo "Found ~/.bash_profile.pre-oh-my-bash -- Restoring to ~/.bash_profile";
 
-  if [ -f ~/.bashrc ] || [ -h ~/.bashrc ]; then
-    BASHRC_SAVE=".bashrc.omb-uninstalled-$(date +%Y%m%d%H%M%S)";
-    echo "Found ~/.bashrc -- Renaming to ~/${BASHRC_SAVE}";
-    mv ~/.bashrc ~/"${BASHRC_SAVE}";
+  if [ -f $HOME/.bash_profile ] || [ -h $HOME/.bash_profile ]; then
+    BASH_PROFILE_SAVE=".bash_profile.omb-uninstalled-$(date +%Y%m%d%H%M%S)";
+    echo "Found ~/.bash_profile -- Renaming to ~/${BASH_PROFILE_SAVE}";
+    mv $HOME/.bash_profile $HOME/"${BASH_PROFILE_SAVE}";
   fi
 
-  mv ~/.bashrc.pre-oh-my-bash ~/.bashrc;
+  mv $HOME/.bash_profile.pre-oh-my-bash $HOME/.bash_profile;
 
   echo "Your original bash config was restored. Please restart your session."
 else
@@ -33,4 +33,4 @@ else
   fi
 fi
 
-echo "Thanks for trying out Oh My Bash. It's been uninstalled."
+echo "Thanks for trying out Oh My Bash. It has been uninstalled."

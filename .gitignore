@@ -13,5 +13,6 @@
 !/log/.gitkeep
 
 # disabled files
+*.swp
 *.disabled
 .idea/
