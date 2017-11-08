@@ -62,17 +62,17 @@ main() {
   }
 
   printf "${BLUE}Looking for an existing bash config...${NORMAL}\n"
-  if [ -f $HOME/.bash_profile ] || [ -h $HOME/.bash_profile ]; then
-    printf "${YELLOW}Found ~/.bash_profile.${NORMAL} ${GREEN}Backing up to ~/.bash_profile.pre-oh-my-bash${NORMAL}\n";
-    mv $HOME/.bash_profile $HOME/.bash_profile.pre-oh-my-bash;
+  if [ -f $HOME/.bashrc ] || [ -h $HOME/.bashrc ]; then
+    printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to ~/.bashrc.pre-oh-my-bash${NORMAL}\n";
+    mv $HOME/.bashrc $HOME/.bashrc.pre-oh-my-bash;
   fi
 
   printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
-  cp $OSH/templates/bash_profile.osh-template $HOME/.bash_profile
+  cp $OSH/templates/bashrc.osh-template $HOME/.bashrc
   sed "/^export OSH=/ c\\
 export OSH=$OSH
-  " $HOME/.bash_profile > $HOME/.bash_profile-ombtemp
-  mv -f $HOME/.bash_profile-ombtemp $HOME/.bash_profile
+  " $HOME/.bashrc > $HOME/.bashrc-ombtemp
+  mv -f $HOME/.bashrc-ombtemp $HOME/.bashrc
 
   # MOTD message :)
   printf '%s' "$GREEN"
@@ -84,7 +84,7 @@ export OSH=$OSH
   printf '%s\n' '                        /____/                            .... is now installed!'
   printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
-  . $HOME/.bash_profile
+  . $HOME/.bashrc
 }
 
 

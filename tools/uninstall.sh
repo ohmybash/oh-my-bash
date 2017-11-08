@@ -12,16 +12,17 @@ if [ -d $HOME/.oh-my-bash ]; then
 fi
 
 echo "Looking for original bash config..."
-if [ -f $HOME/.bash_profile.pre-oh-my-bash ] || [ -h $HOME/.bash_profile.pre-oh-my-bash ]; then
-  echo "Found ~/.bash_profile.pre-oh-my-bash -- Restoring to ~/.bash_profile";
+if [ -f $HOME/.bashrc.pre-oh-my-bash ] || [ -h $HOME/.bashrc.pre-oh-my-bash ]; then
+  echo "Found ~/.bashrc.pre-oh-my-bash -- Restoring to ~/.bashrc";
 
-  if [ -f $HOME/.bash_profile ] || [ -h $HOME/.bash_profile ]; then
-    BASH_PROFILE_SAVE=".bash_profile.omb-uninstalled-$(date +%Y%m%d%H%M%S)";
-    echo "Found ~/.bash_profile -- Renaming to ~/${BASH_PROFILE_SAVE}";
-    mv $HOME/.bash_profile $HOME/"${BASH_PROFILE_SAVE}";
+  if [ -f $HOME/.bashrc ] || [ -h $HOME/.bashrc ]; then
+    bashrc_SAVE=".bashrc.omb-uninstalled-$(date +%Y%m%d%H%M%S)";
+    echo "Found ~/.bashrc -- Renaming to ~/${bashrc_SAVE}";
+    mv $HOME/.bashrc $HOME/"${bashrc_SAVE}";
   fi
 
-  mv $HOME/.bash_profile.pre-oh-my-bash $HOME/.bash_profile;
+  mv $HOME/.bashrc.pre-oh-my-bash $HOME/.bashrc;
+  . $HOME/.bashrc
 
   echo "Your original bash config was restored. Please restart your session."
 else

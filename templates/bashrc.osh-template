@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # Path to your oh-my-bash installation.
 export OSH=$HOME/.oh-my-bash
 
@@ -50,11 +48,6 @@ OSH_THEME="font"
 # Example format: plugins=(core rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(core git bashmarks progress)
-
-# Preload everything for OMB
-if [ -f "$HOME/.profile" ]; then
-  source $HOME/.profile
-fi
 
 source $OSH/oh-my-bash.sh
 
