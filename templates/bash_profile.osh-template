@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Path to your oh-my-bash installation.
 export OSH=$HOME/.oh-my-bash
 
