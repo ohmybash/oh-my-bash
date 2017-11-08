@@ -49,6 +49,11 @@ OSH_THEME="font"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(core git bashmarks progress)
 
+# Preload everything for OMB
+if [ -f "$HOME/.profile" ]; then
+  source $HOME/.profile
+fi
+
 source $OSH/oh-my-bash.sh
 
 # User configuration
