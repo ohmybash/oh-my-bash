@@ -3,7 +3,20 @@
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from http://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
 
-typeset -Ag FX FG BG
+
+# typeset in bash does not have associative arrays, declare does in bash 4.0+
+# https://stackoverflow.com/a/6047948
+
+_RED='\033[0;31m' # Red Color (For error)
+_NC='\033[0m' # No Color (To reset the terminal color)
+
+if [ "${BASH_VERSINFO[0]}" -lt 4 ]; then 
+  echo -e "${_RED}ERROR${_NC}: Sorry, you need at least bash-4.0 to run this script." >&2;
+  exit 1; 
+fi
+
+
+declare -Ag FX FG BG
 
 FX=(
     [reset]="%{^[[00m%}"
