@@ -28,7 +28,7 @@ fi
 for config_file in $OSH/lib/*.sh; do
   custom_config_file="${OSH_CUSTOM}/lib/${config_file:t}"
   [ -f "${custom_config_file}" ] && config_file=${custom_config_file}
-  source $config_file
+  source $config_file 2>/dev/null
 done
 
 
