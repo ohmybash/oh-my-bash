@@ -49,6 +49,8 @@ OSH_THEME="font"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(core git bashmarks progress)
 
+# Which completions to load - by default there are too many of them, why load all ?
+completions=(aws-cli ssh system)
 source $OSH/oh-my-bash.sh
 
 # User configuration

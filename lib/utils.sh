@@ -47,27 +47,6 @@
 #   exit 1
 # fi
 
-##################### Sending notifications to Pushover ########################
-
-# pushover "We just finished performing a lengthy task."
-
-############################### Comparing A List ###############################
-
-# recipes=(
-#   A-random-package
-#   bash
-#   Another-random-package
-#   git
-# )
-# list="$(to_install "${recipes[*]}" "$(brew list)")"
-# if [[ "$list" ]]; then
-# for item in ${list[@]}
-#   do
-#     echo "$item is not on the list"
-#   done
-# else
-# e_arrow "Nothing to install.  You've already got them all."
-# fi
 
 
 ################################################################################

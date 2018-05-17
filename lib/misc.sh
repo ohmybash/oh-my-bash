@@ -22,5 +22,22 @@ if [[ -z "$LC_CTYPE" && -z "$LC_ALL" ]]; then
         export LC_CTYPE=${LANG%%:*} # pick the first entry from LANG
 fi
 
-# recognize comments
-shopt -s interactive_comments
+
+# poor man ssh-copy-id
+# 1 - host 2 - identity file
+ssh-id() {
+def_id="~/.ssh/id_rsa.pub"
+ssh_id=${$2-$def_id}
+ssh $1 "mkdir -p .ssh && cat >> .ssh/authorized_keys" < $2
+}
+
+# self explanatory
+rot13()
+{ if [ $# = 0 ] ; then tr "[a-m][n-z][A-M][N-Z]" "[n-z][a-m][N-Z][A-M]";
+  else tr "[a-m][n-z][A-M][N-Z]" "[n-z][a-m][N-Z][A-M]" < $1;
+  fi
+}
+
+# poor man man
+mmn () { nroff -man $1 | $PAGER; }
+ 

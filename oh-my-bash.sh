@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Bail out early if non-interactive
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
   env OSH=$OSH DISABLE_UPDATE_PROMPT=$DISABLE_UPDATE_PROMPT bash -f $OSH/tools/check_for_upgrade.sh
@@ -8,7 +14,7 @@ fi
 # Initializes Oh My Bash
 
 # add a function path
-fpath=($OSH/functions $OSH/completions $fpath)
+fpath=($OSH/functions $OSH/completion $fpath)
 
 # Set OSH_CUSTOM to the path where your custom config files
 # and plugins exists, or else we will use the default custom/
@@ -73,12 +79,22 @@ for alias_file in $OSH/aliases/*.sh; do
   [ -f "${custom_alias_file}" ] && alias_file=${custom_alias_file}
   source $alias_file
 done
-for completion_file in $OSH/completion/*.sh; do
-  custom_completion_file="${OSH_CUSTOM}/completion/${completion_file:t}"
-  [ -f "${custom_completion_file}" ] && completion_file=${custom_completion_file}
-  source $completion_file
-done
 
+# reduce completions only to types listed just like plugins
+if [ -n ${completions+1} ]; then
+  for completion_file in ${completions[@]}; do
+    if [ -f $OSH/completion/$completion_file.completion.sh ]; then
+      source $OSH/completion/$completion_file.completion.sh
+    fi
+  done
+else
+# if no completions listed then load all
+  for completion_file in $OSH/completion/*.sh; do
+    custom_completion_file="${OSH_CUSTOM}/completion/${completion_file:t}"
+    [ -f "${custom_completion_file}" ] && completion_file=${custom_completion_file}
+    source $completion_file
+  done
+fi
 # Load all of your custom configurations from custom/
 for config_file in $OSH_CUSTOM/*.sh; do
   if [ -f config_file ]; then
