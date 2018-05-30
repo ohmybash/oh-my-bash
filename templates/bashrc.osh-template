@@ -49,7 +49,10 @@ OSH_THEME="font"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(core git bashmarks progress)
 
-source $OSH/oh-my-bash.sh
+if tty -s
+then
+  source $OSH/oh-my-bash.sh
+fi
 
 # User configuration
 
