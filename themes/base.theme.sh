@@ -499,6 +499,12 @@ function aws_profile {
   fi
 }
 
+
+# Returns true if $1 is a shell function.
+fn_exists() {
+  type $1 | grep -q 'shell function'
+}
+
 function safe_append_prompt_command {
     local prompt_re
 
@@ -509,6 +515,12 @@ function safe_append_prompt_command {
     else
       # Linux, FreeBSD, etc.
       prompt_re="\<${1}\>"
+    fi
+
+    # See if we need to use the overriden version
+    if [[ $(fn_exists append_prompt_command_override) ]]; then
+       append_prompt_command_override $1
+       return
     fi
 
     if [[ ${PROMPT_COMMAND} =~ ${prompt_re} ]]; then
