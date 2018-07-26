@@ -1,1 +1,1 @@
-which kontena > /dev/null && . "$( kontena whoami --bash-completion-path )"
+which kontena &> /dev/null && . "$( kontena whoami --bash-completion-path )"

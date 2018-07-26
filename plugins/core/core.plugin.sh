@@ -24,7 +24,7 @@
 
 #   mcd:   Makes new Dir and jumps inside
 #   --------------------------------------------------------------------
-    mcd () { builtin mkdir -p -- "$*" ; builtin cd -- "$*" ; }
+    mcd () { mkdir -p -- "$*" ; builtin cd -- "$*" ; }
 
 #   mans:   Search manpage given in agument '1' for term given in argument '2' (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.

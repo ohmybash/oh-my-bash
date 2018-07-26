@@ -1,1 +1,1 @@
-[[ -x "$(which aws_completer)" ]] && complete -C "$(which aws_completer)" aws
+[[ -x "$(which aws_completer)" ]] &>/dev/null && complete -C "$(which aws_completer)" aws
