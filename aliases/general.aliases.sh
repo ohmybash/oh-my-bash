@@ -18,6 +18,7 @@
 #
 #  ---------------------------------------------------------------------------
 
+
 #   -----------------------------
 #   1.  MAKE TERMINAL BETTER
 #   -----------------------------
@@ -27,7 +28,7 @@ alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias ll='ls -lAFh'                         # Preferred 'ls' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
-alias nano='nano -W -$'                     # Preferred 'nano' implementation
+alias nano='nano -W'                 		# Preferred 'nano' implementation
 alias wget='wget -c'                        # Preferred 'wget' implementation (resume download)
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
 alias ..='cd ../'                           # Go back 1 directory level
