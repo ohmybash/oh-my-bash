@@ -26,6 +26,17 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
+  # Checks the minium version of bash (v4) installed, 
+  # stops the installation if check fails
+  if [ -n $BASH_VERSION ]; then
+     bash_major_version=$(echo $BASH_VERSION | cut -d '.' -f 1)
+     if [ "${bash_major_version}" -lt "4" ]; then
+        printf "Error: Bash 4 required for Oh My Bash.\n"
+        printf "Error: Upgrade Bash and try again.\n"
+        exit 1
+     fi
+  fi
+
   if [ ! -n "$OSH" ]; then
     OSH=$HOME/.oh-my-bash
   fi
