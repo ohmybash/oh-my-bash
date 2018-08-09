@@ -134,6 +134,5 @@ if ! type_exists '__git_ps1' ; then
 fi
 
 # Adding Support for other OSes
-PREVIEW="less"
-[ -s /usr/bin/gloobus-preview ] && PREVIEW="gloobus-preview"
-[ -s /Applications/Preview.app ] && PREVIEW="/Applications/Preview.app"
+[ -s /usr/bin/gloobus-preview ] && PREVIEW="gloobus-preview" || 
+[ -s /Applications/Preview.app ] && PREVIEW="/Applications/Preview.app" || PREVIEW="less"
