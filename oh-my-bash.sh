@@ -81,21 +81,21 @@ done
 
 # Load all of your custom configurations from custom/
 for config_file in $OSH_CUSTOM/*.sh; do
-  if [ -f config_file ]; then
+  if [ -f $config_file ]; then
     source $config_file
   fi
 done
 unset config_file
 # Load all of your custom aliases from custom/
-for alias_file in $OSH_CUSTOM/*.sh; do
-  if [ -f alias_file ]; then
+for alias_file in $OSH_CUSTOM/aliases/*.sh; do
+  if [ -f $alias_file ]; then
     source $alias_file
   fi
 done
 unset alias_file
 # Load all of your custom completions from custom/
-for completion_file in $OSH_CUSTOM/*.sh; do
-  if [ -f completion_file ]; then
+for completion_file in $OSH_CUSTOM/completion/*.sh; do
+  if [ -f $completion_file ]; then
     source $completion_file
   fi
 done
