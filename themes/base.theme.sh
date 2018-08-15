@@ -518,7 +518,7 @@ function safe_append_prompt_command {
     fi
 
     # See if we need to use the overriden version
-    if [[ $(fn_exists append_prompt_command_override) ]]; then
+    if [[ $(fn_exists function append_prompt_command_override) ]]; then
        append_prompt_command_override $1
        return
     fi
