@@ -148,8 +148,13 @@ function __powerline_prompt_command {
   SEGMENTS_AT_LEFT=0
   LAST_SEGMENT_COLOR=""
 
+  # The IFS (internal field seperator) may have been changed outside to not contain
+  # the space character ' ' whence we need to make sure that the space separated list
+  # stored in POWERLINE_PROMPT is converted into an array correctly.
+  IFS=' ' read -r -a POWERLINE_PROMPT_ARRAY <<< "${POWERLINE_PROMPT}"
+
   ## left prompt ##
-  for segment in $POWERLINE_PROMPT; do
+  for segment in ${POWERLINE_PROMPT_ARRAY[@]}; do
     local info="$(__powerline_${segment}_prompt)"
     [[ -n "${info}" ]] && __powerline_left_segment "${info}"
   done
