@@ -119,7 +119,7 @@ e_underline() { printf "${underline}${bold}%s${reset}\n" "$@"
 }
 e_bold() { printf "${bold}%s${reset}\n" "$@"
 }
-e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${blue}%s${reset}\n" "$@"
+e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
 }
 
 #
@@ -134,9 +134,9 @@ e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${blue}%s${reset}\n"
 # fi
 #
 seek_confirmation() {
-  printf "\n${bold}%s${reset}" "$@"
+  printf "\\n${bold}%s${reset}" "$@"
   read -p " (y/n) " -n 1
-  printf "\n"
+  printf "\\n"
 }
 
 # Test whether the result of an 'ask' is a confirmation

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Bail out early if non-interactive
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
   env OSH=$OSH DISABLE_UPDATE_PROMPT=$DISABLE_UPDATE_PROMPT bash -f $OSH/tools/check_for_upgrade.sh
@@ -8,7 +14,7 @@ fi
 # Initializes Oh My Bash
 
 # add a function path
-fpath=($OSH/functions $OSH/completions $fpath)
+fpath=($OSH/functions $fpath)
 
 # Set OSH_CUSTOM to the path where your custom config files
 # and plugins exists, or else we will use the default custom/
@@ -21,7 +27,6 @@ fi
 if [[ -z "$OSH_CACHE_DIR" ]]; then
   OSH_CACHE_DIR="$OSH/cache"
 fi
-
 
 # Load all of the config files in ~/.oh-my-bash/lib that end in .sh
 # TIP: Add files you don't want in git to .gitignore
@@ -48,6 +53,36 @@ for plugin in ${plugins[@]}; do
   fi
 done
 
+is_completion() {
+  local base_dir=$1
+  local name=$2
+  test -f $base_dir/completions/$name/$name.completion.sh
+}
+# Add all defined completions to fpath. This must be done
+# before running compinit.
+for completion in ${completions[@]}; do
+  if is_completion $OSH_CUSTOM $completion; then
+    fpath=($OSH_CUSTOM/completions/$completion $fpath)
+  elif is_completion $OSH $completion; then
+    fpath=($OSH/completions/$completion $fpath)
+  fi
+done
+
+is_alias() {
+  local base_dir=$1
+  local name=$2
+  test -f $base_dir/aliases/$name/$name.aliases.sh
+}
+# Add all defined completions to fpath. This must be done
+# before running compinit.
+for alias in ${aliases[@]}; do
+  if is_alias $OSH_CUSTOM $alias; then
+    fpath=($OSH_CUSTOM/aliases/$alias $fpath)
+  elif is_alias $OSH $alias; then
+    fpath=($OSH/aliases/$alias $fpath)
+  fi
+done
+
 # Figure out the SHORT hostname
 if [[ "$OSTYPE" = darwin* ]]; then
   # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
@@ -65,18 +100,22 @@ for plugin in ${plugins[@]}; do
   fi
 done
 
-# Load all of the completion & aliases files in ~/.oh-my-bash/{completion,aliases}
-# that end in .completion.sh & .aliases.sh
-# TIP: Add files you don't want in git to .gitignore
-for alias_file in $OSH/aliases/*.sh; do
-  custom_alias_file="${OSH_CUSTOM}/aliases/${alias_file:t}"
-  [ -f "${custom_alias_file}" ] && alias_file=${custom_alias_file}
-  source $alias_file
+# Load all of the aliases that were defined in ~/.bashrc
+for alias in ${aliases[@]}; do
+  if [ -f $OSH_CUSTOM/aliases/$alias.aliases.sh ]; then
+    source $OSH_CUSTOM/aliases/$alias.aliases.sh
+  elif [ -f $OSH/aliases/$alias.aliases.sh ]; then
+    source $OSH/aliases/$alias.aliases.sh
+  fi
 done
-for completion_file in $OSH/completion/*.sh; do
-  custom_completion_file="${OSH_CUSTOM}/completion/${completion_file:t}"
-  [ -f "${custom_completion_file}" ] && completion_file=${custom_completion_file}
-  source $completion_file
+
+# Load all of the completions that were defined in ~/.bashrc
+for completion in ${completions[@]}; do
+  if [ -f $OSH_CUSTOM/completions/$completion.completion.sh ]; then
+    source $OSH_CUSTOM/completions/$completion.completion.sh
+  elif [ -f $OSH/completions/$completion.completion.sh ]; then
+    source $OSH/completions/$completion.completion.sh
+  fi
 done
 
 # Load all of your custom configurations from custom/
@@ -86,20 +125,6 @@ for config_file in $OSH_CUSTOM/*.sh; do
   fi
 done
 unset config_file
-# Load all of your custom aliases from custom/
-for alias_file in $OSH_CUSTOM/aliases/*.sh; do
-  if [ -f $alias_file ]; then
-    source $alias_file
-  fi
-done
-unset alias_file
-# Load all of your custom completions from custom/
-for completion_file in $OSH_CUSTOM/completion/*.sh; do
-  if [ -f $completion_file ]; then
-    source $completion_file
-  fi
-done
-unset completion_file
 
 # Load colors first so they can be use in base theme
 source "${OSH}/themes/colours.theme.sh"

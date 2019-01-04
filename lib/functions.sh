@@ -12,8 +12,8 @@ function upgrade_oh_my_bash() {
 }
 
 function take() {
-  mkdir -p $1
-  cd $1
+  mkdir -p "$1"
+  cd "$1" || exit
 }
 
 function open_command() {
