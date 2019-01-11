@@ -14,6 +14,10 @@ You can navigate to the location of a bookmark using the *bm -g* command:
 
 `$ bm -g mydir`
 
+You can also supply just any bookmark name and the *-g* option will be assumed:
+
+`$ bm mydir`
+
 Tab completion is available when you need to enter a bookmark name in a command, such as when using *bm -g*
 
 Easily list all bookmarks you have setup using the *bm -l* command.  
@@ -24,7 +28,7 @@ Easily list all bookmarks you have setup using the *bm -l* command.
 
 **bm -a bookmarkname** Save the current directory as bookmarkname
 
-**bm -g bookmarkname** Go to the specified bookmark
+**bm [-g] bookmarkname** Go to the specified bookmark
 
 **bm -p bookmarkname** Print the bookmark 
 
