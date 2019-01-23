@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # bu.plugin.sh
 # Author: Taleeb Midi <taleebmidi@gmail.com>
 # Based on oh-my-zsh AWS plugin
@@ -6,6 +7,7 @@
 #
 
 # Faster Change Directory up
+# shellcheck disable=SC2034
 function bu () {
 	function usage () {
 		 cat <<-EOF

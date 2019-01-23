@@ -8,6 +8,7 @@
 # https://stackoverflow.com/a/6047948
 
 # This library only works for BASH 4.x to keep the minimum compatible for macOS.
+# shellcheck disable=SC2034
 if [ "${BASH_VERSINFO[0]}" -gt 4 ]; then 
   _RED='\033[0;31m' # Red Color (For error)
   _NC='\033[0m' # No Color (To reset the terminal color)
