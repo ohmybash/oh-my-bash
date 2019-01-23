@@ -24,7 +24,7 @@
 
 #   mcd:   Makes new Dir and jumps inside
 #   --------------------------------------------------------------------
-    mcd () { mkdir -p -- "$*" ; cd -- "$*" ; }
+    mcd () { mkdir -p -- "$*" ; cd -- "$*" || exit ; }
 
 #   mans:   Search manpage given in agument '1' for term given in argument '2' (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.
@@ -44,6 +44,7 @@
 
 #   lsgrep: search through directory contents with grep
 #   ------------------------------------------------------------
+# shellcheck disable=SC2010
     lsgrep () { ls | grep "$*" ; }
 
 #   banish-cookies: redirect .adobe and .macromedia files to /dev/null
@@ -62,7 +63,7 @@
       else
         NUM=${1}
       fi
-      history | awk '{print $2}' | sort | uniq -c | sort -rn | head -$NUM
+      history | awk '{print $2}' | sort | uniq -c | sort -rn | head -"$NUM"
     }
 
 
@@ -114,9 +115,23 @@ zipf () { zip -r "$1".zip "$1" ; }           # zipf:         To create a ZIP arc
 #   ---------------------------------------------------------
     mkiso () {
       if type "mkisofs" > /dev/null; then
-        [ -z ${1+x} ] && local isoname=${PWD##*/} || local isoname=$1
-        [ -z ${2+x} ] && local destpath=../ || local destpath=$2
-        [ -z ${3+x} ] && local srcpath=${PWD} || local srcpath=$3
+        if [ -z ${1+x} ]; then
+          local isoname=${PWD##*/}
+        else
+          local isoname=$1
+        fi
+
+        if [ -z ${2+x} ]; then
+          local destpath=../
+        else
+          local destpath=$2
+        fi
+
+        if [ -z ${3+x} ]; then
+          local srcpath=${PWD}
+        else
+          local srcpath=$3
+        fi
 
         if [ ! -f "${destpath}${isoname}.iso" ]; then
           echo "writing ${isoname}.iso to ${destpath} from ${srcpath}"
@@ -135,14 +150,16 @@ zipf () { zip -r "$1".zip "$1" ; }           # zipf:         To create a ZIP arc
 #   ---------------------------
 
 ff () { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
+# shellcheck disable=SC2145
 ffs () { /usr/bin/find . -name "$@"'*' ; }  # ffs:      Find file whose name starts with a given string
+# shellcheck disable=SC2145
 ffe () { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name ends with a given string
 bigfind() {
   if [[ $# -lt 1 ]]; then
     echo_warn "Usage: bigfind DIRECTORY"
     return
   fi
-  du -a ${1} | sort -n -r | head -n 10
+  du -a "$1" | sort -n -r | head -n 10
 }
 
 
@@ -255,9 +272,9 @@ bigfind() {
 #   -------------------------------------------------------------------
     pickfrom () {
       local file=$1
-      [ -z "$file" ] && reference $FUNCNAME && return
-      length=$(cat "$file" | wc -l)
-      n=$(expr $RANDOM \* "$length" / 32768 + 1)
+      [ -z "$file" ] && reference "$FUNCNAME" && return
+      length=$(wc -l < "$file")
+      n=$( ($RANDOM \* "$length" / 32768 + 1))
       head -n "$n" "$file" | tail -1
     }
 
@@ -265,6 +282,10 @@ bigfind() {
 #       Note default length of generated password is 4, you can pass it to the command
 #       E.g. passgen 15
 #   -------------------------------------------------------------------
+# shellcheck disable=SC2046
+# shellcheck disable=SC2005
+# shellcheck disable=SC2034
+# shellcheck disable=SC2086
     passgen () {
       local i pass length=${1:-4}
       pass=$(echo $(for i in $(eval echo "{1..$length}"); do pickfrom /usr/share/dict/words; done))
