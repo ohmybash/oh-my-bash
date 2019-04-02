@@ -79,7 +79,7 @@ function try_alias_value() {
 #    0 if the variable exists, 3 if it was set
 #
 function default() {
-    test `typeset +m "$1"` && return 0
+    typeset -p "$1" &>/dev/null && return 0
     typeset -g "$1"="$2"   && return 3
 }
 
