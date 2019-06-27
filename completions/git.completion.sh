@@ -624,7 +624,7 @@ __git_commands () {
 	then
 		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
 	else
-		git help -a|egrep '^  [a-zA-Z0-9]'
+		git help -a|egrep "^  [a-z]*"|cut -d" " -f4
 	fi
 }
 
