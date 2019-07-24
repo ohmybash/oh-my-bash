@@ -144,6 +144,9 @@ else
       source "$OSH_CUSTOM/$OSH_THEME/$OSH_THEME.theme.sh"
     elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh" ]; then
       source "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh"
+		# https://github.com/ohmybash/oh-my-bash/issues/70
+		elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME-bash.theme.sh" ]; then
+      source "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME-bash.theme.sh"
     else
       source "$OSH/themes/$OSH_THEME/$OSH_THEME.theme.sh"
     fi
