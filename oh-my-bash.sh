@@ -145,8 +145,8 @@ else
     elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh" ]; then
       source "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh"
 		# https://github.com/ohmybash/oh-my-bash/issues/70
-		elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME-bash.theme.sh" ]; then
-      source "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME-bash.theme.sh"
+  elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/${OSH_THEME}-bash.theme.sh" ]; then
+      source "$OSH_CUSTOM/themes/$OSH_THEME/${OSH_THEME}-bash.theme.sh"
     else
       source "$OSH/themes/$OSH_THEME/$OSH_THEME.theme.sh"
     fi
@@ -162,5 +162,5 @@ if ! type_exists '__git_ps1' ; then
 fi
 
 # Adding Support for other OSes
-[ -s /usr/bin/gloobus-preview ] && PREVIEW="gloobus-preview" || 
+[ -s /usr/bin/gloobus-preview ] && PREVIEW="gloobus-preview" ||
 [ -s /Applications/Preview.app ] && PREVIEW="/Applications/Preview.app" || PREVIEW="less"
