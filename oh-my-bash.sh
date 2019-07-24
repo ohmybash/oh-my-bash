@@ -149,7 +149,7 @@ if [ "$OSH_THEME" = "random" ]; then
   source "$RANDOM_THEME"
   echo "[oh-my-bash] Random theme '$RANDOM_THEME' loaded..."
 else
-  if [ ! "$OSH_THEME" = ""  ]; then
+  if [ -n "$OSH_THEME" ]; then
     if [ -f "$OSH_CUSTOM/$OSH_THEME/$OSH_THEME.theme.sh" ]; then
       source "$OSH_CUSTOM/$OSH_THEME/$OSH_THEME.theme.sh"
     elif [ -f "$OSH_CUSTOM/themes/$OSH_THEME/$OSH_THEME.theme.sh" ]; then
