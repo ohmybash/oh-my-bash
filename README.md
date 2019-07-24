@@ -190,10 +190,6 @@ I'm far from being a [Bash](https://www.gnu.org/software/bash/) expert and suspe
 
 We also need people to test out pull-requests. So take a look through [the open issues](https://github.com/ohmybash/oh-my-bash/issues) and help where you can.
 
-### Do NOT send us themes
-
-We have (more than) enough themes for the time being. Please add your theme to the [external themes](https://github.com/ohmybash/oh-my-bash/wiki/External-themes) wiki page.
-
 ## Contributors
 
 Oh My Bash has a vibrant community of happy users and delightful contributors. Without all the time and help from our contributors, it wouldn't be so awesome.
