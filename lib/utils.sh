@@ -221,14 +221,37 @@ _omb_term_color_initialize
 #
 # Headers and Logging
 #
-function _omb_log_header    { printf "\n${_omb_term_bold}${_omb_term_violet}==========  %s  ==========${_omb_term_reset}\n" "$@"; }
-function _omb_log_arrow     { printf "➜ %s\n" "$@"; }
-function _omb_log_success   { printf "${_omb_term_green}✔ %s${_omb_term_reset}\n" "$@"; }
-function _omb_log_error     { printf "${_omb_term_brown}✖ %s${_omb_term_reset}\n" "$@"; }
-function _omb_log_warning   { printf "${_omb_term_olive}➜ %s${_omb_term_reset}\n" "$@"; }
-function _omb_log_underline { printf "${_omb_term_underline}${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
-function _omb_log_bold      { printf "${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
-function _omb_log_note      { printf "${_omb_term_underline}${_omb_term_bold}${_omb_term_navy}Note:${_omb_term_reset}  ${_omb_term_olive}%s${_omb_term_reset}\n" "$@"; }
+# Note: Define logging functions only when there are no existing
+# definitions so that the end user can customize the error handling.
+_omb_util_command_exists _omb_log_header ||
+  function _omb_log_header    { printf "\n${_omb_term_bold}${_omb_term_violet}==========  %s  ==========${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_arrow ||
+  function _omb_log_arrow     { printf "➜ %s\n" "$@"; }
+_omb_util_command_exists _omb_log_success ||
+  function _omb_log_success   { printf "${_omb_term_green}✔ %s${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_error ||
+  function _omb_log_error     { printf "${_omb_term_brown}✖ %s${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_warning ||
+  function _omb_log_warning   { printf "${_omb_term_olive}➜ %s${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_underline ||
+  function _omb_log_underline { printf "${_omb_term_underline}${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_bold ||
+  function _omb_log_bold      { printf "${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_note ||
+  function _omb_log_note      { printf "${_omb_term_underline}${_omb_term_bold}${_omb_term_navy}Note:${_omb_term_reset}  ${_omb_term_olive}%s${_omb_term_reset}\n" "$@"; }
+_omb_util_command_exists _omb_log_info ||
+  function _omb_log_info      { printf "INFO: %s\n" "$1"; }
+_omb_util_command_exists _omb_log_die ||
+  function _omb_log_die {
+    local status=$1
+    case $status in
+    1) printf 'FATAL: %s\n' "$2"
+       exit "$status" ;;
+    *) printf 'FATAL: Syntax error%s\n%s\n' "${FUNCNAME:+ in $FUNCNAME}" "$2"
+       ((status)) && printf 'FATAL: %s\n' "$status"
+       return "$status" ;;
+    esac
+  }
 
 #
 # USAGE FOR SEEKING CONFIRMATION
