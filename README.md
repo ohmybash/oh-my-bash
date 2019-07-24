@@ -174,6 +174,15 @@ If you would like to track the upstream changes for your customized version of m
 
 If you would like to replace an existing module (theme/plugin/aliases/complet) bundled with Oh My Bash, create a module of the same name in the `custom/` directory so that it will be loaded instead of the original one.
 
+### Configuration
+
+#### SUDO logic
+oh-my-bash is using logic to use sudo if EUID variable and sudo doesn't return false.
+
+To disable this use `OMB_USE_ROOT` variable with `false` value in your `~/.bashrc`
+
+To overwrite this you can use `OMB_ROOT` with `true` value.
+
 ## Getting Updates
 
 By default, you will be prompted to check for upgrades every few weeks. If you would like `oh-my-bash` to automatically upgrade itself without prompting you, set the following in your `~/.bashrc`:
