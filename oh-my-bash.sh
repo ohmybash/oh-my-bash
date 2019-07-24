@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# Error handling
+## if {einfo,warn,die}() are not set globally (so that end-user can customize the error) then sets script's definitions
+if ! command -v einfo > /dev/null; then	einfo()	{	printf "INFO: %s\n" "$1"	1>&2	;	} fi
+if ! command -v warn > /dev/null; then	warn()	{	printf "WARN: %s\n" "$1"	1>&2	;	} fi
+if ! command -v die > /dev/null; then	die()	{
+	case $1 in
+		# FALSE
+		1)	printf "FATAL: %s\n" "$2" 1>&2 ; exit $1 ;;
+		# Custom
+		*)	(printf "FATAL: Syntax error $([ -n "${FUNCNAME[0]}" ] && printf "in ${FUNCNAME[0]}")\n%s\n" "$2"	1>&2	;	exit "$1") || (printf "FATAL: %s\n" "$1" 1>&2 ; exit $1)
+	esac
+} fi
+
 # Bail out early if non-interactive
 case $- in
   *i*) ;;
