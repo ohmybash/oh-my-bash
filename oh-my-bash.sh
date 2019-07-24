@@ -14,10 +14,7 @@ if ! command -v die > /dev/null; then	die()	{
 } fi
 
 # Bail out early if non-interactive
-case $- in
-  *i*) ;;
-    *) return;;
-esac
+[[ $- != *i* ]] && die 1 "Shell is not interactive"
 
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
