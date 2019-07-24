@@ -78,7 +78,7 @@ OSH_THEME="agnoster" # (this is one of the fancy ones)
 
 Open up a new terminal window and your prompt should look something like this:
 
-![Agnoster theme](img/powerline_example.png)
+![Agnoster theme](img/example_powerline.png)
 
 In case you did not find a suitable theme for your needs, please have a look at the wiki for [more of them](https://github.com/ohmybash/oh-my-bash/wiki/External-themes).
 
