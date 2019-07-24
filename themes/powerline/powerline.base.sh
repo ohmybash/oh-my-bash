@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Error handling
-if ! command -v info > /dev/null; then	info()	{	printf "INFO: %s\n" "$1"	1>&2	;	} fi
+if ! command -v info > /dev/null; then	einfo()	{	printf "INFO: %s\n" "$1"	1>&2	;	} fi
 if ! command -v warn > /dev/null; then	warn()	{	printf "WARN: %s\n" "$1"	1>&2	;	} fi
 if ! command -v die > /dev/null; then	die() { printf "FATAL: %s\n" "$2"	1>&2	;	exit "$1"	;	} fi
 
@@ -10,11 +10,11 @@ checkroot () {
 	if ! ((EUID)); then
 		return
 	elif [[ -x "$(command -v sudo)" ]] && [ -n "$OSH_CHECKROOT" ]; then
-			info "Failed to aquire root permission, trying reinvoking with 'sudo' prefix"
+			einfo "Failed to aquire root permission, trying reinvoking with 'sudo' prefix"
 			exec sudo "$0" "$@"
 			exit 1
 	elif [[ ! -x "$(command -v sudo)" ]] && [ -n "$OSH_CHECKROOT" ]; then
-		info "Failed to aquire root permission, trying reinvoking as root user."
+		einfo "Failed to aquire root permission, trying reinvoking as root user."
 		exec su -c "$0 $*"
 		exit 1
 	else
