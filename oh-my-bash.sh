@@ -84,7 +84,7 @@ for alias in ${aliases[@]}; do
 done
 
 # Figure out the SHORT hostname
-if [[ "$OSTYPE" = darwin* ]]; then
+if [[ $(uname) == Darwin* ]]; then
   # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
   SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}
 else
