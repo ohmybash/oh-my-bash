@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# bu.plugin.sh
+# bu.plugin.bash
 # Author: Taleeb Midi <taleebmidi@gmail.com>
 # Based on oh-my-zsh AWS plugin
 #

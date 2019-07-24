@@ -71,7 +71,7 @@ plugins=(
   bashmarks
 )
 
-source $OSH/oh-my-bash.sh
+source $OSH/oh-my-bash.bash
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"

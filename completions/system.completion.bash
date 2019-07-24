@@ -8,8 +8,8 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # Some distribution makes use of a profile.d script to import completion.
-if [ -f /etc/profile.d/bash_completion.sh ]; then
-  . /etc/profile.d/bash_completion.sh
+if [ -f /etc/profile.d/bash_completion.bash ]; then
+  . /etc/profile.d/bash_completion.bash
 fi
 
 

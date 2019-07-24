@@ -10,7 +10,7 @@
 
 ############################---Usage---#########################################
 
-# source ~/path/to/directory/utils.sh
+# source ~/path/to/directory/utils.bash
 
 ########################## Styled text output ##################################
 

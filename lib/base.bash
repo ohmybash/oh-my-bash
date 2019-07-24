@@ -326,7 +326,7 @@ httpHeaders () { /usr/bin/curl -I -L "$@" ; }             # httpHeaders:      Gr
 
 #   to mount a read-only disk image as read-write:
 #   ---------------------------------------
-#   hdiutil attach example.dmg -shadow /tmp/example.shadow -noverify
+#   hdiutil attach example.dmg -shadow /tmp/example.bashadow -noverify
 
 #   mounting a removable drive (of type msdos or hfs)
 #   ---------------------------------------

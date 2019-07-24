@@ -18,7 +18,7 @@
 # I recommend: https://github.com/powerline/fonts.git
 # > git clone https://github.com/powerline/fonts.git fonts
 # > cd fonts
-# > install.sh
+# > install.bash
 
 # In addition, I recommend the
 # [Solarized theme](https://github.com/altercation/solarized/) and, if you're

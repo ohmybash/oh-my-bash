@@ -136,10 +136,10 @@ ___brainy_prompt_ruby() {
 
 ___brainy_prompt_todo() {
 	[ "${THEME_SHOW_TODO}" != "true" ] ||
-	[ -z "$(which todo.sh)" ] && return
+	[ -z "$(which todo.bash)" ] && return
 	color=$bold_white
 	box="[|]"
-	info="t:$(todo.sh ls | egrep "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"
+	info="t:$(todo.bash ls | egrep "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${bold_green}" "${box}"
 }
 
@@ -152,7 +152,7 @@ ___brainy_prompt_clock() {
 }
 
 ___brainy_prompt_battery() {
-	[ ! -e $OSH/plugins/battery/battery.plugin.sh ] ||
+	[ ! -e $OSH/plugins/battery/battery.plugin.bash ] ||
 	[ "${THEME_SHOW_BATTERY}" != "true" ] && return
 	info=$(battery_percentage)
 	color=$bold_green

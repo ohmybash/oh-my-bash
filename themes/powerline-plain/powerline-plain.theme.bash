@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$OSH/themes/powerline-plain/powerline-plain.base.sh"
+source "$OSH/themes/powerline-plain/powerline-plain.base.bash"
 
 USER_INFO_SSH_CHAR=${POWERLINE_USER_INFO_SSH_CHAR:="⌁ "}
 USER_INFO_THEME_PROMPT_COLOR=32

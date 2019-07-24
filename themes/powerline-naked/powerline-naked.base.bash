@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$OSH/themes/powerline/powerline.base.sh"
+source "$OSH/themes/powerline/powerline.base.bash"
 
 function __powerline_left_segment {
   local OLD_IFS="${IFS}"; IFS="|"

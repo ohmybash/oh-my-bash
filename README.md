@@ -104,7 +104,7 @@ The default location is `~/.oh-my-bash` (hidden in your home directory)
 If you'd like to change the install directory with the `OSH` environment variable, either by running `export OSH=/your/path` before installing, or by setting it before the end of the install pipeline like this:
 
 ```shell
-export OSH="$HOME/.dotfiles/oh-my-bash"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+export OSH="$HOME/.dotfiles/oh-my-bash"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.bash)"
 ```
 
 #### Manual Installation
@@ -148,9 +148,9 @@ If you have any hiccups installing, here are a few common fixes.
 
 ### Custom Plugins and Themes
 
-If you want to override any of the default behaviors, just add a new file (ending in `.sh`) in the `custom/` directory.
+If you want to override any of the default behaviors, just add a new file (ending in `.bash`) in the `custom/` directory.
 
-If you have many functions that go well together, you can put them as a `XYZ.plugin.sh` file in the `custom/plugins/` directory and then enable this plugin.
+If you have many functions that go well together, you can put them as a `XYZ.plugin.bash` file in the `custom/plugins/` directory and then enable this plugin.
 
 If you would like to override the functionality of a plugin distributed with Oh My Bash, create a plugin of the same name in the `custom/plugins/` directory and it will be loaded instead of the one in `plugins/`.
 

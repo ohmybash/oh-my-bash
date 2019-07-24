@@ -12,9 +12,9 @@
 # To enable the completions either:
 #  - place this file in /etc/bash_completion.d
 #  or
-#  - copy this file to e.g. ~/.docker-compose-completion.sh and add the line
+#  - copy this file to e.g. ~/.docker-compose-completion.bash and add the line
 #    below to your .bashrc after bash completion features are loaded
-#    . ~/.docker-compose-completion.sh
+#    . ~/.docker-compose-completion.bash
 
 
 __docker_compose_q() {

@@ -6,7 +6,7 @@ I recommend: https://github.com/powerline/fonts.git
 ```
 git clone https://github.com/powerline/fonts.git fonts
 cd fonts
-install.sh
+install.bash
 ```
 
 The aim of this theme is to only show you *relevant* information. Like most

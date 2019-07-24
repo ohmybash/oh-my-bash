@@ -9,9 +9,9 @@
 # To enable the completions either:
 #  - place this file in /etc/bash_completion.d
 #  or
-#  - copy this file to e.g. ~/.docker-machine-completion.sh and add the line
+#  - copy this file to e.g. ~/.docker-machine-completion.bash and add the line
 #    below to your .bashrc after bash completion features are loaded
-#    . ~/.docker-machine-completion.sh
+#    . ~/.docker-machine-completion.bash
 #
 
 _docker_machine_active() {

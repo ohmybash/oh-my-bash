@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # get the node.js version
 function nvm_prompt_info() {
-  [[ -f "$NVM_DIR/nvm.sh" ]] || return
+  [[ -f "$NVM_DIR/nvm.bash" ]] || return
   local nvm_prompt
   nvm_prompt=$(node -v 2>/dev/null)
   [[ "${nvm_prompt}x" == "x" ]] && return

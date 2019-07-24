@@ -1,9 +1,9 @@
 # custom files
-!/custom/aliases/example.aliases.sh
-!/custom/completion/example.completion.sh
+!/custom/aliases/example.aliases.bash
+!/custom/completion/example.completion.bash
 !/custom/plugins/example/
 !/custom/themes/example/
-!/custom/example.sh
+!/custom/example.bash
 /custom/
 
 # temp files directories

@@ -11,7 +11,7 @@ function _update_osh_update() {
 }
 
 function _upgrade_osh() {
-  env BASH=$OSH sh $OSH/tools/upgrade.sh
+  env BASH=$OSH sh $OSH/tools/upgrade.bash
   # update the osh file
   _update_osh_update
 }

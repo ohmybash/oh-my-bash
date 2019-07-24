@@ -22,7 +22,7 @@
 #    2) Add the following line to your .bashrc/.zshrc:
 #        source ~/.git-completion.bash
 #    3) Consider changing your PS1 to also show the current branch,
-#       see git-prompt.sh for details.
+#       see git-prompt.bash for details.
 #
 # If you use complex aliases of form '!f() { ... }; f', you can use the null
 # command ':' as the first command in the function body to declare the desired
@@ -1845,7 +1845,7 @@ _git_config ()
 		return
 		;;
 	color.branch|color.diff|color.interactive|\
-	color.showbranch|color.status|color.ui)
+	color.bashowbranch|color.status|color.ui)
 		__gitcomp "always never auto"
 		return
 		;;
@@ -2017,7 +2017,7 @@ _git_config ()
 		color.interactive.help
 		color.interactive.prompt
 		color.pager
-		color.showbranch
+		color.bashowbranch
 		color.status
 		color.status.added
 		color.status.changed
@@ -2057,7 +2057,7 @@ _git_config ()
 		core.quotepath
 		core.repositoryFormatVersion
 		core.safecrlf
-		core.sharedRepository
+		core.basharedRepository
 		core.sparseCheckout
 		core.symlinks
 		core.trustctime
@@ -2165,7 +2165,7 @@ _git_config ()
 		interactive.singlekey
 		log.date
 		log.decorate
-		log.showroot
+		log.bashowroot
 		mailmap.file
 		man.
 		man.viewer
@@ -2244,7 +2244,7 @@ _git_config ()
 		sendemail.validate
 		showbranch.default
 		status.relativePaths
-		status.showUntrackedFiles
+		status.bashowUntrackedFiles
 		status.submodulesummary
 		submodule.
 		tar.umask

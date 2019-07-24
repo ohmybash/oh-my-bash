@@ -8,11 +8,11 @@
 
 
 _serverProfiles(){
-    if [[ $COMP_WORDS == *standalone.sh* ]]
+    if [[ $COMP_WORDS == *standalone.bash* ]]
     then
       serverdir="../standalone/configuration/"
     else
-       # assume is domain.sh
+       # assume is domain.bash
       serverdir="../domain/configuration/"
     fi
 
@@ -119,12 +119,12 @@ _jboss(){
     local commandsWithoutEqualSign='-b -bmanagement -bunsecure -bpublic --admin-only -h -help -u -version -V -v'
     local commandsWithEqualSign='-P -Djboss.node.name -Djboss.home.dir -Djboss.socket.binding.port-offset -Djboss.bind.address.management -Djboss.bind.address -Djboss.bind.address.unsecure'
 
-    if [[ $COMP_WORDS == *standalone.sh* ]]
+    if [[ $COMP_WORDS == *standalone.bash* ]]
     then
        commandsWithoutEqualSign="${commandsWithoutEqualSign} -c"
        commandsWithEqualSign="${commandsWithEqualSign} --server-config -Djboss.server.base.dir -c"
     else
-       # assume is domain.sh
+       # assume is domain.bash
        commandsWithoutEqualSign="${commandsWithoutEqualSign} --backup  --cached-dc"
        commandsWithEqualSign="${commandsWithEqualSign} -Djboss.domain.master.address --host-config -Djboss.domain.master.port -Djboss.domain.base.dir "
     fi
@@ -138,5 +138,5 @@ _jboss(){
 
 
 }
-complete -o nospace -F _jboss standalone.sh
-complete -o nospace -F _jboss domain.sh
+complete -o nospace -F _jboss standalone.bash
+complete -o nospace -F _jboss domain.bash

@@ -16,7 +16,7 @@ _todo()
         mv prepend prep pri p replace report shorthelp"
     local -r MOVE_COMMAND_PATTERN='^(move|mv)$'
 
-    local _todo_sh=${_todo_sh:-todo.sh}
+    local _todo_sh=${_todo_sh:-todo.bash}
     local completions
     if [ $COMP_CWORD -eq 1 ]; then
         completions="$COMMANDS $(eval TODOTXT_VERBOSE=0 $_todo_sh command listaddons) $OPTS"
@@ -67,5 +67,5 @@ _todo()
     return 0
 }
 
-complete -F _todo todo.sh
+complete -F _todo todo.bash
 complete -F _todo t

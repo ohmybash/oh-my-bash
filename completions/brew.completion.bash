@@ -4,7 +4,7 @@ if which brew >/dev/null 2>&1; then
     . `brew --prefix`/etc/bash_completion
   fi
 
-  if [ -f `brew --prefix`/Library/Contributions/brew_bash_completion.sh ]; then
-    . `brew --prefix`/Library/Contributions/brew_bash_completion.sh
+  if [ -f `brew --prefix`/Library/Contributions/brew_bash_completion.bash ]; then
+    . `brew --prefix`/Library/Contributions/brew_bash_completion.bash
   fi
 fi

@@ -10,7 +10,7 @@ A colorful theme, where shows a lot information about your shell session.
 * An indicator when connected by SSH
 * An indicator when `sudo` has the credentials cached (see the `sudo` manpage for more info about this)
 * An indicator when the current shell is inside the Vim editor
-* Battery charging status (depends on the [../../plugins/battery/battery.plugin.sh](battery plugin))
+* Battery charging status (depends on the [../../plugins/battery/battery.plugin.bash](battery plugin))
 * SCM Repository status (e.g. Git, SVN)
 * The current Python environment (Virtualenv, venv, and Conda are supported) in use
 * The current Ruby environment (rvm and rbenv are supported) in use

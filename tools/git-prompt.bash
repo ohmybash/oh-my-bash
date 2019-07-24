@@ -8,9 +8,9 @@
 #
 # To enable:
 #
-#    1) Copy this file to somewhere (e.g. ~/.git-prompt.sh).
+#    1) Copy this file to somewhere (e.g. ~/.git-prompt.bash).
 #    2) Add the following line to your .bashrc/.zshrc:
-#        source ~/.git-prompt.sh
+#        source ~/.git-prompt.bash
 #    3a) Change your PS1 to call __git_ps1 as
 #        command-substitution:
 #        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
@@ -39,7 +39,7 @@
 # In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty value,
 # unstaged (*) and staged (+) changes will be shown next to the branch
 # name.  You can configure this per-repository with the
-# bash.showDirtyState variable, which defaults to true once
+# bash.bashowDirtyState variable, which defaults to true once
 # GIT_PS1_SHOWDIRTYSTATE is enabled.
 #
 # You can also see if currently something is stashed, by setting
@@ -49,7 +49,7 @@
 # If you would like to see if there're untracked files, then you can set
 # GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're untracked
 # files, then a '%' will be shown next to the branch name.  You can
-# configure this per-repository with the bash.showUntrackedFiles
+# configure this per-repository with the bash.bashowUntrackedFiles
 # variable, which defaults to true once GIT_PS1_SHOWUNTRACKEDFILES is
 # enabled.
 #
@@ -74,7 +74,7 @@
 # By default, __git_ps1 will compare HEAD to your SVN upstream if it can
 # find one, or @{upstream} otherwise.  Once you have set
 # GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
-# setting the bash.showUpstream config variable.
+# setting the bash.bashowUpstream config variable.
 #
 # If you would like to see more information about the identity of
 # commits checked out as a detached HEAD, set GIT_PS1_DESCRIBE_STYLE
@@ -110,10 +110,10 @@ __git_ps1_show_upstream ()
 
 	svn_remote=()
 	# get some config options from git-config
-	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.bashowupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
 	while read -r key value; do
 		case "$key" in
-		bash.showupstream)
+		bash.bashowupstream)
 			GIT_PS1_SHOWUPSTREAM="$value"
 			if [[ -z "${GIT_PS1_SHOWUPSTREAM}" ]]; then
 				p=""
@@ -478,7 +478,7 @@ __git_ps1 ()
 		fi
 	elif [ "true" = "$inside_worktree" ]; then
 		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
-		   [ "$(git config --bool bash.showDirtyState)" != "false" ]
+		   [ "$(git config --bool bash.bashowDirtyState)" != "false" ]
 		then
 			git diff --no-ext-diff --quiet || w="*"
 			git diff --no-ext-diff --cached --quiet || i="+"
@@ -493,7 +493,7 @@ __git_ps1 ()
 		fi
 
 		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
-		   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
+		   [ "$(git config --bool bash.bashowUntrackedFiles)" != "false" ] &&
 		   git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
 		then
 			u="%${ZSH_VERSION+%}"

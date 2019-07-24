@@ -4,7 +4,7 @@
 #   https://github.com/drush-ops/drush
 #
 # Originally from:
-#   http://github.com/drush-ops/drush/blob/master/drush.complete.sh
+#   http://github.com/drush-ops/drush/blob/master/drush.complete.bash
 
 # Ensure drush is available.
 which drush &> /dev/null || alias drush &> /dev/null || return
