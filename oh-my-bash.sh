@@ -17,7 +17,7 @@ if ! command -v die > /dev/null; then	die()	{
 [[ $- != *i* ]] && die 1 "Shell is not interactive"
 
 # Check for updates on initial load...
-if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
+if ! ((DISABLE_AUTO_UPDATE)) ; then
   env OSH=$OSH DISABLE_UPDATE_PROMPT=$DISABLE_UPDATE_PROMPT bash -f $OSH/tools/check_for_upgrade.sh
 fi
 
