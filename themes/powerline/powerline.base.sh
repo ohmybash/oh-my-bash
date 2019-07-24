@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 
+# Error handling
+if ! command -v info > /dev/null; then	info()	{	printf "INFO: %s\n" "$1"	1>&2	;	} fi
+if ! command -v warn > /dev/null; then	warn()	{	printf "WARN: %s\n" "$1"	1>&2	;	} fi
+if ! command -v die > /dev/null; then	die() { printf "FATAL: %s\n" "$2"	1>&2	;	exit "$1"	;	} fi
+
+# Check if executed as root, if not tries to use sudo
+checkroot () {
+	if ! ((EUID)); then
+		return
+	elif [[ -x "$(command -v sudo)" ]] && [ -n "$OSH_CHECKROOT" ]; then
+			info "Failed to aquire root permission, trying reinvoking with 'sudo' prefix"
+			exec sudo "$0" "$@"
+			exit 1
+	elif [[ ! -x "$(command -v sudo)" ]] && [ -n "$OSH_CHECKROOT" ]; then
+		info "Failed to aquire root permission, trying reinvoking as root user."
+		exec su -c "$0 $*"
+		exit 1
+	else
+		die 0 "Unable to elevate root access."
+	fi
+}
+
 # Define this here so it can be used by all of the Powerline themes
 THEME_CHECK_SUDO=${THEME_CHECK_SUDO:=true}
 
@@ -19,7 +41,7 @@ function __powerline_user_info_prompt {
   local color=${USER_INFO_THEME_PROMPT_COLOR}
 
   if [[ "${THEME_CHECK_SUDO}" = true ]]; then
-    if sudo -n uptime 2>&1 | grep -q "load"; then
+    if checkroot uptime 2>&1 | grep -q "load"; then
       color=${USER_INFO_THEME_PROMPT_COLOR_SUDO}
     fi
   fi
