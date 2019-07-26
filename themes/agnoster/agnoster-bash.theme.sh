@@ -1,1 +1,1 @@
-agnoster.bash
+agnoster.base.sh
