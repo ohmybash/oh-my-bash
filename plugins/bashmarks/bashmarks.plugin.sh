@@ -67,17 +67,36 @@ function bm {
       _list_bookmark
     ;;
     # help [ bm -h ]
+    -h)
+      _echo_usage
+    ;;
     *)
-      echo 'USAGE:'
-      echo 'bm -a <bookmark_name> - Saves the current directory as "bookmark_name"'
-      echo 'bm -g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
-      echo 'bm -p <bookmark_name> - Prints the directory associated with "bookmark_name"'
-      echo 'bm -d <bookmark_name> - Deletes the bookmark'
-      echo 'bm -l                 - Lists all available bookmarks'
-      kill -SIGINT $$
-      exit 1
+      if [[ $1 == -* ]]; then
+        # unrecognized option. echo error message and usage [ bm -X ]
+        echo "Unknown option '$1'"
+        _echo_usage
+        kill -SIGINT $$
+        exit 1
+      elif [[ $1 == "" ]]; then
+        # no args supplied - echo usage [ bm ]
+        _echo_usage
+      else
+        # non-option supplied as first arg.  assume goto [ bm BOOKMARK_NAME ]
+        _goto_bookmark "$1"
+      fi
     ;;
   esac
+}
+
+# print usage information
+function _echo_usage {
+  echo 'USAGE:'
+  echo "bm -h                   - Prints this usage info"
+  echo 'bm -a <bookmark_name>   - Saves the current directory as "bookmark_name"'
+  echo 'bm [-g] <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
+  echo 'bm -p <bookmark_name>   - Prints the directory associated with "bookmark_name"'
+  echo 'bm -d <bookmark_name>   - Deletes the bookmark'
+  echo 'bm -l                   - Lists all available bookmarks'
 }
 
 # save current directory to bookmarks
