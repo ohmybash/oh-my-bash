@@ -59,7 +59,7 @@ _salt(){
     case "${pprev}" in
     -G|--grain|--grain-pcre)
     if [ "${cur}" = ":" ]; then
-        COMPREPLY=($(compgen -W "`_salt_get_grain_values ${prev}`"  ))
+        COMPREPLY="$(compgen -W "`_salt_get_grain_values ${prev}`"  )"
         return 0
     fi
     ;;
@@ -112,7 +112,7 @@ _salt(){
         ;;
      -N|--nodegroup)
 	    MASTER_CONFIG='/etc/salt/master'
-        COMPREPLY=($(compgen -W "`awk -F ':'  'BEGIN {print_line = 0};  /^nodegroups/ {print_line = 1;getline } print_line && /^  */ {print $1} /^[^ ]/ {print_line = 0}' <${MASTER_CONFIG}`" -- ${cur}))
+        COMPREPLY="$(compgen -W "`awk -F ':'  'BEGIN {print_line = 0};  /^nodegroups/ {print_line = 1;getline } print_line && /^  */ {print $1} /^[^ ]/ {print_line = 0}' <${MASTER_CONFIG}`" -- ${cur})"
         return 0
      ;;
     esac
