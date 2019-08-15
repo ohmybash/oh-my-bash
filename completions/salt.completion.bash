@@ -112,7 +112,7 @@ _salt(){
         ;;
      -N|--nodegroup)
 	    MASTER_CONFIG='/etc/salt/master'
-        COMPREPLY="$(compgen -W "`awk -F ':'  'BEGIN {print_line = 0};  /^nodegroups/ {print_line = 1;getline } print_line && /^  */ {print $1} /^[^ ]/ {print_line = 0}' <${MASTER_CONFIG}`" -- ${cur})"
+        COMPREPLY="$(compgen -W "$(awk -F ':'  'BEGIN {print_line = 0};  /^nodegroups/ {print_line = 1;getline } print_line && /^  */ {print $1} /^[^ ]/ {print_line = 0}' <${MASTER_CONFIG})" -- ${cur})"
         return 0
      ;;
     esac
