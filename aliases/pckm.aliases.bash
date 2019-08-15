@@ -7,7 +7,7 @@ if [ -n "$EUID" ] && [ -x $(command -v sudo) ]; then
 	[ -z "$OMB_USE_ROOT" ] && export OMB_ROOT=true
 fi
 
-## Enoch Merge
+# Portage - Enoch Merge
 if [[ -x "$(command -v emerge)" ]]; then
 	alias em="${OMB_ROOT:+sudo }emerge" # Enoch Merge
 	alias es="${OMB_ROOT:+sudo }emerge --search" # Enoch Search
@@ -19,6 +19,7 @@ if [[ -x "$(command -v emerge)" ]]; then
 	alias elip="${OMB_ROOT:+sudo }eix-installed -a" # Enoch List Installed Packages
 fi
 
+# Paludis - Cave
 if [[ -x "$(command -v cave)" ]]; then
   alias cave="${OMB_ROOT:+sudo }cave"
   alias cr="${OMB_ROOT:+sudo }cave resolve" # Cave Resolve
@@ -27,6 +28,7 @@ if [[ -x "$(command -v cave)" ]]; then
   alias cli="${OMB_ROOT:+sudo }cave print-ids --matching '*/*::/'" # Cave List Installed
 fi
 
+# Advanced Packaging Tools - APT
 if [[ -x "$(command -v apt)" ]]; then
 	alias apt="${OMB_ROOT:+sudo }apt" # Advanced Packaging Tool
 	alias aptfu="${OMB_ROOT:+sudo }apt update -y && ${OMB_ROOT:+sudo }apt upgrade -y && ${OMB_ROOT:+sudo }apt dist-upgrade -y && ${OMB_ROOT:+sudo }apt autoremove -y"
@@ -37,12 +39,14 @@ if [[ -x "$(command -v apt)" ]]; then
 	alias aptli="${OMB_ROOT:+sudo }apt list --installed"
 fi
 
+# Debian PacKaGe - DPKG
 if [[ -x "$(command -v dpkg)" ]]; then
 	alias dpkg="${OMB_ROOT:+sudo }dpkg"
 fi
 
+# # Zypper = Zen Yast Package Program (ZYPP?)
 # if [[ -x "$(command -v zypper)" ]]; then
-# 	# Zypper = Zen Yast Package Program (ZYPP?)
+#
 # 	# Yast = Yet Another Silly/Setup Thing/Thing
 # 	alias lcp="${OMB_ROOT:+sudo }zypper"
 # 	alias lcpi="${OMB_ROOT:+sudo }zypper install"
