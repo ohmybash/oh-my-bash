@@ -36,7 +36,7 @@
 
 # export THEME=$HOME/.bash/themes/agnoster-bash/agnoster.bash
 # if [[ -f $THEME ]]; then
-#     export DEFAULT_USER=`whoami`
+#     export DEFAULT_USER=$(whoami)
 #     source $THEME
 # fi
 
@@ -227,7 +227,7 @@ prompt_virtualenv() {
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
-    local user=`whoami`
+    local user=$(whoami)
 
     if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
         prompt_segment black default "$user@\h"
