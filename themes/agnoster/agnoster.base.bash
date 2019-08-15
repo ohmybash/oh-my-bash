@@ -129,7 +129,7 @@ bg_color() {
 # for codes (mycodes) as otherwise it'll clobber the original.
 # this changes from BASH v3 to BASH v4.
 ansi() {
-    local seq
+    local seq|
     declare -a mycodes=("${!1}")
 
     debug "ansi: ${!1} all: $* aka ${mycodes[@]}"
@@ -292,7 +292,7 @@ __command_rprompt() {
         [ $n -gt 40 ] || break
         times="$times ${tz%%:*}\e[30;1m:\e[0;36;1m"
         times="$times$(TZ=${tz#*:} date +%H:%M)\e[0m"
-        n=$(( $n - 10 ))
+        n="$( $n - 10 )"
     done
     [ -z "$times" ] || printf "%${n}s$times\\r" ''
 }
