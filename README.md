@@ -10,6 +10,8 @@ Finally, you'll begin to get the sort of attention that you have always felt you
 
 ## Getting Started
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/11d90a2ad7bc4351a71a5dea523ec305)](https://app.codacy.com/app/Kreyren/oh-my-bash?utm_source=github.com&utm_medium=referral&utm_content=ohmybash/oh-my-bash&utm_campaign=Badge_Grade_Dashboard)
+
 ### Prerequisites
 
 __Disclaimer:__ _Oh My Bash works best on macOS and Linux._
