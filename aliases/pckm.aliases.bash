@@ -28,7 +28,7 @@ if [[ -x "$(command -v cave)" ]]; then
   alias cli="${OMB_ROOT:+sudo }cave print-ids --matching '*/*::/'" # Cave List Installed
 fi
 
-# Advanced Packaging Tools - APT
+# Advanced Packaging Tool - APT
 if [[ -x "$(command -v apt)" ]]; then
 	alias apt="${OMB_ROOT:+sudo }apt" # Advanced Packaging Tool
 	alias aptfu="${OMB_ROOT:+sudo }apt update -y && ${OMB_ROOT:+sudo }apt upgrade -y && ${OMB_ROOT:+sudo }apt dist-upgrade -y && ${OMB_ROOT:+sudo }apt autoremove -y"
