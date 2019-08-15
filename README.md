@@ -78,7 +78,7 @@ OSH_THEME="agnoster" # (this is one of the fancy ones)
 
 Open up a new terminal window and your prompt should look something like this:
 
-![Agnoster theme](https://cloud.githubusercontent.com/assets/2618447/6316862/70f58fb6-ba03-11e4-82c9-c083bf9a6574.png)
+![Agnoster theme](img/example_powerline.png)
 
 In case you did not find a suitable theme for your needs, please have a look at the wiki for [more of them](https://github.com/ohmybash/oh-my-bash/wiki/External-themes).
 
@@ -189,10 +189,6 @@ If you want to uninstall `oh-my-bash`, just run `uninstall_oh_my_bash` from the 
 I'm far from being a [Bash](https://www.gnu.org/software/bash/) expert and suspect there are many ways to improve – if you have ideas on how to make the configuration easier to maintain (and faster), don't hesitate to fork and send pull requests!
 
 We also need people to test out pull-requests. So take a look through [the open issues](https://github.com/ohmybash/oh-my-bash/issues) and help where you can.
-
-### Do NOT send us themes
-
-We have (more than) enough themes for the time being. Please add your theme to the [external themes](https://github.com/ohmybash/oh-my-bash/wiki/External-themes) wiki page.
 
 ## Contributors
 
