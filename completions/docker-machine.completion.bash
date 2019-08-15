@@ -231,7 +231,7 @@ _docker_machine() {
     local i
     local command=docker-machine
 
-    for (( i=1; i < ${cword}; ++i)); do
+    for ( i=1; i < ${cword}; ++i); do
         local word=${words[i]}
         if [[ " ${wants_file[*]} ${wants_dir[*]} " =~ " ${word} " ]]; then
             # skip the next option
