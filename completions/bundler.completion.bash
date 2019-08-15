@@ -9,8 +9,8 @@
 #   . completion-bundle
 
 __bundle() {
-  local cur=$2
-  local prev=$3
+  local cur="$2"
+  local prev="$3"
   local bundle_command
   __bundle_get_command
   COMPREPLY=()
@@ -32,7 +32,7 @@ __bundle() {
 
 __bundle_get_command() {
     local i
-    for ((i=1; i < $COMP_CWORD; ++i)); do
+    for (i=1; i < $COMP_CWORD; ++i); do
         local arg=${COMP_WORDS[$i]}
 
         case $arg in
