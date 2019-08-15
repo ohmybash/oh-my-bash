@@ -154,6 +154,15 @@ If you have many functions that go well together, you can put them as a `XYZ.plu
 
 If you would like to override the functionality of a plugin distributed with Oh My Bash, create a plugin of the same name in the `custom/plugins/` directory and it will be loaded instead of the one in `plugins/`.
 
+### Configuration
+
+#### SUDO logic
+oh-my-bash is using logic to use sudo if EUID variable and sudo doesn't return false.
+
+To disable this use `OMB_USE_ROOT` variable with `false` value in your `~/.bashrc`
+
+To overwrite this you can use `OMB_ROOT` with `true` value.
+
 ## Getting Updates
 
 By default, you will be prompted to check for upgrades every few weeks. If you would like `oh-my-bash` to automatically upgrade itself without prompting you, set the following in your `~/.bashrc`:

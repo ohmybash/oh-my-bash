@@ -4,7 +4,7 @@
 
 # Logic for root usage
 if [ -n "$EUID" ] && [ -x $(command -v sudo) ]; then
-	[ -z "$OMB_USE_ROOT" ] && export OMB_ROOT=true
+	[ -z "$OMB_USE_ROOT" ] && export OMB_ROOT='true'
 fi
 
 # Portage - Enoch Merge
