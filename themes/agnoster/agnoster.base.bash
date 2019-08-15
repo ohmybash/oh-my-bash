@@ -220,7 +220,7 @@ prompt_virtualenv() {
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
-    local user=`whoami`
+    local user="$(whoami)"
 
     if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
         prompt_segment black default "$user@\h"
