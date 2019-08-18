@@ -1,5 +1,7 @@
 ---
 name: Bug report
+labels: bug-report "P3 - Normal"
+assignees: kreyren nntoan
 about: Create a report to help us improve
 
 ---
