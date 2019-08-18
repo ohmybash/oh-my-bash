@@ -2,31 +2,17 @@
 name: Feature request
 about: Suggest an idea for this project
 
+title: "REQUEST: "
+labels:  feature-request "P3 - Normal"
+assignees: kreyren nntoan
 ---
 
-**I'm submitting a ...**  (check one with "x")
-- [ ] bug report
-- [x] feature request
+### Description/Abstract
+<!-- Provide short, but verbose explanation about presented feature -->
 
-**Actual Behaviour**
 
-<!-- Describe how the bug manifests. -->
+### Expected Behaviour
+<!-- Provide Expected behaviour of presented feature -->
 
-**Expected Behaviour**
-
-<!-- State here what the feature should enable the user to do. -->
-
-**Steps to reproduce it**
-
-<!-- Add steps to reproduce bugs or add information on the place where the feature should be implemented. Add links to a sample deployment or code. -->
-
-**System information:**
-
-<!-- Add information about the system your facing this bug on. If you think this is irrelevant or if it's a UI bug or a feature request, please remove this section -->
-```
-Your operating system
-```
-
-**Would you like to work on the issue?**
-
-<!-- Let us know if this issue should be assigned to you or tell us who you think could help to solve this issue. -->
+### Actual behaviour (optional)
+<!-- Optionally provide actual behaviour of presented feature -->
