@@ -620,12 +620,7 @@ __git_complete_strategy ()
 }
 
 __git_commands () {
-	if test -n "${GIT_TESTING_COMMAND_COMPLETION:-}"
-	then
-		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
-	else
-		git help -a|egrep "^  [a-z]*"|cut -d" " -f4
-	fi
+	git --list-cmds=builtins,main,others,nohelpers,alias,config
 }
 
 __git_list_all_commands ()
