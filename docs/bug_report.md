@@ -1,4 +1,5 @@
 ---
+title: "BUG: "
 name: Bug report
 labels: bug-report "P3 - Normal"
 assignees: kreyren nntoan
