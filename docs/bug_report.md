@@ -20,7 +20,7 @@ assignees: kreyren nntoan
 
 
 ### Steps to reproduce it
-<!-- Add steps to reproduce bugs or add information on the place where the feature should be implemented. Add links to a sample deployment or code. -->
+<!-- Add steps to reproduce provided bug, BE VERBOSE! -->
 
 
 
