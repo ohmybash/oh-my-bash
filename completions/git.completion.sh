@@ -620,6 +620,7 @@ __git_complete_strategy ()
 }
 
 __git_commands () {
+	# BUG: https://github.com/ohmybash/oh-my-bash/issues/65
 	git --list-cmds=builtins,main,others,nohelpers,alias,config
 }
 
