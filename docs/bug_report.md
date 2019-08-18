@@ -9,10 +9,6 @@ assignees: kreyren nntoan
 
 ---
 
-**I'm submitting a ...**  (check one with "x")
-- [x] bug report
-- [ ] feature request
-
 **Actual Behaviour**
 
 <!-- Describe how the bug manifests. -->
