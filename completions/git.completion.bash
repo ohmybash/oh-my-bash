@@ -1,6 +1,10 @@
+#!/usr/bin/env bash
 # shellcheck disable=SC2194
-## Using HEAD in case statements
-# NOTICE: Oh-my-bash maintainers: This file is mirror from https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+
+# OH-MY-BASH:
+## Oh-my-bash maintainers: This file is mirror from https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+## Code is not compatible with shell (https://github.com/ohmybash/oh-my-bash/pull/100#issuecomment-522513128)
+
 # bash/zsh completion support for core Git.
 #
 # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
