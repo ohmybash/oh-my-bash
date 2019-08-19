@@ -3006,7 +3006,8 @@ __git_main ()
 
 	__git_complete_command "$command" && return
 
-	local expansion=$(__git_aliased_command "$command")
+	expansion=$(__git_aliased_command "$command")
+	local expansion
 	if [ -n "$expansion" ]; then
 		words[1]=$expansion
 		__git_complete_command "$expansion"
