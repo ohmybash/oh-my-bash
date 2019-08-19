@@ -2730,7 +2730,8 @@ _git_svn ()
 		proplist show-ignore show-externals branch tag blame
 		migrate mkdirs reset gc
 		"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
 	else
