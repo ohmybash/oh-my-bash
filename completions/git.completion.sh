@@ -241,7 +241,7 @@ __git_reassemble_comp_words_by_ref()
 			fi
 			first=
 			words_[$j]=${words_[j]}${COMP_WORDS[i]}
-			if [ $i = $COMP_CWORD ]; then
+			if [ "$i" -eq "$COMP_CWORD" ]; then
 				cword_=$j
 			fi
 			if (($i < ${#COMP_WORDS[@]} - 1)); then
