@@ -2050,7 +2050,8 @@ _git_rebase ()
 _git_reflog ()
 {
 	local subcommands="show delete expire"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
