@@ -2866,7 +2866,8 @@ _git_whatchanged ()
 _git_worktree ()
 {
 	local subcommands="add list lock move prune remove unlock"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
 	else
