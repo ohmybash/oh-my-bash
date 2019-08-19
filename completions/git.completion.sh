@@ -2197,7 +2197,7 @@ _git_switch ()
 			# dwim will be done when --detach is specified
 			track_opt=
 		fi
-		if [ $only_local_ref = y -a -z "$track_opt" ]; then
+		if [ "$only_local_ref" = 'y' ] && [ -z "$track_opt" ]; then
 			__gitcomp_direct "$(__git_heads "" "$cur" " ")"
 		else
 			__git_complete_refs $track_opt
