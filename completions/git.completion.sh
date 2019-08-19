@@ -1269,7 +1269,8 @@ _git_bisect ()
 	__git_has_doubledash && return
 
 	local subcommands="start bad good skip reset visualize replay log run"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 	if [ -z "$subcommand" ]; then
 		__git_find_repo_path
 		if [ -f "$__git_repo_path"/BISECT_START ]; then
