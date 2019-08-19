@@ -2677,7 +2677,8 @@ _git_submodule ()
 	__git_has_doubledash && return
 
 	local subcommands="add status init deinit update set-branch summary foreach sync absorbgitdirs"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 	if [ -z "$subcommand" ]; then
 		case "$cur" in
 		--*)
