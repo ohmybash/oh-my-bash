@@ -3105,7 +3105,7 @@ if [[ -n ${ZSH_VERSION-} ]] &&
 		let cword=CURRENT-1
 		emulate ksh -c __${service}_main
 		let _ret && _default && _ret=0
-		return _ret
+		return $_ret
 	}
 
 	compdef _git git gitk
