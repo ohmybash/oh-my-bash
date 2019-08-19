@@ -1889,7 +1889,8 @@ _git_mv ()
 _git_notes ()
 {
 	local subcommands='add append copy edit get-ref list merge prune remove show'
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 
 	case "$subcommand,$cur" in
 	,--*)
