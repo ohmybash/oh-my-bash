@@ -1,3 +1,5 @@
+# shellcheck disable=SC2194
+## Using HEAD in case statements
 # NOTICE: Oh-my-bash maintainers: This file is mirror from https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 # bash/zsh completion support for core Git.
 #
