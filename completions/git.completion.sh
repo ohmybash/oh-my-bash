@@ -2416,7 +2416,8 @@ _git_remote ()
 		add rename remove set-head set-branches
 		get-url set-url show prune update
 		"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 	if [ -z "$subcommand" ]; then
 		case "$cur" in
 		--*)
