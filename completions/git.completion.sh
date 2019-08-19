@@ -1050,7 +1050,8 @@ __git_pretty_aliases ()
 # __git_aliased_command requires 1 argument
 __git_aliased_command ()
 {
-	local word cmdline=$(__git config --get "alias.$1")
+	cmdline="$(__git config --get "alias.$1")"
+	local word cmdline
 	for word in $cmdline; do
 		case "$word" in
 		\!gitk|gitk)
