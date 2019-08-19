@@ -1313,7 +1313,7 @@ _git_branch ()
 		__gitcomp_builtin branch
 		;;
 	*)
-		if [ $only_local_ref = "y" -a $has_r = "n" ]; then
+		if [ "$only_local_ref" = "y" ] && [ "$has_r" = "n" ]; then
 			__gitcomp_direct "$(__git_heads "" "$cur" " ")"
 		else
 			__git_complete_refs
