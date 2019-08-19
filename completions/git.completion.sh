@@ -2484,7 +2484,8 @@ _git_replace ()
 _git_rerere ()
 {
 	local subcommands="clear forget diff remaining status gc"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
 	if test -z "$subcommand"
 	then
 		__gitcomp "$subcommands"
