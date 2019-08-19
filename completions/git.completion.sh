@@ -1063,7 +1063,7 @@ __git_aliased_command ()
 		*=*)	: setting env ;;
 		git)	: git itself ;;
 		\(\))   : skip parens of shell function definition ;;
-		{)	: skip start of shell helper function ;;
+		\{)	: skip start of shell helper function ;;
 		:)	: skip null command ;;
 		\'*)	: skip opening quote after sh -c ;;
 		*)
