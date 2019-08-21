@@ -158,10 +158,7 @@ is_confirmed() {
 # fi
 #
 type_exists() {
-  if [ "$(type -P "$1")" ]; then
-    return 0
-  fi
-  return 1
+  [ "$(type -P "$1")" ]
 }
 
 #
