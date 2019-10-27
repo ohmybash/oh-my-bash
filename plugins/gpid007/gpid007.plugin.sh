@@ -1,9 +1,10 @@
+#!/bin/bash
 # gpid007.plugin.sh
 # Author: Gregor-Patrick Heine
 # mkdir -p $HOME/.oh-my-bash/plugins/gpid007
 
+# AWS_HOME="$HOME/.aws"
 AWS_CONFIG="$HOME/.aws/config"
-AWS_HOME="$HOME/.aws"
 BWHITE='\033[1;37m'
 NOCOLOR='\033[0m'
 BRED='\033[1;31m'
@@ -15,7 +16,7 @@ function evalSeq {
     REXP='\w\.\.\w'
     SEQ=$(echo $INPUT | grep -Eo $REXP)
     SEQ=$(eval "echo {$SEQ}")
-    OUTPUT=$(echo $INPUT | sed "s/$REXP/$SEQ/g")
+    OUTPUT=${INPUT//$REXP/$SEQ}} # $(echo $INPUT | sed "s/$REXP/$SEQ/g")
     OUTPUT=$(echo $OUTPUT | sed 's/ /" "\$/g ; s/,/" "\$/g')
     echo "{print \$${OUTPUT}}"
 }

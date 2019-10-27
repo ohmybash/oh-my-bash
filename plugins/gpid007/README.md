@@ -15,11 +15,13 @@ cd $HOME/.oh-my-bash/plugins/ \
 ```
 
 ## Use
-```
-getec2 \
-    [-g [REXP|*]] \
+```bash
+echo "
+getec2 
+    [-g [REXP|*]]
     [-p [PROFILE|all]] 
     [-c [COLUMN|all|1,3..6,9]] 
     [-h [HELP|?]]
     [-H [HEADER]]
+"
 ```
