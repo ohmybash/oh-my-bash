@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 alias brewp='brew pin'
 alias brews='brew list -1'
 alias brewsp='brew list --pinned'
