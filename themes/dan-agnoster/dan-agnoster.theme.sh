@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # vim: ft=bash ts=2 sw=2 sts=2
 #
+# # A customized version of agnoster theme. #
+#
+#
 # agnoster's Theme - https://gist.github.com/3712874
 # A Powerline-inspired theme for BASH
 #
@@ -108,6 +111,9 @@ fg_color() {
         cyan)       echo 36;;
         white)      echo 37;;
         orange)     echo 38\;5\;166;;
+        darkpurple) echo 38\;5\;53;;
+        lightgrey)  echo 38\;5\;253;;
+        darkgreen)  echo 38\;5\;22;;
     esac
 }
 
@@ -122,6 +128,9 @@ bg_color() {
         cyan)       echo 46;;
         white)      echo 47;;
         orange)     echo 48\;5\;166;;
+        darkpurple) echo 48\;5\;53;;
+        lightgrey)  echo 48\;5\;253;;
+        darkgreen)  echo 48\;5\;22;;
     esac;
 }
 
@@ -223,7 +232,11 @@ prompt_context() {
     local user=`whoami`
 
     if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
-        prompt_segment black default "$user@\h"
+        # prompt_segment black default "$user@\h"
+        # TODO: Change this to use arbitrary hostname and add bling
+        #       via $BLING_STRING and $PROMPT_HOST_NAME
+        #       Unicode "OX" looks like a GNU gnu in some font sets.
+        prompt_segment black default "🐂 $user@."
     fi
 }
 
@@ -231,6 +244,10 @@ prompt_context() {
 # we did previously
 prompt_histdt() {
     prompt_segment black default "\! [\A]"
+}
+
+prompt_time() {
+    prompt_segment black orange '\d \@'
 }
 
 
@@ -249,7 +266,7 @@ prompt_git() {
         if [[ -n $dirty ]]; then
             prompt_segment yellow black
         else
-            prompt_segment green black
+            prompt_segment darkgreen lightgrey
         fi
         PR="$PR${ref/refs\/heads\// }$dirty"
     fi
@@ -257,7 +274,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-    prompt_segment blue black '\w'
+    prompt_segment darkpurple lightgrey '\w'
 }
 
 # Status:
@@ -394,6 +411,7 @@ prompt_emacsdir() {
 build_prompt() {
     [[ ! -z ${AG_EMACS_DIR+x} ]] && prompt_emacsdir
     prompt_status
+    prompt_time
     #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
     prompt_virtualenv
