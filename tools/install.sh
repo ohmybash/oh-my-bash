@@ -26,7 +26,7 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  # Checks the minium version of bash (v4) installed, 
+  # Checks the minium version of bash (v4) installed,
   # stops the installation if check fails
   if [ -n $BASH_VERSION ]; then
      bash_major_version=$(echo $BASH_VERSION | cut -d '.' -f 1)
@@ -67,7 +67,7 @@ main() {
       exit 1
     fi
   fi
-  env git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git $OSH || {
+  env git clone --depth=1 https://github.com/danstoner/oh-my-bash.git $OSH || {
     printf "Error: git clone of oh-my-bash repo failed\n"
     exit 1
   }
@@ -94,7 +94,7 @@ export OSH=$OSH
   printf '%s\n' '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ '
   printf '%s\n' '                        /____/                            .... is now installed!'
   printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
-  printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
+  printf "${BLUE}${BOLD}%s${NORMAL}\n" "Installed from a fork located at https://github.com/danstoner/oh-my-bash.git"
   exec bash; source $HOME/.bashrc
 }
 
