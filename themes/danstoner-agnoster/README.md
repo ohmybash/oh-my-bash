@@ -18,4 +18,4 @@ In addition to the `agnoster` standard cusomizations, set these in `.bashrc` to 
 
 `PROMPT_HOST_NAME` instead of system's host acquired by lookup, use this hostname (TODO)
 
-![ScreenShot](dan-agnoster-bash-sshot.png)
+![ScreenShot](danstoner-agnoster-bash-sshot.png)
