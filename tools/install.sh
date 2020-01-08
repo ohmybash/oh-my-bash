@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SOURCE_REPO="https://github.com/danstoner/oh-my-bash.git"
+
 main() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
@@ -54,7 +56,7 @@ main() {
   # precedence over umasks except for filesystems mounted with option "noacl".
   umask g-w,o-w
 
-  printf "${BLUE}Cloning Oh My Bash...${NORMAL}\n"
+  printf "${BLUE}Cloning Oh My Bash from fork at $SOURCE_REPO ...${NORMAL}\n"
   hash git >/dev/null 2>&1 || {
     echo "Error: git is not installed"
     exit 1
@@ -67,7 +69,7 @@ main() {
       exit 1
     fi
   fi
-  env git clone --depth=1 https://github.com/danstoner/oh-my-bash.git $OSH || {
+  env git clone --depth=1 $SOURCE_REPO $OSH || {
     printf "Error: git clone of oh-my-bash repo failed\n"
     exit 1
   }
@@ -94,7 +96,7 @@ export OSH=$OSH
   printf '%s\n' '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ '
   printf '%s\n' '                        /____/                            .... is now installed!'
   printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
-  printf "${BLUE}${BOLD}%s${NORMAL}\n" "Installed from a fork located at https://github.com/danstoner/oh-my-bash.git"
+  printf "${BLUE}${BOLD}%s${NORMAL}\n" "Installed from a fork located at $SOURCE_REPO"
   exec bash; source $HOME/.bashrc
 }
 
