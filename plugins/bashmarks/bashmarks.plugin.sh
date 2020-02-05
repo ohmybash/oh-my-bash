@@ -186,7 +186,7 @@ function _purge_line {
     trap "/bin/rm -f -- '$t'" EXIT
 
     # purge line
-    sed "/$2/d" "$1" > "$t"
+    sed "/$2/d" "$1" >| "$t"
     /bin/mv "$t" "$1"
 
     # cleanup temp file
