@@ -78,6 +78,7 @@ alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
+alias gcps='git cherry-pick -s'
 alias gcs='git commit -S'
 
 alias gd='git diff'
