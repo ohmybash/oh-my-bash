@@ -198,4 +198,4 @@ Thank you so much!
 
 ## License
 
-Oh My Bash is released under the [WTFPL license](LICENSE.txt).
+Oh My Bash is released under the [GPLv2 license](LICENSE.txt).
