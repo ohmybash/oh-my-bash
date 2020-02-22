@@ -55,18 +55,18 @@ function progress2() {
     _PCT_NOW=$1
     # Stubbornly refusing to go backwards. BUT redraw if equal to the last draw anyway
     #   this could be handy if triggering a call to progress on window resize
-    if (($_PCT_NOW > $_PCT_THEN)); then
-        if (($_PCT_NOW >= 100)); then
+    if ((_PCT_NOW > _PCT_THEN)); then
+        if ((_PCT_NOW >= 100)); then
             #blank the line before \returning to pos 1 to print "Done!"
             printf %${COLUMNS}s
             echo -e "\rDone!"
         else
             #Recompute everything every time because the shopt will update $COLUMNS
             #   when the term size changes, and the progress bar will adjust itself!
-            _FIELD_COLS=$(($COLUMNS - (${#_GAUGE_LABEL} + ${#_OPEN_GAUGE_CHAR} + ${#_CLOSE_GAUGE_CHAR} + ${#_OPEN_PCT_CHAR} + ${#_CLOSE_PCT_CHAR} + 4)))
+            _FIELD_COLS=$((COLUMNS - (${#_GAUGE_LABEL} + ${#_OPEN_GAUGE_CHAR} + ${#_CLOSE_GAUGE_CHAR} + ${#_OPEN_PCT_CHAR} + ${#_CLOSE_PCT_CHAR} + 4)))
             # Bash doesn't 'do' floating point math and using "bc" is cheating
-            _LEFT_COUNT=$(($_FIELD_COLS * $_PCT_NOW / 100))
-            _RIGHT_COUNT=$(($_FIELD_COLS - $_LEFT_COUNT))
+            _LEFT_COUNT=$((_FIELD_COLS * _PCT_NOW / 100))
+            _RIGHT_COUNT=$((_FIELD_COLS - _LEFT_COUNT))
             _COMPLETE=$(printf %${_LEFT_COUNT}s | tr " " $_COMPLETE_CHAR)
             _REMAIN=$(printf %${_RIGHT_COUNT}s | tr " " $_REMAIN_CHAR)
             echo -ne "$_GAUGE_LABEL$_OPEN_GAUGE_CHAR$_COMPLETE$_REMAIN$_CLOSE_GAUGE_CHAR $_OPEN_PCT_CHAR$_PCT_NOW%$_CLOSE_PCT_CHAR\r"
