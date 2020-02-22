@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Copyright (c) 2020, F. Grant Robertson, https://github.com/grobertson/
 # All rights reserved.
 #
@@ -22,42 +23,58 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# Intended to improve upon progress.plugin.sh by destro.nnt@gmail.com, Aug 13,2014. YMMV. 
+# Intended to improve upon progress.plugin.sh by destro.nnt@gmail.com, Aug 13,2014. YMMV.
 
 # USAGE:
 
 # source into your script. Call the progress function to update the ui.
+# Override default values to change the display
 
-_STEP_DELAY=0.1;
-shopt -s checkwinsize; (:); #echo $LINES $COLUMNS
-
+function init_progress() {
+    shopt -s checkwinsize
+    (:) #make $LINES $COLUMNS available
+    _STEP_DELAY=0.01
+    _REMAIN_CHAR="."
+    _COMPLETE_CHAR="#"
+    _OPEN_GAUGE_CHAR='['
+    _CLOSE_GAUGE_CHAR=']'
+    _GAUGE_LABEL="Progress:"
+    _OPEN_PCT_CHAR="("
+    _CLOSE_PCT_CHAR=")"
+    _PCT_THEN=0
+}
 #
 # Description : delay between steps
 #
-function delay
-{
-    sleep $_STEP_DELAY;
+function delay() {
+    sleep $_STEP_DELAY
 }
 
 #
 # Description : set the delay interval
-function set_delay()
-{
+function set_delay() {
     $_STEP_DELAY=$1
 }
 
 #
-# Description : print out executing progress
-# 
-_PCT_THEN=0
-function progress()
-{
-    _PCT_NOW=$1;
-    _PARAM_PHASE=$2;
-    #TODO: find/use width of term
-    if [ $_PCT_THEN -le 0 ] && [ $_PCT_NOW -ge 0 ]  ; then echo -ne "[..........................] (0%)  $PARAM_PHASE \r"  ; delay; fi;
-    if [ $_PCT_THEN -le 90 ] && [ $_PCT_NOW -ge 90 ]; then echo -ne "[##########################] (100%) $PARAM_PHASE \r" ; delay; fi;
-    if [ $_PCT_THEN -le 100 ] && [ $_PCT_NOW -ge 100 ];then echo -ne 'Done!                                            \n' ; delay; fi;
-
-    _PCT_THEN=$_PCT_NOW;
+# Description : Call with int {1..100} to display progress
+#
+function progress() {
+    if ((${#_REMAIN_CHAR} == 0)); then init_progress; fi
+    _PCT_NOW=$1
+    if (($_PCT_NOW > $_PCT_THEN)); then
+        if (($_PCT_NOW >= 100)); then
+            printf %${COLUMNS}s
+            echo -e "\rDone!"
+        else
+            _FIELD_COLS=$(($COLUMNS - (${#_GAUGE_LABEL} + ${#_OPEN_GAUGE_CHAR} + ${#_CLOSE_GAUGE_CHAR} + ${#_OPEN_PCT_CHAR} + ${#_CLOSE_PCT_CHAR} + 4)))
+            _LEFT_COUNT=$(($_FIELD_COLS * $_PCT_NOW / 100))
+            _RIGHT_COUNT=$(($_FIELD_COLS - $_LEFT_COUNT))
+            _COMPLETE=$(printf %${_LEFT_COUNT}s | tr " " $_COMPLETE_CHAR)
+            _REMAIN=$(printf %${_RIGHT_COUNT}s | tr " " $_REMAIN_CHAR)
+            echo -ne "$_GAUGE_LABEL$_OPEN_GAUGE_CHAR$_COMPLETE$_REMAIN$_CLOSE_GAUGE_CHAR $_OPEN_PCT_CHAR$_PCT_NOW%$_CLOSE_PCT_CHAR\r"
+            delay
+        fi
+    fi
+    _PCT_THEN=$_PCT_NOW
 }
