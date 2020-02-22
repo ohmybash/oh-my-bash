@@ -49,7 +49,7 @@ function init_progress {
 
 #
 # Description : Call with int {1..100} to display progress
-function progress() {
+function progress2() {
     # Set the initial vars if they haven't been set already.
     if ((${#_REMAIN_CHAR} == 0)); then init_progress; fi
     _PCT_NOW=$1
