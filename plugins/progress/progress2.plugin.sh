@@ -27,7 +27,7 @@
 
 # USAGE:
 
-See README.md
+# See README.md
 
 #
 # Description: Called automatically if _REMAIN_CHAR is unset
