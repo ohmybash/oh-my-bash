@@ -4,6 +4,8 @@
 # DESCRIPTION: This is an SSH-D proxy with auto-reconnect on disconnect
 # AUTHOR: Toan Nguyen (nntoan at protonmail dot com)
 # VERSION: 1.0.0
+# USAGE: autossh your_user@your_server_ip
+# shellcheck disable=SC2034,SC2182,SC2162,SC2236,SC2120,SC2009,SC2119,SC2086,SC2059,SC2006
 # ------------------------------------------------------------------------------
 VERSION="1.0.0"
 GITHUB="https://github.com/nntoan/autossh"
@@ -171,7 +173,7 @@ auto_connect()
       clear
       printf "${GREEN}Connecting: "
       for i in {1..100}; do
-        printf "." $i -1 $i
+        printf "." "$i" -1 "$i"
         sleep .033
       done
       echo_c green " 100%${NORMAL}"
