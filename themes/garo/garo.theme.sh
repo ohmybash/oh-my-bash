@@ -21,15 +21,15 @@
 # 07:45:05 (venv) user@host ~ →
 #
 
-SCM_NONE_CHAR=''
-SCM_THEME_PROMPT_DIRTY=" ${red}✗"
-SCM_THEME_PROMPT_CLEAN=""
-SCM_THEME_PROMPT_PREFIX="${green}|"
-SCM_THEME_PROMPT_SUFFIX="${green}|"
-SCM_GIT_SHOW_MINIMAL_INFO=true
+export SCM_NONE_CHAR=''
+export SCM_THEME_PROMPT_DIRTY=" ${red}✗"
+export SCM_THEME_PROMPT_CLEAN=""
+export SCM_THEME_PROMPT_PREFIX="${green}|"
+export SCM_THEME_PROMPT_SUFFIX="${green}|"
+export SCM_GIT_SHOW_MINIMAL_INFO=true
 
-VIRTUALENV_THEME_PROMPT_PREFIX='('
-VIRTUALENV_THEME_PROMPT_SUFFIX=') '
+export VIRTUALENV_THEME_PROMPT_PREFIX='('
+export VIRTUALENV_THEME_PROMPT_SUFFIX=') '
 
 function prompt_command() {
     # This needs to be first to save last command return code
