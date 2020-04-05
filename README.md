@@ -178,6 +178,16 @@ upgrade_oh_my_bash
 
 Magic!
 
+## Bring Oh My Bash wherever you go through the ssh ([demo](https://asciinema.org/a/314508))
+To bring Oh My Bash to the ssh session there is a plugin in [xxh project](https://github.com/xxh/xxh):
+```bash
+xxh +I xxh-plugin-bash-ohmybash
+xxh myhost +s bash-zero
+myhost$ echo $OSH_THEME
+agnoster
+```
+This allows to use Oh My Bash in ssh session without any installations on the host and root access.
+
 ## Uninstalling Oh My Bash
 
 Oh My Bash isn't for everyone. We'll miss you, but we want to make this an easy breakup.
