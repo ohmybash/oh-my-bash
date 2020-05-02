@@ -1,6 +1,6 @@
 # custom files
 !/custom/aliases/example.aliases.sh
-!/custom/completion/example.completion.sh
+!/custom/completions/example.completion.sh
 !/custom/plugins/example/
 !/custom/themes/example/
 !/custom/example.sh
