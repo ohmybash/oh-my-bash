@@ -38,4 +38,4 @@ function _omb_theme_vscode_initialize {
 _omb_theme_vscode_initialize
 
 function _omb_theme_PROMPT_COMMAND { true; }
-PROMPT_DIRTRIM=4
+PROMPT_DIRTRIM=${PROMPT_DIRTRIM:-4}
