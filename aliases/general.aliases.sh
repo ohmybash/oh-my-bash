@@ -26,5 +26,6 @@ alias c='clear'                             # c:            Clear terminal displ
 alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
 alias show_options='shopt'                  # Show_options: display bash options settings
 alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
+alias fix_term='echo -e "\033c"'            # fix_term:     Reset the conosle.  Similar to the reset command
 alias cic='set completion-ignore-case On'   # cic:          Make tab-completion case-insensitive
 alias src='source ~/.bashrc'                # src:          Reload .bashrc file
