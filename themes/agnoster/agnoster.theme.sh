@@ -208,12 +208,17 @@ prompt_end() {
 ### virtualenv prompt
 prompt_virtualenv() {
     if [[ -n $VIRTUAL_ENV ]]; then
+				# the last word in --version command correspond to version number
+				for e in $($VIRTUAL_ENV/bin/python --version)
+				do
+					VENV_VERSION=$e
+				done
+
         color=cyan
         prompt_segment $color $PRIMARY_FG
-        prompt_segment $color white "$(basename $VIRTUAL_ENV)"
+        prompt_segment $color white "$(basename $VENV_VERSION)"
     fi
 }
-
 
 ### Prompt components
 # Each component will draw itself, and hide itself if no information needs to be shown
