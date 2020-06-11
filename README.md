@@ -198,4 +198,4 @@ Thank you so much!
 
 ## License
 
-Oh My Bash is released under the [MIT license](LICENSE.txt).
+Oh My Bash is released under the [MIT license](LICENSE.md).
