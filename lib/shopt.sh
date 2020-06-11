@@ -12,7 +12,7 @@ set -o noclobber
 shopt -s checkwinsize
 
 # Automatically trim long paths in the prompt (requires Bash 4.x)
-PROMPT_DIRTRIM=2
+PROMPT_DIRTRIM=${PROMPT_DIRTRIM:-2}
 
 # Enable history expansion with space
 # E.g. typing !!<space> will replace the !! with your last command

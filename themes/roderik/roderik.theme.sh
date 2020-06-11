@@ -4,7 +4,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWSTASHSTATE=true
 
-export PROMPT_DIRTRIM=3
+export PROMPT_DIRTRIM=${PROMPT_DIRTRIM:-3}
 
 function _omb_theme_PROMPT_COMMAND() {
     if [[ ${EUID} == 0 ]] ; then
