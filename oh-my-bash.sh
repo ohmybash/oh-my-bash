@@ -31,7 +31,7 @@ fi
 # Load all of the config files in ~/.oh-my-bash/lib that end in .sh
 # TIP: Add files you don't want in git to .gitignore
 for config_file in $OSH/lib/*.sh; do
-  custom_config_file="${OSH_CUSTOM}/lib/${config_file:t}"
+  custom_config_file="${OSH_CUSTOM}/lib/$(basename "${config_file}")"
   [ -f "${custom_config_file}" ] && config_file=${custom_config_file}
   source $config_file
 done
