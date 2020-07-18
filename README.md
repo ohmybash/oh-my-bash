@@ -145,6 +145,7 @@ If you have any hiccups installing, here are a few common fixes.
 
 * You _might_ need to modify your `PATH` in `~/.bashrc` if you're not able to find some commands after switching to `oh-my-bash`.
 * If you installed manually or changed the install location, check the `OSH` environment variable in `~/.bashrc`.
+* You _might_ need to [install Oh My Bash](#basic-installation) with `$ bash` instead of `$ sh`.
 
 ### Custom Plugins and Themes
 
