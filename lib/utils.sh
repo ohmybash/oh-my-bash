@@ -161,7 +161,13 @@ is_confirmed() {
 }
 
 #
-# Test whether a command exists
+# Test whether a command is defined. Includes:
+#   alias (command is shell alias)
+#   keyword (command is shell reserved word)
+#   function (command is shell function)
+#   builtin (command is shell builtin)
+#   file (command is disk file)
+#
 # $1 = cmd to test
 # Usage:
 # if type_exists 'git'; then
@@ -171,7 +177,7 @@ is_confirmed() {
 # fi
 #
 type_exists() {
-  [ "$(type -P "$1")" ]
+  [ "$(type -t "$1")" ]
 }
 
 #
