@@ -204,10 +204,17 @@ prompt_end() {
     PR="$PR $(ansi reset[@])"
     CURRENT_BG=''
 }
+### conda env prompt
+promp_conda_env() {
+    if [[ -n $CONDA_PROMPT_MODIFIER && -n $CONDA_PYTHON_EXE ]]; then
+       prompt_segment cyan $PRIMARY_FG
+       prompt_segment cyan white  "[c] $CONDA_PROMPT_MODIFIER $($CONDA_PYTHON_EXE --version| awk '{print $NF}')"
+    fi
+}
 
 ### virtualenv prompt
 prompt_virtualenv() {
-    if [[ -n $VIRTUAL_ENV ]]; then
+    if [[ -n $VIRTUAL_ENV && -z $CONDA_PROMPT_MODIFIER ]]; then
 				# the last word in --version command correspond to version number
 				for e in $($VIRTUAL_ENV/bin/python --version)
 				do
@@ -399,6 +406,7 @@ prompt_emacsdir() {
 build_prompt() {
     [[ ! -z ${AG_EMACS_DIR+x} ]] && prompt_emacsdir
     prompt_status
+    prompt_conda_env
     #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
     prompt_virtualenv
