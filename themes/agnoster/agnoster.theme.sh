@@ -208,11 +208,13 @@ prompt_end() {
 ### virtualenv prompt
 prompt_virtualenv() {
     if [[ -n $VIRTUAL_ENV ]]; then
-				# the last word in --version command correspond to version number
-				for e in $($VIRTUAL_ENV/bin/python --version)
-				do
-					VENV_VERSION=$e
-				done
+        # Python could output the version information in both stdout and
+        # stderr (e.g. if using pyenv, the output goes to stderr).
+        VERSION_OUTPUT=$($VIRTUAL_ENV/bin/python --version 2>&1)
+
+        # The last word of the output of `python --version`
+        # corresponds to the version number.
+        VENV_VERSION=$(echo $VERSION_OUTPUT | awk '{print $NF}')
 
         color=cyan
         prompt_segment $color $PRIMARY_FG
