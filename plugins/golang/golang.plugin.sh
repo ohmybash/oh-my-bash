@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 alias gob='go build'
 alias goc='go clean'
 alias god='go doc'
