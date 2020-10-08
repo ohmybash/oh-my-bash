@@ -27,7 +27,14 @@ shopt -s nocaseglob;
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
 
 # Perform file completion in a case insensitive fashion
-bind "set completion-ignore-case on"
+if [[ ${CASE_SENSITIVE-} == false ]]; then
+	bind "set completion-ignore-case on"
+elif [[ ${CASE_SENSITIVE-} == true ]]; then
+	bind "set completion-ignore-case off"
+else
+	# By default, case sensitivity is disabled.
+	bind "set completion-ignore-case on"
+fi
 
 # Treat hyphens and underscores as equivalent
 bind "set completion-map-case on"
