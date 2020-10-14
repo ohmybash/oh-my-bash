@@ -106,9 +106,9 @@ function _omb_prompt_format {
 function scm {
   if [[ "$SCM_CHECK" = false ]]; then SCM=$SCM_NONE
   elif [[ -f .git/HEAD ]]; then SCM=$SCM_GIT
-  elif _omb_util_binary_exists git && [[ -n "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
+  elif _omb_util_binary_exists git && [[ -n "$(command git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
   elif [[ -d .hg ]]; then SCM=$SCM_HG
-  elif _omb_util_binary_exists hg && [[ -n "$(hg root 2> /dev/null)" ]]; then SCM=$SCM_HG
+  elif _omb_util_binary_exists hg && [[ -n "$(command hg root 2> /dev/null)" ]]; then SCM=$SCM_HG
   elif [[ -d .svn ]]; then SCM=$SCM_SVN
   else SCM=$SCM_NONE
   fi
@@ -238,10 +238,10 @@ function git_prompt_vars {
   local details=''
   local git_status_flags=''
   SCM_STATE=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
-  if [[ "$(git config --get bash-it.hide-status)" != "1" ]]; then
+  if [[ "$(command git config --get bash-it.hide-status)" != "1" ]]; then
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && git_status_flags='-uno'
-    local status_lines=$((git status --porcelain ${git_status_flags} -b 2> /dev/null ||
-                          git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
+    local status_lines=$((command git status --porcelain ${git_status_flags} -b 2> /dev/null ||
+                          command git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
     local status=$(awk 'NR==1' <<< "$status_lines")
     local counts=$(awk 'NR==2' <<< "$status_lines")
     IFS=$'\t' read untracked_count unstaged_count staged_count <<< "$counts"
@@ -258,7 +258,7 @@ function git_prompt_vars {
 
   [[ "${SCM_GIT_SHOW_CURRENT_USER}" == "true" ]] && details+="$(git_user_info)"
 
-  SCM_CHANGE=$(git rev-parse --short HEAD 2>/dev/null)
+  SCM_CHANGE=$(command git rev-parse --short HEAD 2>/dev/null)
 
   local ref=$(git_clean_branch)
 
@@ -272,7 +272,7 @@ function git_prompt_vars {
       local remote_name=${tracking_info%%/*}
       local remote_branch=${tracking_info#${remote_name}/}
       local remote_info=""
-      local num_remotes=$(git remote | wc -l 2> /dev/null)
+      local num_remotes=$(command git remote | wc -l 2> /dev/null)
       [[ "${SCM_BRANCH}" = "${remote_branch}" ]] && local same_branch_name=true
       if ([[ "${SCM_GIT_SHOW_REMOTE_INFO}" = "auto" ]] && [[ "${num_remotes}" -ge 2 ]]) ||
           [[ "${SCM_GIT_SHOW_REMOTE_INFO}" = "true" ]]; then
@@ -292,11 +292,11 @@ function git_prompt_vars {
     SCM_GIT_DETACHED="false"
   else
     local detached_prefix=""
-    ref=$(git describe --tags --exact-match 2> /dev/null)
+    ref=$(command git describe --tags --exact-match 2> /dev/null)
     if [[ -n "$ref" ]]; then
       detached_prefix=${SCM_THEME_TAG_PREFIX}
     else
-      ref=$(git describe --contains --all HEAD 2> /dev/null)
+      ref=$(command git describe --contains --all HEAD 2> /dev/null)
       ref=${ref#remotes/}
       [[ -z "$ref" ]] && ref=${SCM_CHANGE}
       detached_prefix=${SCM_THEME_DETACHED_PREFIX}
@@ -310,7 +310,7 @@ function git_prompt_vars {
   [[ "${status}" =~ ${ahead_re} ]] && SCM_BRANCH+=" ${SCM_GIT_AHEAD_CHAR}${BASH_REMATCH[1]}"
   [[ "${status}" =~ ${behind_re} ]] && SCM_BRANCH+=" ${SCM_GIT_BEHIND_CHAR}${BASH_REMATCH[1]}"
 
-  local stash_count="$(git stash list 2> /dev/null | wc -l | tr -d ' ')"
+  local stash_count="$(command git stash list 2> /dev/null | wc -l | tr -d ' ')"
   [[ "${stash_count}" -gt 0 ]] && SCM_BRANCH+=" {${stash_count}}"
 
   SCM_BRANCH+=${details}
@@ -320,7 +320,7 @@ function git_prompt_vars {
 }
 
 function svn_prompt_vars {
-  if [[ -n $(svn status 2> /dev/null) ]]; then
+  if [[ -n $(command svn status 2> /dev/null) ]]; then
     SCM_DIRTY=1
     SCM_STATE=${SVN_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
   else
@@ -505,9 +505,9 @@ _omb_deprecate_function 20000 python_version_prompt _omb_prompt_print_python_env
 
 function git_user_info {
   # support two or more initials, set by 'git pair' plugin
-  SCM_CURRENT_USER=$(git config user.initials | sed 's% %+%')
+  SCM_CURRENT_USER=$(command git config user.initials | sed 's% %+%')
   # if `user.initials` weren't set, attempt to extract initials from `user.name`
-  [[ -z "${SCM_CURRENT_USER}" ]] && SCM_CURRENT_USER=$(printf "%s" $(for word in $(git config user.name | tr 'A-Z' 'a-z'); do printf "%1.1s" $word; done))
+  [[ -z "${SCM_CURRENT_USER}" ]] && SCM_CURRENT_USER=$(printf "%s" $(for word in $(command git config user.name | tr 'A-Z' 'a-z'); do printf "%1.1s" $word; done))
   [[ -n "${SCM_CURRENT_USER}" ]] && printf "%s" "$SCM_THEME_CURRENT_USER_PREFFIX$SCM_CURRENT_USER$SCM_THEME_CURRENT_USER_SUFFIX"
 }
 
