@@ -102,12 +102,14 @@ fg_color() {
         black)      echo 30;;
         red)        echo 31;;
         green)      echo 32;;
+        darkgreen)  echo 38\;5\;22;;
         yellow)     echo 33;;
         blue)       echo 34;;
+        lightblue)  echo 38\;5\;6;;
         magenta)    echo 35;;
         cyan)       echo 36;;
         white)      echo 37;;
-        orange)     echo 38\;5\;166;;
+        orange)     echo 38\;5\;130;;
     esac
 }
 
@@ -116,12 +118,14 @@ bg_color() {
         black)      echo 40;;
         red)        echo 41;;
         green)      echo 42;;
+        darkgreen)  echo 48\;5\;22;;
         yellow)     echo 43;;
         blue)       echo 44;;
+        lightblue)  echo 48\;5\;6;;
         magenta)    echo 45;;
         cyan)       echo 46;;
         white)      echo 47;;
-        orange)     echo 48\;5\;166;;
+        orange)     echo 48\;5\;130;;
     esac;
 }
 
@@ -272,18 +276,20 @@ prompt_git() {
             prompt_segment green black
         fi
         PR="$PR ${ref/refs\/heads\// }$dirty"
+
+        # I prefer a new line here. Eventually need to parameterize this.
         prompt_newline
     fi
 }
 
 # Dir: current working directory
 prompt_dir() {
-    prompt_segment blue black '\w'
+    prompt_segment lightblue black ' \w'
 }
 
 prompt_datetime() {
     datetime=$(date "+%a %m/%d %I:%M:%S%p")
-    prompt_segment green white "$datetime"
+    prompt_segment green black "$datetime"
 }
 
 # Status:
@@ -428,7 +434,6 @@ build_prompt() {
     prompt_kubecontext
     prompt_virtualenv
     prompt_datetime
-    prompt_newline
     prompt_end
 }
 
