@@ -25,6 +25,8 @@ function ac_adapter_connected {
   then
     WMIC Path Win32_Battery Get BatteryStatus /Format:List | grep -q 'BatteryStatus=2'
     return $?
+  elif [[ -r /sys/class/power_supply/ADP0/online ]]; then
+    [[ $(cat /sys/class/power_supply/ADP0/online) == 1 ]]
   fi
 }
 
@@ -49,6 +51,8 @@ function ac_adapter_disconnected {
   then
     WMIC Path Win32_Battery Get BatteryStatus /Format:List | grep -q 'BatteryStatus=1'
     return $?
+  elif [[ -r /sys/class/power_supply/ADP0/online ]]; then
+    [[ $(cat /sys/class/power_supply/ADP0/online) == 0 ]]
   fi
 }
 
