@@ -125,8 +125,8 @@ function battery_percentage {
         echo $WINPC
       ;;
     esac
-  else
-    echo "no"
+  elif [[ -r /sys/class/power_supply/BAT0/capacity ]]; then
+    echo "$(cat /sys/class/power_supply/BAT0/capacity)"
   fi
 }
 
