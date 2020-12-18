@@ -48,7 +48,7 @@ bind '"\e[C": forward-char'
 bind '"\e[D": backward-char'
 
 # Use standard ISO 8601 timestamp
-# %F equivalent to %Y-%m-%d                                                                                      
+# %F equivalent to %Y-%m-%d
 # %T equivalent to %H:%M:%S (24-hours format)
 
 # Show history

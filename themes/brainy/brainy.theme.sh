@@ -152,7 +152,7 @@ ___brainy_prompt_clock() {
 }
 
 ___brainy_prompt_battery() {
-	[ ! -e $OSH/plugins/battery/battery.plugin.sh ] ||
+	[ ! -e "$OSH/plugins/battery/battery.plugin.sh" ] ||
 	[ "${THEME_SHOW_BATTERY}" != "true" ] && return
 	info=$(battery_percentage)
 	color=$_omb_prompt_bold_green

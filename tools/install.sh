@@ -137,7 +137,7 @@ _omb_install_user_bashrc() {
   printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
   _omb_install_run cp "$OSH"/templates/bashrc.osh-template ~/.bashrc
   sed "/^export OSH=/ c\\
-export OSH=$OSH
+export OSH='${OSH//\'/\'\\\'\'}'
   " ~/.bashrc >| ~/.bashrc.omb-temp
   _omb_install_run mv -f ~/.bashrc.omb-temp ~/.bashrc
 

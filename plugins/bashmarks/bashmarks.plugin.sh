@@ -37,7 +37,7 @@
 if [ ! -n "$SDIRS" ]; then
     SDIRS=~/.sdirs
 fi
-touch $SDIRS
+touch "$SDIRS"
 
 # main function
 function bm {
