@@ -16,3 +16,5 @@
 *.swp
 *.disabled
 .idea/
+
+*.conf
