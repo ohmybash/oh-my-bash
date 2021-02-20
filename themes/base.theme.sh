@@ -132,7 +132,7 @@ function scm_prompt_info_common {
 function git_clean_branch {
   local unsafe_ref=$(command git symbolic-ref -q HEAD 2> /dev/null)
   local stripped_ref=${unsafe_ref##refs/heads/}
-  local clean_ref=${stripped_ref//[^a-zA-Z0-9\/]/-}
+  local clean_ref=${stripped_ref//[^a-zA-Z0-9\/_]/-}
   echo $clean_ref
 }
 
