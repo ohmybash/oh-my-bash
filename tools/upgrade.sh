@@ -22,6 +22,7 @@ else
 fi
 
 printf "${BLUE}%s${NORMAL}\n" "Updating Oh My Bash"
+OLDPWD="$PWD"
 cd "$OSH"
 if git pull --rebase --stat origin master
 then
@@ -34,7 +35,8 @@ then
   printf '%s\n' '                        /____/                            '
   printf "${BLUE}%s\n" "Hooray! Oh My Bash has been updated and/or is at the current version."
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
-  exec bash; source $HOME/.bashrc
+  source $HOME/.bashrc
 else
   printf "${RED}%s${NORMAL}\n" 'There was an error updating. Try again later?'
 fi
+cd "$OLDPWD"
