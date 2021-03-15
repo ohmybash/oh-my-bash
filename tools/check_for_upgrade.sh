@@ -11,7 +11,7 @@ function _update_osh_update() {
 }
 
 function _upgrade_osh() {
-  env BASH=$OSH sh $OSH/tools/upgrade.sh
+  BASH=$OSH source $OSH/tools/upgrade.sh
   # update the osh file
   _update_osh_update
 }
@@ -42,7 +42,7 @@ if mkdir "$OSH/log/update.lock" 2>/dev/null; then
       if [ "$DISABLE_UPDATE_PROMPT" = "true" ]; then
         _upgrade_osh
       else
-        echo "[Oh My Bash] Would you like to check for updates? [Y/n]: \c"
+        echo -e "[Oh My Bash] Would you like to check for updates? [Y/n]: \c"
         read line
         if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
           _upgrade_osh
