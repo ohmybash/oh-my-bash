@@ -6,7 +6,7 @@ if ! command -v "command_exists" >/dev/null; then	command_exists() { command -v 
 ac_adapter_connected(){
   if command_exists upower;
   then
-    upower -i $(upower -e | grep BAT) | grep 'state' | grep -q 'charging\|fully-charged'
+    upower -i $(upower -e | grep BAT) | grep 'state' | grep -q '[^(dis)]charging\|fully-charged'
     return $?
   elif command_exists acpi;
   then
