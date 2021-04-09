@@ -50,8 +50,7 @@ function open_command() {
 #    1 if it does not exist
 #
 function alias_value() {
-    alias "$1" | sed "s/^$1='\(.*\)'$/\1/"
-    test $(alias "$1")
+    [ "${BASH_ALIASES[$1]}" ] && echo ${BASH_ALIASES[$1]}
 }
 
 #
