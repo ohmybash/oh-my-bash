@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 
+# Checks the minium version of bash (v4) installed, 
+# stops the installation if check fails
+if [ -z "$BASH_VERSION" ] || \
+     { bash_major_version=$(echo "$BASH_VERSION" | cut -d '.' -f 1); 
+       [ "${bash_major_version}" -lt "4" ]; }; then
+  printf "Error: Bash 4 required for Oh My Bash.\n"
+  printf "Error: Upgrade Bash and try again.\n"
+  exit 1
+fi
+
 main() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
   if hash tput >/dev/null 2>&1; then
     ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || echo -1)
   fi
+
   if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
     RED=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
     GREEN=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
@@ -25,17 +36,6 @@ main() {
   # Only enable exit-on-error after the non-critical colorization stuff,
   # which may fail on systems lacking tput or terminfo
   set -e
-
-  # Checks the minium version of bash (v4) installed, 
-  # stops the installation if check fails
-  if [ -n $BASH_VERSION ]; then
-     bash_major_version=$(echo $BASH_VERSION | cut -d '.' -f 1)
-     if [ "${bash_major_version}" -lt "4" ]; then
-        printf "Error: Bash 4 required for Oh My Bash.\n"
-        printf "Error: Upgrade Bash and try again.\n"
-        exit 1
-     fi
-  fi
 
   if [ ! -n "$OSH" ]; then
     OSH=$HOME/.oh-my-bash
