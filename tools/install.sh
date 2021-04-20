@@ -17,7 +17,7 @@ main() {
     ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || echo -1)
   fi
 
-  if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
+  if [[ -t 1 && -n $ncolors && $ncolors -ge 8 ]]; then
     RED=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
     GREEN=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
     YELLOW=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
@@ -37,11 +37,11 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  if [ ! -n "$OSH" ]; then
+  if [[ ! $OSH ]]; then
     OSH=~/.oh-my-bash
   fi
 
-  if [ -d "$OSH" ]; then
+  if [[ -d $OSH ]]; then
     printf "${YELLOW}You already have Oh My Bash installed.${NORMAL}\n"
     printf "You'll need to remove $OSH if you want to re-install.\n"
     exit
@@ -60,7 +60,7 @@ main() {
     exit 1
   }
   # The Windows (MSYS) Git is not compatible with normal use on cygwin
-  if [ "$OSTYPE" = cygwin ]; then
+  if [[ $OSTYPE = cygwin ]]; then
     if git --version | grep msysgit > /dev/null; then
       echo "Error: Windows/MSYS Git is not supported on Cygwin"
       echo "Error: Make sure the Cygwin git package is installed and is first on the path"
@@ -73,7 +73,7 @@ main() {
   }
 
   printf "${BLUE}Looking for an existing bash config...${NORMAL}\n"
-  if [ -f ~/.bashrc ] || [ -h ~/.bashrc ]; then
+  if [[ -f ~/.bashrc || -h ~/.bashrc ]]; then
     printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to ~/.bashrc.pre-oh-my-bash${NORMAL}\n";
     mv ~/.bashrc ~/.bashrc.pre-oh-my-bash;
   fi
