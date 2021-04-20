@@ -3,16 +3,16 @@
 main() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
-  if which tput >/dev/null 2>&1; then
-      ncolors=$(tput colors)
+  if hash tput >/dev/null 2>&1; then
+    ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || echo -1)
   fi
   if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
-    RED="$(tput setaf 1)"
-    GREEN="$(tput setaf 2)"
-    YELLOW="$(tput setaf 3)"
-    BLUE="$(tput setaf 4)"
-    BOLD="$(tput bold)"
-    NORMAL="$(tput sgr0)"
+    RED=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
+    GREEN=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
+    YELLOW=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+    BLUE=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
+    BOLD=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+    NORMAL=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
   else
     RED=""
     GREEN=""
