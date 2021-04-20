@@ -38,7 +38,7 @@ main() {
   set -e
 
   if [ ! -n "$OSH" ]; then
-    OSH=$HOME/.oh-my-bash
+    OSH=~/.oh-my-bash
   fi
 
   if [ -d "$OSH" ]; then
@@ -67,23 +67,23 @@ main() {
       exit 1
     fi
   fi
-  env git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git $OSH || {
+  env git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git "$OSH" || {
     printf "Error: git clone of oh-my-bash repo failed\n"
     exit 1
   }
 
   printf "${BLUE}Looking for an existing bash config...${NORMAL}\n"
-  if [ -f $HOME/.bashrc ] || [ -h $HOME/.bashrc ]; then
+  if [ -f ~/.bashrc ] || [ -h ~/.bashrc ]; then
     printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to ~/.bashrc.pre-oh-my-bash${NORMAL}\n";
-    mv $HOME/.bashrc $HOME/.bashrc.pre-oh-my-bash;
+    mv ~/.bashrc ~/.bashrc.pre-oh-my-bash;
   fi
 
   printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
-  cp $OSH/templates/bashrc.osh-template $HOME/.bashrc
+  cp "$OSH"/templates/bashrc.osh-template ~/.bashrc
   sed "/^export OSH=/ c\\
 export OSH=$OSH
-  " $HOME/.bashrc > $HOME/.bashrc-ombtemp
-  mv -f $HOME/.bashrc-ombtemp $HOME/.bashrc
+  " ~/.bashrc > ~/.bashrc-ombtemp
+  mv -f ~/.bashrc-ombtemp ~/.bashrc
 
   # MOTD message :)
   printf '%s' "$GREEN"
@@ -95,7 +95,7 @@ export OSH=$OSH
   printf '%s\n' '                        /____/                            .... is now installed!'
   printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
-  exec bash; source $HOME/.bashrc
+  exec bash; source ~/.bashrc
 }
 
 
