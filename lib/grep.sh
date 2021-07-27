@@ -21,7 +21,9 @@ elif grep_flag_available --exclude=.cvs; then
 fi
 
 # export grep settings
-alias grep="grep ${GREP_OPTIONS[*]}"
+if ((${#GREP_OPTIONS[@]} > 0)); then
+  alias grep="grep ${GREP_OPTIONS[*]}"
+fi
 
 # clean up
 unset GREP_OPTIONS
