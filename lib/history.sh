@@ -39,11 +39,6 @@ HISTCONTROL="erasedups:ignoreboth"
 # Don't record some commands
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 
-# Use standard ISO 8601 timestamp
-# %F equivalent to %Y-%m-%d                                                                                      
-# %T equivalent to %H:%M:%S (24-hours format)
-HISTTIMEFORMAT='%F %T '
-
 # Enable incremental history search with up/down arrows (also Readline goodness)
 # Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-hi
 # bash4 specific ??
@@ -52,10 +47,14 @@ bind '"\e[B": history-search-forward'
 bind '"\e[C": forward-char'
 bind '"\e[D": backward-char'
 
+# Use standard ISO 8601 timestamp
+# %F equivalent to %Y-%m-%d                                                                                      
+# %T equivalent to %H:%M:%S (24-hours format)
+
 # Show history
-#case $HIST_STAMPS in
-  #"mm/dd/yyyy") alias history='fc -fl 1' ;;
-  #"dd.mm.yyyy") alias history='fc -El 1' ;;
-  #"yyyy-mm-dd") alias history='fc -il 1' ;;
-  #*) alias history='fc -l 1' ;;
-#esac
+case $HIST_STAMPS in
+  "mm/dd/yyyy") HISTTIMEFORMAT=$(echo -e '\033[31m[%m/%d/%Y] \033[36m[%T]\033[0m ');;
+  "dd.mm.yyyy") HISTTIMEFORMAT=$(echo -e '\033[31m [%d.%m.%Y] \033[36m[%T]\033[0m ') ;;
+  "yyyy-mm-dd") HISTTIMEFORMAT=$(echo -e '\033[31m%Y-%m-%d] \033[36m[%T]\033[0m ') ;;
+  *) HISTTIMEFORMAT=$(echo -e '\033[31m%F \033[36m%T\033[0m ') ;;
+esac
