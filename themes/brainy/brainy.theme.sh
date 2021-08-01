@@ -289,7 +289,7 @@ function __brainy_ps2 {
 function _omb_theme_PROMPT_COMMAND {
     exitcode="$?"
 
-    PS1="$(__brainy_ps1)"
+    PS1="\[\e]0;\u@\h: \w\a\]$(__brainy_ps1)"
     PS2="$(__brainy_ps2)"
 }
 
