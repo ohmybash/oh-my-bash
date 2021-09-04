@@ -91,16 +91,16 @@ export OSH=$OSH
 
   # MOTD message :)
   printf '%s' "$GREEN"
-  printf '%s\n' '         __                          __               __  '
-  printf '%s\n' '  ____  / /_     ____ ___  __  __   / /_  ____ ______/ /_ '
-  printf '%s\n' ' / __ \/ __ \   / __ `__ \/ / / /  / __ \/ __ `/ ___/ __ \'
-  printf '%s\n' '/ /_/ / / / /  / / / / / / /_/ /  / /_/ / /_/ (__  ) / / /'
-  printf '%s\n' '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ '
-  printf '%s\n' '                        /____/                            .... is now installed!'
-  printf "%s\n" "Please look over the ~/.bashrc file to select plugins, themes, and options"
+  printf '%s\n' \
+    '         __                          __               __  ' \
+    '  ____  / /_     ____ ___  __  __   / /_  ____ ______/ /_ ' \
+    ' / __ \/ __ \   / __ `__ \/ / / /  / __ \/ __ `/ ___/ __ \' \
+    '/ /_/ / / / /  / / / / / / /_/ /  / /_/ / /_/ (__  ) / / /' \
+    '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ ' \
+    '                        /____/                            .... is now installed!' \
+    "Please look over the ~/.bashrc file to select plugins, themes, and options"
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
   exec bash; source ~/.bashrc
 }
-
 
 main
