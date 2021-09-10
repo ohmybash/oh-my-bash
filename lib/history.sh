@@ -53,8 +53,8 @@ bind '"\e[D": backward-char'
 
 # Show history
 case $HIST_STAMPS in
-  "mm/dd/yyyy") HISTTIMEFORMAT=$(echo -e '\033[31m[%m/%d/%Y] \033[36m[%T]\033[0m ');;
-  "dd.mm.yyyy") HISTTIMEFORMAT=$(echo -e '\033[31m [%d.%m.%Y] \033[36m[%T]\033[0m ') ;;
-  "yyyy-mm-dd") HISTTIMEFORMAT=$(echo -e '\033[31m%Y-%m-%d] \033[36m[%T]\033[0m ') ;;
-  *) HISTTIMEFORMAT=$(echo -e '\033[31m%F \033[36m%T\033[0m ') ;;
+  "mm/dd/yyyy") HISTTIMEFORMAT=$'\033[31m[%m/%d/%Y] \033[36m[%T]\033[0m ' ;;
+  "dd.mm.yyyy") HISTTIMEFORMAT=$'\033[31m [%d.%m.%Y] \033[36m[%T]\033[0m ' ;;
+  "yyyy-mm-dd") HISTTIMEFORMAT=$'\033[31m%Y-%m-%d] \033[36m[%T]\033[0m ' ;;
+  *) HISTTIMEFORMAT=$'\033[31m%F \033[36m%T\033[0m ' ;;
 esac
