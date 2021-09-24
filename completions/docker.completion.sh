@@ -410,7 +410,7 @@ __docker_nospace() {
 }
 
 __docker_complete_resolved_hostname() {
-	command -v host >/dev/null 2>&1 || return
+	_omb_util_command_exists host || return
 	COMPREPLY=( $(host 2>/dev/null "${cur%:}" | awk '/has address/ {print $4}') )
 }
 

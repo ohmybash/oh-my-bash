@@ -1,2 +1,2 @@
 #! bash oh-my-bash.module
-[[ -x "$(which aws_completer)" ]] &>/dev/null && complete -C "$(which aws_completer)" aws
+_omb_util_binary_exists aws_completer && complete -C "$(type -P aws_completer)" aws

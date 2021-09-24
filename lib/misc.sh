@@ -11,7 +11,7 @@ _omb_util_alias _='sudo'
 _omb_util_alias please='sudo'
 
 ## more intelligent acking for ubuntu users
-if which ack-grep &> /dev/null; then
+if _omb_util_binary_exists ack-grep; then
   _omb_util_alias afind='ack-grep -il'
 else
   _omb_util_alias afind='ack -il'

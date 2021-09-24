@@ -59,7 +59,7 @@ _python_django_completion()
 
 # Support for multiple interpreters.
 unset pythons
-if command -v whereis &>/dev/null; then
+if _omb_util_command_exists whereis; then
     python_interpreters=$(whereis python | cut -d " " -f 2-)
     for python in $python_interpreters; do
         pythons="${pythons} $(basename -- $python)"

@@ -197,10 +197,10 @@ bigfind() {
 #   ips:  display all ip addresses for this host
 #   -------------------------------------------------------------------
     ips () {
-      if command -v ifconfig &>/dev/null
+      if _omb_util_command_exists ifconfig
       then
         ifconfig | awk '/inet /{ print $2 }'
-      elif command -v ip &>/dev/null
+      elif _omb_util_command_exists ip
       then
         ip addr | grep -oP 'inet \K[\d.]+'
       else

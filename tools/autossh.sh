@@ -16,7 +16,7 @@ ALIVE=0
 HISTFILE="$HOME/.autossh.history"
 
 # Use colors, but only if connected to a terminal, and that terminal supports them.
-if which tput >/dev/null 2>&1; then
+if type -P tput >/dev/null 2>&1; then
   ncolors=$(tput colors)
 fi
 if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then

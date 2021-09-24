@@ -80,7 +80,7 @@ function __fab_fabfile_mtime() {
 #
 function __fab_completion() {
     # Return if "fab" command doesn't exists
-    [[ -e `which fab 2> /dev/null` ]] || return 0
+    _omb_util_binary_exists fab || return 0
 
     # Variables to hold the current word and possible matches
     local cur="${COMP_WORDS[COMP_CWORD]}"
