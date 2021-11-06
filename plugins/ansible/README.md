@@ -21,12 +21,7 @@ plugins=(... ansible)
 | `acon`                                     | command `ansible-console`                                           |
 | `ainv`                                     | command `ansible-inventory`                                         |
 | `aplaybook`                                | command `ansible-playbook`                                          |
-| `ainv`                                     | command `ansible-inventory`                                         |
 | `adoc`                                     | command `ansible-doc`                                               |
 | `agal`                                     | command `ansible-galaxy`                                            |
 | `apull`                                    | command `ansible-pull`                                              |
 | `aval`                                     | command `ansible-vault`                                             |
-
-## Maintainer
-
-### [Deepankumar](https://github.com/deepan10) 
