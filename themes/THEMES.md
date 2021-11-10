@@ -95,6 +95,10 @@
 
 [![](gallifrey/gallifrey-dark.png)](gallifrey/gallifrey-dark.png)
 
+## `half-life`
+
+[![](half-life/half-life.theme.png)](half-life/half-life.theme.png)
+
 ## `hawaii50`
 
 [![](hawaii50/hawaii50-dark.png)](hawaii50/hawaii50-dark.png)
