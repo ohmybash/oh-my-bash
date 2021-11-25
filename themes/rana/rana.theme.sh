@@ -32,37 +32,37 @@
 #*color7: #E5E5E5
 
 # ----------------------------------------------------------------- DEF COLOR
-RCol='\e[0m'    # Text Reset
+RCol='\[\e[0m\]'    # Text Reset
 
 # Regular
-Bla='\e[0;30m';
-Red='\e[0;31m';
-Gre='\e[0;32m';
-Yel='\e[0;33m';
-Blu='\e[0;34m';
-Pur='\e[0;35m';
-Cya='\e[0;36m';
-Whi='\e[0;37m';
+Bla='\[\e[0;30m\]';
+Red='\[\e[0;31m\]';
+Gre='\[\e[0;32m\]';
+Yel='\[\e[0;33m\]';
+Blu='\[\e[0;34m\]';
+Pur='\[\e[0;35m\]';
+Cya='\[\e[0;36m\]';
+Whi='\[\e[0;37m\]';
 
 # Bold
-BBla='\e[1;30m';
-BRed='\e[1;31m';
-BYel='\e[1;33m';
-BGre='\e[1;32m';
-BBlu='\e[1;34m';
-BPur='\e[1;35m';
-BCya='\e[1;36m';
-BWhi='\e[1;37m';
+BBla='\[\e[1;30m\]';
+BRed='\[\e[1;31m\]';
+BYel='\[\e[1;33m\]';
+BGre='\[\e[1;32m\]';
+BBlu='\[\e[1;34m\]';
+BPur='\[\e[1;35m\]';
+BCya='\[\e[1;36m\]';
+BWhi='\[\e[1;37m\]';
 
 # High Intensity
-IBla='\e[0;90m';
-IRed='\e[0;91m';
-IGre='\e[0;92m';
-IYel='\e[0;93m';
-IBlu='\e[0;94m';
-IPur='\e[0;95m';
-ICya='\e[0;96m';
-IWhi='\e[0;97m';
+IBla='\[\e[0;90m\]';
+IRed='\[\e[0;91m\]';
+IGre='\[\e[0;92m\]';
+IYel='\[\e[0;93m\]';
+IBlu='\[\e[0;94m\]';
+IPur='\[\e[0;95m\]';
+ICya='\[\e[0;96m\]';
+IWhi='\[\e[0;97m\]';
 
 # ----------------------------------------------------------------- COLOR CONF
 D_DEFAULT_COLOR="${Whi}"
