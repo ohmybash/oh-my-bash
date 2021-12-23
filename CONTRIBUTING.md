@@ -97,6 +97,9 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 
 For any extensive change, _eg_ a new plugin, you will have to find testers to +1 your PR.
 
+When you add new themes, please also update [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
+After your new themes are merged, the list in [Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the Wiki also needs to be updated.
+
 ----
 
 ## Use the Search, Luke
