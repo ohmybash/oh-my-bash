@@ -56,6 +56,10 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 
 ## Submitting Pull Requests
 
+The code should work with Bash 3.2.  Make all the changes to be
+POSIX-compatible for external tools unless it is related to a plugin that
+clearly targets specific tools or environment such as "GNU make" or "macOS".
+
 ### Getting started
 
 You should be familiar with the basics of
