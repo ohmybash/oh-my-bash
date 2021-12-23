@@ -83,9 +83,6 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 
 ### You have an addition
 
-Please [do not](https://github.com/ohmybash/oh-my-bash/wiki/Themes#dont-send-us-your-theme-for-now)
-send themes for now.
-
 Please be so kind as to [search](#use-the-search-luke) for any pending, merged or rejected Pull Requests
 covering or related to what you want to add.
 
