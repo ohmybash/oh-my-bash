@@ -1,14 +1,14 @@
 # @chopnico 2021
 
-if [ -d "$HOME/.goenv" ]; then
+if [ -d ~/.goenv ]; then
 	# goenv exported variables
-	export GOENV_ROOT="$HOME/.goenv"
-	export PATH="$GOENV_ROOT/bin:$PATH"
+	export GOENV_ROOT=~/.goenv
+	export PATH=$GOENV_ROOT/bin${PATH:+:$PATH}
 
 	# Enables goenv shims
-	eval "$(goenv init -)"
+	eval -- "$(goenv init -)"
 
 	# Allows goenv to manage GOPATH and GOROOT
-	export PATH="$GOROOT/bin:$PATH"
-	export PATH="$PATH:$GOPATH/bin"
+	export PATH=$GOROOT/bin:$PATH
+	export PATH=$PATH:$GOPATH/bin
 fi
