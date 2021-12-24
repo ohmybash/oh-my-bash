@@ -19,10 +19,7 @@ if [ "$DISPLAY" ] || [ "$WAYLAND_DISPLAY" ]; then
 		"exit")
 			_osh_plugin_tmux_autoattach_exit
 			;;
-		"detach")
-			_osh_plugin_tmux_autoattach_detach
-			;;
-		*)
+		"detach" | *)
 			_osh_plugin_tmux_autoattach_detach
 			;;
 	esac
