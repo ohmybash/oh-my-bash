@@ -14,13 +14,11 @@ _osh_plugin_tmux_autoattach_detach() {
 	[ -z "$TMUX" ] && tmux -2u new -A
 }
 
-if [ "$DISPLAY" ] || [ "$WAYLAND_DISPLAY" ] || [ "$SSH_TTY" ]; then
-	case "$OSH_PLUGIN_TMUX_AUTOATTACH_BEHAVIOR" in
-		"exit")
-			_osh_plugin_tmux_autoattach_exit
-			;;
-		"detach" | *)
-			_osh_plugin_tmux_autoattach_detach
-			;;
-	esac
-fi
+case "$OSH_PLUGIN_TMUX_AUTOATTACH_BEHAVIOR" in
+	"exit")
+		_osh_plugin_tmux_autoattach_exit
+		;;
+	"detach" | *)
+		_osh_plugin_tmux_autoattach_detach
+		;;
+esac
