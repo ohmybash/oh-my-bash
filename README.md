@@ -50,6 +50,16 @@ For example, this line might begin to look like this:
 plugins=(git bundler osx rake ruby)
 ```
 
+##### With Conditionals
+
+You may want to control when and/or how plugins should be enabled.
+
+For example, if you want the `tmux-autoattach` plugin to only run on SSH sessions, you could employ a trivial conditional that checks for the `$SSH_TTY` variable. Just make sure to remove the plugin from the larger plugin list.
+
+``` bash
+[ "$SSH_TTY" ] && plugins+=(tmux-autoattach)
+```
+
 #### Using Plugins
 
 Most plugins (should! we're working on this) include a __README__, which documents how to use them.

@@ -16,3 +16,4 @@
 *.swp
 *.disabled
 .idea/
+*.tmp
