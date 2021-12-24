@@ -8,5 +8,5 @@ This tmux plugin will automatically attach a tmux session to your shell session.
 
 | Setting | Description                                                                                                                                                      |
 |---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| exit    | This will completely close out your shell session, including your terminal, but keep your tmux sessions intact. This will also close your session if you detach. |
-| detach  | This will allow you to detach from the tmux screen without closing the terminal or shell session.                                                                |
+| `exit`    | This will completely close out your shell session, including your terminal, but keep your tmux sessions intact. This will also close your session if you detach. |
+| `detach` (default)  | This will allow you to detach from the tmux screen without closing the terminal or shell session.                                                                |
