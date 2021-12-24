@@ -9,9 +9,12 @@ if [ -z "${BASH_VERSION-}" ]; then
 fi
 
 if [[ ! ${BASH_VERSINFO[0]-} ]] || ((BASH_VERSINFO[0] < 3 || BASH_VERSINFO[0] == 3 && BASH_VERSINFO[1] < 2)); then
-  printf "Error: Bash 3.2 required for Oh My Bash.\n"
-  printf "Error: Upgrade Bash and try again.\n"
+  printf "Error: Bash 3.2 required for Oh My Bash.\n" >&2
+  printf "Error: Upgrade Bash and try again.\n" >&2
   return 2 &>/dev/null || exit 2
+elif ((BASH_VERSINFO[0] < 4)); then
+  printf "Warning: Bash >=4 is no longer required for Oh My Bash but is cool to have ;)\n" >&2
+  printf "Warning: Why don't you upgrade your Bash to 4 or higher?\n" >&2
 fi
 
 _omb_install_print_usage() {
