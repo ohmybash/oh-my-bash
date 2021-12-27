@@ -130,7 +130,7 @@ ___brainy_prompt_ruby() {
 	[ "${THEME_SHOW_RUBY}" != "true" ] && return
 	color=$bold_white
 	box="[|]"
-	info="rb-$(ruby_version_prompt)"
+	info="rb-$(_omb_prompt_print_ruby_env)"
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${bold_red}" "${box}"
 }
 

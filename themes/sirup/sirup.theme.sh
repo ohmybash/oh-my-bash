@@ -1,22 +1,20 @@
 # For unstaged(*) and staged(+) values next to branch name in __git_ps1
 GIT_PS1_SHOWDIRTYSTATE="enabled"
 
-function rvm_version_prompt {
-  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
+function _omb_theme_sirup_rubygem {
+  local gemset=$(command awk -F'@' '{print $2}' <<< "$GEM_HOME")
+  [[ $gemset ]] && gemset="@$gemset"
 
-  [ "$gemset" != "" ] && gemset="@$gemset"
-  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
+  local version=$(command awk -F'-' '{print $2}' <<< "$MY_RUBY_HOME")
+  [[ $version == 1.9.2 ]] && version=
 
-  [ "$version" == "1.9.2" ] && version=""
-
-  local full="$version$gemset"
-
-  [ "$full" != "" ] && echo "$full"
+  local full=$version$gemset
+  [[ $full ]] && echo "$full"
 }
  
-function prompt_command() {
-    # Check http://github.com/Sirupsen/dotfiles for screenshot
-    PS1="$blue\W/$bold_blue$(rvm_version_prompt)$bold_green$(__git_ps1 " (%s)") ${normal}$ "
+function prompt_command {
+  # Check http://github.com/Sirupsen/dotfiles for screenshot
+  PS1="$blue\W/$bold_blue$(_omb_theme_sirup_rubygem)$bold_green$(__git_ps1 " (%s)") ${normal}$ "
 }
 
 safe_append_prompt_command prompt_command

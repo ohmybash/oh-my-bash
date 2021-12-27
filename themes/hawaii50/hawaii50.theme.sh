@@ -84,7 +84,7 @@ IP_SEPARATOR=', '
 # FUNCS =======================================================================
 
 function get_ip_info {
-    myip=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
+    local myip=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
     echo -e "$(ips | sed -e :a -e '$!N;s/\n/${IP_SEPARATOR}/;ta' | sed -e 's/127\.0\.0\.1\${IP_SEPARATOR}//g'), ${myip}"
 }
 
@@ -98,22 +98,20 @@ function ip_prompt_info() {
 # Displays virtual info prompt (virtualenv/rvm)
 function virtual_prompt_info() {
     local python_venv; _omb_prompt_get_python_venv
-    local rvm_info=$(ruby_version_prompt)
+    local ruby_env; _omb_prompt_get_ruby_env
     local virtual_prompt=""
 
     local prefix=${VIRTUAL_THEME_PROMPT_PREFIX}
     local suffix=${VIRTUAL_THEME_PROMPT_SUFFIX}
 
     # If no virtual info, just return
-    [[ -z "$python_venv" && -z "$rvm_info" ]] && return
+    [[ $python_venv$ruby_env ]] || return
 
     # If virtual_env info present, append to prompt
-    [[ -n "$python_venv" ]] && virtual_prompt="virtualenv: ${VE_COLOR}$python_venv${DEFAULT_COLOR}"
+    [[ $python_venv ]] && virtual_prompt="virtualenv: ${VE_COLOR}$python_venv${DEFAULT_COLOR}"
 
-    if [[ -n "$rvm_info" ]]
-    then
-        [[ -n "$python_venv" ]] && virtual_prompt="$virtual_prompt, "
-        virtual_prompt="${virtual_prompt}rvm: ${RVM_COLOR}$rvm_info${DEFAULT_COLOR}"
+    if [[ $ruby_env ]]; then
+        virtual_prompt="${virtual_prompt:+$virtual_prompt, }rvm: ${RVM_COLOR}$ruby_env${DEFAULT_COLOR}"
     fi
     echo -e "$prefix$virtual_prompt$suffix"
 }
@@ -121,14 +119,14 @@ function virtual_prompt_info() {
 # Parse git info
 function git_prompt_info() {
     if [[ -n $(git status -s 2> /dev/null |grep -v ^# |grep -v "working directory clean") ]]; then
-        state=${GIT_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
+        local state=${GIT_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
-        state=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
+        local state=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
-    prefix=${GIT_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
-    suffix=${GIT_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    commit_id=$(git rev-parse HEAD 2>/dev/null) || return
+    local prefix=${GIT_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
+    local suffix=${GIT_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
+    local ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    local commit_id=$(git rev-parse HEAD 2>/dev/null) || return
 
     echo -e "$prefix${REF_COLOR}${ref#refs/heads/}${DEFAULT_COLOR}:${commit_id:0:$MAX_GIT_HEX_LENGTH}$state$suffix"
 }
@@ -136,14 +134,14 @@ function git_prompt_info() {
 # Parse hg info
 function hg_prompt_info() {
     if [[ -n $(hg status 2> /dev/null) ]]; then
-        state=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
+        local state=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
-        state=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
+        local state=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
-    prefix=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
-    suffix=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    branch=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
-    changeset=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
+    local prefix=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
+    local suffix=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
+    local branch=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
+    local changeset=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
 
     echo -e "$prefix${REF_COLOR}${branch}${DEFAULT_COLOR}:${changeset#*:}$state$suffix"
 }
@@ -151,16 +149,16 @@ function hg_prompt_info() {
 # Parse svn info
 function svn_prompt_info() {
     if [[ -n $(svn status --ignore-externals -q 2> /dev/null) ]]; then
-        state=${SVN_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
+        local state=${SVN_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
-        state=${SVN_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
+        local state=${SVN_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
-    prefix=${SVN_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
-    suffix=${SVN_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    ref=$(svn info 2> /dev/null | awk -F/ '/^URL:/ { for (i=0; i<=NF; i++) { if ($i == "branches" || $i == "tags" ) { print $(i+1); break }; if ($i == "trunk") { print $i; break } } }') || return
+    local prefix=${SVN_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
+    local suffix=${SVN_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
+    local ref=$(svn info 2> /dev/null | awk -F/ '/^URL:/ { for (i=0; i<=NF; i++) { if ($i == "branches" || $i == "tags" ) { print $(i+1); break }; if ($i == "trunk") { print $i; break } } }') || return
     [[ -z $ref ]] && return
 
-    revision=$(svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
+    local revision=$(svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
 
     echo -e "$prefix${REF_COLOR}$ref${DEFAULT_COLOR}:$revision$state$suffix"
 }
@@ -169,14 +167,13 @@ function svn_prompt_info() {
 function limited_pwd() {
 
     # Replace $HOME with ~ if possible 
-    RELATIVE_PWD=${PWD/#$HOME/\~}
+    local RELATIVE_PWD=${PWD/#$HOME/\~}
 
     local offset=$((${#RELATIVE_PWD}-$MAX_PWD_LENGTH))
 
-    if [ $offset -gt "0" ]
-    then
+    if ((offset > 0)); then
         local truncated_symbol="..."
-        TRUNCATED_PWD=${RELATIVE_PWD:$offset:$MAX_PWD_LENGTH}
+        local TRUNCATED_PWD=${RELATIVE_PWD:$offset:$MAX_PWD_LENGTH}
         echo -e "${truncated_symbol}/${TRUNCATED_PWD#*/}"
     else
         echo -e "${RELATIVE_PWD}"
@@ -186,7 +183,7 @@ function limited_pwd() {
 # Displays the current prompt
 function prompt() {
     local UC=$USER_COLOR
-    [ $UID -eq "0" ] && UC=$SUPERUSER_COLOR
+    ((UID == 0)) && UC=$SUPERUSER_COLOR
 
     if [[ $VIRTUAL_PROMPT_ENABLED == 1 ]]; then
         PS1="$(scm_char) ${UC}\u ${DEFAULT_COLOR}at ${MACHINE_COLOR}\h$(ip_prompt_info) ${DEFAULT_COLOR}in ${DIRECTORY_COLOR}$(limited_pwd)${DEFAULT_COLOR}$(virtual_prompt_info)$(scm_prompt_info)${reset_color} \$ "
