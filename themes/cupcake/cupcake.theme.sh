@@ -49,14 +49,6 @@ icon_end="└❯ "
 
 # FUNCTIONS ===================================================================
 
-# Display virtual environment info
-function virtualenv_prompt {
-  if [[ -n "$VIRTUAL_ENV" ]]; then
-    virtualenv=`basename "$VIRTUAL_ENV"`
-    echo -e "$VIRTUALENV_CHAR$virtualenv "
-  fi
-}
-
 # Rename tab
 function tabname {
   printf "\e]1;$1\a"
