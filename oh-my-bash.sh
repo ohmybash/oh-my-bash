@@ -154,7 +154,7 @@ if [[ $PROMPT ]]; then
     export PS1="\["$PROMPT"\]"
 fi
 
-if ! type_exists '__git_ps1' ; then
+if ! _omb_util_command_exists '__git_ps1' ; then
   source "$OSH/tools/git-prompt.sh"
 fi
 
