@@ -56,8 +56,18 @@ THEME_SHOW_USER_HOST=${THEME_SHOW_USER_HOST:=false}
 USER_HOST_THEME_PROMPT_PREFIX=''
 USER_HOST_THEME_PROMPT_SUFFIX=''
 
+# deprecate
 VIRTUALENV_THEME_PROMPT_PREFIX=' |'
 VIRTUALENV_THEME_PROMPT_SUFFIX='|'
+CONDAENV_THEME_PROMPT_PREFIX=' |'
+CONDAENV_THEME_PROMPT_SUFFIX='|'
+PYTHON_THEME_PROMPT_PREFIX=' |'
+PYTHON_THEME_PROMPT_SUFFIX='|'
+
+# # new
+# OMB_THEME_PROMPT_VIRTUALENV_FORMAT=' |%s|'
+# OMB_THEME_PROMPT_CONDAENV_FORMAT=' |%s|'
+# OMB_THEME_PROMPT_PYTHON_VERSION_FORMAT=' |%s|'
 
 RBENV_THEME_PROMPT_PREFIX=' |'
 RBENV_THEME_PROMPT_SUFFIX='|'
@@ -385,27 +395,59 @@ function ruby_version_prompt {
   echo -e "$(rbfu_version_prompt)$(rbenv_version_prompt)$(rvm_version_prompt)$(chruby_version_prompt)"
 }
 
-function virtualenv_prompt {
-  if [[ -n "$VIRTUAL_ENV" ]]; then
-    virtualenv=`basename "$VIRTUAL_ENV"`
-    echo -e "$VIRTUALENV_THEME_PROMPT_PREFIX$virtualenv$VIRTUALENV_THEME_PROMPT_SUFFIX"
-  fi
+function _omb_prompt_get_virtualenv {
+  virtualenv=
+  [[ ${VIRTUAL_ENV-} ]] || return 1
+  local prefix=${VIRTUALENV_THEME_PROMPT_PREFIX-}
+  local suffix=${VIRTUALENV_THEME_PROMPT_SUFFIX-}
+  local format=${OMB_THEME_PROMPT_VIRTUALENV_FORMAT-${prefix//'%'/'%%'}%s${suffix//'%'/'%%'}}
+  printf -v virtualenv "$format" "$(basename "$VIRTUAL_ENV")"
 }
 
-function condaenv_prompt {
-  if [[ $CONDA_DEFAULT_ENV ]]; then
-    echo -e "${CONDAENV_THEME_PROMPT_PREFIX}${CONDA_DEFAULT_ENV}${CONDAENV_THEME_PROMPT_SUFFIX}"
-  fi
+function _omb_prompt_get_condaenv {
+  condaenv=
+  [[ ${CONDA_DEFAULT_ENV-} ]] || return 1
+  local prefix=${CONDAENV_THEME_PROMPT_PREFIX-}
+  local suffix=${CONDAENV_THEME_PROMPT_SUFFIX-}
+  local format=${OMB_THEME_PROMPT_CONDAENV_FORMAT-${prefix//'%'/'%%'}%s${suffix//'%'/'%%'}}
+  printf -v condaenv "$format" "$CONDA_DEFAULT_ENV"
 }
 
-function py_interp_prompt {
-  py_version=$(python --version 2>&1 | awk '{print "py-"$2;}') || return
-  echo -e "${PYTHON_THEME_PROMPT_PREFIX}${py_version}${PYTHON_THEME_PROMPT_SUFFIX}"
+function _omb_prompt_get_python_version {
+  python_version=$(python --version 2>&1 | command awk '{print "py-"$2;}')
+  [[ $python_version ]] || return 1
+  local prefix=${PYTHON_THEME_PROMPT_PREFIX-}
+  local suffix=${PYTHON_THEME_PROMPT_SUFFIX-}
+  local format=${OMB_THEME_PROMPT_PYTHON_VERSION_FORMAT-${prefix//'%'/'%%'}%s${suffix//'%'/'%%'}}
+  printf -v python_version "$format" "$python_version"
 }
 
-function python_version_prompt {
-  echo -e "$(virtualenv_prompt)$(condaenv_prompt)$(py_interp_prompt)"
+function _omb_prompt_get_python_venv {
+  local virtualenv condaenv
+  _omb_prompt_get_virtualenv
+  _omb_prompt_get_condaenv
+  python_venv=$virtualenv$condaenv
+  [[ $python_venv ]]
 }
+function _omb_prompt_get_python_env {
+  local virtualenv condaenv python_version
+  _omb_prompt_get_virtualenv
+  _omb_prompt_get_condaenv
+  _omb_prompt_get_python_version
+  python_env=$virtualenv$condaenv$python_version
+  [[ $python_env ]]
+}
+
+_omb_util_defun_print _omb_prompt_{print,get}_virtualenv virtualenv
+_omb_util_defun_print _omb_prompt_{print,get}_condaenv condaenv
+_omb_util_defun_print _omb_prompt_{print,get}_python_version python_version
+_omb_util_defun_print _omb_prompt_{print,get}_python_venv python_venv
+_omb_util_defun_print _omb_prompt_{print,get}_python_env python_env
+
+_omb_util_defun_deprecate 20000 virtualenv_prompt     _omb_prompt_print_virtualenv
+_omb_util_defun_deprecate 20000 condaenv_prompt       _omb_prompt_print_condaenv
+_omb_util_defun_deprecate 20000 py_interp_prompt      _omb_prompt_print_python_version
+_omb_util_defun_deprecate 20000 python_version_prompt _omb_prompt_print_python_env
 
 function git_user_info {
   # support two or more initials, set by 'git pair' plugin

@@ -97,7 +97,7 @@ function ip_prompt_info() {
 
 # Displays virtual info prompt (virtualenv/rvm)
 function virtual_prompt_info() {
-    local virtual_env_info=$(virtualenv_prompt)
+    local python_venv; _omb_prompt_get_python_venv
     local rvm_info=$(ruby_version_prompt)
     local virtual_prompt=""
 
@@ -105,14 +105,14 @@ function virtual_prompt_info() {
     local suffix=${VIRTUAL_THEME_PROMPT_SUFFIX}
 
     # If no virtual info, just return
-    [[ -z "$virtual_env_info" && -z "$rvm_info" ]] && return
+    [[ -z "$python_venv" && -z "$rvm_info" ]] && return
 
     # If virtual_env info present, append to prompt
-    [[ -n "$virtual_env_info" ]] && virtual_prompt="virtualenv: ${VE_COLOR}$virtual_env_info${DEFAULT_COLOR}"
+    [[ -n "$python_venv" ]] && virtual_prompt="virtualenv: ${VE_COLOR}$python_venv${DEFAULT_COLOR}"
 
     if [[ -n "$rvm_info" ]]
     then
-        [[ -n "$virtual_env_info" ]] && virtual_prompt="$virtual_prompt, "
+        [[ -n "$python_venv" ]] && virtual_prompt="$virtual_prompt, "
         virtual_prompt="${virtual_prompt}rvm: ${RVM_COLOR}$rvm_info${DEFAULT_COLOR}"
     fi
     echo -e "$prefix$virtual_prompt$suffix"

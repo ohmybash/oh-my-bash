@@ -41,8 +41,9 @@ function prompt_command() {
     # This needs to be first to save last command return code
     local RC="$?"
 
-    hostname="${bold_black}\u@\h"
-    virtualenv="${white}$(virtualenv_prompt)"
+    local hostname="${bold_black}\u@\h"
+    local python_venv; _omb_prompt_get_python_venv
+    python_venv=$white$python_venv
 
     # Set return status color
     if [[ ${RC} == 0 ]]; then
@@ -54,7 +55,7 @@ function prompt_command() {
     # Append new history lines to history file
     history -a
 
-    PS1="$(clock_prompt)${virtualenv}${hostname} ${bold_cyan}\W $(scm_prompt_char_info)${ret_status}→ ${normal}"
+    PS1="$(clock_prompt)$python_venv${hostname} ${bold_cyan}\W $(scm_prompt_char_info)${ret_status}→ ${normal}"
 }
 
 safe_append_prompt_command prompt_command
