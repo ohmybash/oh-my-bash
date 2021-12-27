@@ -33,7 +33,7 @@
 
 ############ Testing if packages, apps, gems, etc. are installed ###############
 
-# if type_exists 'git'; then
+# if _omb_util_command_exists 'git'; then
 #   e_success "Git good to go"
 # else
 #   e_error "Git should be installed. It isn't. Aborting."
@@ -73,15 +73,24 @@
 ################################################################################
 
 _omb_version=10000
+_omb_bash_version=$((BASH_VERSINFO[0] * 10000 + BASH_VERSINFO[1] * 100 + BASH_VERSINFO[2]))
 
 function _omb_util_defun_print {
   builtin eval -- "function $1 { local $3; $2 \"\$@\" && printf '%s\n' \"\${$3}\"; }"
 }
 
+function __omb_util_defun_deprecate__message {
+  local old=$1 new=$2
+  local v=__omb_util_DeprecateFunction_$old; v=${v//[!a-zA-Z0-9_]/'_'}
+  [[ ${!v+set} ]] && return 0
+  printf 'warning (oh-my-bash): %s\n' "\`$old' is deprecated. Use \`$new'." >&2
+  printf -v "$v" done
+}
+
 function _omb_util_defun_deprecate {
   local warning=
   ((_omb_version>=$1)) &&
-    warning='echo "warning: \`$2'\'' is deprecated. Use \`$3'\''." >&2; '
+    warning='__omb_util_defun_deprecate__message "$2" "$3"; '
   builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
 }
 
@@ -161,24 +170,46 @@ is_confirmed() {
 }
 
 #
-# Test whether a command is defined. Includes:
-#   alias (command is shell alias)
-#   keyword (command is shell reserved word)
-#   function (command is shell function)
-#   builtin (command is shell builtin)
-#   file (command is disk file)
+# Test whether a command---either an alias, a keyword, a function, a builtin,
+# or a file---is defined.
 #
 # $1 = cmd to test
-# Usage:
-# if type_exists 'git'; then
-#   some action
-# else
-#   some other action
-# fi
 #
-type_exists() {
-  [ "$(type -t "$1")" ]
+# Usage:
+#
+#   if _omb_util_command_exists 'git'; then
+#     some action
+#   else
+#     some other action
+#   fi
+#
+
+if ((_omb_bash_version >= 40000)); then
+  _omb_util_command_exists() {
+    type -t -- "$@" &>/dev/null # bash-4.0
+  }
+  _omb_util_binary_exists() {
+    type -P -- "$@" &>/dev/null # bash-4.0
+  }
+else
+  _omb_util_command_exists() {
+    while (($#)); do
+      type -t -- "$1" &>/dev/null || return 1
+      shift
+    done
+  }
+  _omb_util_binary_exists() {
+    while (($#)); do
+      type -P -- "$1" &>/dev/null || return 1
+      shift
+    done
+  }
+fi
+_omb_util_function_exists() {
+  declare -F "$@" &>/dev/null # bash-3.2
 }
+
+_omb_util_defun_deprecate 20000 type_exists _omb_util_binary_exists
 
 #
 # Test which OS the user runs
