@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Based on 'bobby' theme with the addition of virtualenv_prompt
+# Based on 'bobby' theme with the addition of python_venv
 #
 
 SCM_THEME_PROMPT_DIRTY=" ${red}✗"
@@ -14,7 +14,7 @@ VIRTUALENV_THEME_PROMPT_PREFIX='|'
 VIRTUALENV_THEME_PROMPT_SUFFIX='|'
 
 function prompt_command() {
-    PS1="\n${green}$(virtualenv_prompt)${red}$(ruby_version_prompt) ${reset_color}\h ${orange}in ${reset_color}\w\n${yellow}$(scm_char)$(scm_prompt_info) ${yellow}→${white} "
+    PS1="\n${green}$(_omb_prompt_print_python_venv)${red}$(ruby_version_prompt) ${reset_color}\h ${orange}in ${reset_color}\w\n${yellow}$(scm_char)$(scm_prompt_info) ${yellow}→${white} "
 }
 
 safe_append_prompt_command prompt_command
