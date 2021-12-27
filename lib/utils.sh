@@ -102,16 +102,16 @@ function _omb_util_defun_deprecate {
 if which tput >/dev/null 2>&1; then
     ncolors=$(tput colors)
 fi
-if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
-  bold="$(tput bold)"
-  underline=$(tput sgr 0 1)
-  reset="$(tput sgr0)"
-  red="$(tput setaf 1)"
-  green="$(tput setaf 2)"
-  yellow="$(tput setaf 3)"
-  blue="$(tput setaf 4)"
-  purple=$(tput setaf 171)
-  tan=$(tput setaf 3)
+if [[ -t 1 && $ncolors && ncolors -ge 8 ]]; then
+  bold=$(tput bold 2>/dev/null)
+  underline=$(tput sgr 0 1 2>/dev/null)
+  reset=$(tput sgr0 2>/dev/null)
+  red=$(tput setaf 1 2>/dev/null)
+  green=$(tput setaf 2 2>/dev/null)
+  yellow=$(tput setaf 3 2>/dev/null)
+  blue=$(tput setaf 4 2>/dev/null)
+  purple=$(tput setaf 171 2>/dev/null)
+  tan=$(tput setaf 3 2>/dev/null)
 else
   bold=""
   underline=""
@@ -163,10 +163,7 @@ seek_confirmation() {
 
 # Test whether the result of an 'ask' is a confirmation
 is_confirmed() {
-  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-    return 0
-  fi
-  return 1
+  [[ $REPLY =~ ^[Yy]$ ]]
 }
 
 #
@@ -217,10 +214,7 @@ _omb_util_defun_deprecate 20000 type_exists _omb_util_binary_exists
 # Usage: if is_os 'darwin'; then
 #
 is_os() {
-  if [[ "${OSTYPE}" == $1* ]]; then
-    return 0
-  fi
-  return 1
+  [[ $OSTYPE == $1* ]]
 }
 
 #
