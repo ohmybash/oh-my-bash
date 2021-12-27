@@ -72,6 +72,19 @@
 
 ################################################################################
 
+_omb_version=10000
+
+function _omb_util_defun_print {
+  builtin eval -- "function $1 { local $3; $2 \"\$@\" && printf '%s\n' \"\${$3}\"; }"
+}
+
+function _omb_util_defun_deprecate {
+  local warning=
+  ((_omb_version>=$1)) &&
+    warning='echo "warning: \`$2'\'' is deprecated. Use \`$3'\''." >&2; '
+  builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
+}
+
 #
 # Set Colors
 #
