@@ -37,12 +37,24 @@ THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%I:%M:%S"}
 VIRTUALENV_THEME_PROMPT_PREFIX='('
 VIRTUALENV_THEME_PROMPT_SUFFIX=') '
 
+function _python_venv_prompt {
+    local python_venv=""
+
+    if [[ -n "${CONDA_DEFAULT_ENV}" ]]; then
+        python_venv="${CONDA_DEFAULT_ENV}"
+    elif [[ -n "${VIRTUAL_ENV}" ]]; then
+        python_venv=$(basename "${VIRTUAL_ENV}")
+    fi
+
+    [[ -n "${python_venv}" ]] && echo -e "$VIRTUALENV_THEME_PROMPT_PREFIX$python_venv$VIRTUALENV_THEME_PROMPT_SUFFIX"
+}
+
 function prompt_command() {
     # This needs to be first to save last command return code
     local RC="$?"
 
     hostname="${bold_black}\u@\h"
-    virtualenv="${white}$(virtualenv_prompt)"
+    virtualenv="${white}$(_python_venv_prompt)"
 
     # Set return status color
     if [[ ${RC} == 0 ]]; then
