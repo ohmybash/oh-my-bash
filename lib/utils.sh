@@ -103,15 +103,15 @@ if which tput >/dev/null 2>&1; then
     ncolors=$(tput colors)
 fi
 if [[ -t 1 && $ncolors && ncolors -ge 8 ]]; then
-  bold=$(tput bold 2>/dev/null)
-  underline=$(tput sgr 0 1 2>/dev/null)
-  reset=$(tput sgr0 2>/dev/null)
-  red=$(tput setaf 1 2>/dev/null)
-  green=$(tput setaf 2 2>/dev/null)
-  yellow=$(tput setaf 3 2>/dev/null)
-  blue=$(tput setaf 4 2>/dev/null)
-  purple=$(tput setaf 171 2>/dev/null)
-  tan=$(tput setaf 3 2>/dev/null)
+  bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+  underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+  reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+  red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
+  green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
+  yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+  blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
+  purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+  tan=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
 else
   bold=""
   underline=""
