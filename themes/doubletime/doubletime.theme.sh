@@ -51,7 +51,7 @@ $(doubletime_scm_prompt)$reset_color $ "
   PS4='+ '
 }
 
-safe_append_prompt_command prompt_setter
+_omb_util_add_prompt_command prompt_setter
 
 git_prompt_status() {
   local git_status_output

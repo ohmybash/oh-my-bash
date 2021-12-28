@@ -126,4 +126,4 @@ ${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
 }
 
 # Runs prompt (this bypasses oh-my-bash $PROMPT setting)
-safe_append_prompt_command prompt
+_omb_util_add_prompt_command prompt

@@ -52,4 +52,4 @@ function prompt_command() {
     PS1="$python_venv${hostname} ${bold_cyan}\w $(scm_prompt_char_info)${ret_status}→ ${normal}"
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

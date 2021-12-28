@@ -239,3 +239,27 @@ pushover () {
   -F "message=${MESSAGE}" \
   "${PUSHOVERURL}" > /dev/null 2>&1
 }
+
+_omb_util_add_prompt_command() {
+  # Set OS dependent exact match regular expression
+  local prompt_re
+  if [[ $OSTYPE == darwin* ]]; then
+    # macOS
+    prompt_re='[[:<:]]'$1'[[:>:]]'
+  else
+    # Linux, FreeBSD, etc.
+    prompt_re='\<'$1'\>'
+  fi
+
+  # See if we need to use the overriden version
+  if _omb_util_function_exists append_prompt_command_override; then
+    append_prompt_command_override "$1"
+    return
+  fi
+
+  if [[ $PROMPT_COMMAND =~ $prompt_re ]]; then
+    return
+  else
+    PROMPT_COMMAND="$1${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+  fi
+}

@@ -584,30 +584,4 @@ function aws_profile {
 
 # Returns true if $1 is a shell function.
 _omb_util_defun_deprecate 20000 fn_exists _omb_util_function_exists
-
-function safe_append_prompt_command {
-    local prompt_re
-
-    # Set OS dependent exact match regular expression
-    if [[ ${OSTYPE} == darwin* ]]; then
-      # macOS
-      prompt_re="[[:<:]]${1}[[:>:]]"
-    else
-      # Linux, FreeBSD, etc.
-      prompt_re="\<${1}\>"
-    fi
-
-    # See if we need to use the overriden version
-    if _omb_util_function_exists append_prompt_command_override; then
-        append_prompt_command_override "$1"
-       return
-    fi
-
-    if [[ ${PROMPT_COMMAND} =~ ${prompt_re} ]]; then
-      return
-    elif [[ -z ${PROMPT_COMMAND} ]]; then
-      PROMPT_COMMAND="${1}"
-    else
-      PROMPT_COMMAND="${1};${PROMPT_COMMAND}"
-    fi
-}
+_omb_util_defun_deprecate 20000 safe_append_prompt_command _omb_util_add_prompt_command

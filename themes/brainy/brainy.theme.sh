@@ -292,4 +292,4 @@ _brainy_prompt() {
     PS2="$(__brainy_ps2)"
 }
 
-safe_append_prompt_command _brainy_prompt
+_omb_util_add_prompt_command _brainy_prompt

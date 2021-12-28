@@ -49,7 +49,7 @@ PS2="$LIGHT_BLUE-$YELLOW-$YELLOW-$NO_COLOUR "
 
 }
 
-safe_append_prompt_command prompt_setter
+_omb_util_add_prompt_command prompt_setter
 
 THEME_SHOW_CLOCK=${THEME_SHOW_CLOCK:-"true"}
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"\[\033[1;33m\]"}

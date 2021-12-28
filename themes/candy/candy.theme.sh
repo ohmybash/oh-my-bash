@@ -7,4 +7,4 @@ function prompt_command() {
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$blue"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%I:%M:%S"}
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command
