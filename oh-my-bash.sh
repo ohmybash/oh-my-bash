@@ -13,9 +13,6 @@ fi
 
 # Initializes Oh My Bash
 
-# add a function path
-fpath=($OSH/functions $fpath)
-
 # Set OSH_CUSTOM to the path where your custom config files
 # and plugins exists, or else we will use the default custom/
 if [[ -z "$OSH_CUSTOM" ]]; then
@@ -34,53 +31,6 @@ for config_file in $OSH/lib/*.sh; do
   custom_config_file="${OSH_CUSTOM}/lib/$(basename "${config_file}")"
   [ -f "${custom_config_file}" ] && config_file=${custom_config_file}
   source $config_file
-done
-
-
-is_plugin() {
-  local base_dir=$1
-  local name=$2
-  test -f $base_dir/plugins/$name/$name.plugin.sh \
-    || test -f $base_dir/plugins/$name/_$name
-}
-# Add all defined plugins to fpath. This must be done
-# before running compinit.
-for plugin in ${plugins[@]}; do
-  if is_plugin $OSH_CUSTOM $plugin; then
-    fpath=($OSH_CUSTOM/plugins/$plugin $fpath)
-  elif is_plugin $OSH $plugin; then
-    fpath=($OSH/plugins/$plugin $fpath)
-  fi
-done
-
-is_completion() {
-  local base_dir=$1
-  local name=$2
-  test -f $base_dir/completions/$name/$name.completion.sh
-}
-# Add all defined completions to fpath. This must be done
-# before running compinit.
-for completion in ${completions[@]}; do
-  if is_completion $OSH_CUSTOM $completion; then
-    fpath=($OSH_CUSTOM/completions/$completion $fpath)
-  elif is_completion $OSH $completion; then
-    fpath=($OSH/completions/$completion $fpath)
-  fi
-done
-
-is_alias() {
-  local base_dir=$1
-  local name=$2
-  test -f $base_dir/aliases/$name/$name.aliases.sh
-}
-# Add all defined completions to fpath. This must be done
-# before running compinit.
-for alias in ${aliases[@]}; do
-  if is_alias $OSH_CUSTOM $alias; then
-    fpath=($OSH_CUSTOM/aliases/$alias $fpath)
-  elif is_alias $OSH $alias; then
-    fpath=($OSH/aliases/$alias $fpath)
-  fi
 done
 
 # Figure out the SHORT hostname
