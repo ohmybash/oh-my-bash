@@ -1,23 +1,21 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Initialize fasd, without setting up the prompt hook, which
 # we want to be handled by oh-my-bash.
 
-_fasd_prompt_func() {
-  [ -z "$_FASD_SINK" ] && _FASD_SINK=/dev/null
-  eval "fasd --proc \$(fasd --sanitize \$(history 1 | \\
-    sed "s/^[ ]*[0-9]*[ ]*//"))" >> "$_FASD_SINK" 2>&1
+_omb_plugin_fasd_prompt_func() {
+  local sink=${OMB_PLUGIN_FASD_SINK:-/dev/null}
+  [[ $sink == /dev/null ]] && return 0
+  fasd --proc "$(fasd --sanitize "$(history 1 | command sed 's/^[ ]*[0-9]*[ ]*//')")" >> "$sink" 2>&1
 }
 
-function _install_fasd() {
-  type fasd >/dev/null 2>&1
-  if [ "$?" == "0" ]; then
-    eval "$(fasd --init posix-alias bash-ccomp bash-ccomp-install)"
-    _omb_util_add_prompt_command _fasd_prompt_func
+_omb_plugin_fasd_initialize() {
+  if _omb_util_command_exists fasd; then
+    eval -- "$(fasd --init posix-alias bash-ccomp bash-ccomp-install)"
+    _omb_util_add_prompt_command _omb_plugin_fasd_prompt_func
   else
-    echo "fasd not found, plugin not activated."
+    echo 'fasd not found, plugin not activated.' >&2
   fi
 }
 
-
-_install_fasd
+_omb_plugin_fasd_initialize
