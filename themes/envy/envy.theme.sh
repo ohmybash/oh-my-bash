@@ -13,4 +13,4 @@ function prompt_command() {
     PS1="\n${yellow}$(_omb_prompt_print_ruby_env) ${purple}\h ${reset_color}in ${green}\w\n${bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${reset_color} "
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

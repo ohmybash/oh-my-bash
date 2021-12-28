@@ -25,4 +25,4 @@ SCM_THEME_PROMPT_PREFIX="${green}("
 SCM_THEME_PROMPT_SUFFIX="${green})${reset_color}"
 
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

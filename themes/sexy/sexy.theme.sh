@@ -43,4 +43,4 @@ function prompt_command() {
   PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

@@ -40,4 +40,4 @@ pure_prompt() {
     esac
 }
 
-safe_append_prompt_command pure_prompt
+_omb_util_add_prompt_command pure_prompt

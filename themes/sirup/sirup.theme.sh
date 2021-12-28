@@ -17,4 +17,4 @@ function prompt_command {
   PS1="$blue\W/$bold_blue$(_omb_theme_sirup_rubygem)$bold_green$(__git_ps1 " (%s)") ${normal}$ "
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

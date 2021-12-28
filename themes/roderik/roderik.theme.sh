@@ -14,4 +14,4 @@ function prompt_command() {
     fi
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

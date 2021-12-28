@@ -48,4 +48,4 @@ function prompt_command() {
     PS1="${new_PS1}${green}${wrap_char}→${reset_color} "
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

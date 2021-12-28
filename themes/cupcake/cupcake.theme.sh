@@ -68,4 +68,4 @@ function prompt_command() {
 }
 
 # Runs prompt (this bypasses oh-my-bash $PROMPT setting)
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

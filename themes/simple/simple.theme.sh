@@ -22,4 +22,4 @@ SCM_THEME_PROMPT_CLEAN=" ✓"
 SCM_THEME_PROMPT_PREFIX="("
 SCM_THEME_PROMPT_SUFFIX=")"
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

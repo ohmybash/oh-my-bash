@@ -35,4 +35,4 @@ SCM_THEME_PROMPT_PREFIX="${bold_cyan}("
 SCM_THEME_PROMPT_SUFFIX="${bold_cyan})${reset_color}"
 
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

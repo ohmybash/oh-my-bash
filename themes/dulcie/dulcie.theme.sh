@@ -95,4 +95,4 @@ dulcie_prompt() {
   PS1="${PS1}${DULCIE_PROMPTCHAR} "
 }
 
-safe_append_prompt_command dulcie_prompt
+_omb_util_add_prompt_command dulcie_prompt

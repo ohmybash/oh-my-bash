@@ -21,4 +21,4 @@ function prompt_command() {
     PROMPT='${green}\u${normal}@${green}\h${normal}:${blue}\w${normal}${red}$(prompt_char)$(git_prompt_info)${normal}\$ '
 }
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command

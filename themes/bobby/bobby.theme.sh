@@ -31,4 +31,4 @@ THEME_CLOCK_CHAR_COLOR=${THEME_CLOCK_CHAR_COLOR:-"$red"}
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$bold_cyan"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%Y-%m-%d %H:%M:%S"}
 
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command
