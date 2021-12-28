@@ -249,7 +249,7 @@ git_status_dirty() {
 # Git: branch/detached head, dirty status
 prompt_git() {
     local ref dirty
-    if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
         ZSH_THEME_GIT_PROMPT_DIRTY='±'
         dirty=$(git_status_dirty)
         ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"

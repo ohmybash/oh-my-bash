@@ -137,12 +137,12 @@ prompt_git() {
 			git update-index --really-refresh -q &>/dev/null;
 
 			# Check for uncommitted changes in the index.
-			if ! $(git diff --quiet --ignore-submodules --cached); then
+			if ! git diff --quiet --ignore-submodules --cached; then
 				s+='+';
 			fi;
 
 			# Check for unstaged changes.
-			if ! $(git diff-files --quiet --ignore-submodules --); then
+			if ! git diff-files --quiet --ignore-submodules --; then
 				s+='!';
 			fi;
 
@@ -152,7 +152,7 @@ prompt_git() {
 			fi;
 
 			# Check for stashed files.
-			if $(git rev-parse --verify refs/stash &>/dev/null); then
+			if git rev-parse --verify refs/stash &>/dev/null; then
 				s+='$';
 			fi;
 

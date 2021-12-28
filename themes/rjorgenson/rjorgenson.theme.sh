@@ -49,7 +49,7 @@ function is_integer() { # helper function for todo-txt-count
 }
 
 todo_txt_count() {
-    if `hash todo.sh 2>&-`; then # is todo.sh installed
+    if _omb_util_command_exists todo.sh; then # is todo.sh installed
         count=$(todo.sh ls | egrep "TODO: [0-9]+ of ([0-9]+) tasks shown" | awk '{ print $4 }')
         if is_integer $count; then # did we get a sane answer back
             echo "${BRACKET_COLOR}[${STRING_COLOR}T:$count${BRACKET_COLOR}]$normal"
