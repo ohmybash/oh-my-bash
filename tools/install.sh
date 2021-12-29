@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-# Checks the minium version of bash (v4) installed, 
+# Checks the minium version of bash (v3.2) installed, 
 # stops the installation if check fails
-if [ -z "$BASH_VERSION" ] || \
-     { bash_major_version=$(echo "$BASH_VERSION" | cut -d '.' -f 1); 
-       [ "${bash_major_version}" -lt "4" ]; }; then
-  printf "Error: Bash 4 required for Oh My Bash.\n"
+if [ -z "${BASH_VERSION-}" ]; then
+  printf "Error: Bash 3.2 required for Oh My Bash.\n"
+  printf "Error: Install Bash and try running this script with Bash.\n"
+  exit 1
+fi
+
+if [[ ! ${BASH_VERSINFO[0]-} ]] || ((BASH_VERSINFO[0] < 3 || BASH_VERSINFO[0] == 3 && BASH_VERSINFO[1] < 2)); then
+  printf "Error: Bash 3.2 required for Oh My Bash.\n"
   printf "Error: Upgrade Bash and try again.\n"
   exit 1
 fi
