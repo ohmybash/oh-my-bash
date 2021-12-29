@@ -25,13 +25,6 @@ if [ -f ~/.bashrc.pre-oh-my-bash ] || [ -h ~/.bashrc.pre-oh-my-bash ]; then
   exec bash; source ~/.bashrc
 
   echo "Your original bash config was restored. Please restart your session."
-else
-  if hash chsh >/dev/null 2>&1; then
-    echo "Switching back to bash"
-    chsh -s /bin/bash
-  else
-    echo "You can edit /etc/passwd to switch your default shell back to bash"
-  fi
 fi
 
 echo "Thanks for trying out Oh My Bash. It has been uninstalled."
