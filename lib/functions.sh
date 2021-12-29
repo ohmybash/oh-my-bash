@@ -4,7 +4,7 @@ function bash_stats() {
 }
 
 function uninstall_oh_my_bash() {
-  env OSH=$OSH sh $OSH/tools/uninstall.sh
+  source "$OSH"/tools/uninstall.sh
 }
 
 function upgrade_oh_my_bash() {
