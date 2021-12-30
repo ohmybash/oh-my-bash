@@ -5,8 +5,8 @@ OSH_THEME_GIT_PROMPT_CLEAN="✓"
 
 # Nicely formatted terminal prompt
 ps_scm_prompt() {
-  CHAR=$(scm_char)
-  if [ $CHAR = $SCM_NONE_CHAR ]
+  local CHAR=$(scm_char)
+  if [ "$CHAR" = "$SCM_NONE_CHAR" ]
     then
       return
     else
@@ -14,10 +14,10 @@ ps_scm_prompt() {
   fi
 }
 
-function prompt_command() {
-  ps_username="${purple}\u${normal}"
-  ps_path="${green}\w${normal}"
-  ps_user_mark="${orange}λ${normal}"
+prompt_command() {
+  local ps_username="${purple}\u${normal}"
+  local ps_path="${green}\w${normal}"
+  local ps_user_mark="${orange}λ${normal}"
 
   PS1="$ps_username in $ps_path$(ps_scm_prompt) $ps_user_mark "
 }
