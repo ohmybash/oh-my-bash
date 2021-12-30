@@ -4,13 +4,10 @@ OSH_THEME_GIT_PROMPT_DIRTY="✗"
 OSH_THEME_GIT_PROMPT_CLEAN="✓"
 
 # Nicely formatted terminal prompt
-ps_scm_prompt() {
+_omb_theme_half_way_prompt_scm() {
   local CHAR=$(scm_char)
-  if [ "$CHAR" = "$SCM_NONE_CHAR" ]
-    then
-      return
-    else
-      echo " on ${blue}$(git_current_branch)$(parse_git_dirty)${normal} "
+  if [[ $CHAR != "$SCM_NONE_CHAR" ]]; then
+    printf '%s' " on ${blue}$(git_current_branch)$(parse_git_dirty)${normal} "
   fi
 }
 
@@ -19,8 +16,7 @@ prompt_command() {
   local ps_path="${green}\w${normal}"
   local ps_user_mark="${orange}λ${normal}"
 
-  PS1="$ps_username in $ps_path$(ps_scm_prompt) $ps_user_mark "
+  PS1="$ps_username in $ps_path$(_omb_theme_half_way_prompt_scm) $ps_user_mark "
 }
 
-
-safe_append_prompt_command prompt_command
+_omb_util_add_prompt_command prompt_command
