@@ -56,6 +56,10 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 
 ## Submitting Pull Requests
 
+The code should work with Bash 3.2.  Make all the changes to be
+POSIX-compatible for external tools unless it is related to a plugin that
+clearly targets specific tools or environment such as "GNU make" or "macOS".
+
 ### Getting started
 
 You should be familiar with the basics of
@@ -83,9 +87,6 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 
 ### You have an addition
 
-Please [do not](https://github.com/ohmybash/oh-my-bash/wiki/Themes#dont-send-us-your-theme-for-now)
-send themes for now.
-
 Please be so kind as to [search](#use-the-search-luke) for any pending, merged or rejected Pull Requests
 covering or related to what you want to add.
 
@@ -95,6 +96,9 @@ If not, then go ahead and submit a PR. Please copy to anyone relevant (_eg_ plug
 maintainers) by mentioning their GitHub handle (starting with `@`) in your message.
 
 For any extensive change, _eg_ a new plugin, you will have to find testers to +1 your PR.
+
+When you add new themes, please also update [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
+After your new themes are merged, the list in [Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the Wiki also needs to be updated.
 
 ----
 
