@@ -478,7 +478,7 @@ __git_ps1 ()
 		fi
 	elif [ "true" = "$inside_worktree" ]; then
 		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
-		   [ "$(git config --bool bash.bashowDirtyState)" != "false" ]
+		   [ "$(git config --bool bash.showDirtyState)" != "false" ]
 		then
 			git diff --no-ext-diff --quiet || w="*"
 			git diff --no-ext-diff --cached --quiet || i="+"
