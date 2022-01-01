@@ -113,7 +113,7 @@ __git_ps1_show_upstream ()
 	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.bashowupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
 	while read -r key value; do
 		case "$key" in
-		bash.bashowupstream)
+		bash.showupstream)
 			GIT_PS1_SHOWUPSTREAM="$value"
 			if [[ -z "${GIT_PS1_SHOWUPSTREAM}" ]]; then
 				p=""
