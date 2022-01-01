@@ -1,31 +1,32 @@
 #!/usr/bin/env bash
+
 # is x grep argument available?
-grep_flag_available() {
-    echo | grep $1 "" >/dev/null 2>&1
+_omb_grep_flag_available() {
+  echo | grep $1 "" >/dev/null 2>&1
 }
 
-GREP_OPTIONS=()
+_omb_grep_options=()
 
 # color grep results
-if grep_flag_available --color=auto; then
-    GREP_OPTIONS+=( "--color=auto" )
+if _omb_grep_flag_available --color=auto; then
+  _omb_grep_options+=( "--color=auto" )
 fi
 
 # ignore VCS folders (if the necessary grep flags are available)
-VCS_FOLDERS="{.bzr,CVS,.git,.hg,.svn}"
+_omb_grep_vcs_folders="{.bzr,CVS,.git,.hg,.svn}"
 
-if grep_flag_available --exclude-dir=.cvs; then
-    GREP_OPTIONS+=( "--exclude-dir=$VCS_FOLDERS" )
-elif grep_flag_available --exclude=.cvs; then
-    GREP_OPTIONS+=( "--exclude=$VCS_FOLDERS" )
+if _omb_grep_flag_available --exclude-dir=.cvs; then
+  _omb_grep_options+=( "--exclude-dir=$_omb_grep_vcs_folders" )
+elif _omb_grep_flag_available --exclude=.cvs; then
+  _omb_grep_options+=( "--exclude=$_omb_grep_vcs_folders" )
 fi
 
 # export grep settings
-if ((${#GREP_OPTIONS[@]} > 0)); then
-  alias grep="grep ${GREP_OPTIONS[*]}"
+if ((${#_omb_grep_options[@]} > 0)); then
+  alias grep="grep ${_omb_grep_options[*]}"
 fi
 
 # clean up
-unset GREP_OPTIONS
-unset VCS_FOLDERS
-unset -f grep_flag_available
+unset -v _omb_grep_options
+unset -v _omb_grep_vcs_folders
+unset -f _omb_grep_flag_available
