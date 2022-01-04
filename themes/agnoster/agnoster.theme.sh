@@ -218,7 +218,19 @@ function prompt_virtualenv {
 
         color=cyan
         prompt_segment $color $PRIMARY_FG
-        prompt_segment $color white "$(basename $VENV_VERSION)"
+        prompt_segment $color white "[v] $(basename $VENV_VERSION)"
+    fi
+}
+
+### conda env prompt
+prompt_conda_env() {
+    if [[ -n $CONDA_PREFIX ]]; then
+        if [[ -z $CONDA_PROMPT_MODIFIER ]]; then
+            CONDA_PROMPT_MODIFIER=$(basename $CONDA_PREFIX)
+        fi
+        CONDA_PYTHON_VERSION=$($CONDA_PREFIX/bin/python -c 'import platform;print(platform.python_version())')
+        prompt_segment cyan $PRIMARY_FG
+        prompt_segment cyan white "[c] $CONDA_PROMPT_MODIFIER $CONDA_PYTHON_VERSION"
     fi
 }
 
@@ -404,6 +416,7 @@ function build_prompt {
     #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
     prompt_virtualenv
+    prompt_conda_env
     prompt_dir
     prompt_git
     prompt_end
