@@ -263,3 +263,28 @@ _omb_util_add_prompt_command() {
     PROMPT_COMMAND="$1${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
   fi
 }
+
+_omb_util_glob_expand() {
+  local set=$- shopt=$BASHOPTS gignore=$GLOBIGNORE
+
+  shopt -u failglob
+  shopt -s nullglob
+  shopt -s extglob
+  set +f
+  GLOBIGNORE=
+
+  eval -- "$1=($2)"
+
+  GLOBIGNORE=$gignore
+  # Note: dotglob is changed by GLOBIGNORE
+  if [[ :$shopt: == *:dotglob:* ]]; then
+    shopt -s dotglob
+  else
+    shopt -u dotglob
+  fi
+  [[ $set == *f* ]] && set -f
+  [[ :$shopt: != *:extglob:* ]] && shopt -u extglob
+  [[ :$shopt: != *:nullglob:* ]] && shopt -u nullglob
+  [[ :$shopt: == *:failglob:* ]] && shopt -s failglob
+  return 0
+}
