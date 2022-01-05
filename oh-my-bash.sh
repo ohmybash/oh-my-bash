@@ -41,7 +41,7 @@ _omb_module_require() {
     completion) locations=({"$OSH_CUSOM","$OSH"}/completions/"$name".completion.{bash,sh}) ;;
     theme)      locations=({"$OSH_CUSOM"{,/themes},"$OSH"/themes}/"$name"/"$name".theme.{bash,sh}) ;;
     *)
-      echo "oh-my-bash (package_require): unknown package type '$type'." >&2
+      echo "oh-my-bash (module_require): unknown package type '$type'." >&2
       status=2
       continue ;;
     esac
@@ -54,7 +54,7 @@ _omb_module_require() {
       fi
     done
 
-    echo "oh-my-bash (package_require): package '$type:$name' not found." >&2
+    echo "oh-my-bash (module_require): package '$type:$name' not found." >&2
     status=127
   done
 
@@ -93,13 +93,13 @@ else
 fi
 
 # Load all of the plugins that were defined in ~/.bashrc
-_omb_module_require_plugin ${plugins[@]}
+_omb_module_require_plugin "${plugins[@]}"
 
 # Load all of the aliases that were defined in ~/.bashrc
-_omb_module_require_alias ${aliases[@]}
+_omb_module_require_alias "${aliases[@]}"
 
 # Load all of the completions that were defined in ~/.bashrc
-_omb_module_require_completion ${completions[@]}
+_omb_module_require_completion "${completions[@]}"
 
 # Load all of your custom configurations from custom/
 _omb_util_glob_expand _omb_init_files '"$OSH_CUSTOM"/*.{sh,bash}'
