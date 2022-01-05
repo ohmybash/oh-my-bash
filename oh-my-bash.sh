@@ -36,8 +36,8 @@ _omb_module_require() {
     local -a locations=()
     case $type in
     lib)        locations=({"$OSH_CUSOM","$OSH"}/lib/"$name".{bash,sh}) ;;
-    plugin)     locations=({"$OSH_CUSOM","$OSH"}/plugins/"$name".plugin.{bash,sh}) ;;
-    alias)      locations=({"$OSH_CUSOM","$OSH"}/aliases/"$name".alias.{bash,sh}) ;;
+    plugin)     locations=({"$OSH_CUSOM","$OSH"}/plugins/"$name"/"$name".plugin.{bash,sh}) ;;
+    alias)      locations=({"$OSH_CUSOM","$OSH"}/aliases/"$name".aliases.{bash,sh}) ;;
     completion) locations=({"$OSH_CUSOM","$OSH"}/completions/"$name".completion.{bash,sh}) ;;
     theme)      locations=({"$OSH_CUSOM"{,/themes},"$OSH"/themes}/"$name"/"$name".theme.{bash,sh}) ;;
     *)
