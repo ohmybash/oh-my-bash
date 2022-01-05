@@ -22,9 +22,8 @@ else
 fi
 
 printf "${BLUE}%s${NORMAL}\n" "Updating Oh My Bash"
-cd "$OSH"
-if git pull --rebase --stat origin master
-then
+
+if git -C "$OSH" pull --rebase --stat origin master; then
   printf '%s' "$GREEN"
   printf '%s\n' '         __                          __               __  '
   printf '%s\n' '  ____  / /_     ____ ___  __  __   / /_  ____ ______/ /_ '
