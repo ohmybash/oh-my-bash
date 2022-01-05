@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
-############################---Description---###################################
-#                                                                              #
-# Summary       : Show a progress bar GUI on terminal platform                 #
-# Support       : destro.nnt@gmail.com                                         #
-# Created date  : Aug 12,2014                                                  #
-# Latest Modified date : Aug 13,2014                                           #
-#                                                                              #
-################################################################################
+#Description:
 
-############################---Usage---#########################################
+# Summary       : Show a progress bar GUI on terminal platform
+# Support       : destro.nnt@gmail.com
+# Created date  : Aug 12,2014
+# Last Modified : Feb, 21, 2020
+# Last Modifier : FG Robertson (https://github.com/grobertson)                 
 
-# Copy below functions (delay and progress fuctions) into your shell script directly
-# Then invoke progress function to show progress bar 
 
-# In other way, you could import source indirectly then using. Nothing different
-
-################################################################################
+#Usage:
+# source into your script.
+# progress int n(1...100) string<"Phase">
 
 
 #
@@ -33,7 +28,7 @@ CURRENT_PROGRESS=0
 function progress()
 {
     PARAM_PROGRESS=$1;
-    PARAM_STATUS=$2;
+    PARAM_PHASE=$2;
 
     if [ $CURRENT_PROGRESS -le 0 -a $PARAM_PROGRESS -ge 0 ]  ; then echo -ne "[..........................] (0%)  $PARAM_PHASE \r"  ; delay; fi;
     if [ $CURRENT_PROGRESS -le 5 -a $PARAM_PROGRESS -ge 5 ]  ; then echo -ne "[#.........................] (5%)  $PARAM_PHASE \r"  ; delay; fi;
