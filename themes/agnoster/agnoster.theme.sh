@@ -36,7 +36,7 @@
 
 # export THEME=$HOME/.bash/themes/agnoster-bash/agnoster.bash
 # if [[ -f $THEME ]]; then
-#     export DEFAULT_USER=`whoami`
+#     export DEFAULT_USER=$(whoami)
 #     source $THEME
 # fi
 
@@ -227,7 +227,7 @@ prompt_virtualenv() {
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
-    local user=`whoami`
+    local user=$(whoami)
 
     if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
         prompt_segment black default "$user@\h"
@@ -249,7 +249,7 @@ git_status_dirty() {
 # Git: branch/detached head, dirty status
 prompt_git() {
     local ref dirty
-    if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
         ZSH_THEME_GIT_PROMPT_DIRTY='±'
         dirty=$(git_status_dirty)
         ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"

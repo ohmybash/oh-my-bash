@@ -95,78 +95,6 @@ function _omb_util_defun_deprecate {
 }
 
 #
-# Set Colors
-#
-# Use colors, but only if connected to a terminal, and that terminal
-# supports them.
-if which tput >/dev/null 2>&1; then
-    ncolors=$(tput colors)
-fi
-if [[ -t 1 && $ncolors && ncolors -ge 8 ]]; then
-  bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
-  underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
-  reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
-  red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
-  green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
-  yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-  blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
-  purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
-  tan=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-else
-  bold=""
-  underline=""
-  reset=""
-  red=""
-  green=""
-  yellow=""
-  blue=""
-  purple=""
-  tan=""
-fi
-
-#
-# Headers and Logging
-#
-e_header() { printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@"
-}
-e_arrow() { printf "➜ %s\n" "$@"
-}
-e_success() { printf "${green}✔ %s${reset}\n" "$@"
-}
-e_error() { printf "${red}✖ %s${reset}\n" "$@"
-}
-e_warning() { printf "${tan}➜ %s${reset}\n" "$@"
-}
-e_underline() { printf "${underline}${bold}%s${reset}\n" "$@"
-}
-e_bold() { printf "${bold}%s${reset}\n" "$@"
-}
-e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
-}
-
-#
-# USAGE FOR SEEKING CONFIRMATION
-# seek_confirmation "Ask a question"
-# Credit: https://github.com/kevva/dotfiles
-#
-# if is_confirmed; then
-#   some action
-# else
-#   some other action
-# fi
-#
-seek_confirmation() {
-  printf "\\n${bold}%s${reset}" "$@"
-  read -p " (y/n) " -n 1
-  printf "\\n"
-}
-
-# Test whether the result of an 'ask' is a confirmation
-is_confirmed() {
-  [[ $REPLY =~ ^[Yy]$ ]]
-}
-
-#
 # Test whether a command---either an alias, a keyword, a function, a builtin,
 # or a file---is defined.
 #
@@ -206,7 +134,70 @@ _omb_util_function_exists() {
   declare -F "$@" &>/dev/null # bash-3.2
 }
 
-_omb_util_defun_deprecate 20000 type_exists _omb_util_binary_exists
+
+#
+# Set Colors
+#
+# Use colors, but only if connected to a terminal, and that terminal
+# supports them.
+if which tput >/dev/null 2>&1; then
+    ncolors=$(tput colors)
+fi
+if [[ -t 1 && $ncolors && ncolors -ge 8 ]]; then
+  bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+  underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+  reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+  red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
+  green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
+  yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+  blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
+  purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+  tan=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+else
+  bold=""
+  underline=""
+  reset=""
+  red=""
+  green=""
+  yellow=""
+  blue=""
+  purple=""
+  tan=""
+fi
+
+#
+# Headers and Logging
+#
+_omb_log_header()    { printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@"; }
+_omb_log_arrow()     { printf "➜ %s\n" "$@"; }
+_omb_log_success()   { printf "${green}✔ %s${reset}\n" "$@"; }
+_omb_log_error()     { printf "${red}✖ %s${reset}\n" "$@"; }
+_omb_log_warning()   { printf "${tan}➜ %s${reset}\n" "$@"; }
+_omb_log_underline() { printf "${underline}${bold}%s${reset}\n" "$@"; }
+_omb_log_bold()      { printf "${bold}%s${reset}\n" "$@"; }
+_omb_log_note()      { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"; }
+
+#
+# USAGE FOR SEEKING CONFIRMATION
+# seek_confirmation "Ask a question"
+# Credit: https://github.com/kevva/dotfiles
+#
+# if is_confirmed; then
+#   some action
+# else
+#   some other action
+# fi
+#
+seek_confirmation() {
+  printf "\\n${bold}%s${reset}" "$@"
+  read -p " (y/n) " -n 1
+  printf "\\n"
+}
+
+# Test whether the result of an 'ask' is a confirmation
+is_confirmed() {
+  [[ $REPLY =~ ^[Yy]$ ]]
+}
 
 #
 # Test which OS the user runs

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Bail out early if non-interactive
-case $- in
-  *i*) ;;
-    *) return;;
-esac
+if [[ $- != *i* ]]; then
+  printf 'oh-my-bash: Shell is not interactive.\n' >&2
+  return 1
+fi
 
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
-  env OSH=$OSH DISABLE_UPDATE_PROMPT=$DISABLE_UPDATE_PROMPT bash -f $OSH/tools/check_for_upgrade.sh
+  env OSH="$OSH" DISABLE_UPDATE_PROMPT="$DISABLE_UPDATE_PROMPT" bash -f "$OSH"/tools/check_for_upgrade.sh
 fi
 
 # Initializes Oh My Bash
