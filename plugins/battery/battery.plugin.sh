@@ -62,7 +62,8 @@ battery_percentage(){
   if command_exists upower;
   then
     local UPOWER_OUTPUT=$(_omb_plugin_battery__upower_print_info | sed -n 's/.*percentage[:[:blank:]]*\([0-9%]\{1,\}\)$/\1/p')
-    echo ${UPOWER_OUTPUT: : -1}
+    [[ $UPOWER_OUTPUT ]] &&
+      echo "${UPOWER_OUTPUT::-1}"
   elif command_exists acpi;
   then
     local ACPI_OUTPUT=$(acpi -b)
