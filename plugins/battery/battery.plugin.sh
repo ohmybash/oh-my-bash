@@ -55,10 +55,10 @@ ac_adapter_disconnected(){
   fi
 }
 
+## @fn battery_percentage
+##   @about 'displays battery charge as a percentage of full (100%)'
+##   @group 'battery'
 battery_percentage(){
-  about 'displays battery charge as a percentage of full (100%)'
-  group 'battery'
-
   if command_exists upower;
   then
     local UPOWER_OUTPUT=$(_omb_plugin_battery__upower_print_info | sed -n 's/.*percentage[:[:blank:]]*\([0-9%]\{1,\}\)$/\1/p')
@@ -128,10 +128,10 @@ battery_percentage(){
   fi
 }
 
+## @fn battery_charge
+##   @about 'graphical display of your battery charge'
+##   @group 'battery'
 battery_charge(){
-  about 'graphical display of your battery charge'
-  group 'battery'
-
   # Full char
   local F_C='▸'
   # Depleted char
