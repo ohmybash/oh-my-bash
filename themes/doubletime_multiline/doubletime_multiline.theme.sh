@@ -2,7 +2,7 @@
 
 source "$OSH/themes/doubletime/doubletime.theme.sh"
 
-function prompt_setter() {
+function _omb_theme_PROMPT_COMMAND() {
   # Save history
   history -a
   history -c
@@ -15,4 +15,4 @@ $(doubletime_scm_prompt)$reset_color $ "
   PS4='+ '
 }
 
-_omb_util_add_prompt_command prompt_setter
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

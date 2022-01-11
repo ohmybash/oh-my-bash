@@ -181,7 +181,7 @@ function limited_pwd() {
 }
 
 # Displays the current prompt
-function prompt() {
+function _omb_theme_PROMPT_COMMAND() {
     local UC=$USER_COLOR
     ((UID == 0)) && UC=$SUPERUSER_COLOR
 
@@ -194,4 +194,4 @@ function prompt() {
     PS4='+ '
 }
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

@@ -17,7 +17,7 @@ function git_short_sha() {
   SHA=$(git rev-parse --short HEAD 2> /dev/null) && echo "$GIT_SHA_PREFIX$SHA$GIT_SHA_SUFFIX"
 }
 
-function prompt() {
+function _omb_theme_PROMPT_COMMAND() {
     local return_status=""
     local ruby="${red}$(_omb_prompt_print_ruby_env)${reset_color}"
     local user_host="${green}\h${reset_color}"
@@ -32,4 +32,4 @@ function prompt() {
     PS1="\n${n_commands} ${user_host} ${prompt_symbol} ${ruby} ${open}${current_path}${git_branch}${close}${return_status}\n${prompt_char}"
 }
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

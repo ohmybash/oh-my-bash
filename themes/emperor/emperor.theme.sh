@@ -33,10 +33,10 @@ __emperor_clock() {
   clock_prompt
 }
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
     PS1="\n$(__emperor_clock)${purple}\h ${reset_color}in ${prompt_color}\w\n${bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${reset_color} "
 }
 
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%H "}
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

@@ -24,7 +24,7 @@ scm_prompt() {
     fi
 }
 
-pure_prompt() {
+_omb_theme_PROMPT_COMMAND() {
     ps_host="${green}\h${normal}";
     ps_user_mark="${bold}\$${normal}";
     ps_root_mark="${normal}§"
@@ -39,4 +39,4 @@ pure_prompt() {
     esac
 }
 
-_omb_util_add_prompt_command pure_prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

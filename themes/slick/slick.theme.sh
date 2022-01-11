@@ -54,7 +54,7 @@ modern_scm_prompt() {
         fi
 }
 
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
 
    case $HOSTNAME in
     "clappy"* ) my_ps_host="${green}\h${normal}";
@@ -84,4 +84,4 @@ PS2="> "
 
 
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

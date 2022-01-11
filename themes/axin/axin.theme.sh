@@ -33,10 +33,10 @@ else
     RESET="\033[m"
 fi
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
   PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]@ \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\[$SCM_THEME_PROMPT_PREFIX\]$(clock_prompt) \[$PURPLE\]\$(scm_prompt_info) \n\$ \[$RESET\]"
 }
 
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"${white}"}
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

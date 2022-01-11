@@ -99,7 +99,7 @@ my_ve(){
     echo "";
     }
 
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
 
     my_ps_host="$BOLD$ORANGE\h${normal}";
     # yes, these are the the same for now ...
@@ -128,4 +128,4 @@ PS2="└─▪ "
 
 
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

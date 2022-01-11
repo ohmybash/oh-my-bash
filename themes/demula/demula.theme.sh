@@ -91,7 +91,7 @@ safe_battery_charge() {
 }
 
 # -------------------------------------------------------------- PROMPT OUTPUT
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
   local LAST_COMMAND_FAILED=$(mitsuhikos_lastcommandfailed)
   local SAVE_CURSOR='\033[s'
   local RESTORE_CURSOR='\033[u'
@@ -126,4 +126,4 @@ ${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
 }
 
 # Runs prompt (this bypasses oh-my-bash $PROMPT setting)
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

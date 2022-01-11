@@ -17,7 +17,7 @@ __tonka_clock() {
   fi
 }
 
-prompt_setter() {
+_omb_theme_PROMPT_COMMAND() {
 
 #   Named "Tonka" because of the colour scheme
 local WHITE="\[\033[1;37m\]"
@@ -49,7 +49,7 @@ PS2="$LIGHT_BLUE-$YELLOW-$YELLOW-$NO_COLOUR "
 
 }
 
-_omb_util_add_prompt_command prompt_setter
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 THEME_SHOW_CLOCK=${THEME_SHOW_CLOCK:-"true"}
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"\[\033[1;33m\]"}

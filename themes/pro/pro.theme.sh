@@ -15,8 +15,8 @@ function git_prompt_info {
   echo -e "$SCM_PREFIX$SCM_BRANCH$SCM_STATE$SCM_SUFFIX"
 }
 
-function prompt() {
+function _omb_theme_PROMPT_COMMAND() {
   PS1="\h: \W $(scm_prompt_info)${reset_color} $ "
 }
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

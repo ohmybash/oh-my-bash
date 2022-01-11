@@ -11,7 +11,7 @@ _omb_theme_half_way_prompt_scm() {
   fi
 }
 
-prompt_command() {
+_omb_theme_PROMPT_COMMAND() {
   local ps_username="${purple}\u${normal}"
   local ps_path="${green}\w${normal}"
   local ps_user_mark="${orange}λ${normal}"
@@ -19,4 +19,4 @@ prompt_command() {
   PS1="$ps_username in $ps_path$(_omb_theme_half_way_prompt_scm) $ps_user_mark "
 }
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

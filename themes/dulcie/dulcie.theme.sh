@@ -23,7 +23,7 @@ dulcie_background() {
   echo -en "\[\e[48;5;${1}m\]"
 }
 
-dulcie_prompt() {
+_omb_theme_PROMPT_COMMAND() {
   color_user_root=$(dulcie_color 169)
   color_user_nonroot="${green}"
   color_host_local=$(dulcie_color 230)
@@ -95,4 +95,4 @@ dulcie_prompt() {
   PS1="${PS1}${DULCIE_PROMPTCHAR} "
 }
 
-_omb_util_add_prompt_command dulcie_prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

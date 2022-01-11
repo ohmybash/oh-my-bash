@@ -75,6 +75,10 @@
 _omb_version=10000
 _omb_bash_version=$((BASH_VERSINFO[0] * 10000 + BASH_VERSINFO[1] * 100 + BASH_VERSINFO[2]))
 
+function _omb_util_setexit {
+  return "$1"
+}
+
 function _omb_util_defun_print {
   builtin eval -- "function $1 { local $3; $2 \"\$@\" && printf '%s\n' \"\${$3}\"; }"
 }
@@ -246,27 +250,54 @@ else
   }
 fi
 
+_omb_util_prompt_command=()
+_omb_util_prompt_command_hook() {
+  local status=$? lastarg=$_ hook
+  for hook in "${_omb_util_prompt_command[@]}"; do
+    _omb_util_setexit "$status" "$lastarg"
+    eval -- "$hook"
+  done
+}
+
+: "${_omb_util_prompt_command_setup=}"
+
 _omb_util_add_prompt_command() {
-  # Set OS dependent exact match regular expression
-  local prompt_re
-  if [[ $OSTYPE == darwin* ]]; then
-    # macOS
-    prompt_re='[[:<:]]'$1'[[:>:]]'
-  else
-    # Linux, FreeBSD, etc.
-    prompt_re='\<'$1'\>'
-  fi
+  local other
+  for other in "${_omb_util_prompt_command[@]}"; do
+    [[ $1 == "$other" ]] && return 0
+  done
+  _omb_util_prompt_command+=("$1")
 
-  # See if we need to use the overriden version
-  if _omb_util_function_exists append_prompt_command_override; then
-    append_prompt_command_override "$1"
-    return
-  fi
+  if [[ ! $_omb_util_prompt_command_setup ]]; then
+    _omb_util_prompt_command_setup=1
+    local hook=_omb_util_prompt_command_hook
 
-  if [[ $PROMPT_COMMAND =~ $prompt_re ]]; then
-    return
-  else
-    PROMPT_COMMAND="$1${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    # See if we need to use the overriden version
+    if _omb_util_function_exists append_prompt_command_override; then
+      append_prompt_command_override "$hook"
+      return
+    fi
+
+    # Set OS dependent exact match regular expression
+    local prompt_re
+    if [[ $OSTYPE == darwin* ]]; then
+      # macOS
+      prompt_re='[[:<:]]'$hook'[[:>:]]'
+    else
+      # Linux, FreeBSD, etc.
+      prompt_re='\<'$hook'\>'
+    fi
+    [[ $PROMPT_COMMAND =~ $prompt_re ]] && return 0
+
+    if ((_omb_bash_version >= 50100)); then
+      local other
+      for other in "${PROMPT_COMMAND[@]}"; do
+        [[ $hook == "$other" ]] && return 0
+      done
+      PROMPT_COMMAND+=("$hook")
+    else
+      PROMPT_COMMAND="$hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    fi
   fi
 }
 

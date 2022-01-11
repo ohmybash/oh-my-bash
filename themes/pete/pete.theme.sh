@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 
-prompt_setter() {
+_omb_theme_PROMPT_COMMAND() {
   # Save history
   history -a
   history -c
@@ -10,7 +10,7 @@ prompt_setter() {
   PS4='+ '
 }
 
-_omb_util_add_prompt_command prompt_setter
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 SCM_THEME_PROMPT_DIRTY=" ✗"
 SCM_THEME_PROMPT_CLEAN=" ✓"

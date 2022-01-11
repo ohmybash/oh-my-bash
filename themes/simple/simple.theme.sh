@@ -12,7 +12,7 @@ case $TERM in
 	;;
 esac
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
 	PS1="${TITLEBAR}${orange}${reset_color}${green}\w${bold_blue}\[\$(scm_prompt_info)\]${normal} "
 }
 
@@ -22,4 +22,4 @@ SCM_THEME_PROMPT_CLEAN=" ✓"
 SCM_THEME_PROMPT_PREFIX="("
 SCM_THEME_PROMPT_SUFFIX=")"
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

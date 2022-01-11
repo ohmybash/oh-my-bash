@@ -76,7 +76,7 @@ my_prompt_char() {
     fi
 }
 
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
 
     my_ps_host="${STRING_COLOR}\h${normal}";
     my_ps_user="${STRING_COLOR}\u${normal}";
@@ -98,4 +98,4 @@ PS2="└─$(my_prompt_char)"
 
 
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
