@@ -82,7 +82,7 @@ CONDAENV_THEME_PROMPT_SUFFIX='|'
 PYTHON_THEME_PROMPT_PREFIX=' |'
 PYTHON_THEME_PROMPT_SUFFIX='|'
 
-## @fn __omb_prompt_construct_format var value fmt_prefix[:deprecated]
+## @fn _omb_prompt_format var value fmt_prefix[:deprecated]
 ##   @param[in] var
 ##   @param[in] value
 ##   @param[in] fmt_prefix
