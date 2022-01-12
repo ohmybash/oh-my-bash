@@ -143,8 +143,9 @@ _omb_install_main() {
 
   printf "${BLUE}Looking for an existing bash config...${NORMAL}\n"
   if [[ -f ~/.bashrc || -h ~/.bashrc ]]; then
-    printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to ~/.bashrc.pre-oh-my-bash${NORMAL}\n"
-    _omb_install_run mv ~/.bashrc ~/.bashrc.pre-oh-my-bash
+    local bashrc_backup=~/.bashrc.omb-backup-$(date +%Y%m%d%H%M%S)
+    printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to $bashrc_backup${NORMAL}\n"
+    _omb_install_run mv ~/.bashrc "$bashrc_backup"
   fi
 
   printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
