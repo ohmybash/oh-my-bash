@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
 # Bail out early if non-interactive
-if [[ $- != *i* ]]; then
-  printf 'oh-my-bash: Shell is not interactive.\n' >&2
-  return 1
-fi
+#
+# Note: We cannot produce any error messages here because, in some systems,
+# /etc/gdm3/Xsession sources ~/.profile and checks stderr.  If there is any
+# stderr ourputs, it refuses to start the session.
+case $- in
+  *i*) ;;
+    *) return;;
+esac
 
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
