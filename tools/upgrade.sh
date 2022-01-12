@@ -1,29 +1,35 @@
 #!/usr/bin/env bash
 
-# Use colors, but only if connected to a terminal, and that terminal
-# supports them.
-if which tput >/dev/null 2>&1; then
-    ncolors=$(tput colors)
-fi
-if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
-  RED=$(tput setaf 1)
-  GREEN=$(tput setaf 2)
-  YELLOW=$(tput setaf 3)
-  BLUE=$(tput setaf 4)
-  BOLD=$(tput bold)
-  NORMAL=$(tput sgr0)
-else
-  RED=""
-  GREEN=""
-  YELLOW=""
-  BLUE=""
-  BOLD=""
-  NORMAL=""
-fi
+function _omb_upgrade {
+  # Use colors, but only if connected to a terminal, and that terminal
+  # supports them.
+  if type -P tput &>/dev/null; then
+    local ncolors=$(tput colors)
+  fi
 
-printf "${BLUE}%s${NORMAL}\n" "Updating Oh My Bash"
+  if [[ -t 1 && $ncolors && $ncolors -ge 8 ]]; then
+    local RED=$(tput setaf 1)
+    local GREEN=$(tput setaf 2)
+    local YELLOW=$(tput setaf 3)
+    local BLUE=$(tput setaf 4)
+    local BOLD=$(tput bold)
+    local NORMAL=$(tput sgr0)
+  else
+    local RED=""
+    local GREEN=""
+    local YELLOW=""
+    local BLUE=""
+    local BOLD=""
+    local NORMAL=""
+  fi
 
-if git -C "$OSH" pull --rebase --stat origin master; then
+  printf "${BLUE}%s${NORMAL}\n" "Updating Oh My Bash"
+
+  if ! command git -C "$OSH" pull --rebase --stat origin master; then
+    printf "${RED}%s${NORMAL}\n" 'There was an error updating. Try again later?'
+    return 1
+  fi
+
   printf '%s' "$GREEN"
   printf '%s\n' '         __                          __               __  '
   printf '%s\n' '  ____  / /_     ____ ___  __  __   / /_  ____ ______/ /_ '
@@ -33,7 +39,9 @@ if git -C "$OSH" pull --rebase --stat origin master; then
   printf '%s\n' '                        /____/                            '
   printf "${BLUE}%s\n" "Hooray! Oh My Bash has been updated and/or is at the current version."
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
-  exec bash; source ~/.bashrc
-else
-  printf "${RED}%s${NORMAL}\n" 'There was an error updating. Try again later?'
-fi
+  if [[ $- == *i* ]]; then
+    declare -f _omb_util_unload &>/dev/null && _omb_util_unload
+    source ~/.bashrc
+  fi
+}
+_omb_upgrade

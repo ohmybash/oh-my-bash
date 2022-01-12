@@ -11,8 +11,8 @@ case $- in
 esac
 
 # Check for updates on initial load...
-if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
-  env OSH="$OSH" DISABLE_UPDATE_PROMPT="$DISABLE_UPDATE_PROMPT" bash -f "$OSH"/tools/check_for_upgrade.sh
+if [[ $DISABLE_AUTO_UPDATE != true ]]; then
+  source "$OSH"/tools/check_for_upgrade.sh
 fi
 
 # Initializes Oh My Bash

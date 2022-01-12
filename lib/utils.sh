@@ -250,6 +250,17 @@ else
   }
 fi
 
+_omb_util_unload_hook=()
+_omb_util_unload() {
+  local hook
+  for hook in "${_omb_util_unload_hook[@]}"; do
+    eval -- "$hook"
+  done
+}
+
+_omb_util_original_PS1=$PS1
+_omb_util_unload_hook+=('PS1=$_omb_util_original_PS1')
+
 _omb_util_prompt_command=()
 _omb_util_prompt_command_hook() {
   local status=$? lastarg=$_ hook
@@ -259,8 +270,9 @@ _omb_util_prompt_command_hook() {
   done
 }
 
-: "${_omb_util_prompt_command_setup=}"
+_omb_util_unload_hook+=('_omb_util_prompt_command=()')
 
+: "${_omb_util_prompt_command_setup=}"
 _omb_util_add_prompt_command() {
   local other
   for other in "${_omb_util_prompt_command[@]}"; do

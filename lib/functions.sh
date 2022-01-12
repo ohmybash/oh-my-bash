@@ -8,7 +8,7 @@ function uninstall_oh_my_bash() {
 }
 
 function upgrade_oh_my_bash() {
-  env OSH=$OSH sh $OSH/tools/upgrade.sh
+  source "$OSH"/tools/upgrade.sh
 }
 
 function take() {
