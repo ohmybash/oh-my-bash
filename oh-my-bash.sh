@@ -45,7 +45,7 @@ _omb_module_require() {
     completion) locations=({"$OSH_CUSTOM","$OSH"}/completions/"$name".completion.{bash,sh}) ;;
     theme)      locations=({"$OSH_CUSTOM"{,/themes},"$OSH"/themes}/"$name"/"$name".theme.{bash,sh}) ;;
     *)
-      echo "oh-my-bash (module_require): unknown package type '$type'." >&2
+      echo "oh-my-bash (module_require): unknown module type '$type'." >&2
       status=2
       continue ;;
     esac
@@ -58,7 +58,7 @@ _omb_module_require() {
       fi
     done
 
-    echo "oh-my-bash (module_require): package '$type:$name' not found." >&2
+    echo "oh-my-bash (module_require): module '$type:$name' not found." >&2
     status=127
   done
 
