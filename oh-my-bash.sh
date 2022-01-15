@@ -10,6 +10,17 @@ case $- in
     *) return;;
 esac
 
+if [ ! -n "${BASH_VERSION-}" ]; then
+  printf '%s\n' 'oh-my-bash: This is not a Bash. Use OMB with Bash 3.2 or higher.' >&2
+  return 1
+fi
+_omb_bash_version=$((BASH_VERSINFO[0] * 10000 + BASH_VERSINFO[1] * 100 + BASH_VERSINFO[2]))
+if ((_omb_bash_version < 30200)); then
+  printf '%s\n' "oh-my-bash: OMB does not support this version of Bash ($BASH_VERSION)" >&2
+  printf '%s\n' "oh-my-bash: Use OMB with Bash 3.2 or higher" >&2
+  return 1
+fi
+
 # Check for updates on initial load...
 if [[ $DISABLE_AUTO_UPDATE != true ]]; then
   source "$OSH"/tools/check_for_upgrade.sh

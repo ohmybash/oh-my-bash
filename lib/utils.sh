@@ -73,7 +73,6 @@
 ################################################################################
 
 _omb_version=10000
-_omb_bash_version=$((BASH_VERSINFO[0] * 10000 + BASH_VERSINFO[1] * 100 + BASH_VERSINFO[2]))
 
 function _omb_util_setexit {
   return "$1"
@@ -93,7 +92,7 @@ function __omb_util_defun_deprecate__message {
 
 function _omb_util_defun_deprecate {
   local warning=
-  ((_omb_version>=$1)) &&
+  ((_omb_version >= $1)) &&
     warning='__omb_util_defun_deprecate__message "$2" "$3"; '
   builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
 }
