@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! bash oh-my-bash.module
 
 # Various shell options collected in single file
 # taken from bash-sensible and other sources

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! bash oh-my-bash.module
 
 # is x grep argument available?
 _omb_grep_flag_available() {

@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # ------------------------------------------------------------------#
 #          FILE: mbriggs.zsh-theme                                  #
 #            BY: Matt Briggs (matt@mattbriggs.net)                  #

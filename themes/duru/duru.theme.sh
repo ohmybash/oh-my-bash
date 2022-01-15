@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 SCM_THEME_PROMPT_PREFIX="${cyan} on ${green}"
 SCM_THEME_PROMPT_SUFFIX=""

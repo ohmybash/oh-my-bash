@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # This command is used a LOT both below and in daily life
 alias k=kubectl
 

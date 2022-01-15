@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # n0qorg theme by Florian Baumann <flo@noqqe.de>
 
 ## look-a-like

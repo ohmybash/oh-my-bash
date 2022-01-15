@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # defaults
 # Bash command line completion for defaults
 #

@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # Emoji-based theme to display source control management and
 # virtual environment info beside the ordinary bash prompt.

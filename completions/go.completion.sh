@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # bash completion for go tool
 # https://github.com/thomasf/go-bash-completion

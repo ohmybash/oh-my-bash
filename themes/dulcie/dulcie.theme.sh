@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # Simplistic one-liner theme to display source control management info beside
 # the ordinary Linux bash prompt.

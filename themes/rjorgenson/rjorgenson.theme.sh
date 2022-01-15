@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # port of zork theme
 
 # set colors for use throughout the prompt

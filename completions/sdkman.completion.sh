@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 _sdkman_complete()
 {
   local CANDIDATES

@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 #
 # Based on 'bobby' theme with the addition of python_venv
 #

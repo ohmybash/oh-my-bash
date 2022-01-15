@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! bash oh-my-bash.module
 ############################---Description---###################################
 #                                                                              #
 # Summary       : A collection of handy utilities and functions for bash       #

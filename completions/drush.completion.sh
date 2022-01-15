@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 #
 # bash completion support for Drush:
 #   https://github.com/drush-ops/drush

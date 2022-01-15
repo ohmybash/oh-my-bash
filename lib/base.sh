@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! bash oh-my-bash.module
 #  ---------------------------------------------------------------------------
 #
 #  Description:  This file holds all base BASH functions

@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # Borrowed from grunt-cli
 # http://gruntjs.com/
 #

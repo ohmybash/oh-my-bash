@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # Axin Bash Prompt, inspired by theme "Sexy" and "Bobby"
 # thanks to them

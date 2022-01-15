@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 ############################---Description---###################################
 #                                                                              #
 # Summary       : Show a progress bar GUI on terminal platform                 #

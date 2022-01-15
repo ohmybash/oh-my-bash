@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # zitron theme by Florian Baumann <flo@noqqe.de>
 
 ## git-theme

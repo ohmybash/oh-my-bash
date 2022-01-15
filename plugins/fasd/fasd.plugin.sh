@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # Initialize fasd, without setting up the prompt hook, which
 # we want to be handled by oh-my-bash.

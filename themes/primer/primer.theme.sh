@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # based of the candy theme, but minimized by odbol
 function prompt_command() {

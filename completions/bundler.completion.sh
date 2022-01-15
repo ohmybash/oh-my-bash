@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # bash completion for the `bundle` command.
 #
 # Copyright (c) 2011-2013 Daniel Luz <dev at mernen dot com>.

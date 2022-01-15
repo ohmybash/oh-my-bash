@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! bash oh-my-bash.module
 
 CLOCK_CHAR_THEME_PROMPT_PREFIX=''
 CLOCK_CHAR_THEME_PROMPT_SUFFIX=''

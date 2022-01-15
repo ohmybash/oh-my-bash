@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # Bash completion script for homesick
 #
 # The homebrew bash completion script was used as inspiration.

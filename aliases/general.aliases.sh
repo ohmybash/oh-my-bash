@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 #  ---------------------------------------------------------------------------
 #
 #  Description:  This file holds all general BASH aliases

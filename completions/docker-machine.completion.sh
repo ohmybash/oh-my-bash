@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 #
 # bash completion file for docker-machine commands
 #

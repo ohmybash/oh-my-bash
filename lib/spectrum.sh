@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! bash oh-my-bash.module
 # A script to make using 256 colors in bash less painful.
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from http://github.com/sykora/etc/blob/master/zsh/functions/spectrum/

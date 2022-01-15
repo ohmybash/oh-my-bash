@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 OSH_THEME_GIT_PROMPT_DIRTY="✗"
 OSH_THEME_GIT_PROMPT_CLEAN="✓"

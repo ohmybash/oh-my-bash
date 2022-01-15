@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # Bash completion support for the 'dirs' plugin (commands G, R).
 
 _dirs-complete() {

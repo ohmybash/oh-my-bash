@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # Loads the system's Bash completion modules.
 # If Homebrew is installed (OS X), its Bash completion modules are loaded.

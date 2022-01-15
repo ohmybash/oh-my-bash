@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # scm theming
 SCM_THEME_PROMPT_PREFIX="${yellow}("
 SCM_THEME_PROMPT_SUFFIX=")${normal}"

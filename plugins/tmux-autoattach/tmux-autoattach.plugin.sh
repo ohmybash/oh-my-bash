@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # @chopnico 2021
 #
 # tmux-autoattach.plugin.sh

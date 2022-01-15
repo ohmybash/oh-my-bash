@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # Check if zoxide is installed
 if _omb_util_command_exists zoxide; then

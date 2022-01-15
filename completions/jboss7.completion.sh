@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # Completions for JBoss Application Server 7 (EAP 6)
 # VERSION: 0.6
 # DATE: 2012-10-30

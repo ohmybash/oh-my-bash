@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 # apm-bash-completion is written by Ugur Ozyilmazel
 # repo: https://github.com/vigo/apm-bash-completion

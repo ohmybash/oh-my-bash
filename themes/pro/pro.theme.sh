@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 SCM_THEME_PROMPT_DIRTY=" ${red}✗"
 SCM_THEME_PROMPT_CLEAN=" ${green}✓"

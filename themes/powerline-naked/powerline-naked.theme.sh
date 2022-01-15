@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 
 source "$OSH/themes/powerline-naked/powerline-naked.base.sh"
 

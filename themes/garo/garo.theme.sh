@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 #
 # One line prompt showing the following configurable information
 # for git:

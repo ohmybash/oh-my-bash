@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 SCM_GIT_CHAR="± "
 SCM_HG_CHAR="☿ "
 SCM_SVN_CHAR="⑆ "

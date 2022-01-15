@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # Mairan Bash Prompt, inspired by "Zork"
 
 if tput setaf 1 &> /dev/null; then

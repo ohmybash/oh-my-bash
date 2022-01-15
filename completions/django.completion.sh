@@ -1,4 +1,4 @@
-# -*- mode: bash -*-
+#! bash oh-my-bash.module
 # #########################################################################
 # This bash script adds tab-completion feature to django-admin.py and
 # manage.py.
