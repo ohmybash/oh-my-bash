@@ -21,6 +21,10 @@ if ((_omb_bash_version < 30200)); then
   return 1
 fi
 
+OMB_VERSINFO=(1 0 0 0 master noarch)
+OMB_VERSION="${OMB_VERSINFO[0]}.${OMB_VERSINFO[1]}.${OMB_VERSINFO[2]}(${OMB_VERSINFO[3]})-${OMB_VERSINFO[4]} (${OMB_VERSINFO[5]})"
+_omb_version=$((OMB_VERSINFO[0] * 10000 + OMB_VERSINFO[1] * 100 + OMB_VERSINFO[2]))
+
 # Check for updates on initial load...
 if [[ $DISABLE_AUTO_UPDATE != true ]]; then
   source "$OSH"/tools/check_for_upgrade.sh

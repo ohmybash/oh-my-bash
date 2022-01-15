@@ -17,20 +17,30 @@ elif ((BASH_VERSINFO[0] < 4)); then
   printf "Warning: Why don't you upgrade your Bash to 4 or higher?\n" >&2
 fi
 
+_omb_install_print_version() {
+  local OMB_VERSINFO
+  OMB_VERSINFO=(1 0 0 0 master noarch)
+  printf '%s\n' 'Install script for Oh-My-Bash (https://github.com/ohmybash/oh-my-bash)'
+  printf 'oh-my-bash, version %s.%s.%s(%s)-%s (%s)\n' "${OMB_VERSINFO[@]}"
+}
+
 _omb_install_print_usage() {
   printf '%s\n' \
-    'usage: ./install.sh [--unattended | --help | --dry-run]' \
-    'usage: bash -c "$(< install.sh)" [--unattended | --help | --dry-run]'
+    'usage: ./install.sh [--unattended | --dry-run | --help | --usage | --version]' \
+    'usage: bash -c "$(< install.sh)" [--unattended | --dry-run | --help | --usage |' \
+    '           --version]'
 }
 
 _omb_install_print_help() {
+  _omb_install_print_version
   _omb_install_print_usage
   printf '%s\n' \
-    'Install script for Oh-My-Bash (https://github.com/ohmybash/oh-my-bash)' \
     '' \
     'OPTIONS' \
     '  --help            show this help' \
+    '  --usage           show usage' \
     '  --unattended      attend the meeting' \
+    '  --help            show version' \
     ''
 }
 
@@ -39,8 +49,11 @@ _omb_install_readargs() {
     local arg=$1; shift
     if [[ :$install_opts: != *:literal:* ]]; then
       case $arg in
-      --help | --unattended | --dry-run)
+      --help | --usage | --unattended | --dry-run)
         install_opts+=:${arg#--}
+        continue ;;
+      --version | -v)
+        install_opts+=:version
         continue ;;
       --)
         install_opts+=:literal
@@ -96,12 +109,27 @@ _omb_install_main() {
   local install_opts=
   _omb_install_readargs "$@"
 
+  if [[ :$install_opts: == *:error:* ]]; then
+    printf '\n'
+    install_opts+=:usage
+  fi
   if [[ :$install_opts: == *:help:* ]]; then
     _omb_install_print_help
-    return 0
-  elif [[ :$install_opts: == *:error:* ]]; then
-    _omb_install_print_usage
+    install_opts+=:exit
+  else
+    if [[ :$install_opts: == *:version:* ]]; then
+      _omb_install_print_version
+      install_opts+=:exit
+    fi
+    if [[ :$install_opts: == *:usage:* ]]; then
+      _omb_install_print_usage
+      install_opts+=:exit
+    fi
+  fi
+  if [[ :$install_opts: == *:error:* ]]; then
     return 2
+  elif [[ :$install_opts: == *:exit:* ]]; then
+    return 0
   fi
 
   # Only enable exit-on-error after the non-critical colorization stuff,
