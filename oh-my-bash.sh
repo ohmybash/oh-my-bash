@@ -82,8 +82,9 @@ _omb_module_require_theme()      { _omb_module_require "${@/#/theme:}"; }
 # TIP: Add files you don't want in git to .gitignore
 _omb_module_require_lib utils
 _omb_module_require_lib omb-deprecate
-_omb_util_glob_expand _omb_init_files '{"$OSH","$OSH_CUSTOM"}/lib/*.sh'
+_omb_util_glob_expand _omb_init_files '{"$OSH","$OSH_CUSTOM"}/lib/*.{bash,sh}'
 _omb_init_files=("${_omb_init_files[@]##*/}")
+_omb_init_files=("${_omb_init_files[@]%.bash}")
 _omb_init_files=("${_omb_init_files[@]%.sh}")
 _omb_module_require_lib "${_omb_init_files[@]}"
 unset -v _omb_init_files
