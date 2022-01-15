@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 alias gob='go build'
 alias goc='go clean'

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # Bash completion support for Capistrano.
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}

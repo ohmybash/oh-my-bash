@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # Bash Terraform completion
 
 _terraform()

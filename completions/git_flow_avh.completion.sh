@@ -1,4 +1,4 @@
-#!bash
+# -*- mode: bash -*-
 #
 # git-flow-completion
 # ===================

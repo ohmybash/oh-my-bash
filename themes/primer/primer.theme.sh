@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # based of the candy theme, but minimized by odbol
 function prompt_command() {

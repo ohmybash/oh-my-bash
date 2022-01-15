@@ -1,1 +1,2 @@
+# -*- mode: bash -*-
 PROMPT="\w>>"

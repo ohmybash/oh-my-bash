@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # defaults
 # Bash command line completion for defaults
 #

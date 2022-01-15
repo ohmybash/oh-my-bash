@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 if _omb_util_command_exists brew; then
   _omb_completion_brew_prefix=$(brew --prefix)
   if [[ $_omb_completion_brew_prefix ]]; then

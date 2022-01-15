@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 _sdkman_complete()
 {
   local CANDIDATES

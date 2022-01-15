@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # tmux completion
 # See: http://www.debian-administration.org/articles/317 for how to write more.

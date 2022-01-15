@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # git theming
 ZSH_THEME_GIT_PROMPT_PREFIX="${bold_blue}(${yellow}%B"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%b${bold_blue})${reset_color} "

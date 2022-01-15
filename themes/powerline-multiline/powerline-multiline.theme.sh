@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 source "$OSH/themes/powerline-multiline/powerline-multiline.base.sh"
 

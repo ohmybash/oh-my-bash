@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # Packer (http://www.packer.io) bash completion
 #

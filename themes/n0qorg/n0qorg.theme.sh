@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # n0qorg theme by Florian Baumann <flo@noqqe.de>
 
 ## look-a-like

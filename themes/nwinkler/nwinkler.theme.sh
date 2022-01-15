@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # Two line prompt showing the following information:
 # (time) SCM [username@hostname] pwd (SCM branch SCM status)

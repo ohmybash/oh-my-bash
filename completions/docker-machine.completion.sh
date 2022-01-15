@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 #
 # bash completion file for docker-machine commands
 #

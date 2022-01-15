@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 #
 # One line prompt showing the following configurable information
 # for git:

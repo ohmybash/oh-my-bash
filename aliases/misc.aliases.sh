@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 #  ---------------------------------------------------------------------------
 #
 #  Description:  This file holds many useful BASH aliases and save our lives!

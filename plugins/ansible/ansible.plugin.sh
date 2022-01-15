@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # Functions
 function ansible-version(){
     ansible --version

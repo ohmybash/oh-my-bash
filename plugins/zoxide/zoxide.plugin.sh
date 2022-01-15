@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # Check if zoxide is installed
 if _omb_util_command_exists zoxide; then

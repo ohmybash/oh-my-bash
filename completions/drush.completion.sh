@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 #
 # bash completion support for Drush:
 #   https://github.com/drush-ops/drush

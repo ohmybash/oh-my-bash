@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # bash completion for go tool
 # https://github.com/thomasf/go-bash-completion

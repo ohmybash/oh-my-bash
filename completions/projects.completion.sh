@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 _pj() {
   [ -z "$PROJECT_PATHS" ] && return
   shift

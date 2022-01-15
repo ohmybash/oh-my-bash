@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # scm themeing
 SCM_THEME_PROMPT_DIRTY="×"
 SCM_THEME_PROMPT_CLEAN="✓"

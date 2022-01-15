@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 
 # pip bash completion start
 _pip_completion()

@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # port of zork theme
 
 # set colors for use throughout the prompt

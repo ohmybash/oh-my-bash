@@ -1,4 +1,4 @@
-#!/bin/bash
+# -*- mode: bash -*-
 # Borrowed from grunt-cli
 # http://gruntjs.com/
 #

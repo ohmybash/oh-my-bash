@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # Axin Bash Prompt, inspired by theme "Sexy" and "Bobby"
 # thanks to them

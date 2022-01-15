@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # apm-bash-completion is written by Ugur Ozyilmazel
 # repo: https://github.com/vigo/apm-bash-completion

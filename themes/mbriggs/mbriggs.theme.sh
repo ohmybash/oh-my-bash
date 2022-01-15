@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # ------------------------------------------------------------------#
 #          FILE: mbriggs.zsh-theme                                  #
 #            BY: Matt Briggs (matt@mattbriggs.net)                  #

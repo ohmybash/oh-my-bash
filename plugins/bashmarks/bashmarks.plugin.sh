@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # Copyright (c) 2015, Toan Nguyen - https://nntoan.github.io
 # All rights reserved.
 #

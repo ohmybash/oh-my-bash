@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # Bash completion support for maven
 # inspired from : 
 #  - https://github.com/juven/maven-bash-completion

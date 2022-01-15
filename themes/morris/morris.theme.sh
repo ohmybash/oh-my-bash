@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 
 # prompt theming
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 SCM_THEME_PROMPT_PREFIX=" ${purple}"
 SCM_THEME_PROMPT_SUFFIX=" ${normal}"

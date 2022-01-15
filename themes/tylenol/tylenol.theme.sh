@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 #
 # Based on 'bobby' theme with the addition of python_venv
 #

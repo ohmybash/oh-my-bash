@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 source "$OSH/themes/powerline-naked/powerline-naked.base.sh"
 

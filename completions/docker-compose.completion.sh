@@ -1,4 +1,4 @@
-#!bash
+# -*- mode: bash -*-
 #
 # bash completion for docker-compose
 #

@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # ------------------------------------------------------------------#
 #          FILE: cooperkid.zsh-theme                                #
 #            BY: Alfredo Bejarano                                   #

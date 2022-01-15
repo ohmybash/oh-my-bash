@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # @chopnico 2021
 #
 # tmux-autoattach.plugin.sh

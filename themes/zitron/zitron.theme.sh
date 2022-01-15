@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # zitron theme by Florian Baumann <flo@noqqe.de>
 
 ## git-theme

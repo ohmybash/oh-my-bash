@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 OSH_THEME_GIT_PROMPT_DIRTY="✗"
 OSH_THEME_GIT_PROMPT_CLEAN="✓"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 __tonka_time() {
   THEME_CLOCK_FORMAT="%H%M"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 source "$OSH/themes/doubletime/doubletime.theme.sh"
 

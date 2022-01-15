@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # Install dependencies globally
 alias npmg="npm i -g "
 

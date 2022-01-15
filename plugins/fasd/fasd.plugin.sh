@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # Initialize fasd, without setting up the prompt hook, which
 # we want to be handled by oh-my-bash.

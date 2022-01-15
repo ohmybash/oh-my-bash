@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # Brainy Bash Prompt for Bash-it
 # by MunifTanjim

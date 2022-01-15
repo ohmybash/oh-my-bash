@@ -1,4 +1,4 @@
-#!/bin/bash
+# -*- mode: bash -*-
 
 # (The MIT License)
 #

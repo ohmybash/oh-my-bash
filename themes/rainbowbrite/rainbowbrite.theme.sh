@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 # based off of n0qorg
 # looks like, if you're in a git repo:

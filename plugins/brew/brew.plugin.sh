@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 
 alias brewp='brew pin'
 alias brews='brew list -1'

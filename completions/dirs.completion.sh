@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 # Bash completion support for the 'dirs' plugin (commands G, R).
 
 _dirs-complete() {

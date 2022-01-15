@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # scm theming
 SCM_THEME_PROMPT_PREFIX="${yellow}("
 SCM_THEME_PROMPT_SUFFIX=")${normal}"

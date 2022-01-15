@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 #
 # This theme was obviously inspired a lot by 
 #

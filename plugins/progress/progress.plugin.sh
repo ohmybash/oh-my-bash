@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# -*- mode: bash -*-
 ############################---Description---###################################
 #                                                                              #
 # Summary       : Show a progress bar GUI on terminal platform                 #

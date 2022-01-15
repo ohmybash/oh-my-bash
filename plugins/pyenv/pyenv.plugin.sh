@@ -1,3 +1,4 @@
+# -*- mode: bash -*-
 # @chopnico 2021
 
 if [ -d ~/.pyenv ]; then 
