@@ -231,6 +231,21 @@ pushover () {
   "${PUSHOVERURL}" > /dev/null 2>&1
 }
 
+## @fn _omb_util_get_shopt optnames...
+if ((_omb_bash_version >= 40100)); then
+  _omb_util_get_shopt() { shopt=$BASHOPTS; }
+else
+  _omb_util_get_shopt() {
+    shopt=
+    local opt
+    for opt; do
+      if shopt -q "$opt" &>/dev/null; then
+        shopt=${shopt:+$shopt:}$opt
+      fi
+    done
+  }
+fi
+
 _omb_util_add_prompt_command() {
   # Set OS dependent exact match regular expression
   local prompt_re
@@ -256,7 +271,8 @@ _omb_util_add_prompt_command() {
 }
 
 _omb_util_glob_expand() {
-  local set=$- shopt=$BASHOPTS gignore=$GLOBIGNORE
+  local set=$- shopt gignore=$GLOBIGNORE
+  _omb_util_get_shopt failglob nullglob extglob
 
   shopt -u failglob
   shopt -s nullglob
