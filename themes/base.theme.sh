@@ -438,11 +438,11 @@ _omb_util_defun_print _omb_prompt_{print,get}_rvm rvm
 _omb_util_defun_print _omb_prompt_{print,get}_chruby chruby
 _omb_util_defun_print _omb_prompt_{print,get}_ruby_env ruby_env
 
-_omb_util_defun_deprecate 20000 rbfu_version_prompt   _omb_prompt_print_rbfu
-_omb_util_defun_deprecate 20000 rbenv_version_prompt  _omb_prompt_print_rbenv
-_omb_util_defun_deprecate 20000 rvm_version_prompt    _omb_prompt_print_rvm
-_omb_util_defun_deprecate 20000 chruby_version_prompt _omb_prompt_print_chruby
-_omb_util_defun_deprecate 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
+_omb_deprecate_function 20000 rbfu_version_prompt   _omb_prompt_print_rbfu
+_omb_deprecate_function 20000 rbenv_version_prompt  _omb_prompt_print_rbenv
+_omb_deprecate_function 20000 rvm_version_prompt    _omb_prompt_print_rvm
+_omb_deprecate_function 20000 chruby_version_prompt _omb_prompt_print_chruby
+_omb_deprecate_function 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
 
 function _omb_prompt_get_virtualenv {
   virtualenv=
@@ -484,10 +484,10 @@ _omb_util_defun_print _omb_prompt_{print,get}_python_version python_version
 _omb_util_defun_print _omb_prompt_{print,get}_python_venv python_venv
 _omb_util_defun_print _omb_prompt_{print,get}_python_env python_env
 
-_omb_util_defun_deprecate 20000 virtualenv_prompt     _omb_prompt_print_virtualenv
-_omb_util_defun_deprecate 20000 condaenv_prompt       _omb_prompt_print_condaenv
-_omb_util_defun_deprecate 20000 py_interp_prompt      _omb_prompt_print_python_version
-_omb_util_defun_deprecate 20000 python_version_prompt _omb_prompt_print_python_env
+_omb_deprecate_function 20000 virtualenv_prompt     _omb_prompt_print_virtualenv
+_omb_deprecate_function 20000 condaenv_prompt       _omb_prompt_print_condaenv
+_omb_deprecate_function 20000 py_interp_prompt      _omb_prompt_print_python_version
+_omb_deprecate_function 20000 python_version_prompt _omb_prompt_print_python_env
 
 function git_user_info {
   # support two or more initials, set by 'git pair' plugin
@@ -583,5 +583,5 @@ function aws_profile {
 
 
 # Returns true if $1 is a shell function.
-_omb_util_defun_deprecate 20000 fn_exists _omb_util_function_exists
-_omb_util_defun_deprecate 20000 safe_append_prompt_command _omb_util_add_prompt_command
+_omb_deprecate_function 20000 fn_exists _omb_util_function_exists
+_omb_deprecate_function 20000 safe_append_prompt_command _omb_util_add_prompt_command

@@ -80,21 +80,6 @@ function _omb_util_defun_print {
   builtin eval -- "function $1 { local $3; $2 \"\$@\" && printf '%s\n' \"\${$3}\"; }"
 }
 
-function __omb_util_defun_deprecate__message {
-  local old=$1 new=$2
-  local v=__omb_util_DeprecateFunction_$old; v=${v//[!a-zA-Z0-9_]/'_'}
-  [[ ${!v+set} ]] && return 0
-  printf 'warning (oh-my-bash): %s\n' "\`$old' is deprecated. Use \`$new'." >&2
-  printf -v "$v" done
-}
-
-function _omb_util_defun_deprecate {
-  local warning=
-  ((_omb_version >= $1)) &&
-    warning='__omb_util_defun_deprecate__message "$2" "$3"; '
-  builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
-}
-
 #
 # Test whether a command---either an alias, a keyword, a function, a builtin,
 # or a file---is defined.
