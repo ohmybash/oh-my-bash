@@ -1,184 +1,80 @@
 #! bash oh-my-bash.module
 
-function __ {
-  echo "$@"
+function _omb_theme__construct_sgr {
+  out=
+  local reset=
+  while (($#)); do
+    local next=$1; shift
+    case $next in
+    reset)     reset=0 ;;
+    bold)      out=${out:+$out;}1 ;;
+    faint)     out=${out:+$out;}2 ;;
+    italic)    out=${out:+$out;}3 ;;
+    underline) out=${out:+$out;}4 ;;
+    negative)  out=${out:+$out;}7 ;;
+    crossed)   out=${out:+$out;}8 ;;
+    color)
+      local color=$1; shift
+
+      local side=fg mode=normal
+      case $1 in
+      fg | bg) side=$1; shift ;;
+      esac
+      case $1 in
+      normal | bright) mode=$1; shift ;;
+      esac
+
+      local prefix=3
+      case $side:$mode in
+      fg:normal) prefix=3  ;;
+      bg:normal) prefix=4  ;;
+      fg:bright) prefix=9  ;;
+      bg:bright) prefix=10 ;;
+      esac
+
+      case $color in
+      black)   color=0 ;;
+      red)     color=1 ;;
+      green)   color=2 ;;
+      yellow)  color=3 ;;
+      blue)    color=4 ;;
+      magenta) color=5 ;;
+      cyan)    color=6 ;;
+      white)   color=7 ;;
+      rgb)
+        local r=$1 g=$2 b=$3; shift 3
+        if ((r == g && g == b)); then
+          # gray range above 232
+          color=$((232 + r / 11))
+        else
+          color="8;5;$(((r * 36  + b * 6 + g) / 51 + 16))"
+        fi ;;
+      *) printf '%s\n' "_omb_theme_color: unknown color '$color'" >&2
+         continue ;;
+      esac
+      out=${out:+$out;}$prefix$color ;;
+    '')
+      out="${out:+$out;}$*" ;;
+    *)
+      printf '%s\n' "_omb_theme_color: unknown token '$next'" >&2 ;;
+    esac
+  done
+
+  if [[ $reset ]]; then
+    out=$reset${out:+;$out}
+  fi
 }
 
-function __make_ansi {
-  next=$1; shift
-  echo "\[\e[$(__$next $@)m\]"
+function _omb_theme_color_prompt {
+  local out
+  _omb_theme__construct_sgr "$@"
+  echo "\[\e[${out}m\]"
 }
 
-function __make_echo {
-  next=$1; shift
-  echo "\033[$(__$next $@)m"
-}
-
-
-function __reset {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "0${out:+;${out}}"
-}
-
-function __bold {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "${out:+${out};}1"
-}
-
-function __faint {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "${out:+${out};}2"
-}
-
-function __italic {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "${out:+${out};}3"
-}
-
-function __underline {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "${out:+${out};}4"
-}
-
-function __negative {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "${out:+${out};}7"
-}
-
-function __crossed {
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "${out:+${out};}8"
-}
-
-
-function __color_normal_fg {
-  echo "3$1"
-}
-
-function __color_normal_bg {
-  echo "4$1"
-}
-
-function __color_bright_fg {
-  echo "9$1"
-}
-
-function __color_bright_bg {
-  echo "10$1"
-}
-
-
-function __color_black   {
-  echo "0"
-}
-
-function __color_red   {
-  echo "1"
-}
-
-function __color_green   {
-  echo "2"
-}
-
-function __color_yellow  {
-  echo "3"
-}
-
-function __color_blue  {
-  echo "4"
-}
-
-function __color_magenta {
-  echo "5"
-}
-
-function __color_cyan  {
-  echo "6"
-}
-
-function __color_white   {
-  echo "7"
-}
-
-function __color_rgb {
-  r=$1 && g=$2 && b=$3
-  [[ r == g && g == b ]] && echo $(( $r / 11 + 232 )) && return # gray range above 232
-  echo "8;5;$(( ($r * 36  + $b * 6 + $g) / 51 + 16 ))"
-}
-
-function __color {
-  color=$1; shift
-  case "$1" in
-    fg|bg) side="$1"; shift ;;
-    *) side=fg;;
-  esac
-  case "$1" in
-    normal|bright) mode="$1"; shift;;
-    *) mode=normal;;
-  esac
-  [[ $color == "rgb" ]] && rgb="$1 $2 $3"; shift 3
-
-  next=$1; shift
-  out="$(__$next $@)"
-  echo "$(__color_${mode}_${side} $(__color_${color} $rgb))${out:+;${out}}"
-}
-
-
-function __black   {
-  echo "$(__color black $@)"
-}
-
-function __red   {
-  echo "$(__color red $@)"
-}
-
-function __green   {
-  echo "$(__color green $@)"
-}
-
-function __yellow  {
-  echo "$(__color yellow $@)"
-}
-
-function __blue  {
-  echo "$(__color blue $@)"
-}
-
-function __magenta {
-  echo "$(__color magenta $@)"
-}
-
-function __cyan  {
-  echo "$(__color cyan $@)"
-}
-
-function __white   {
-  echo "$(__color white $@)"
-}
-
-function __rgb {
-  echo "$(__color rgb $@)"
-}
-
-
-function __color_parse {
-  next=$1; shift
-  echo "$(__$next $@)"
-}
-
-function color {
-  echo "$(__color_parse make_ansi $@)"
-}
-
-function echo_color {
-  echo "$(__color_parse make_echo $@)"
+function _omb_theme_color_echo {
+  local out
+  _omb_theme__construct_sgr "$@"
+  echo "\033[${out}m"
 }
 
 # already defined in lib/omb-deprecated.sh
@@ -271,6 +167,9 @@ _omb_term_background_orange=$'\e[101m'
 
 _omb_term_normal=$'\e[0m'
 _omb_term_reset_color=$'\e[39m'
+
+_omb_deprecate_function 20000 color      _omb_theme_color_prompt
+_omb_deprecate_function 20000 echo_color _omb_theme_color_echo
 
 _omb_deprecate_const 20000 black             "$_omb_prompt_black"              "Please use '_omb_prompt_black'."
 _omb_deprecate_const 20000 cyan              "$_omb_prompt_cyan"               "Please use '_omb_prompt_cyan'."
