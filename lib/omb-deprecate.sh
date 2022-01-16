@@ -1,22 +1,242 @@
 #! bash oh-my-bash.module
 
-function _omb_deprecate_function__message {
+function _omb_deprecate_warning {
+  local level=$1 msg=$2
+  local src=${BASH_SOURCE[level+1]} line=${BASH_LINENO[level]} func=${FUNCNAME[level+1]}
+  if [[ $func && $func != source ]]; then
+    func=" ($func)"
+  else
+    func=
+  fi
+  printf '%s\n' "$src:$line$func: $msg"
+}
+
+function _omb_deprecate_function__notify {
   local old=$1 new=$2
-  local v=__omb_util_DeprecateFunction_$old; v=${v//[!a-zA-Z0-9_]/'_'}
+  local v=__omb_deprecate_Function_$old; v=${v//[!a-zA-Z0-9_]/'_'}
   [[ ${!v+set} ]] && return 0
   printf 'warning (oh-my-bash): %s\n' "\`$old' is deprecated. Use \`$new'." >&2
-  printf -v "$v" done
+  printf -v "$v" notified
 }
 
 function _omb_deprecate_function {
   local warning=
   ((_omb_version>=$1)) &&
-    warning='_omb_deprecate_function__message "$2" "$3"; '
+    warning='_omb_deprecate_function__notify "$2" "$3"; '
   builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
 }
 
+## @fn _omb_deprecate_declare version old_name new_name opts arg
+##   @param[in] version
+##     The OMB version starting warning messages.
+##
+##   @param[in] old_name new_name
+##     old and new variable names.  The empty value of new_name indicates that
+##     the old_name is just deprecated, or there is no unique corresponding new
+##     variable.
+##
+##   @param[in] opts
+##     a colon-separated list of the following fields:
+##
+##     sync
+##       detect changes in either of old variable and new variable, and apply
+##       the change to the other.
+##     track
+##       copy from the new variable to the old variable when the value is
+##       changed.
+##
+##   @param[in] arg
+##     When new_name is not specified, arg contains an error message that will
+##     be shown when the old_name is accessed.
+##
 
-# deprecate functions
+## @fn _omb_deprecate_declare__init
+##   @var[in] __ver __old __new __opts __msg
+function _omb_deprecate_declare__init {
+  if [[ ${!__old+set} ]]; then
+    __opts=$__opts:notified
+    if ((_omb_version >= __ver)); then
+      if [[ $__new ]]; then
+        printf '%s\n' "(oh-my-bash) The variable '$__old' is set but has been renamed to '$__new'.  Please use '$__new'."
+      else
+        printf '%s\n' "(oh-my-bash) The variable '$__old' is set but has been deprecated.${__msg+ $__msg}"
+      fi >/dev/tty
+    fi
+    if [[ $__new && ! ${!__new+set} ]]; then
+      printf "$__new" '%s' "${!__old}"
+    fi
+  fi
+}
+if ((_omb_bash_version >= 40300)); then
+  _omb_deprecate_declare=()
+  declare -gA _omb_deprecate_declare_counter=()
+  function _omb_deprecate_declare {
+    local __ver=$1 __old=$2 __new=$3 __opts=$4 __msg=$5
+    _omb_deprecate_declare__init
+
+    unset -n "$__old"
+    unset -v "$__old"
+    if ((_omb_version >= __ver)); then
+      local __index=${#_omb_deprecate_declare[@]}
+      _omb_deprecate_declare[__index]=$__old:$__new:$__msg
+      eval "declare -gn $__old='$__new[_omb_deprecate_declare_counter[$__index,\$BASH_SOURCE,\$LINENO]+=\$(_omb_deprecate_declare__notify $__index),0]'"
+    else
+      eval "declare -gn $__old='$__new'"
+    fi
+  }
+  function _omb_deprecate_declare__notify {
+    local __index=$1 data=${_omb_deprecate_declare[__index]}
+    local __old __new __msg
+    __old=${data%%:*} data=${data#*:}
+    __new=${data%%:*} data=${data#*:}
+    __msg=$data
+    local count=${_omb_deprecate_declare_counter[$__index,${BASH_SOURCE[1]},${BASH_LINENO[0]}]:-0}
+    if ((count == 0)); then
+      if [[ $__new ]]; then
+        _omb_deprecate_warning 1 "(oh-my-bash) The variable '$__old' has been renamed to '$__new'. Please use '$__new'."
+      else
+        _omb_deprecate_warning 1 "(oh-my-bash) The variable '$__old' has been deprecated.${__msg+ $__msg}"
+      fi >/dev/tty
+    fi
+    echo 1
+  }
+else
+  _omb_deprecate_declare=()
+  _omb_deprecate_declare_notify=()
+  _omb_deprecate_declare_value=()
+  function _omb_deprecate_declare {
+    local __ver=$1 __old=$2 __new=$3 __opts=$4 __msg=$5
+    _omb_deprecate_declare__init
+
+    if [[ ! $__new ]]; then
+      # (show warning when used) nothing can be done for bash <= 4.2
+      return 0
+    fi
+
+    local __notify=
+    if ((_omb_version >= __ver)) && [[ :$__opts: != *:notified:* ]]; then
+      __notify=1
+    fi
+
+    printf "$__old" %s "${!__new-}"
+    if [[ :$__opts: == *:track:* ]]; then
+      local __index=${#_omb_deprecate_declare[@]}
+      _omb_deprecate_declare[__index]=track:$__old:$__new:$__msg
+      _omb_deprecate_declare_notify[__index]=$__notify
+    elif [[ :$__opts: == *:sync:* ]]; then
+      local __index=${#_omb_deprecate_declare[@]}
+      _omb_deprecate_declare[__index]=sync:$__old:$__new:$__msg
+      _omb_deprecate_declare_notify[__index]=$__notify
+      _omb_deprecate_declare_value[__index]=${__new}
+    fi
+  }
+  function _omb_deprecate_declare__sync {
+    local __index __pair __type __old __new __msg
+    for __index in "${!_omb_util_deprecate[@]}"; do
+      __pair=${_omb_util_deprecate[__index]}
+      __type=${__pair%%:*} __pair=${__pair#*:}
+      __old=${__pair%%:*} __pair=${__pair#*:}
+      __new=${_pair%%:*} __msg=${__pair#*:}
+
+      [[ ${!__new} != "$__value" || ${!__old} != "$__value" ]] || continue
+
+      # Notify deprecation when the variable 'old_name' has been first changed.
+      if [[ ${!__old+set} && ${!__old} != "$__value" && ${_omb_deprecate_declare_notify[__index]} ]]; then
+        _omb_deprecate_declare_notify[__index]=
+        if [[ $__new ]]; then
+          printf '%s\n' "(oh-my-bash) The variable '$__old' is changed but has been renamed to '$__new'.  Please use '$__new'."
+        else
+          printf '%s\n' "(oh-my-bash) The variable '$__old' is changed but has been deprecated.${__msg+ $__msg}"
+        fi >/dev/tty
+      fi
+
+      case $__type in
+      (sync)
+        local __value=${_omb_util_deprecate_value[__index]} __event=
+        if [[ ! ${!__new+set} || ! ${!__old+set} ]]; then
+          __value=${!__new-${!__old-}} __event=change
+        elif [[ ${!__new} != "$__value" ]]; then
+          __value=${!__new} __event=change
+        elif [[ ${!__old} != "$__value" ]]; then
+          __value=${!__old} __event=change
+        fi
+
+        if [[ $__event ]]; then
+          _omb_util_deprecate_value[__index]=$__value
+          printf -v "$__new" %s "$__value"
+          printf -v "$__old" %s "$__value"
+        fi ;;
+      (track)
+        printf -v "$__old" %s "${!__new-}" ;;
+      esac
+    done
+  }
+  _omb_util_add_prompt_command _omb_deprecate_declare__sync
+fi
+
+if ((_omb_bash_version >= 40300)); then
+  _omb_deprecate_const=()
+  _omb_deprecate_const_value=()
+  declare -gA _omb_deprecate_const_counter=()
+  function _omb_deprecate_const {
+    local __ver=$1 __old=$2 __value=$3 __msg=$4
+    if [[ ${!__old+set} ]]; then
+      return 0
+    fi
+
+    if ((_omb_version >= __ver)); then
+      local __index=${#_omb_deprecate_const[@]}
+      _omb_deprecate_const[__index]=$__old:$__msg
+      _omb_deprecate_const_value[__index]=$__value
+      printf -v "_omb_deprecate_Const_$__old" %s "$__value"
+      eval "declare -gn $__old='_omb_deprecate_Const_$__old[_omb_deprecate_const_counter[$__index,\$BASH_SOURCE,\$LINENO]+=\$(_omb_deprecate_const__notify $__index),0]'"
+    else
+      printf -v "$__old" %s "$__value"
+    fi
+  }
+  function _omb_deprecate_const__notify {
+    local __index=$1
+    local __old=${_omb_deprecate_const[__index]%%:*}
+    local __msg=${_omb_deprecate_const[__index]#*:}
+    local __value=${_omb_deprecate_const_value[__index]}
+    local __ref=_omb_deprecate_Const_$__old
+    if [[ ${!__ref-} == "$__value" ]]; then
+      local count=${_omb_deprecate_const_counter[$__index,${BASH_SOURCE[1]},${BASH_LINENO[0]}]:-0}
+      if ((count == 0)); then
+        _omb_deprecate_warning 1 "(oh-my-bash) The variable '$__old' has been deprecated.${__msg+ $__msg}" >&2
+      fi
+    fi
+    echo 1
+  }
+  function _omb_deprecate_const__sync {
+    local __index __old __curval __compaction=
+    for __index in "${!_omb_deprecate_const[@]}"; do
+      __old=${_omb_deprecate_const[__index]%%:*}
+      [[ $__old ]] || continue
+
+      __ref=_omb_deprecate_Const_$__old
+      __curval=${!__ref-}
+      if [[ $__curval != "${_omb_deprecate_const_value[__index]}" ]]; then
+        _omb_deprecate_const[__index]=
+        _omb_deprecate_const_value[__index]=
+        unset -n "$__old"
+        printf -v "$__old" %s "$__curval"
+      fi
+    done
+  }
+  _omb_util_add_prompt_command _omb_deprecate_const__sync
+else
+  function _omb_deprecate_const {
+    local __ver=$1 __old=$2 __value=$3 __msg=$4
+    if [[ ${!__old+set} ]]; then
+      return 0
+    fi
+    printf -v "$__old" %s "$__value"
+  }
+fi
+
+#------------------------------------------------------------------------------
+# deprecate functions and variables
 
 # oh-my-bash.sh -- These functions were originally used to find
 # "fpath" directories, which are not supported by Bash.
