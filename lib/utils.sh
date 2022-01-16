@@ -126,29 +126,35 @@ _omb_util_function_exists() {
 #
 # Use colors, but only if connected to a terminal, and that terminal
 # supports them.
-if which tput >/dev/null 2>&1; then
-    ncolors=$(tput colors)
-fi
-if [[ -t 1 && $ncolors && ncolors -ge 8 ]]; then
-  bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
-  underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
-  reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
-  red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
-  green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
-  yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-  blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
-  purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
-  tan=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-else
-  bold=""
-  underline=""
-  reset=""
-  red=""
-  green=""
-  yellow=""
-  blue=""
-  purple=""
-  tan=""
+_omb_term_colors=
+_omb_term_bold=
+_omb_term_underline=
+_omb_term_reset=
+_omb_term_black=
+_omb_term_red=
+_omb_term_green=
+_omb_term_yellow=
+_omb_term_blue=
+_omb_term_magenta=
+_omb_term_cyan=
+_omb_term_white=
+_omb_term_purple=
+if _omb_util_binary_exists tput; then
+  _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
+  if [[ -t 1 && $_omb_term_colors && _omb_term_colors -ge 8 ]]; then
+    _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+    _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+    _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+    _omb_term_black=$(tput setaf 0 2>/dev/null || tput AF 0 2>/dev/null)
+    _omb_term_red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
+    _omb_term_green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
+    _omb_term_yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+    _omb_term_blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
+    _omb_term_magenta=$(tput setaf 5 2>/dev/null || tput AF 5 2>/dev/null)
+    _omb_term_cyan=$(tput setaf 6 2>/dev/null || tput AF 6 2>/dev/null)
+    _omb_term_white=$(tput setaf 7 2>/dev/null || tput AF 7 2>/dev/null)
+    _omb_term_purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+  fi
 fi
 
 #
