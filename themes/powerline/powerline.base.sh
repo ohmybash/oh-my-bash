@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Error handling
-if ! command -v info > /dev/null; then	einfo()	{	printf "INFO: %s\n" "$1"	1>&2	;	} fi
+if ! command -v einfo > /dev/null; then	einfo()	{	printf "INFO: %s\n" "$1"	1>&2	;	} fi
 if ! command -v warn > /dev/null; then	warn()	{	printf "WARN: %s\n" "$1"	1>&2	;	} fi
 if ! command -v die > /dev/null; then	die() { printf "FATAL: %s\n" "$2"	1>&2	;	exit "$1"	;	} fi
 
