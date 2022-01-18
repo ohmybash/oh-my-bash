@@ -1,7 +1,7 @@
 #! bash oh-my-bash.module
 
 # Define this here so it can be used by all of the Powerline themes
-THEME_CHECK_SUDO=${THEME_CHECK_SUDO:=true}
+THEME_CHECK_SUDO=${THEME_CHECK_SUDO:=false}
 
 function set_color {
   if [[ "${1}" != "-" ]]; then
