@@ -502,7 +502,7 @@ function git_user_info {
 
 function clock_char {
   CLOCK_CHAR=${THEME_CLOCK_CHAR:-"⌚"}
-  CLOCK_CHAR_COLOR=${THEME_CLOCK_CHAR_COLOR:-"$normal"}
+  CLOCK_CHAR_COLOR=${THEME_CLOCK_CHAR_COLOR:-"$_omb_prompt_normal"}
   SHOW_CLOCK_CHAR=${THEME_SHOW_CLOCK_CHAR:-"true"}
 
   if [[ "${SHOW_CLOCK_CHAR}" = "true" ]]; then
@@ -511,7 +511,7 @@ function clock_char {
 }
 
 function clock_prompt {
-  CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$normal"}
+  CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_normal"}
   CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%H:%M:%S"}
   [ -z $THEME_SHOW_CLOCK ] && THEME_SHOW_CLOCK=${THEME_CLOCK_CHECK:-"true"}
   SHOW_CLOCK=$THEME_SHOW_CLOCK
@@ -555,7 +555,7 @@ function prompt_char {
 
 function battery_char {
     if [[ "${THEME_BATTERY_PERCENTAGE_CHECK}" = true ]]; then
-        echo -e "${bold_red}$(battery_percentage)%"
+        echo -e "${_omb_prompt_bold_red}$(battery_percentage)%"
     fi
 }
 

@@ -16,7 +16,7 @@ function git_prompt_info {
 }
 
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="\h: \W $(scm_prompt_info)${reset_color} $ "
+  PS1="\h: \W $(scm_prompt_info)${_omb_prompt_reset_color} $ "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

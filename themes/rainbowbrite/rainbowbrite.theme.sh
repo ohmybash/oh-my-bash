@@ -11,9 +11,9 @@ _omb_theme_PROMPT_COMMAND() {
   history -c
   history -r
   # displays user@server in purple
-  # PS1="$red$(scm_char) $purple\u@\h$reset_color:$blue\w$yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $black\$$reset_color "
+  # PS1="$red$(scm_char) $purple\u@\h$_omb_prompt_reset_color:$blue\w$yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
   # no user@server
-  PS1="$red$(scm_char) $blue\w$yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $black\$$reset_color "
+  PS1="$red$(scm_char) $blue\w$yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
   PS2='> '
   PS4='+ '
 }

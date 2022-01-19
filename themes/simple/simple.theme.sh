@@ -13,7 +13,7 @@ case $TERM in
 esac
 
 function _omb_theme_PROMPT_COMMAND() {
-	PS1="${TITLEBAR}${orange}${reset_color}${green}\w${bold_blue}\[\$(scm_prompt_info)\]${normal} "
+	PS1="${TITLEBAR}${_omb_prompt_orange}${_omb_prompt_reset_color}${green}\w${_omb_prompt_bold_blue}\[\$(scm_prompt_info)\]${_omb_prompt_normal} "
 }
 
 # scm themeing

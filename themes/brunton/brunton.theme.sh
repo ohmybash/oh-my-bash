@@ -3,16 +3,16 @@
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${bold_red}✗${normal}"
-SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓${normal}"
-SCM_GIT_CHAR="${bold_green}±${normal}"
-SCM_SVN_CHAR="${bold_cyan}⑆${normal}"
-SCM_HG_CHAR="${bold_red}☿${normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
+SCM_GIT_CHAR="${_omb_prompt_bold_green}±${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_red}☿${_omb_prompt_normal}"
 
 is_vim_shell() {
 	if [ ! -z "$VIMRUNTIME" ]
 	then
-		echo "[${cyan}vim shell${normal}]"
+		echo "[${_omb_prompt_cyan}vim shell${_omb_prompt_normal}]"
 	fi
 }
 
@@ -22,15 +22,15 @@ scm_prompt() {
 	then
 		return
 	else
-		echo " $(scm_char) (${white}$(scm_prompt_info)${normal})"
+		echo " $(scm_char) (${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal})"
 	fi
 }
 
 _omb_theme_PROMPT_COMMAND() {
-  PS1="${white}${background_blue} \u${normal}${background_blue}@${red}${background_blue}\h $(clock_prompt) ${reset_color}${normal} $(battery_charge)\n${bold_black}${background_white} \w ${normal}$(scm_prompt)$(is_vim_shell)\n${white}>${normal} "
+  PS1="${_omb_prompt_white}${_omb_prompt_background_blue} \u${_omb_prompt_normal}${_omb_prompt_background_blue}@${red}${_omb_prompt_background_blue}\h $(clock_prompt) ${_omb_prompt_reset_color}${_omb_prompt_normal} $(battery_charge)\n${_omb_prompt_bold_black}${_omb_prompt_background_white} \w ${_omb_prompt_normal}$(scm_prompt)$(is_vim_shell)\n${_omb_prompt_white}>${_omb_prompt_normal} "
 }
 
-THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$blue$background_white"}
+THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$blue$_omb_prompt_background_white"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-" %H:%M:%S"}
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

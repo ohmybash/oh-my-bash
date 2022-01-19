@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 
-SCM_THEME_PROMPT_PREFIX="${cyan} on ${green}"
+SCM_THEME_PROMPT_PREFIX="${_omb_prompt_cyan} on ${green}"
 SCM_THEME_PROMPT_SUFFIX=""
 SCM_THEME_PROMPT_DIRTY=" ${red}with changes"
 SCM_THEME_PROMPT_CLEAN=""
@@ -9,7 +9,7 @@ venv() {
   if [ ! -z "$VIRTUAL_ENV" ]
   then
     local env=$VIRTUAL_ENV
-    echo "${gray} in ${orange}${env##*/} "
+    echo "${gray} in ${_omb_prompt_orange}${env##*/} "
   fi
 }
 
@@ -18,7 +18,7 @@ last_two_dirs() {
 }
 
 _omb_theme_PROMPT_COMMAND() {
-  PS1="${yellow}# ${reset_color}$(last_two_dirs)$(scm_prompt_info)${reset_color}$(venv)${reset_color} ${cyan}\n> ${reset_color}"
+  PS1="${yellow}# ${_omb_prompt_reset_color}$(last_two_dirs)$(scm_prompt_info)${_omb_prompt_reset_color}$(venv)${_omb_prompt_reset_color} ${_omb_prompt_cyan}\n> ${_omb_prompt_reset_color}"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

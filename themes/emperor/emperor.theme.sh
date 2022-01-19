@@ -1,12 +1,12 @@
 #! bash oh-my-bash.module
 
 SCM_THEME_PROMPT_DIRTY=" ${red}✗"
-SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 SCM_THEME_PROMPT_PREFIX=" |"
 SCM_THEME_PROMPT_SUFFIX="${green}|"
 
 GIT_THEME_PROMPT_DIRTY=" ${red}✗"
-GIT_THEME_PROMPT_CLEAN=" ${bold_green}✓"
+GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 GIT_THEME_PROMPT_PREFIX=" ${green}|"
 GIT_THEME_PROMPT_SUFFIX="${green}|"
 
@@ -17,7 +17,7 @@ function get_hour_color {
     hour_color=$red
     min=$(date +%M)
     if [ "$min" -lt "15" ]; then
-        hour_color=$white
+        hour_color=$_omb_prompt_white
     elif [ "$min" -lt "30" ]; then
         hour_color=$green
     elif [ "$min" -lt "45" ]; then
@@ -34,7 +34,7 @@ __emperor_clock() {
 }
 
 function _omb_theme_PROMPT_COMMAND() {
-    PS1="\n$(__emperor_clock)${purple}\h ${reset_color}in ${prompt_color}\w\n${bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${reset_color} "
+    PS1="\n$(__emperor_clock)${purple}\h ${_omb_prompt_reset_color}in ${prompt_color}\w\n${_omb_prompt_bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${_omb_prompt_reset_color} "
 }
 
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%H "}

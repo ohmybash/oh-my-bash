@@ -208,7 +208,7 @@ bigfind() {
 #   -------------------------------------------------------------------
     myip () {
       res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
-      echo -e "Your public IP is: ${echo_bold_green} $res ${echo_normal}"
+      echo -e "Your public IP is: ${_omb_term_bold_green} $res ${_omb_term_normal}"
     }
 
 #   ii:  display useful host related informaton
@@ -233,15 +233,15 @@ bigfind() {
 #   batch_chmod: Batch chmod for all files & sub-directories in the current one
 #   -------------------------------------------------------------------
     batch_chmod() {
-      echo -ne "${echo_bold_blue}Applying 0755 permission for all directories..."
+      echo -ne "${_omb_term_bold_blue}Applying 0755 permission for all directories..."
       (find . -type d -print0 | xargs -0 chmod 0755) &
       spinner
-      echo -ne "${echo_normal}"
+      echo -ne "${_omb_term_normal}"
       
-      echo -ne "${echo_bold_blue}Applying 0644 permission for all files..."
+      echo -ne "${_omb_term_bold_blue}Applying 0644 permission for all files..."
       (find . -type f -print0 | xargs -0 chmod 0644) &
       spinner
-      echo -ne "${echo_normal}"
+      echo -ne "${_omb_term_normal}"
     }
 
 #   usage: disk usage per directory, in Mac OS X and Linux

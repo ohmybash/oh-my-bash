@@ -8,7 +8,7 @@
 # echo -ne "${fg[red]}I am running..."
 # ( my_long_task_running ) &
 # spinner
-# echo -ne "...${reset_color} ${fg[green]}DONE${reset_color}"
+# echo -ne "...${_omb_prompt_reset_color} ${fg[green]}DONE${_omb_prompt_reset_color}"
 #
 
 # This spinner is used when there is a terminal.

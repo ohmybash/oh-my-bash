@@ -3,6 +3,7 @@
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from http://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
 
+_omb_module_require lib:omb-prompt-colors
 
 # typeset in bash does not have associative arrays, declare does in bash 4.0+
 # https://stackoverflow.com/a/6047948
@@ -35,14 +36,14 @@ if [ "${BASH_VERSINFO[0]}" -gt 4 ]; then
   # Show all 256 colors with color number
   function spectrum_ls() {
     for code in {000..255}; do
-      print -P -- "$code: %{$FG[$code]%}$OSH_SPECTRUM_TEXT%{$reset_color%}"
+      print -P -- "$code: %{$FG[$code]%}$OSH_SPECTRUM_TEXT%{$_omb_prompt_reset_color%}"
     done
   }
 
   # Show all 256 colors where the background is set to specific color
   function spectrum_bls() {
     for code in {000..255}; do
-      print -P -- "$code: %{$BG[$code]%}$OSH_SPECTRUM_TEXT%{$reset_color%}"
+      print -P -- "$code: %{$BG[$code]%}$OSH_SPECTRUM_TEXT%{$_omb_prompt_reset_color%}"
     done
   }
 fi

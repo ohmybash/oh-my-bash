@@ -124,7 +124,7 @@ _omb_prompt_background_orange='\[\e[101m\]'
 _omb_prompt_normal='\[\e[0m\]'
 _omb_prompt_reset_color='\[\e[39m\]'
 
-# These colors are meant to be used with `echo -e`
+# These colors are intended to be used with `echo`
 
 # These variables are defined in lib/utils.sh
 #
@@ -170,6 +170,9 @@ _omb_term_background_orange=$'\e[101m'
 
 _omb_term_normal=$'\e[0m'
 _omb_term_reset_color=$'\e[39m'
+
+# used by themes/gallifrey
+_omb_prompt_bold='\[\e[1m\]'
 
 _omb_deprecate_function 20000 color      _omb_theme_color_prompt
 _omb_deprecate_function 20000 echo_color _omb_theme_color_echo

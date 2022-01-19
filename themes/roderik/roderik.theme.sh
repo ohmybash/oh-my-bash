@@ -8,9 +8,9 @@ export PROMPT_DIRTRIM=3
 
 function _omb_theme_PROMPT_COMMAND() {
     if [[ ${EUID} == 0 ]] ; then
-        PS1="[$(clock_prompt)]${yellow}[${red}\u@\h ${green}\w${yellow}]${red}$(__git_ps1 "(%s)")${normal}\\$ "
+        PS1="[$(clock_prompt)]${yellow}[${red}\u@\h ${green}\w${yellow}]${red}$(__git_ps1 "(%s)")${_omb_prompt_normal}\\$ "
     else
-        PS1="[$(clock_prompt)]${yellow}[${cyan}\u@\h ${green}\w${yellow}]${red}$(__git_ps1 "(%s)")${normal}\\$ "
+        PS1="[$(clock_prompt)]${yellow}[${_omb_prompt_cyan}\u@\h ${green}\w${yellow}]${red}$(__git_ps1 "(%s)")${_omb_prompt_normal}\\$ "
     fi
 }
 

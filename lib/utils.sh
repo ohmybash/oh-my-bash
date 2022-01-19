@@ -160,14 +160,14 @@ fi
 #
 # Headers and Logging
 #
-_omb_log_header()    { printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@"; }
+_omb_log_header()    { printf "\n${_omb_term_bold}${purple}==========  %s  ==========${_omb_term_reset}\n" "$@"; }
 _omb_log_arrow()     { printf "➜ %s\n" "$@"; }
-_omb_log_success()   { printf "${green}✔ %s${reset}\n" "$@"; }
-_omb_log_error()     { printf "${red}✖ %s${reset}\n" "$@"; }
-_omb_log_warning()   { printf "${tan}➜ %s${reset}\n" "$@"; }
-_omb_log_underline() { printf "${underline}${bold}%s${reset}\n" "$@"; }
-_omb_log_bold()      { printf "${bold}%s${reset}\n" "$@"; }
-_omb_log_note()      { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"; }
+_omb_log_success()   { printf "${green}✔ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_error()     { printf "${red}✖ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_warning()   { printf "${_omb_term_yellow}➜ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_underline() { printf "${_omb_term_underline}${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
+_omb_log_bold()      { printf "${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
+_omb_log_note()      { printf "${_omb_term_underline}${_omb_term_bold}${blue}Note:${_omb_term_reset}  ${yellow}%s${_omb_term_reset}\n" "$@"; }
 
 #
 # USAGE FOR SEEKING CONFIRMATION
@@ -181,7 +181,7 @@ _omb_log_note()      { printf "${underline}${bold}${blue}Note:${reset}  ${yellow
 # fi
 #
 seek_confirmation() {
-  printf "\\n${bold}%s${reset}" "$@"
+  printf "\\n${_omb_term_bold}%s${_omb_term_reset}" "$@"
   read -p " (y/n) " -n 1
   printf "\\n"
 }

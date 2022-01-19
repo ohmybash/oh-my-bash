@@ -31,7 +31,7 @@ SCM_GIT_SHOW_MINIMAL_INFO=true
 CLOCK_THEME_PROMPT_PREFIX=''
 CLOCK_THEME_PROMPT_SUFFIX=' '
 THEME_SHOW_CLOCK=${THEME_SHOW_CLOCK:-"true"}
-THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$bold_blue"}
+THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_bold_blue"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%I:%M:%S"}
 
 VIRTUALENV_THEME_PROMPT_PREFIX='('
@@ -41,21 +41,21 @@ function _omb_theme_PROMPT_COMMAND() {
     # This needs to be first to save last command return code
     local RC="$?"
 
-    local hostname="${bold_black}\u@\h"
+    local hostname="${_omb_prompt_bold_black}\u@\h"
     local python_venv; _omb_prompt_get_python_venv
-    python_venv=$white$python_venv
+    python_venv=$_omb_prompt_white$python_venv
 
     # Set return status color
     if [[ ${RC} == 0 ]]; then
-        ret_status="${bold_green}"
+        ret_status="${_omb_prompt_bold_green}"
     else
-        ret_status="${bold_red}"
+        ret_status="${_omb_prompt_bold_red}"
     fi
 
     # Append new history lines to history file
     history -a
 
-    PS1="$(clock_prompt)$python_venv${hostname} ${bold_cyan}\W $(scm_prompt_char_info)${ret_status}→ ${normal}"
+    PS1="$(clock_prompt)$python_venv${hostname} ${_omb_prompt_bold_cyan}\W $(scm_prompt_char_info)${ret_status}→ ${_omb_prompt_normal}"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

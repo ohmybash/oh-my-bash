@@ -21,9 +21,9 @@ function _omb_theme_PROMPT_COMMAND() {
 
 # scm theming
 SCM_THEME_PROMPT_DIRTY=" ${red}✗"
-SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 SCM_THEME_PROMPT_PREFIX="${green}("
-SCM_THEME_PROMPT_SUFFIX="${green})${reset_color}"
+SCM_THEME_PROMPT_SUFFIX="${green})${_omb_prompt_reset_color}"
 
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
