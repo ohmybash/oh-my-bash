@@ -265,16 +265,16 @@ _omb_deprecate_const 20000 underline "$_omb_term_underline" "Please use '_omb_te
 _omb_deprecate_const 20000 reset     "$_omb_term_reset"     "Please use '_omb_term_reset'."
 _omb_deprecate_const 20000 tan       "$_omb_term_yellow"    "Please use '_omb_term_yellow'."
 
-_omb_prompt_red=${_omb_term_red:+$'\1'$_omb_term_red$'\2'}
-_omb_prompt_green=${_omb_term_green:+$'\1'$_omb_term_green$'\2'}
-_omb_prompt_yellow=${_omb_term_yellow:+$'\1'$_omb_term_yellow$'\2'}
-_omb_prompt_blue=${_omb_term_blue:+$'\1'$_omb_term_blue$'\2'}
-_omb_prompt_magenta=${_omb_term_magenta:+$'\1'$_omb_term_magenta$'\2'}
-_omb_deprecate_const 20000 red       "$_omb_prompt_red"     "Please use '_omb_term_red' or '_omb_prompt_red'."
-_omb_deprecate_const 20000 green     "$_omb_prompt_green"   "Please use '_omb_term_green' or '_omb_prompt_green'."
-_omb_deprecate_const 20000 yellow    "$_omb_prompt_yellow"  "Please use '_omb_term_yellow' or '_omb_prompt_yellow'."
-_omb_deprecate_const 20000 blue      "$_omb_prompt_blue"    "Please use '_omb_term_blue' or '_omb_prompt_blue'."
-_omb_deprecate_const 20000 purple    "$_omb_prompt_magenta" "Please use '_omb_term_magenta' or '_omb_prompt_magenta'."
+_omb_deprecate_red=${_omb_term_red:+$'\1'$_omb_term_red$'\2'}
+_omb_deprecate_green=${_omb_term_green:+$'\1'$_omb_term_green$'\2'}
+_omb_deprecate_yellow=${_omb_term_yellow:+$'\1'$_omb_term_yellow$'\2'}
+_omb_deprecate_blue=${_omb_term_blue:+$'\1'$_omb_term_blue$'\2'}
+_omb_deprecate_magenta=${_omb_term_magenta:+$'\1'$_omb_term_magenta$'\2'}
+_omb_deprecate_const 20000 red       "$_omb_deprecate_red"     "Please use '_omb_term_red' or '_omb_prompt_red'."
+_omb_deprecate_const 20000 green     "$_omb_deprecate_green"   "Please use '_omb_term_green' or '_omb_prompt_green'."
+_omb_deprecate_const 20000 yellow    "$_omb_deprecate_yellow"  "Please use '_omb_term_yellow' or '_omb_prompt_yellow'."
+_omb_deprecate_const 20000 blue      "$_omb_deprecate_blue"    "Please use '_omb_term_blue' or '_omb_prompt_blue'."
+_omb_deprecate_const 20000 purple    "$_omb_deprecate_magenta" "Please use '_omb_term_magenta' or '_omb_prompt_magenta'."
 
 _omb_deprecate_function 20000 e_header    _omb_log_header
 _omb_deprecate_function 20000 e_arrow     _omb_log_arrow

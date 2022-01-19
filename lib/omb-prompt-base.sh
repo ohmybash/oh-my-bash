@@ -1,5 +1,8 @@
 #! bash oh-my-bash.module
 
+_omb_module_require lib:omb-deprecate
+_omb_module_require lib:omb-prompt-colors
+
 CLOCK_CHAR_THEME_PROMPT_PREFIX=''
 CLOCK_CHAR_THEME_PROMPT_SUFFIX=''
 CLOCK_THEME_PROMPT_PREFIX=''

@@ -1,4 +1,8 @@
 #! bash oh-my-bash.module
+#
+# 2022-01-20 Koichi Murase: renamed from "themes/colours.theme.sh" to "lib/omb-prompt-colors.sh"
+
+_omb_module_require lib:omb-deprecate
 
 function _omb_theme__construct_sgr {
   out=
@@ -77,12 +81,11 @@ function _omb_theme_color_echo {
   echo "\033[${out}m"
 }
 
-# already defined in lib/omb-deprecated.sh
-# @var _omb_prompt_red
-# @var _omb_prompt_green
-# @var _omb_prompt_yellow
-# @var _omb_prompt_blue
-# @var _omb_prompt_magenta
+_omb_prompt_red='\[\e[0;31m\]'
+_omb_prompt_green='\[\e[0;32m\]'
+_omb_prompt_yellow='\[\e[0;33m\]'
+_omb_prompt_blue='\[\e[0;34m\]'
+_omb_prompt_magenta='\[\e[0;35m\]'
 _omb_prompt_black='\[\e[0;30m\]'
 _omb_prompt_cyan='\[\e[0;36m\]'
 _omb_prompt_white='\[\e[0;37m\]'
