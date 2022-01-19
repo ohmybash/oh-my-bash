@@ -129,10 +129,6 @@ for _omb_init_file in "${_omb_init_files[@]}"; do
 done
 unset -v _omb_init_files _omb_init_file
 
-# Load colors first so they can be use in base theme
-source "${OSH}/themes/colours.theme.sh"
-source "${OSH}/themes/base.theme.sh"
-
 # Load the theme
 if [[ $OSH_THEME == random ]]; then
   _omb_util_glob_expand _omb_init_files '"$OSH"/themes/*/*.theme.sh'
