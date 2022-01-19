@@ -25,7 +25,7 @@ dulcie_background() {
 
 _omb_theme_PROMPT_COMMAND() {
   color_user_root=$(dulcie_color 169)
-  color_user_nonroot="${green}"
+  color_user_nonroot="${_omb_prompt_green}"
   color_host_local=$(dulcie_color 230)
   color_host_remote=$(dulcie_color 214)
   color_rootdir=$(dulcie_color 117)
@@ -53,7 +53,7 @@ _omb_theme_PROMPT_COMMAND() {
     DULCIE_WORKINGDIR="${color_workingdir}\W${_omb_prompt_reset_color}"
     DULCIE_PROMPTCHAR="${color_user}"'\$'"${_omb_prompt_reset_color}"
 
-    SCM_THEME_PROMPT_DIRTY=" ${red}✗${_omb_prompt_reset_color}"
+    SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗${_omb_prompt_reset_color}"
     SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
     DULCIE_SCM_BACKGROUND="${background_scm}"
     DULCIE_SCM_DIR_COLOR="${color_rootdir}"

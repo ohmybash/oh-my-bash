@@ -138,9 +138,9 @@ battery_charge(){
   # Depleted char
   local D_C='▹'
   local DEPLETED_COLOR="${_omb_prompt_normal}"
-  local FULL_COLOR="${green}"
-  local HALF_COLOR="${yellow}"
-  local DANGER_COLOR="${red}"
+  local FULL_COLOR="${_omb_prompt_green}"
+  local HALF_COLOR="${_omb_prompt_yellow}"
+  local DANGER_COLOR="${_omb_prompt_red}"
   local BATTERY_OUTPUT="${DEPLETED_COLOR}${D_C}${D_C}${D_C}${D_C}${D_C}"
   local BATTERY_PERC=$(battery_percentage)
 

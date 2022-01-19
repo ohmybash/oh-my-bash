@@ -10,14 +10,14 @@ SCM_THEME_PROMPT_SUFFIX=""
 if [ ! -z $RVM_THEME_PROMPT_COLOR ]; then
     RVM_THEME_PROMPT_COLOR=$(eval echo $`echo ${RVM_THEME_PROMPT_COLOR}`);
 else
-    RVM_THEME_PROMPT_COLOR="${red}"
+    RVM_THEME_PROMPT_COLOR="${_omb_prompt_red}"
 fi
 RVM_THEME_PROMPT_PREFIX="(${RVM_THEME_PROMPT_COLOR}rb${_omb_prompt_normal}: "
 RVM_THEME_PROMPT_SUFFIX=") "
 if [ ! -z $VIRTUALENV_THEME_PROMPT_COLOR ]; then
     VIRTUALENV_THEME_PROMPT_COLOR=$(eval echo $`echo ${VIRTUALENV_THEME_PROMPT_COLOR}`);
 else
-    VIRTUALENV_THEME_PROMPT_COLOR="${green}"
+    VIRTUALENV_THEME_PROMPT_COLOR="${_omb_prompt_green}"
 fi
 VIRTUALENV_THEME_PROMPT_PREFIX="(${VIRTUALENV_THEME_PROMPT_COLOR}py${_omb_prompt_normal}: "
 VIRTUALENV_THEME_PROMPT_SUFFIX=") "
@@ -25,7 +25,7 @@ VIRTUALENV_THEME_PROMPT_SUFFIX=") "
 if [ ! -z $THEME_PROMPT_HOST_COLOR ]; then
     THEME_PROMPT_HOST_COLOR=$(eval echo $`echo ${THEME_PROMPT_HOST_COLOR}`);
 else
-    THEME_PROMPT_HOST_COLOR="$blue"
+    THEME_PROMPT_HOST_COLOR="$_omb_prompt_blue"
 fi
 
 doubletime_scm_prompt() {
@@ -63,7 +63,7 @@ git_prompt_status() {
   elif [ -n "$(echo $git_status_output | grep 'Untracked files')" ]; then
      git_status="${_omb_prompt_bold_cyan}$(scm_prompt_info) +"
   elif [ -n "$(echo $git_status_output | grep 'nothing to commit')" ]; then
-     git_status="${_omb_prompt_bold_green}$(scm_prompt_info) ${green}✓"
+     git_status="${_omb_prompt_bold_green}$(scm_prompt_info) ${_omb_prompt_green}✓"
   else
     git_status="$(scm_prompt_info)"
   fi

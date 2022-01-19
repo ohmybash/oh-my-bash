@@ -68,9 +68,9 @@ my_ve(){
 
 _omb_theme_PROMPT_COMMAND() {
 
-    my_ps_host="${green}\h${_omb_prompt_normal}";
+    my_ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
     # yes, these are the the same for now ...
-    my_ps_host_root="${green}\h${_omb_prompt_normal}";
+    my_ps_host_root="${_omb_prompt_green}\h${_omb_prompt_normal}";
  
     my_ps_user="${_omb_prompt_bold_green}\u${_omb_prompt_normal}"
     my_ps_root="${_omb_prompt_bold_red}\u${_omb_prompt_normal}";

@@ -22,11 +22,11 @@ function randomize_nwinkler {
 
   AVAILABLE_COLORS=(
     "$_omb_prompt_black"
-    "$red"
-    "$green"
-    "$yellow"
-    "$blue"
-    "$purple"
+    "$_omb_prompt_red"
+    "$_omb_prompt_green"
+    "$_omb_prompt_yellow"
+    "$_omb_prompt_blue"
+    "$_omb_prompt_magenta"
     "$_omb_prompt_cyan"
     "$_omb_prompt_white"
     "$_omb_prompt_orange"
@@ -83,8 +83,8 @@ else
   echo
 fi
 
-PROMPT_END_CLEAN="${green}→${_omb_prompt_reset_color}"
-PROMPT_END_DIRTY="${red}→${_omb_prompt_reset_color}"
+PROMPT_END_CLEAN="${_omb_prompt_green}→${_omb_prompt_reset_color}"
+PROMPT_END_DIRTY="${_omb_prompt_red}→${_omb_prompt_reset_color}"
 
 function prompt_end() {
   echo -e "$PROMPT_END"

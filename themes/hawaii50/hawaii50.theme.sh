@@ -44,16 +44,16 @@ ORANGE='\[\e[0;33m\]'
 
 DEFAULT_COLOR="${_omb_prompt_white}"
 
-USER_COLOR="${purple}"
-SUPERUSER_COLOR="${red}"
+USER_COLOR="${_omb_prompt_magenta}"
+SUPERUSER_COLOR="${_omb_prompt_red}"
 MACHINE_COLOR=$ORANGE
 IP_COLOR=$ORANGE
-DIRECTORY_COLOR="${green}"
+DIRECTORY_COLOR="${_omb_prompt_green}"
 
 VE_COLOR="${_omb_prompt_cyan}"
 RVM_COLOR="${_omb_prompt_cyan}"
 
-REF_COLOR="${purple}"
+REF_COLOR="${_omb_prompt_magenta}"
 
 # SCM prompts
 SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"

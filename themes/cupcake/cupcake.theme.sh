@@ -19,7 +19,7 @@ VIRTUALENV_THEME_PROMPT_SUFFIX=""
 # SCM prompts
 SCM_NONE_CHAR=""
 SCM_GIT_CHAR="[±] "
-SCM_GIT_BEHIND_CHAR="${red}↓${_omb_prompt_normal}"
+SCM_GIT_BEHIND_CHAR="${_omb_prompt_red}↓${_omb_prompt_normal}"
 SCM_GIT_AHEAD_CHAR="${_omb_prompt_bold_green}↑${_omb_prompt_normal}"
 SCM_GIT_UNTRACKED_CHAR="⌀"
 SCM_GIT_UNSTAGED_CHAR="${_omb_prompt_bold_yellow}•${_omb_prompt_normal}"
@@ -31,7 +31,7 @@ SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
 # Git status prompts
-GIT_THEME_PROMPT_DIRTY=" ${red}✗${_omb_prompt_normal}"
+GIT_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗${_omb_prompt_normal}"
 GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 GIT_THEME_PROMPT_PREFIX=""
 GIT_THEME_PROMPT_SUFFIX=""

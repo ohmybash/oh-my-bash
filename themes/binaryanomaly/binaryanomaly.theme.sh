@@ -30,7 +30,7 @@ function set_host_color() {
 function set_user_color() {
   case $(id -u) in
     0)
-      printf "${red}"
+      printf "${_omb_prompt_red}"
       ;;
     *)
       printf "${_omb_prompt_cyan}"
@@ -73,7 +73,7 @@ function _omb_theme_PROMPT_COMMAND() {
   ps_uh_separator="${dark_grey}@${_omb_prompt_normal}"
   ps_hostname="$(set_host_color)\h${_omb_prompt_normal}"
 
-  ps_path="${yellow}\w${_omb_prompt_normal}"
+  ps_path="${_omb_prompt_yellow}\w${_omb_prompt_normal}"
   ps_scm_prompt="${light_grey}$(scm_prompt)"
 
   ps_user_mark="${_omb_prompt_normal} ${_omb_prompt_normal}"
@@ -93,8 +93,8 @@ SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
 SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${light_grey}"
-SCM_THEME_PROMPT_CLEAN=" ${green}✓${light_grey}"
-SCM_GIT_CHAR="${green}±${light_grey}"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓${light_grey}"
+SCM_GIT_CHAR="${_omb_prompt_green}±${light_grey}"
 SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${light_grey}"
 SCM_HG_CHAR="${_omb_prompt_bold_red}☿${light_grey}"
 

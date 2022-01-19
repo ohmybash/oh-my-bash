@@ -5,12 +5,12 @@
 #      BASED ON: smt by Stephen Tudor (stephen@tudorstudio.com)     #
 # ------------------------------------------------------------------#
 
-SCM_THEME_PROMPT_DIRTY="${red}⚡${_omb_prompt_reset_color}"
-SCM_THEME_PROMPT_AHEAD="${red}!${_omb_prompt_reset_color}"
-SCM_THEME_PROMPT_CLEAN="${green}✓${_omb_prompt_reset_color}"
+SCM_THEME_PROMPT_DIRTY="${_omb_prompt_red}⚡${_omb_prompt_reset_color}"
+SCM_THEME_PROMPT_AHEAD="${_omb_prompt_red}!${_omb_prompt_reset_color}"
+SCM_THEME_PROMPT_CLEAN="${_omb_prompt_green}✓${_omb_prompt_reset_color}"
 SCM_THEME_PROMPT_PREFIX=" "
 SCM_THEME_PROMPT_SUFFIX=""
-GIT_SHA_PREFIX=" ${yellow}"
+GIT_SHA_PREFIX=" ${_omb_prompt_yellow}"
 GIT_SHA_SUFFIX="${_omb_prompt_reset_color}"
 
 function git_short_sha() {
@@ -19,8 +19,8 @@ function git_short_sha() {
 
 function _omb_theme_PROMPT_COMMAND() {
     local return_status=""
-    local ruby="${red}$(_omb_prompt_print_ruby_env)${_omb_prompt_reset_color}"
-    local user_host="${green}\h${_omb_prompt_reset_color}"
+    local ruby="${_omb_prompt_red}$(_omb_prompt_print_ruby_env)${_omb_prompt_reset_color}"
+    local user_host="${_omb_prompt_green}\h${_omb_prompt_reset_color}"
     local current_path="\w"
     local n_commands="\!"
     local git_branch="$(git_short_sha)$(scm_prompt_info)"

@@ -11,9 +11,9 @@ _omb_theme_PROMPT_COMMAND() {
   history -c
   history -r
   # displays user@server in purple
-  # PS1="$red$(scm_char) $purple\u@\h$_omb_prompt_reset_color:$blue\w$yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
+  # PS1="$_omb_prompt_red$(scm_char) $_omb_prompt_magenta\u@\h$_omb_prompt_reset_color:$_omb_prompt_blue\w$_omb_prompt_yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
   # no user@server
-  PS1="$red$(scm_char) $blue\w$yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
+  PS1="$_omb_prompt_red$(scm_char) $_omb_prompt_blue\w$_omb_prompt_yellow$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
   PS2='> '
   PS4='+ '
 }
@@ -21,9 +21,9 @@ _omb_theme_PROMPT_COMMAND() {
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 SCM_NONE_CHAR='·'
-SCM_THEME_PROMPT_DIRTY=" ${red}✗"
-SCM_THEME_PROMPT_CLEAN=" ${green}✓"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓"
 SCM_THEME_PROMPT_PREFIX=" ("
-SCM_THEME_PROMPT_SUFFIX="${yellow})"
+SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_yellow})"
 RVM_THEME_PROMPT_PREFIX=" ("
 RVM_THEME_PROMPT_SUFFIX=")"

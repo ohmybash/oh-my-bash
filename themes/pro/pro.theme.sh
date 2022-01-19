@@ -1,14 +1,14 @@
 #! bash oh-my-bash.module
 
-SCM_THEME_PROMPT_DIRTY=" ${red}✗"
-SCM_THEME_PROMPT_CLEAN=" ${green}✓"
-SCM_THEME_PROMPT_PREFIX=" ${blue}scm:( "
-SCM_THEME_PROMPT_SUFFIX="${blue} )"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓"
+SCM_THEME_PROMPT_PREFIX=" ${_omb_prompt_blue}scm:( "
+SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_blue} )"
 
-GIT_THEME_PROMPT_DIRTY=" ${red}✗"
-GIT_THEME_PROMPT_CLEAN=" ${green}✓"
-GIT_THEME_PROMPT_PREFIX="${green}git:( "
-GIT_THEME_PROMPT_SUFFIX="${green} )"
+GIT_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓"
+GIT_THEME_PROMPT_PREFIX="${_omb_prompt_green}git:( "
+GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_green} )"
 
 function git_prompt_info {
   git_prompt_vars

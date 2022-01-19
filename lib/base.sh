@@ -214,14 +214,14 @@ bigfind() {
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
     ii() {
-      echo -e "\\nYou are logged on ${red}$HOST"
+      echo -e "\\nYou are logged on ${_omb_term_red}$HOST"
       echo -e "\\nAdditionnal information:$NC " ; uname -a
-      echo -e "\\n${red}Users logged on:$NC " ; w -h
-      echo -e "\\n${red}Current date :$NC " ; date
-      echo -e "\\n${red}Machine stats :$NC " ; uptime
-      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${red}Current network location :$NC " ; scselect
-      echo -e "\\n${red}Public facing IP Address :$NC " ;myip
-      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${red}DNS Configuration:$NC " ; scutil --dns
+      echo -e "\\n${_omb_term_red}Users logged on:$NC " ; w -h
+      echo -e "\\n${_omb_term_red}Current date :$NC " ; date
+      echo -e "\\n${_omb_term_red}Machine stats :$NC " ; uptime
+      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_red}Current network location :$NC " ; scselect
+      echo -e "\\n${_omb_term_red}Public facing IP Address :$NC " ;myip
+      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_red}DNS Configuration:$NC " ; scutil --dns
       echo
     }
 

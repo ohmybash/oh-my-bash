@@ -19,7 +19,7 @@ case $TERM in
 esac
 
 function _omb_theme_PROMPT_COMMAND() {
-    PROMPT='${green}\u${_omb_prompt_normal}@${green}\h${_omb_prompt_normal}:${blue}\w${_omb_prompt_normal}${red}$(prompt_char)$(git_prompt_info)${_omb_prompt_normal}\$ '
+    PROMPT='${_omb_prompt_green}\u${_omb_prompt_normal}@${_omb_prompt_green}\h${_omb_prompt_normal}:${_omb_prompt_blue}\w${_omb_prompt_normal}${_omb_prompt_red}$(prompt_char)$(git_prompt_info)${_omb_prompt_normal}\$ '
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

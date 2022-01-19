@@ -33,7 +33,7 @@ __my_rvm_ruby_version() {
 __my_venv_prompt() {
   if [ ! -z "$VIRTUAL_ENV" ]
   then
-    echo "[${blue}@${_omb_prompt_normal}${VIRTUAL_ENV##*/}]"
+    echo "[${_omb_prompt_blue}@${_omb_prompt_normal}${VIRTUAL_ENV##*/}]"
   fi
 }
 
@@ -57,11 +57,11 @@ modern_scm_prompt() {
 _omb_theme_PROMPT_COMMAND() {
 
    case $HOSTNAME in
-    "clappy"* ) my_ps_host="${green}\h${_omb_prompt_normal}";
+    "clappy"* ) my_ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
             ;;
-    "icekernel") my_ps_host="${red}\h${_omb_prompt_normal}";
+    "icekernel") my_ps_host="${_omb_prompt_red}\h${_omb_prompt_normal}";
             ;;
-    * ) my_ps_host="${green}\h${_omb_prompt_normal}";
+    * ) my_ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
             ;;
     esac
 

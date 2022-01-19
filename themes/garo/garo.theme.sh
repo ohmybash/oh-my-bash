@@ -22,10 +22,10 @@
 #
 
 export SCM_NONE_CHAR=''
-export SCM_THEME_PROMPT_DIRTY=" ${red}✗"
+export SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
 export SCM_THEME_PROMPT_CLEAN=""
-export SCM_THEME_PROMPT_PREFIX="${green}|"
-export SCM_THEME_PROMPT_SUFFIX="${green}|"
+export SCM_THEME_PROMPT_PREFIX="${_omb_prompt_green}|"
+export SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
 export SCM_GIT_SHOW_MINIMAL_INFO=true
 
 export VIRTUALENV_THEME_PROMPT_PREFIX='('

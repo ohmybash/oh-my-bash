@@ -7,13 +7,13 @@ OSH_THEME_GIT_PROMPT_CLEAN="✓"
 _omb_theme_half_way_prompt_scm() {
   local CHAR=$(scm_char)
   if [[ $CHAR != "$SCM_NONE_CHAR" ]]; then
-    printf '%s' " on ${blue}$(git_current_branch)$(parse_git_dirty)${_omb_prompt_normal} "
+    printf '%s' " on ${_omb_prompt_blue}$(git_current_branch)$(parse_git_dirty)${_omb_prompt_normal} "
   fi
 }
 
 _omb_theme_PROMPT_COMMAND() {
-  local ps_username="${purple}\u${_omb_prompt_normal}"
-  local ps_path="${green}\w${_omb_prompt_normal}"
+  local ps_username="${_omb_prompt_magenta}\u${_omb_prompt_normal}"
+  local ps_path="${_omb_prompt_green}\w${_omb_prompt_normal}"
   local ps_user_mark="${_omb_prompt_orange}λ${_omb_prompt_normal}"
 
   PS1="$ps_username in $ps_path$(_omb_theme_half_way_prompt_scm) $ps_user_mark "

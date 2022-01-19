@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 # scm theming
-SCM_THEME_PROMPT_PREFIX="${yellow}("
+SCM_THEME_PROMPT_PREFIX="${_omb_prompt_yellow}("
 SCM_THEME_PROMPT_SUFFIX=")${_omb_prompt_normal}"
 
 SCM_THEME_PROMPT_DIRTY="*"
@@ -25,7 +25,7 @@ scm_prompt() {
 }
 
 _omb_theme_PROMPT_COMMAND() {
-    ps_host="${green}\h${_omb_prompt_normal}";
+    ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
     ps_user_mark="${_omb_prompt_bold}\$${_omb_prompt_normal}";
     ps_root_mark="${_omb_prompt_normal}§"
     ps_path="${_omb_prompt_normal}\w";

@@ -27,10 +27,10 @@ scm_prompt() {
 }
 
 _omb_theme_PROMPT_COMMAND() {
-  PS1="${_omb_prompt_white}${_omb_prompt_background_blue} \u${_omb_prompt_normal}${_omb_prompt_background_blue}@${red}${_omb_prompt_background_blue}\h $(clock_prompt) ${_omb_prompt_reset_color}${_omb_prompt_normal} $(battery_charge)\n${_omb_prompt_bold_black}${_omb_prompt_background_white} \w ${_omb_prompt_normal}$(scm_prompt)$(is_vim_shell)\n${_omb_prompt_white}>${_omb_prompt_normal} "
+  PS1="${_omb_prompt_white}${_omb_prompt_background_blue} \u${_omb_prompt_normal}${_omb_prompt_background_blue}@${_omb_prompt_red}${_omb_prompt_background_blue}\h $(clock_prompt) ${_omb_prompt_reset_color}${_omb_prompt_normal} $(battery_charge)\n${_omb_prompt_bold_black}${_omb_prompt_background_white} \w ${_omb_prompt_normal}$(scm_prompt)$(is_vim_shell)\n${_omb_prompt_white}>${_omb_prompt_normal} "
 }
 
-THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$blue$_omb_prompt_background_white"}
+THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_blue$_omb_prompt_background_white"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-" %H:%M:%S"}
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
