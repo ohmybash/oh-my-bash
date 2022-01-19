@@ -66,7 +66,7 @@ __ps_time() {
   echo "$(clock_prompt)${normal}\n"
 }
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
   ps_reboot="${bright_yellow}$(show_reboot_required)${normal}\n"
 
   ps_username="$(set_user_color)\u${normal}"
@@ -98,4 +98,4 @@ SCM_GIT_CHAR="${green}±${light_grey}"
 SCM_SVN_CHAR="${bold_cyan}⑆${light_grey}"
 SCM_HG_CHAR="${bold_red}☿${light_grey}"
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

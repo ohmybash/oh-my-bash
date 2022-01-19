@@ -5,7 +5,7 @@
 # ± ~/path/to (branch ✓) $
 # in glorious red / blue / yellow color scheme
 
-prompt_setter() {
+_omb_theme_PROMPT_COMMAND() {
   # Save history
   history -a
   history -c
@@ -18,7 +18,7 @@ prompt_setter() {
   PS4='+ '
 }
 
-_omb_util_add_prompt_command prompt_setter
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 SCM_NONE_CHAR='·'
 SCM_THEME_PROMPT_DIRTY=" ${red}✗"

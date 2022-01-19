@@ -285,11 +285,11 @@ __brainy_ps2() {
 	printf "%s%s%s" "${color}" "${__BRAINY_PROMPT_CHAR_PS2}  " "${normal}"
 }
 
-_brainy_prompt() {
+_omb_theme_PROMPT_COMMAND() {
     exitcode="$?"
 
     PS1="$(__brainy_ps1)"
     PS2="$(__brainy_ps2)"
 }
 
-_omb_util_add_prompt_command _brainy_prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

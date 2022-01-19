@@ -13,7 +13,7 @@ GIT_THEME_PROMPT_SUFFIX="${normal})"
 RVM_THEME_PROMPT_PREFIX=""
 RVM_THEME_PROMPT_SUFFIX=""
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
     dtime="$(clock_prompt)"
     user_host="${green}\u@${cyan}\h${normal}"
     current_dir="${bold_blue}\w${normal}"
@@ -30,4 +30,4 @@ function prompt_command() {
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$yellow"}
 THEME_CLOCK_FORMAT=${THEME_TIME_FORMAT:-"%I:%M:%S "}
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

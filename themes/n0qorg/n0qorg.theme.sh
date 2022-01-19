@@ -5,11 +5,11 @@
 # host directory (branch*)»
 # for example:
 # ananas ~/Code/bash-it/themes (master*)»
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
     PS1="${bold_blue}[$(hostname)]${normal} \w${normal} ${bold_white}[$(git_prompt_info)]${normal}» "
 }
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 ## git-theme
 # feel free to change git chars.

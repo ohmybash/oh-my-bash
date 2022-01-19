@@ -7,7 +7,7 @@
 
 _omb_module_require plugin:battery
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
   local status=$?
 
   # added TITLEBAR for updating the tab and window titles with the pwd
@@ -40,4 +40,4 @@ SCM_THEME_PROMPT_PREFIX="${bold_cyan}("
 SCM_THEME_PROMPT_SUFFIX="${bold_cyan})${reset_color}"
 
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

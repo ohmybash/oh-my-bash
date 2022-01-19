@@ -63,7 +63,7 @@ _omb_install_run() {
     printf '%s\n' "$BOLD$GREEN[dryrun]$NORMAL $BOLD$*$NORMAL" >&5
   else
     printf '%s\n' "$BOLD\$ $*$NORMAL" >&5
-    "$@"
+    command "$@"
   fi
 }
 
@@ -124,19 +124,19 @@ _omb_install_main() {
   umask g-w,o-w
 
   printf "${BLUE}Cloning Oh My Bash...${NORMAL}\n"
-  hash git >/dev/null 2>&1 || {
+  type -P git &>/dev/null || {
     echo "Error: git is not installed"
     return 1
   }
   # The Windows (MSYS) Git is not compatible with normal use on cygwin
   if [[ $OSTYPE = cygwin ]]; then
-    if git --version | grep msysgit > /dev/null; then
+    if command git --version | command grep msysgit > /dev/null; then
       echo "Error: Windows/MSYS Git is not supported on Cygwin"
       echo "Error: Make sure the Cygwin git package is installed and is first on the path"
       return 1
     fi
   fi
-  _omb_install_run env git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git "$OSH" || {
+  _omb_install_run git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git "$OSH" || {
     printf "Error: git clone of oh-my-bash repo failed\n"
     return 1
   }

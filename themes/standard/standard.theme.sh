@@ -18,8 +18,8 @@ case $TERM in
 	;;
 esac
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
     PROMPT='${green}\u${normal}@${green}\h${normal}:${blue}\w${normal}${red}$(prompt_char)$(git_prompt_info)${normal}\$ '
 }
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

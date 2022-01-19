@@ -33,7 +33,7 @@ function git_prompt_info {
 }
 
 LAST_PROMPT=""
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
     local new_PS1="${bold_cyan}$(scm_char)${yellow}$(_omb_prompt_print_ruby_env)${green}\w $(scm_prompt_info)"
     local new_prompt=$(PS1="$new_PS1" "$BASH" --norc -i </dev/null 2>&1 | sed -n '${s/^\(.*\)exit$/\1/p;}')
 
@@ -48,4 +48,4 @@ function prompt_command() {
     PS1="${new_PS1}${green}${wrap_char}→${reset_color} "
 }
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

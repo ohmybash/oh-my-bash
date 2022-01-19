@@ -26,11 +26,11 @@ scm_prompt() {
 	fi
 }
 
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
   PS1="${white}${background_blue} \u${normal}${background_blue}@${red}${background_blue}\h $(clock_prompt) ${reset_color}${normal} $(battery_charge)\n${bold_black}${background_white} \w ${normal}$(scm_prompt)$(is_vim_shell)\n${white}>${normal} "
 }
 
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$blue$background_white"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-" %H:%M:%S"}
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

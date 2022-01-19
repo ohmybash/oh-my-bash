@@ -36,7 +36,7 @@ modern_scm_prompt() {
 	fi
 }
 
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
 	if [ $? -ne 0 ]
 	then
 		# Yes, the indenting on these is weird, but it has to be like
@@ -54,4 +54,4 @@ PS2="└─▪ "
 
 
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

@@ -23,7 +23,7 @@ function prompt_end() {
   echo -e "$PROMPT_END"
 }
 
-prompt_setter() {
+_omb_theme_PROMPT_COMMAND() {
   local exit_status=$?
   if [[ $exit_status -eq 0 ]]; then PROMPT_END=$PROMPT_END_CLEAN
     else PROMPT_END=$PROMPT_END_DIRTY
@@ -37,7 +37,7 @@ prompt_setter() {
   PS4='+ '
 }
 
-_omb_util_add_prompt_command prompt_setter
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 SCM_THEME_PROMPT_DIRTY=" ${bold_red}✗${normal}"
 SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓${normal}"

@@ -31,7 +31,7 @@ export SCM_GIT_SHOW_MINIMAL_INFO=true
 export VIRTUALENV_THEME_PROMPT_PREFIX='('
 export VIRTUALENV_THEME_PROMPT_SUFFIX=') '
 
-function prompt_command() {
+function _omb_theme_PROMPT_COMMAND() {
     # This needs to be first to save last command return code
     local RC="$?"
 
@@ -52,4 +52,4 @@ function prompt_command() {
     PS1="$python_venv${hostname} ${bold_cyan}\w $(scm_prompt_char_info)${ret_status}→ ${normal}"
 }
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

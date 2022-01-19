@@ -17,8 +17,8 @@ last_two_dirs() {
   pwd|rev|awk -F / '{print $1,$2}'|rev|sed s_\ _/_|sed "s|$(sed 's,\/,,'<<<$HOME)|~|g"
 }
 
-prompt() {
+_omb_theme_PROMPT_COMMAND() {
   PS1="${yellow}# ${reset_color}$(last_two_dirs)$(scm_prompt_info)${reset_color}$(venv)${reset_color} ${cyan}\n> ${reset_color}"
 }
 
-_omb_util_add_prompt_command prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

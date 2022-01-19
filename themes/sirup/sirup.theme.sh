@@ -13,9 +13,9 @@ function _omb_theme_sirup_rubygem {
   [[ $full ]] && echo "$full"
 }
  
-function prompt_command {
+function _omb_theme_PROMPT_COMMAND {
   # Check http://github.com/Sirupsen/dotfiles for screenshot
   PS1="$blue\W/$bold_blue$(_omb_theme_sirup_rubygem)$bold_green$(__git_ps1 " (%s)") ${normal}$ "
 }
 
-_omb_util_add_prompt_command prompt_command
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

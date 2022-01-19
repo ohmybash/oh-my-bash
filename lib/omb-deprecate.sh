@@ -32,3 +32,12 @@ _omb_util_defun_deprecate 20000 e_warning   _omb_log_warning
 _omb_util_defun_deprecate 20000 e_underline _omb_log_underline
 _omb_util_defun_deprecate 20000 e_bold      _omb_log_bold
 _omb_util_defun_deprecate 20000 e_note      _omb_log_note
+
+# themes/*
+_omb_util_defun_deprecate 20000 prompt_command  _omb_theme_PROMPT_COMMAND
+_omb_util_defun_deprecate 20000 prompt          _omb_theme_PROMPT_COMMAND
+_omb_util_defun_deprecate 20000 prompt_setter   _omb_theme_PROMPT_COMMAND
+_omb_util_defun_deprecate 20000 pure_setter     _omb_theme_PROMPT_COMMAND # pure, gallifrey
+_omb_util_defun_deprecate 20000 dulcie_setter   _omb_theme_PROMPT_COMMAND # dulcie
+_omb_util_defun_deprecate 20000 _brainy_setter  _omb_theme_PROMPT_COMMAND # brainy
+_omb_util_defun_deprecate 20000 set_bash_prompt _omb_theme_PROMPT_COMMAND # agnoster
