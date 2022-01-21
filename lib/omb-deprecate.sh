@@ -2,27 +2,32 @@
 
 function _omb_deprecate_warning {
   local level=$1 msg=$2
-  local src=${BASH_SOURCE[level+1]} line=${BASH_LINENO[level]} func=${FUNCNAME[level+1]}
+  local sep=$_omb_term_cyan:
+  local src=$_omb_term_magenta${BASH_SOURCE[level+1]}
+  local line=$_omb_term_green${BASH_LINENO[level]}
+  local func=${FUNCNAME[level+1]}
   if [[ $func && $func != source ]]; then
-    func=" ($func)"
+    func=" $_omb_term_cyan($_omb_term_blue$func$_omb_term_cyan)"
   else
     func=
   fi
-  printf '%s\n' "$src:$line$func: $msg"
+  printf '%s\n' "$src$sep$line$func$sep$_omb_term_reset $msg"
 }
 
 function _omb_deprecate_function__notify {
   local old=$1 new=$2
   local v=__omb_deprecate_Function_$old; v=${v//[!a-zA-Z0-9_]/'_'}
   [[ ${!v+set} ]] && return 0
-  printf 'warning (oh-my-bash): %s\n' "\`$old' is deprecated. Use \`$new'." >&2
+  local esc_old=$_omb_term_bold_red$old$_omb_term_reset
+  local esc_new=$_omb_term_bold_blue$new$_omb_term_reset
+  _omb_deprecate_warning 2 "The function '$esc_old' is deprecated. Please use '$esc_new'." >&2
   printf -v "$v" notified
 }
 
 function _omb_deprecate_function {
   local warning=
-  ((_omb_version>=$1)) &&
-    warning='_omb_deprecate_function__notify "$2" "$3"; '
+  ((_omb_version >= $1)) &&
+    warning="_omb_deprecate_function__notify '$2' '$3'; "
   builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
 }
 
@@ -57,9 +62,9 @@ function _omb_deprecate_declare__init {
     __opts=$__opts:notified
     if ((_omb_version >= __ver)); then
       if [[ $__new ]]; then
-        printf '%s\n' "(oh-my-bash) The variable '$__old' is set but has been renamed to '$__new'.  Please use '$__new'."
+        printf '%s\n' "oh-my-bash: The variable '$__old' is set but has been renamed to '$__new'.  Please use '$__new'."
       else
-        printf '%s\n' "(oh-my-bash) The variable '$__old' is set but has been deprecated.${__msg+ $__msg}"
+        printf '%s\n' "oh-my-bash: The variable '$__old' is set but has been deprecated.${__msg+ $__msg}"
       fi >/dev/tty
     fi
     if [[ $__new && ! ${!__new+set} ]]; then
@@ -86,16 +91,17 @@ if ((_omb_bash_version >= 40300)); then
   }
   function _omb_deprecate_declare__notify {
     local __index=$1 data=${_omb_deprecate_declare[__index]}
-    local __old __new __msg
-    __old=${data%%:*} data=${data#*:}
-    __new=${data%%:*} data=${data#*:}
-    __msg=$data
+    local __old=${data%%:*}; data=${data#*:}
+    local __new=${data%%:*}; data=${data#*:}
+    local __msg=$data
     local count=${_omb_deprecate_declare_counter[$__index,${BASH_SOURCE[1]},${BASH_LINENO[0]}]:-0}
     if ((count == 0)); then
+      local esc_old=$_omb_term_bold_red$__old$_omb_term_reset
+      local esc_new=$_omb_term_bold_blue$__new$_omb_term_reset
       if [[ $__new ]]; then
-        _omb_deprecate_warning 1 "(oh-my-bash) The variable '$__old' has been renamed to '$__new'. Please use '$__new'."
+        _omb_deprecate_warning 1 "The variable '$esc_old' has been renamed to '$esc_new'. Please use '$esc_new'."
       else
-        _omb_deprecate_warning 1 "(oh-my-bash) The variable '$__old' has been deprecated.${__msg+ $__msg}"
+        _omb_deprecate_warning 1 "The variable '$esc_old' has been deprecated.${__msg+ $__msg}"
       fi >/dev/tty
     fi
     echo 1
@@ -143,10 +149,12 @@ else
       # Notify deprecation when the variable 'old_name' has been first changed.
       if [[ ${!__old+set} && ${!__old} != "$__value" && ${_omb_deprecate_declare_notify[__index]} ]]; then
         _omb_deprecate_declare_notify[__index]=
+        local esc_old=$_omb_term_bold_red$__old$_omb_term_reset
+        local esc_new=$_omb_term_bold_blue$__new$_omb_term_reset
         if [[ $__new ]]; then
-          printf '%s\n' "(oh-my-bash) The variable '$__old' is changed but has been renamed to '$__new'.  Please use '$__new'."
+          printf '%s\n' "oh-my-bash: The variable '$esc_old' is changed but has been renamed to '$esc_new'.  Please use '$esc_new'."
         else
-          printf '%s\n' "(oh-my-bash) The variable '$__old' is changed but has been deprecated.${__msg+ $__msg}"
+          printf '%s\n' "oh-my-bash: The variable '$esc_old' is changed but has been deprecated.${__msg+ $__msg}"
         fi >/dev/tty
       fi
 
@@ -203,7 +211,8 @@ if ((_omb_bash_version >= 40300)); then
     if [[ ${!__ref-} == "$__value" ]]; then
       local count=${_omb_deprecate_const_counter[$__index,${BASH_SOURCE[1]},${BASH_LINENO[0]}]:-0}
       if ((count == 0)); then
-        _omb_deprecate_warning 1 "(oh-my-bash) The variable '$__old' has been deprecated.${__msg+ $__msg}" >&2
+        local esc_old=$_omb_term_bold_red$__old$_omb_term_reset
+        _omb_deprecate_warning 1 "The variable '$esc_old' has been deprecated.${__msg+ $__msg}" >&2
       fi
     fi
     echo 1
@@ -235,6 +244,8 @@ else
   }
 fi
 
+_omb_deprecate_msg_please_use="Please use '$_omb_term_bold_blue%s$_omb_term_reset'."
+
 #------------------------------------------------------------------------------
 # deprecate functions and variables
 
@@ -259,22 +270,22 @@ is_alias() {
 # lib/utils.sh -- Logging functions
 _omb_deprecate_function 20000 type_exists _omb_util_binary_exists
 
-_omb_deprecate_const 20000 ncolors   "$_omb_term_colors"    "Please use '_omb_term_colors'."
-_omb_deprecate_const 20000 bold      "$_omb_term_bold"      "Please use '_omb_term_bold'."
-_omb_deprecate_const 20000 underline "$_omb_term_underline" "Please use '_omb_term_underline'."
-_omb_deprecate_const 20000 reset     "$_omb_term_reset"     "Please use '_omb_term_reset'."
-_omb_deprecate_const 20000 tan       "$_omb_term_yellow"    "Please use '_omb_term_yellow'."
+_omb_deprecate_const 20000 ncolors   "$_omb_term_colors"    "${_omb_deprecate_msg_please_use/'%s'/_omb_term_colors}"
+_omb_deprecate_const 20000 bold      "$_omb_term_bold"      "${_omb_deprecate_msg_please_use/'%s'/_omb_term_bold}"
+_omb_deprecate_const 20000 underline "$_omb_term_underline" "${_omb_deprecate_msg_please_use/'%s'/_omb_term_underline}"
+_omb_deprecate_const 20000 reset     "$_omb_term_reset"     "${_omb_deprecate_msg_please_use/'%s'/_omb_term_reset}"
+_omb_deprecate_const 20000 tan       "$_omb_term_yellow"    "${_omb_deprecate_msg_please_use/'%s'/_omb_term_yellow}"
 
 _omb_deprecate_red=${_omb_term_red:+$'\1'$_omb_term_red$'\2'}
 _omb_deprecate_green=${_omb_term_green:+$'\1'$_omb_term_green$'\2'}
 _omb_deprecate_yellow=${_omb_term_yellow:+$'\1'$_omb_term_yellow$'\2'}
 _omb_deprecate_blue=${_omb_term_blue:+$'\1'$_omb_term_blue$'\2'}
 _omb_deprecate_magenta=${_omb_term_magenta:+$'\1'$_omb_term_magenta$'\2'}
-_omb_deprecate_const 20000 red       "$_omb_deprecate_red"     "Please use '_omb_term_red' or '_omb_prompt_red'."
-_omb_deprecate_const 20000 green     "$_omb_deprecate_green"   "Please use '_omb_term_green' or '_omb_prompt_green'."
-_omb_deprecate_const 20000 yellow    "$_omb_deprecate_yellow"  "Please use '_omb_term_yellow' or '_omb_prompt_yellow'."
-_omb_deprecate_const 20000 blue      "$_omb_deprecate_blue"    "Please use '_omb_term_blue' or '_omb_prompt_blue'."
-_omb_deprecate_const 20000 purple    "$_omb_deprecate_magenta" "Please use '_omb_term_magenta' or '_omb_prompt_magenta'."
+_omb_deprecate_const 20000 red       "$_omb_deprecate_red"     "Please use '${_omb_term_bold_blue}_omb_term_red$_omb_term_reset' or '${_omb_term_bold_blue}_omb_prompt_red$_omb_term_reset'."
+_omb_deprecate_const 20000 green     "$_omb_deprecate_green"   "Please use '${_omb_term_bold_blue}_omb_term_green$_omb_term_reset' or '${_omb_term_bold_blue}_omb_prompt_green$_omb_term_reset'."
+_omb_deprecate_const 20000 yellow    "$_omb_deprecate_yellow"  "Please use '${_omb_term_bold_blue}_omb_term_yellow$_omb_term_reset' or '${_omb_term_bold_blue}_omb_prompt_yellow$_omb_term_reset'."
+_omb_deprecate_const 20000 blue      "$_omb_deprecate_blue"    "Please use '${_omb_term_bold_blue}_omb_term_blue$_omb_term_reset' or '${_omb_term_bold_blue}_omb_prompt_blue$_omb_term_reset'."
+_omb_deprecate_const 20000 purple    "$_omb_deprecate_magenta" "Please use '${_omb_term_bold_blue}_omb_term_magenta$_omb_term_reset' or '${_omb_term_bold_blue}_omb_prompt_magenta$_omb_term_reset'."
 
 _omb_deprecate_function 20000 e_header    _omb_log_header
 _omb_deprecate_function 20000 e_arrow     _omb_log_arrow
@@ -288,8 +299,8 @@ _omb_deprecate_function 20000 e_note      _omb_log_note
 # plugins/bashmarks/bashmarks.plugin.sh [ This anyway conflicts with
 #   variables defined by themes (axin, mairan, sexy, etc.) so do not
 #   define fallbacks and warnings. ]
-#_omb_deprecate_const RED   "0;31m" "Please use '\${_omb_term_red:2}'."
-#_omb_deprecate_const GREEN "0;33m" "Please use '\${_omb_term_green:2}'."
+#_omb_deprecate_const RED   "0;31m" "${_omb_deprecate_msg_please_use/'%s'/\${_omb_term_red:2}}"
+#_omb_deprecate_const GREEN "0;33m" "${_omb_deprecate_msg_please_use/'%s'/\${_omb_term_green:2}}"
 
 # themes/*
 _omb_deprecate_function 20000 prompt_command  _omb_theme_PROMPT_COMMAND

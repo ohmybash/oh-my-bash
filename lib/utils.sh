@@ -120,42 +120,65 @@ _omb_util_function_exists() {
   declare -F "$@" &>/dev/null # bash-3.2
 }
 
-
 #
 # Set Colors
 #
 # Use colors, but only if connected to a terminal, and that terminal
 # supports them.
 _omb_term_colors=
-_omb_term_bold=
-_omb_term_underline=
-_omb_term_reset=
-_omb_term_black=
-_omb_term_red=
-_omb_term_green=
-_omb_term_yellow=
-_omb_term_blue=
-_omb_term_magenta=
-_omb_term_cyan=
-_omb_term_white=
-_omb_term_purple=
-if _omb_util_binary_exists tput; then
-  _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
-  if [[ -t 1 && $_omb_term_colors && _omb_term_colors -ge 8 ]]; then
-    _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
-    _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
-    _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
-    _omb_term_black=$(tput setaf 0 2>/dev/null || tput AF 0 2>/dev/null)
-    _omb_term_red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
-    _omb_term_green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
-    _omb_term_yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-    _omb_term_blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
-    _omb_term_magenta=$(tput setaf 5 2>/dev/null || tput AF 5 2>/dev/null)
-    _omb_term_cyan=$(tput setaf 6 2>/dev/null || tput AF 6 2>/dev/null)
-    _omb_term_white=$(tput setaf 7 2>/dev/null || tput AF 7 2>/dev/null)
-    _omb_term_purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
-  fi
+if [[ ! -t 1 ]]; then
+  _omb_term_bold=
+  _omb_term_underline=
+  _omb_term_reset=
+  _omb_term_black=
+  _omb_term_red=
+  _omb_term_green=
+  _omb_term_yellow=
+  _omb_term_blue=
+  _omb_term_magenta=
+  _omb_term_cyan=
+  _omb_term_white=
+  _omb_term_purple=
+elif _omb_util_binary_exists tput &&
+    _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null) &&
+    ((_omb_term_colors >= 8))
+then
+  _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+  _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+  _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+  _omb_term_black=$(tput setaf 0 2>/dev/null || tput AF 0 2>/dev/null)
+  _omb_term_red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
+  _omb_term_green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
+  _omb_term_yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+  _omb_term_blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
+  _omb_term_magenta=$(tput setaf 5 2>/dev/null || tput AF 5 2>/dev/null)
+  _omb_term_cyan=$(tput setaf 6 2>/dev/null || tput AF 6 2>/dev/null)
+  _omb_term_white=$(tput setaf 7 2>/dev/null || tput AF 7 2>/dev/null)
+  _omb_term_purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+else
+  _omb_term_bold=$'\e[1m'
+  _omb_term_underline=$'\e[4m'
+  _omb_term_reset=$'\e[0m'
+  _omb_term_black=$'\e[30m'
+  _omb_term_red=$'\e[31m'
+  _omb_term_green=$'\e[32m'
+  _omb_term_yellow=$'\e[33m'
+  _omb_term_blue=$'\e[34m'
+  _omb_term_magenta=$'\e[35m'
+  _omb_term_cyan=$'\e[36m'
+  _omb_term_white=$'\e[37m'
+  _omb_term_purple=$'\e[38;5;171m'
 fi
+
+_omb_term_bold_black=$_omb_term_bold$_omb_term_black
+_omb_term_bold_red=$_omb_term_bold$_omb_term_red
+_omb_term_bold_green=$_omb_term_bold$_omb_term_green
+_omb_term_bold_yellow=$_omb_term_bold$_omb_term_yellow
+_omb_term_bold_blue=$_omb_term_bold$_omb_term_blue
+_omb_term_bold_magenta=$_omb_term_bold$_omb_term_magenta
+_omb_term_bold_cyan=$_omb_term_bold$_omb_term_cyan
+_omb_term_bold_white=$_omb_term_bold$_omb_term_white
+_omb_term_bold_purple=$_omb_term_bold$_omb_term_purple
 
 #
 # Headers and Logging
