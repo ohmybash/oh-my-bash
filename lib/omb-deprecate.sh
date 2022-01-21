@@ -285,6 +285,12 @@ _omb_deprecate_function 20000 e_underline _omb_log_underline
 _omb_deprecate_function 20000 e_bold      _omb_log_bold
 _omb_deprecate_function 20000 e_note      _omb_log_note
 
+# plugins/bashmarks/bashmarks.plugin.sh [ This anyway conflicts with
+#   variables defined by themes (axin, mairan, sexy, etc.) so do not
+#   define fallbacks and warnings. ]
+#_omb_deprecate_const RED   "0;31m" "Please use '\${_omb_term_red:2}'."
+#_omb_deprecate_const GREEN "0;33m" "Please use '\${_omb_term_green:2}'."
+
 # themes/*
 _omb_deprecate_function 20000 prompt_command  _omb_theme_PROMPT_COMMAND
 _omb_deprecate_function 20000 prompt          _omb_theme_PROMPT_COMMAND
