@@ -272,12 +272,6 @@ bigfind() {
       fi
     }
 
-#   command_exists: checks for existence of a command (0 = true, 1 = false)
-#   -------------------------------------------------------------------
-    command_exists () {
-      type "$1" &> /dev/null ;
-    }
-
 #   pickfrom: picks random line from file
 #   -------------------------------------------------------------------
     pickfrom () {
