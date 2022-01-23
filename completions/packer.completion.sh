@@ -130,7 +130,7 @@ _packer_completion ()
     # Words containing an equal sign get split into tokens in bash > 4, which
     # doesn't come in handy here.
     # This is handled here. bash < 4 does not split.
-    declare -f _get_comp_words_by_ref >/dev/null && _get_comp_words_by_ref -n = cur
+    _omb_util_function_exists _get_comp_words_by_ref && _get_comp_words_by_ref -n = cur
 
     COMPREPLY=()
     local i c=1 command
@@ -157,7 +157,7 @@ _packer_completion ()
     fi
 
     local completion_func="__packer_${command}"
-    declare -f $completion_func >/dev/null && $completion_func
+    _omb_util_function_exists $completion_func && $completion_func
 }
 
 complete -o nospace -F _packer_completion packer

@@ -6,7 +6,7 @@
 
 function_exists()
 {
-	declare -F $1 > /dev/null
+	_omb_util_function_exists $1
 	return $?
 }
 

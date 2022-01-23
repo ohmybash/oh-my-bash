@@ -77,7 +77,7 @@ _omb_theme_PROMPT_COMMAND() {
   printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 
   # Open the new terminal in the same directory
-  declare -f __vte_osc7 > /dev/null && __vte_osc7
+  _omb_util_function_exists __vte_osc7 && __vte_osc7
 
   PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
   if [[ "${DULCIE_MULTILINE}" -eq "1" ]]; then

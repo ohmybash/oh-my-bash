@@ -3,7 +3,7 @@
 # This script complements the completion script that ships with git.
 
 # Check that git tab completion is available
-if declare -F _git > /dev/null; then
+if _omb_util_function_exists _git; then
   # Duplicate and rename the 'list_all_commands' function
   eval "$(declare -f __git_list_all_commands | \
         sed 's/__git_list_all_commands/__git_list_all_commands_without_hub/')"
