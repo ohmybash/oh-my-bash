@@ -81,59 +81,29 @@ function _omb_theme_color_echo {
   echo "\033[${out}m"
 }
 
-_omb_prompt_brown='\[\e[0;31m\]'
-_omb_prompt_green='\[\e[0;32m\]'
-_omb_prompt_olive='\[\e[0;33m\]'
-_omb_prompt_navy='\[\e[0;34m\]'
-_omb_prompt_purple='\[\e[0;35m\]'
-_omb_prompt_black='\[\e[0;30m\]'
-_omb_prompt_teal='\[\e[0;36m\]'
-_omb_prompt_white='\[\e[0;37m\]'
-_omb_prompt_red='\[\e[0;91m\]'
+function _omb_prompt_color_initialize {
+  _omb_prompt_normal='\[\e[0m\]'
+  _omb_prompt_reset_color='\[\e[39m\]'
 
-_omb_prompt_bold_black='\[\e[30;1m\]'
-_omb_prompt_bold_brown='\[\e[31;1m\]'
-_omb_prompt_bold_green='\[\e[32;1m\]'
-_omb_prompt_bold_olive='\[\e[33;1m\]'
-_omb_prompt_bold_navy='\[\e[34;1m\]'
-_omb_prompt_bold_purple='\[\e[35;1m\]'
-_omb_prompt_bold_teal='\[\e[36;1m\]'
-_omb_prompt_bold_white='\[\e[37;1m\]'
-_omb_prompt_bold_red='\[\e[91;1m\]'
+  # used by themes/gallifrey
+  _omb_prompt_bold='\[\e[1m\]'
 
-_omb_prompt_underline_black='\[\e[30;4m\]'
-_omb_prompt_underline_brown='\[\e[31;4m\]'
-_omb_prompt_underline_green='\[\e[32;4m\]'
-_omb_prompt_underline_olive='\[\e[33;4m\]'
-_omb_prompt_underline_navy='\[\e[34;4m\]'
-_omb_prompt_underline_purple='\[\e[35;4m\]'
-_omb_prompt_underline_teal='\[\e[36;4m\]'
-_omb_prompt_underline_white='\[\e[37;4m\]'
-_omb_prompt_underline_red='\[\e[91;4m\]'
+  local -a normal_colors=(black brown green olive navy purple teal silver)
+  local -a bright_colors=(gray red lime yellow blue magenta cyan white)
+  local index
+  for ((index = 0; index < 8; index++)); do
+    printf -v "_omb_prompt_${normal_colors[index]}" %s '\[\e[0;3'"$index"'m\]'
+    printf -v "_omb_prompt_bold_${normal_colors[index]}" %s '\[\e[3'"$index"';1m\]'
+    printf -v "_omb_prompt_underline_${normal_colors[index]}" %s '\[\e[3'"$index"';4m\]'
+    printf -v "_omb_prompt_background_${normal_colors[index]}" %s '\[\e[4'"$index"'m\]'
+    printf -v "_omb_prompt_${bright_colors[index]}" %s '\[\e[0;9'"$index"'m\]'
+    printf -v "_omb_prompt_bold_${bright_colors[index]}" %s '\[\e[9'"$index"';1m\]'
+    printf -v "_omb_prompt_underline_${bright_colors[index]}" %s '\[\e[9'"$index"';4m\]'
+    printf -v "_omb_prompt_background_${bright_colors[index]}" %s '\[\e[10'"$index"'m\]'
+  done
+}
+_omb_prompt_color_initialize
 
-_omb_prompt_background_black='\[\e[40m\]'
-_omb_prompt_background_brown='\[\e[41m\]'
-_omb_prompt_background_green='\[\e[42m\]'
-_omb_prompt_background_olive='\[\e[43m\]'
-_omb_prompt_background_navy='\[\e[44m\]'
-_omb_prompt_background_purple='\[\e[45m\]'
-_omb_prompt_background_teal='\[\e[46m\]'
-_omb_prompt_background_white='\[\e[47;1m\]'
-_omb_prompt_background_red='\[\e[101m\]'
-
-_omb_prompt_normal='\[\e[0m\]'
-_omb_prompt_reset_color='\[\e[39m\]'
-
-# These colors are intended to be used with `echo`
-
-# These variables are defined in "lib/utils.sh"
-# - _omb_term_{,_bold,_underline,_background}{<basic8>,red,white,violet}
-
-_omb_term_normal=$'\e[0m'
-_omb_term_reset_color=$'\e[39m'
-
-# used by themes/gallifrey
-_omb_prompt_bold='\[\e[1m\]'
 
 _omb_deprecate_function 20000 color      _omb_theme_color_prompt
 _omb_deprecate_function 20000 echo_color _omb_theme_color_echo

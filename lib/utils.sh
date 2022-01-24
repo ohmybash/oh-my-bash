@@ -124,35 +124,29 @@ _omb_util_function_exists() {
 # Set Colors
 #
 # Use colors, but only if connected to a terminal, and that terminal
-# supports them.
-if [[ ! -t 1 ]]; then
-  _omb_term_colors=
-  _omb_term_bold=
-  _omb_term_underline=
-  _omb_term_reset=
+# supports them.  These colors are intended to be used with `echo`
+#
+_omb_term_color_initialize() {
+  local name
+  local -a normal_colors=(black brown green olive navy purple teal silver)
+  local -a bright_colors=(gray red lime yellow blue magenta cyan white)
 
-  _omb_term_black=
-  _omb_term_brown=
-  _omb_term_green=
-  _omb_term_olive=
-  _omb_term_navy=
-  _omb_term_purple=
-  _omb_term_teal=
-  _omb_term_silver=
+  if [[ ! -t 1 ]]; then
+    _omb_term_colors=
+    _omb_term_bold=
+    _omb_term_underline=
+    _omb_term_reset=
+    _omb_term_normal=
+    _omb_term_reset_color=
+    for name in "${normal_colors[@]}" "${bright_colors[@]}" violet; do
+      printf -v "_omb_term_$name" ''
+      printf -v "_omb_term_background_$name" ''
+      printf -v "_omb_term_bold_$name" ''
+      printf -v "_omb_term_underline_$name" ''
+    done
+    return 0
+  fi
 
-  _omb_term_background_black=
-  _omb_term_background_brown=
-  _omb_term_background_green=
-  _omb_term_background_olive=
-  _omb_term_background_navy=
-  _omb_term_background_purple=
-  _omb_term_background_teal=
-  _omb_term_background_silver=
-
-  _omb_term_red=
-  _omb_term_white=
-  _omb_term_violet=
-else
   if _omb_util_binary_exists tput; then
     _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
     _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
@@ -164,81 +158,65 @@ else
     _omb_term_underline=$'\e[4m'
     _omb_term_reset=$'\e[0m'
   fi
+  _omb_term_normal=$'\e[0m'
+  _omb_term_reset_color=$'\e[39m'
 
+  # normal colors
   if ((_omb_term_colors >= 8)); then
-    _omb_term_black=$(tput setaf 0 2>/dev/null || tput AF 0 2>/dev/null)
-    _omb_term_brown=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
-    _omb_term_green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
-    _omb_term_olive=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-    _omb_term_navy=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
-    _omb_term_purple=$(tput setaf 5 2>/dev/null || tput AF 5 2>/dev/null)
-    _omb_term_teal=$(tput setaf 6 2>/dev/null || tput AF 6 2>/dev/null)
-    _omb_term_silver=$(tput setaf 7 2>/dev/null || tput AF 7 2>/dev/null)
+    local index
+    for ((index = 0; index < 8; index++)); do
+      local fg=$(tput setaf "$index" 2>/dev/null || tput AF "$index" 2>/dev/null)
+      [[ $fg ]] || fg=$'\e[3'$index'm'
+      printf -v "_omb_term_${normal_colors[index]}" %s "$fg"
+      printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+    done
   else
-    _omb_term_black=$'\e[30m'
-    _omb_term_brown=$'\e[31m'
-    _omb_term_green=$'\e[32m'
-    _omb_term_olive=$'\e[33m'
-    _omb_term_navy=$'\e[34m'
-    _omb_term_purple=$'\e[35m'
-    _omb_term_teal=$'\e[36m'
-    _omb_term_silver=$'\e[37m'
+    local index
+    for ((index = 0; index < 8; index++)); do
+      printf -v "_omb_term_${normal_colors[index]}" '\e[3%sm' "$index"
+      printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+    done
   fi
 
-  _omb_term_background_black=$'\e[40m'
-  _omb_term_background_brown=$'\e[41m'
-  _omb_term_background_green=$'\e[42m'
-  _omb_term_background_olive=$'\e[43m'
-  _omb_term_background_navy=$'\e[44m'
-  _omb_term_background_purple=$'\e[45m'
-  _omb_term_background_teal=$'\e[46m'
-  _omb_term_background_silver=$'\e[47m'
-
+  # bright colors
   if ((_omb_term_colors >= 16)); then
-    _omb_term_red=$(tput setaf 9 2>/dev/null || tput AF 9 2>/dev/null)
-    _omb_term_white=$(tput setaf 15 2>/dev/null || tput AF 15 2>/dev/null)
-    _omb_term_background_red=$_omb_term_background_brown$'\e[101m'
-    _omb_term_background_white=$_omb_term_background_silver$'\e[107m'
+    local index
+    for ((index = 0; index < 8; index++)); do
+      local fg=$(tput setaf $((index+8)) 2>/dev/null || tput AF $((index+8)) 2>/dev/null)
+      [[ $fg ]] || fg=$'\e[9'$index'm'
+      local refbg=_omb_term_background_${normal_colors[index]}
+      local bg=${!refbg}$'\e[10'$index'm'
+      printf -v "_omb_term_${bright_colors[index]}" %s "$fg"
+      printf -v "_omb_term_background_${bright_colors[index]}" %s "$bg"
+    done
   else
-    _omb_term_red=$_omb_term_bold$_omb_term_brown
-    _omb_term_white=$_omb_term_bold$_omb_term_silver
-    _omb_term_background_red=$_omb_term_bold$_omb_term_background_brown
-    _omb_term_background_white=$_omb_term_bold$_omb_term_background_silver
+    # copy normal colors to bright colors (with bold)
+    local index
+    for ((index = 0; index < 8; index++)); do
+      local reffg=_omb_term_${normal_colors[index]}
+      local refbg=_omb_term_background_${normal_colors[index]}
+      printf -v "_omb_term_${bright_colors[index]}" %s "$_omb_term_bold${!reffg}"
+      printf -v "_omb_term_background_${bright_colors[index]}" %s "$_omb_term_bold${!refbg}"
+    done
   fi
 
+  # index colors
   if ((_omb_term_colors == 256)); then
-    _omb_term_violet=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+    _omb_term_violet=$'\e[38;5;171m'
     _omb_term_background_violet=$'\e[48;5;171m'
   else
     _omb_term_violet=$_omb_term_purple
     _omb_term_background_violet=$_omb_term_background_purple
   fi
-fi
 
-_omb_term_bold_black=$_omb_term_bold$_omb_term_black
-_omb_term_bold_brown=$_omb_term_bold$_omb_term_brown
-_omb_term_bold_green=$_omb_term_bold$_omb_term_green
-_omb_term_bold_olive=$_omb_term_bold$_omb_term_olive
-_omb_term_bold_navy=$_omb_term_bold$_omb_term_navy
-_omb_term_bold_purple=$_omb_term_bold$_omb_term_purple
-_omb_term_bold_teal=$_omb_term_bold$_omb_term_teal
-_omb_term_bold_silver=$_omb_term_bold$_omb_term_silver
-_omb_term_bold_red=$_omb_term_bold$_omb_term_red
-_omb_term_bold_white=$_omb_term_bold$_omb_term_white
-_omb_term_bold_violet=$_omb_term_bold$_omb_term_violet
-
-_omb_term_underline_black=$_omb_term_underline$_omb_term_black
-_omb_term_underline_brown=$_omb_term_underline$_omb_term_brown
-_omb_term_underline_green=$_omb_term_underline$_omb_term_green
-_omb_term_underline_olive=$_omb_term_underline$_omb_term_olive
-_omb_term_underline_navy=$_omb_term_underline$_omb_term_navy
-_omb_term_underline_purple=$_omb_term_underline$_omb_term_purple
-_omb_term_underline_teal=$_omb_term_underline$_omb_term_teal
-_omb_term_underline_silver=$_omb_term_underline$_omb_term_silver
-_omb_term_underline_red=$_omb_term_underline$_omb_term_red
-_omb_term_underline_white=$_omb_term_underline$_omb_term_white
-_omb_term_underline_violet=$_omb_term_underline$_omb_term_violet
-
+  # bold / underline versions
+  for name in "${normal_colors[@]}" "${bright_colors[@]}" violet; do
+    local ref=_omb_term_$name
+    printf -v "_omb_term_bold_$name" %s "$_omb_term_bold${!ref}"
+    printf -v "_omb_term_underline_$name" %s "$_omb_term_underline${!ref}"
+  done
+}
+_omb_term_color_initialize
 
 #
 # Headers and Logging
