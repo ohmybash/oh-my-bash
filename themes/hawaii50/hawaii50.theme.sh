@@ -44,19 +44,19 @@ ORANGE='\[\e[0;33m\]'
 
 DEFAULT_COLOR="${_omb_prompt_white}"
 
-USER_COLOR="${_omb_prompt_magenta}"
-SUPERUSER_COLOR="${_omb_prompt_red}"
+USER_COLOR="${_omb_prompt_purple}"
+SUPERUSER_COLOR="${_omb_prompt_brown}"
 MACHINE_COLOR=$ORANGE
 IP_COLOR=$ORANGE
 DIRECTORY_COLOR="${_omb_prompt_green}"
 
-VE_COLOR="${_omb_prompt_cyan}"
-RVM_COLOR="${_omb_prompt_cyan}"
+VE_COLOR="${_omb_prompt_teal}"
+RVM_COLOR="${_omb_prompt_teal}"
 
-REF_COLOR="${_omb_prompt_magenta}"
+REF_COLOR="${_omb_prompt_purple}"
 
 # SCM prompts
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_THEME_PROMPT_PREFIX=' on '
 SCM_THEME_PROMPT_SUFFIX=''

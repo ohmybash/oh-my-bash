@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 # scm theming
-SCM_THEME_PROMPT_PREFIX="${_omb_prompt_yellow}("
+SCM_THEME_PROMPT_PREFIX="${_omb_prompt_olive}("
 SCM_THEME_PROMPT_SUFFIX=")${_omb_prompt_normal}"
 
 SCM_THEME_PROMPT_DIRTY="*"

@@ -33,7 +33,7 @@ if ((_omb_bash_version >= 40000)); then
   _omb_spectrum__initialize
 
   declare -gA FX FG BG
-  _omb_deprecate_const 20000 _RED "$_omb_term_red"   "${_omb_deprecate_msg_please_use/'%s'/_omb_term_red}"
+  _omb_deprecate_const 20000 _RED "$_omb_term_brown"   "${_omb_deprecate_msg_please_use/'%s'/_omb_term_brown}"
   _omb_deprecate_const 20000 _NC  "$_omb_term_reset" "${_omb_deprecate_msg_please_use/'%s'/_omb_term_reset}"
   function _omb_spectrum__deprecate() {
     local key

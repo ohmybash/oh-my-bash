@@ -35,11 +35,11 @@ BRACKET_COLOR=$ORANGE
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_GIT_CHAR="${_omb_prompt_bold_green}±${_omb_prompt_normal}"
-SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${_omb_prompt_normal}"
-SCM_HG_CHAR="${_omb_prompt_bold_red}☿${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 #Mysql Prompt
 export MYSQL_PS1="(\u@\h) [\d]> "
@@ -66,7 +66,7 @@ __my_rvm_ruby_version() {
 is_vim_shell() {
         if [ ! -z "$VIMRUNTIME" ]
         then
-                echo "[${_omb_prompt_cyan}vim shell${_omb_prompt_normal}]"
+                echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
         fi
 }
 
@@ -84,7 +84,7 @@ modern_scm_prompt() {
 chroot(){
     if [ -n "$debian_chroot" ]
     then
-        my_ps_chroot="${_omb_prompt_bold_cyan}$debian_chroot${_omb_prompt_normal}";
+        my_ps_chroot="${_omb_prompt_bold_teal}$debian_chroot${_omb_prompt_normal}";
         echo "($my_ps_chroot)";
     fi
     }
@@ -93,7 +93,7 @@ chroot(){
 my_ve(){
     if [ -n "$VIRTUAL_ENV" ]
     then
-        my_ps_ve="${_omb_prompt_bold_magenta}$ve${_omb_prompt_normal}";
+        my_ps_ve="${_omb_prompt_bold_purple}$ve${_omb_prompt_normal}";
         echo "($my_ps_ve)";
     fi
     echo "";
@@ -106,7 +106,7 @@ _omb_theme_PROMPT_COMMAND() {
     my_ps_host_root="$ORANGE\h${_omb_prompt_normal}";
 
     my_ps_user="$BOLD$GREEN\u${_omb_prompt_normal}"
-    my_ps_root="${_omb_prompt_bold_red}\u${_omb_prompt_normal}";
+    my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}";
 
     if [ -n "$VIRTUAL_ENV" ]
     then

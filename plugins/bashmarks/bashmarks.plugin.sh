@@ -122,9 +122,9 @@ function _goto_bookmark {
     if [ -d "$target" ]; then
         cd "$target"
     elif [ ! -n "$target" ]; then
-        printf '%s\n' "${_omb_term_red}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
+        printf '%s\n' "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
     else
-        printf '%s\n' "${_omb_term_red}WARNING: '${target}' does not exist${_omb_term_reset}"
+        printf '%s\n' "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
     fi
 }
 

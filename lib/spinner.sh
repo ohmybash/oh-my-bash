@@ -5,7 +5,7 @@
 #
 # Examples
 #
-# echo -ne "${_omb_term_red}I am running..."
+# echo -ne "${_omb_term_brown}I am running..."
 # ( my_long_task_running ) &
 # spinner
 # echo -ne "...${_omb_term_reset} ${_omb_term_green}DONE${_omb_term_reset}"

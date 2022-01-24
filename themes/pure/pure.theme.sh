@@ -3,11 +3,11 @@
 SCM_THEME_PROMPT_PREFIX="|"
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓${_omb_prompt_normal}"
 SCM_GIT_CHAR="${_omb_prompt_green}±${_omb_prompt_normal}"
-SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${_omb_prompt_normal}"
-SCM_HG_CHAR="${_omb_prompt_bold_red}☿${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 ### TODO: openSUSE has already colors enabled, check if those differs from stock
 # LS colors, made with http://geoff.greer.fm/lscolors/
@@ -25,12 +25,12 @@ scm_prompt() {
 }
 
 _omb_theme_PROMPT_COMMAND() {
-    ps_host="${_omb_prompt_bold_blue}\h${_omb_prompt_normal}";
+    ps_host="${_omb_prompt_bold_navy}\h${_omb_prompt_normal}";
     ps_user="${_omb_prompt_green}\u${_omb_prompt_normal}";
     ps_user_mark="${_omb_prompt_green} $ ${_omb_prompt_normal}";
-    ps_root="${_omb_prompt_red}\u${_omb_prompt_red}";
-    ps_root_mark="${_omb_prompt_red} # ${_omb_prompt_normal}"
-    ps_path="${_omb_prompt_yellow}\w${_omb_prompt_normal}";
+    ps_root="${_omb_prompt_brown}\u${_omb_prompt_brown}";
+    ps_root_mark="${_omb_prompt_brown} # ${_omb_prompt_normal}"
+    ps_path="${_omb_prompt_olive}\w${_omb_prompt_normal}";
 
     # make it work
     case $(id -u) in

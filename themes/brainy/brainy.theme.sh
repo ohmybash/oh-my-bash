@@ -88,10 +88,10 @@ ____brainy_bottom() {
 ##############
 
 ___brainy_prompt_user_info() {
-	color=$_omb_prompt_bold_blue
+	color=$_omb_prompt_bold_navy
 	if [ "${THEME_SHOW_SUDO}" == "true" ]; then
 		if [ $(sudo -n id -u 2>&1 | grep 0) ]; then
-			color=$_omb_prompt_bold_red
+			color=$_omb_prompt_bold_brown
 		fi
 	fi
 	box="[|]"
@@ -104,7 +104,7 @@ ___brainy_prompt_user_info() {
 }
 
 ___brainy_prompt_dir() {
-	color=$_omb_prompt_bold_yellow
+	color=$_omb_prompt_bold_olive
 	box="[|]"
 	info="\w"
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
@@ -120,10 +120,10 @@ ___brainy_prompt_scm() {
 
 ___brainy_prompt_python() {
 	[ "${THEME_SHOW_PYTHON}" != "true" ] && return
-	color=$_omb_prompt_bold_yellow
+	color=$_omb_prompt_bold_olive
 	box="[|]"
 	info="$(python_version_prompt)"
-	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_blue}" "${box}"
+	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_navy}" "${box}"
 }
 
 ___brainy_prompt_ruby() {
@@ -131,7 +131,7 @@ ___brainy_prompt_ruby() {
 	color=$_omb_prompt_bold_white
 	box="[|]"
 	info="rb-$(_omb_prompt_print_ruby_env)"
-	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_red}" "${box}"
+	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_brown}" "${box}"
 }
 
 ___brainy_prompt_todo() {
@@ -148,7 +148,7 @@ ___brainy_prompt_clock() {
 	color=$THEME_CLOCK_COLOR
 	box="[|]"
 	info="$(date +"${THEME_CLOCK_FORMAT}")"
-	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_magenta}" "${box}"
+	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_purple}" "${box}"
 }
 
 ___brainy_prompt_battery() {
@@ -157,9 +157,9 @@ ___brainy_prompt_battery() {
 	info=$(battery_percentage)
 	color=$_omb_prompt_bold_green
 	if [ "$info" -lt 50 ]; then
-		color=$_omb_prompt_bold_yellow
+		color=$_omb_prompt_bold_olive
 	elif [ "$info" -lt 25 ]; then
-		color=$_omb_prompt_bold_red
+		color=$_omb_prompt_bold_brown
 	fi
 	box="[|]"
 	ac_adapter_connected && info+="+"
@@ -169,7 +169,7 @@ ___brainy_prompt_battery() {
 
 ___brainy_prompt_exitcode() {
 	[ "${THEME_SHOW_EXITCODE}" != "true" ] && return
-	color=$_omb_prompt_bold_magenta
+	color=$_omb_prompt_bold_purple
 	[ "$exitcode" -ne 0 ] && printf "%s|%s" "${color}" "${exitcode}"
 }
 
@@ -250,7 +250,7 @@ export RBFU_THEME_PROMPT_SUFFIX=""
 export RVM_THEME_PROMPT_PREFIX=""
 export RVM_THEME_PROMPT_SUFFIX=""
 
-export SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+export SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 export SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 
 THEME_SHOW_SUDO=${THEME_SHOW_SUDO:-"true"}

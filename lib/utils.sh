@@ -125,72 +125,132 @@ _omb_util_function_exists() {
 #
 # Use colors, but only if connected to a terminal, and that terminal
 # supports them.
-_omb_term_colors=
 if [[ ! -t 1 ]]; then
+  _omb_term_colors=
   _omb_term_bold=
   _omb_term_underline=
   _omb_term_reset=
+
   _omb_term_black=
-  _omb_term_red=
+  _omb_term_brown=
   _omb_term_green=
-  _omb_term_yellow=
-  _omb_term_blue=
-  _omb_term_magenta=
-  _omb_term_cyan=
-  _omb_term_white=
+  _omb_term_olive=
+  _omb_term_navy=
   _omb_term_purple=
-elif _omb_util_binary_exists tput &&
-    _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null) &&
-    ((_omb_term_colors >= 8))
-then
-  _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
-  _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
-  _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
-  _omb_term_black=$(tput setaf 0 2>/dev/null || tput AF 0 2>/dev/null)
-  _omb_term_red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
-  _omb_term_green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
-  _omb_term_yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-  _omb_term_blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
-  _omb_term_magenta=$(tput setaf 5 2>/dev/null || tput AF 5 2>/dev/null)
-  _omb_term_cyan=$(tput setaf 6 2>/dev/null || tput AF 6 2>/dev/null)
-  _omb_term_white=$(tput setaf 7 2>/dev/null || tput AF 7 2>/dev/null)
-  _omb_term_purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+  _omb_term_teal=
+  _omb_term_silver=
+
+  _omb_term_background_black=
+  _omb_term_background_brown=
+  _omb_term_background_green=
+  _omb_term_background_olive=
+  _omb_term_background_navy=
+  _omb_term_background_purple=
+  _omb_term_background_teal=
+  _omb_term_background_silver=
+
+  _omb_term_red=
+  _omb_term_white=
+  _omb_term_violet=
 else
-  _omb_term_bold=$'\e[1m'
-  _omb_term_underline=$'\e[4m'
-  _omb_term_reset=$'\e[0m'
-  _omb_term_black=$'\e[30m'
-  _omb_term_red=$'\e[31m'
-  _omb_term_green=$'\e[32m'
-  _omb_term_yellow=$'\e[33m'
-  _omb_term_blue=$'\e[34m'
-  _omb_term_magenta=$'\e[35m'
-  _omb_term_cyan=$'\e[36m'
-  _omb_term_white=$'\e[37m'
-  _omb_term_purple=$'\e[38;5;171m'
+  if _omb_util_binary_exists tput; then
+    _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
+    _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+    _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+    _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+  else
+    _omb_term_colors=
+    _omb_term_bold=$'\e[1m'
+    _omb_term_underline=$'\e[4m'
+    _omb_term_reset=$'\e[0m'
+  fi
+
+  if ((_omb_term_colors >= 8)); then
+    _omb_term_black=$(tput setaf 0 2>/dev/null || tput AF 0 2>/dev/null)
+    _omb_term_brown=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
+    _omb_term_green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
+    _omb_term_olive=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
+    _omb_term_navy=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
+    _omb_term_purple=$(tput setaf 5 2>/dev/null || tput AF 5 2>/dev/null)
+    _omb_term_teal=$(tput setaf 6 2>/dev/null || tput AF 6 2>/dev/null)
+    _omb_term_silver=$(tput setaf 7 2>/dev/null || tput AF 7 2>/dev/null)
+  else
+    _omb_term_black=$'\e[30m'
+    _omb_term_brown=$'\e[31m'
+    _omb_term_green=$'\e[32m'
+    _omb_term_olive=$'\e[33m'
+    _omb_term_navy=$'\e[34m'
+    _omb_term_purple=$'\e[35m'
+    _omb_term_teal=$'\e[36m'
+    _omb_term_silver=$'\e[37m'
+  fi
+
+  _omb_term_background_black=$'\e[40m'
+  _omb_term_background_brown=$'\e[41m'
+  _omb_term_background_green=$'\e[42m'
+  _omb_term_background_olive=$'\e[43m'
+  _omb_term_background_navy=$'\e[44m'
+  _omb_term_background_purple=$'\e[45m'
+  _omb_term_background_teal=$'\e[46m'
+  _omb_term_background_silver=$'\e[47m'
+
+  if ((_omb_term_colors >= 16)); then
+    _omb_term_red=$(tput setaf 9 2>/dev/null || tput AF 9 2>/dev/null)
+    _omb_term_white=$(tput setaf 15 2>/dev/null || tput AF 15 2>/dev/null)
+    _omb_term_background_red=$_omb_term_background_brown$'\e[101m'
+    _omb_term_background_white=$_omb_term_background_silver$'\e[107m'
+  else
+    _omb_term_red=$_omb_term_bold$_omb_term_brown
+    _omb_term_white=$_omb_term_bold$_omb_term_silver
+    _omb_term_background_red=$_omb_term_bold$_omb_term_background_brown
+    _omb_term_background_white=$_omb_term_bold$_omb_term_background_silver
+  fi
+
+  if ((_omb_term_colors == 256)); then
+    _omb_term_violet=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
+    _omb_term_background_violet=$'\e[48;5;171m'
+  else
+    _omb_term_violet=$_omb_term_purple
+    _omb_term_background_violet=$_omb_term_background_purple
+  fi
 fi
 
 _omb_term_bold_black=$_omb_term_bold$_omb_term_black
-_omb_term_bold_red=$_omb_term_bold$_omb_term_red
+_omb_term_bold_brown=$_omb_term_bold$_omb_term_brown
 _omb_term_bold_green=$_omb_term_bold$_omb_term_green
-_omb_term_bold_yellow=$_omb_term_bold$_omb_term_yellow
-_omb_term_bold_blue=$_omb_term_bold$_omb_term_blue
-_omb_term_bold_magenta=$_omb_term_bold$_omb_term_magenta
-_omb_term_bold_cyan=$_omb_term_bold$_omb_term_cyan
-_omb_term_bold_white=$_omb_term_bold$_omb_term_white
+_omb_term_bold_olive=$_omb_term_bold$_omb_term_olive
+_omb_term_bold_navy=$_omb_term_bold$_omb_term_navy
 _omb_term_bold_purple=$_omb_term_bold$_omb_term_purple
+_omb_term_bold_teal=$_omb_term_bold$_omb_term_teal
+_omb_term_bold_silver=$_omb_term_bold$_omb_term_silver
+_omb_term_bold_red=$_omb_term_bold$_omb_term_red
+_omb_term_bold_white=$_omb_term_bold$_omb_term_white
+_omb_term_bold_violet=$_omb_term_bold$_omb_term_violet
+
+_omb_term_underline_black=$_omb_term_underline$_omb_term_black
+_omb_term_underline_brown=$_omb_term_underline$_omb_term_brown
+_omb_term_underline_green=$_omb_term_underline$_omb_term_green
+_omb_term_underline_olive=$_omb_term_underline$_omb_term_olive
+_omb_term_underline_navy=$_omb_term_underline$_omb_term_navy
+_omb_term_underline_purple=$_omb_term_underline$_omb_term_purple
+_omb_term_underline_teal=$_omb_term_underline$_omb_term_teal
+_omb_term_underline_silver=$_omb_term_underline$_omb_term_silver
+_omb_term_underline_red=$_omb_term_underline$_omb_term_red
+_omb_term_underline_white=$_omb_term_underline$_omb_term_white
+_omb_term_underline_violet=$_omb_term_underline$_omb_term_violet
+
 
 #
 # Headers and Logging
 #
-_omb_log_header()    { printf "\n${_omb_term_bold}${_omb_term_magenta}==========  %s  ==========${_omb_term_reset}\n" "$@"; }
+_omb_log_header()    { printf "\n${_omb_term_bold}${_omb_term_violet}==========  %s  ==========${_omb_term_reset}\n" "$@"; }
 _omb_log_arrow()     { printf "➜ %s\n" "$@"; }
 _omb_log_success()   { printf "${_omb_term_green}✔ %s${_omb_term_reset}\n" "$@"; }
-_omb_log_error()     { printf "${_omb_term_red}✖ %s${_omb_term_reset}\n" "$@"; }
-_omb_log_warning()   { printf "${_omb_term_yellow}➜ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_error()     { printf "${_omb_term_brown}✖ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_warning()   { printf "${_omb_term_olive}➜ %s${_omb_term_reset}\n" "$@"; }
 _omb_log_underline() { printf "${_omb_term_underline}${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
 _omb_log_bold()      { printf "${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
-_omb_log_note()      { printf "${_omb_term_underline}${_omb_term_bold}${_omb_term_blue}Note:${_omb_term_reset}  ${_omb_term_yellow}%s${_omb_term_reset}\n" "$@"; }
+_omb_log_note()      { printf "${_omb_term_underline}${_omb_term_bold}${_omb_term_navy}Note:${_omb_term_reset}  ${_omb_term_olive}%s${_omb_term_reset}\n" "$@"; }
 
 #
 # USAGE FOR SEEKING CONFIRMATION

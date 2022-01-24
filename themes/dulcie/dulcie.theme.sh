@@ -53,7 +53,7 @@ _omb_theme_PROMPT_COMMAND() {
     DULCIE_WORKINGDIR="${color_workingdir}\W${_omb_prompt_reset_color}"
     DULCIE_PROMPTCHAR="${color_user}"'\$'"${_omb_prompt_reset_color}"
 
-    SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗${_omb_prompt_reset_color}"
+    SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗${_omb_prompt_reset_color}"
     SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
     DULCIE_SCM_BACKGROUND="${background_scm}"
     DULCIE_SCM_DIR_COLOR="${color_rootdir}"

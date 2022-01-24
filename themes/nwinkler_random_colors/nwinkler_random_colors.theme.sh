@@ -22,34 +22,34 @@ function randomize_nwinkler {
 
   AVAILABLE_COLORS=(
     "$_omb_prompt_black"
-    "$_omb_prompt_red"
+    "$_omb_prompt_brown"
     "$_omb_prompt_green"
-    "$_omb_prompt_yellow"
-    "$_omb_prompt_blue"
-    "$_omb_prompt_magenta"
-    "$_omb_prompt_cyan"
+    "$_omb_prompt_olive"
+    "$_omb_prompt_navy"
+    "$_omb_prompt_purple"
+    "$_omb_prompt_teal"
     "$_omb_prompt_white"
-    "$_omb_prompt_orange"
+    "$_omb_prompt_red"
     "$_omb_prompt_bold_black"
-    "$_omb_prompt_bold_red"
+    "$_omb_prompt_bold_brown"
     "$_omb_prompt_bold_green"
-    "$_omb_prompt_bold_yellow"
-    "$_omb_prompt_bold_blue"
-    "$_omb_prompt_bold_magenta"
-    "$_omb_prompt_bold_cyan"
+    "$_omb_prompt_bold_olive"
+    "$_omb_prompt_bold_navy"
+    "$_omb_prompt_bold_purple"
+    "$_omb_prompt_bold_teal"
     "$_omb_prompt_bold_white"
-    "$_omb_prompt_bold_orange"
+    "$_omb_prompt_bold_red"
 
     # # Uncomment these to allow underlines:
     # "$_omb_prompt_underline_black"
-    # "$_omb_prompt_underline_red"
+    # "$_omb_prompt_underline_brown"
     # "$_omb_prompt_underline_green"
-    # "$_omb_prompt_underline_yellow"
-    # "$_omb_prompt_underline_blue"
-    # "$_omb_prompt_underline_magenta"
-    # "$_omb_prompt_underline_cyan"
+    # "$_omb_prompt_underline_olive"
+    # "$_omb_prompt_underline_navy"
+    # "$_omb_prompt_underline_purple"
+    # "$_omb_prompt_underline_teal"
     # "$_omb_prompt_underline_white"
-    # "$_omb_prompt_underline_orange"
+    # "$_omb_prompt_underline_red"
   )
 
   USERNAME_COLOR=${AVAILABLE_COLORS[$RANDOM % ${#AVAILABLE_COLORS[@]} ]}
@@ -84,7 +84,7 @@ else
 fi
 
 PROMPT_END_CLEAN="${_omb_prompt_green}→${_omb_prompt_reset_color}"
-PROMPT_END_DIRTY="${_omb_prompt_red}→${_omb_prompt_reset_color}"
+PROMPT_END_DIRTY="${_omb_prompt_brown}→${_omb_prompt_reset_color}"
 
 function prompt_end() {
   echo -e "$PROMPT_END"
@@ -106,7 +106,7 @@ _omb_theme_PROMPT_COMMAND() {
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_THEME_PROMPT_PREFIX=" ("
 SCM_THEME_PROMPT_SUFFIX=")"

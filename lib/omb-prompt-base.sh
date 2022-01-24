@@ -555,7 +555,7 @@ function prompt_char {
 
 function battery_char {
     if [[ "${THEME_BATTERY_PERCENTAGE_CHECK}" = true ]]; then
-        echo -e "${_omb_prompt_bold_red}$(battery_percentage)%"
+        echo -e "${_omb_prompt_bold_brown}$(battery_percentage)%"
     fi
 }
 

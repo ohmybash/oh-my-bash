@@ -22,7 +22,7 @@
 #
 
 SCM_NONE_CHAR=''
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
 SCM_THEME_PROMPT_CLEAN=""
 SCM_THEME_PROMPT_PREFIX="${_omb_prompt_green}|"
 SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
@@ -31,7 +31,7 @@ SCM_GIT_SHOW_MINIMAL_INFO=true
 CLOCK_THEME_PROMPT_PREFIX=''
 CLOCK_THEME_PROMPT_SUFFIX=' '
 THEME_SHOW_CLOCK=${THEME_SHOW_CLOCK:-"true"}
-THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_bold_blue"}
+THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_bold_navy"}
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%I:%M:%S"}
 
 VIRTUALENV_THEME_PROMPT_PREFIX='('
@@ -49,13 +49,13 @@ function _omb_theme_PROMPT_COMMAND() {
     if [[ ${RC} == 0 ]]; then
         ret_status="${_omb_prompt_bold_green}"
     else
-        ret_status="${_omb_prompt_bold_red}"
+        ret_status="${_omb_prompt_bold_brown}"
     fi
 
     # Append new history lines to history file
     history -a
 
-    PS1="$(clock_prompt)$python_venv${hostname} ${_omb_prompt_bold_cyan}\W $(scm_prompt_char_info)${ret_status}→ ${_omb_prompt_normal}"
+    PS1="$(clock_prompt)$python_venv${hostname} ${_omb_prompt_bold_teal}\W $(scm_prompt_char_info)${ret_status}→ ${_omb_prompt_normal}"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

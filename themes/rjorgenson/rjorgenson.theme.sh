@@ -3,17 +3,17 @@
 
 # set colors for use throughout the prompt
 # i like things consistent
-OMB_THEME_BRACKET_COLOR="${OMB_THEME_BRACKET_COLOR-${_omb_prompt_blue}}"
+OMB_THEME_BRACKET_COLOR="${OMB_THEME_BRACKET_COLOR-${_omb_prompt_navy}}"
 OMB_THEME_STRING_COLOR="${OMB_THEME_STRING_COLOR-${_omb_prompt_green}}"
 
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_GIT_CHAR="${OMB_THEME_STRING_COLOR}±${_omb_prompt_normal}"
-SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${_omb_prompt_normal}"
-SCM_HG_CHAR="${_omb_prompt_bold_red}☿${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 PROMPT_CHAR="${OMB_THEME_BRACKET_COLOR}➞ ${_omb_prompt_normal}"
 if [[ $OSTYPE == *darwin* ]]; then
@@ -81,7 +81,7 @@ _omb_theme_PROMPT_COMMAND() {
     # nice prompt
     case "$(id -u)" in
         0)
-          my_user="${_omb_prompt_bold_red}\u${_omb_prompt_normal}";
+          my_user="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}";
           line2="${bracket_c}└─${PROMPT_CHAR}"
         ;;
     esac

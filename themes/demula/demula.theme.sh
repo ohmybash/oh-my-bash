@@ -35,15 +35,15 @@
 # ----------------------------------------------------------------- COLOR CONF
 D_DEFAULT_COLOR="${_omb_prompt_normal}"
 D_INTERMEDIATE_COLOR="${_omb_prompt_white}"
-D_USER_COLOR="${_omb_prompt_magenta}"
-D_SUPERUSER_COLOR="${_omb_prompt_red}"
-D_MACHINE_COLOR="${_omb_prompt_cyan}"
+D_USER_COLOR="${_omb_prompt_purple}"
+D_SUPERUSER_COLOR="${_omb_prompt_brown}"
+D_MACHINE_COLOR="${_omb_prompt_teal}"
 D_DIR_COLOR="${_omb_prompt_green}"
-D_SCM_COLOR="${_omb_prompt_yellow}"
-D_BRANCH_COLOR="${_omb_prompt_yellow}"
+D_SCM_COLOR="${_omb_prompt_olive}"
+D_BRANCH_COLOR="${_omb_prompt_olive}"
 D_CHANGES_COLOR="${_omb_prompt_white}"
-D_CMDFAIL_COLOR="${_omb_prompt_red}"
-D_VIMSHELL_COLOR="${_omb_prompt_cyan}"
+D_CMDFAIL_COLOR="${_omb_prompt_brown}"
+D_VIMSHELL_COLOR="${_omb_prompt_teal}"
 
 # ------------------------------------------------------------------ FUNCTIONS
 case $TERM in

@@ -214,14 +214,14 @@ bigfind() {
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
     ii() {
-      echo -e "\\nYou are logged on ${_omb_term_red}$HOST"
+      echo -e "\\nYou are logged on ${_omb_term_brown}$HOST"
       echo -e "\\nAdditionnal information:$NC " ; uname -a
-      echo -e "\\n${_omb_term_red}Users logged on:$NC " ; w -h
-      echo -e "\\n${_omb_term_red}Current date :$NC " ; date
-      echo -e "\\n${_omb_term_red}Machine stats :$NC " ; uptime
-      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_red}Current network location :$NC " ; scselect
-      echo -e "\\n${_omb_term_red}Public facing IP Address :$NC " ;myip
-      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_red}DNS Configuration:$NC " ; scutil --dns
+      echo -e "\\n${_omb_term_brown}Users logged on:$NC " ; w -h
+      echo -e "\\n${_omb_term_brown}Current date :$NC " ; date
+      echo -e "\\n${_omb_term_brown}Machine stats :$NC " ; uptime
+      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_brown}Current network location :$NC " ; scselect
+      echo -e "\\n${_omb_term_brown}Public facing IP Address :$NC " ;myip
+      [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_brown}DNS Configuration:$NC " ; scutil --dns
       echo
     }
 
@@ -233,12 +233,12 @@ bigfind() {
 #   batch_chmod: Batch chmod for all files & sub-directories in the current one
 #   -------------------------------------------------------------------
     batch_chmod() {
-      echo -ne "${_omb_term_bold_blue}Applying 0755 permission for all directories..."
+      echo -ne "${_omb_term_bold_navy}Applying 0755 permission for all directories..."
       (find . -type d -print0 | xargs -0 chmod 0755) &
       spinner
       echo -ne "${_omb_term_normal}"
       
-      echo -ne "${_omb_term_bold_blue}Applying 0644 permission for all files..."
+      echo -ne "${_omb_term_bold_navy}Applying 0644 permission for all files..."
       (find . -type f -print0 | xargs -0 chmod 0644) &
       spinner
       echo -ne "${_omb_term_normal}"

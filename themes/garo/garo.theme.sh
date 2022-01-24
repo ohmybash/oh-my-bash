@@ -22,7 +22,7 @@
 #
 
 export SCM_NONE_CHAR=''
-export SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+export SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
 export SCM_THEME_PROMPT_CLEAN=""
 export SCM_THEME_PROMPT_PREFIX="${_omb_prompt_green}|"
 export SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
@@ -43,13 +43,13 @@ function _omb_theme_PROMPT_COMMAND() {
     if [[ ${RC} == 0 ]]; then
         ret_status="${_omb_prompt_bold_green}"
     else
-        ret_status="${_omb_prompt_bold_red}"
+        ret_status="${_omb_prompt_bold_brown}"
     fi
 
     # Append new history lines to history file
     history -a
 
-    PS1="$python_venv${hostname} ${_omb_prompt_bold_cyan}\w $(scm_prompt_char_info)${ret_status}→ ${_omb_prompt_normal}"
+    PS1="$python_venv${hostname} ${_omb_prompt_bold_teal}\w $(scm_prompt_char_info)${ret_status}→ ${_omb_prompt_normal}"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

@@ -1,11 +1,11 @@
 #! bash oh-my-bash.module
 
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓"
-SCM_THEME_PROMPT_PREFIX=" ${_omb_prompt_blue}scm:( "
-SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_blue} )"
+SCM_THEME_PROMPT_PREFIX=" ${_omb_prompt_navy}scm:( "
+SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_navy} )"
 
-GIT_THEME_PROMPT_DIRTY=" ${_omb_prompt_red}✗"
+GIT_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
 GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓"
 GIT_THEME_PROMPT_PREFIX="${_omb_prompt_green}git:( "
 GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_green} )"

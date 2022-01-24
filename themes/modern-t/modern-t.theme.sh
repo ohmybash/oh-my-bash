@@ -2,11 +2,11 @@
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_GIT_CHAR="${_omb_prompt_bold_green}±${_omb_prompt_normal}"
-SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${_omb_prompt_normal}"
-SCM_HG_CHAR="${_omb_prompt_bold_red}☿${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 case $TERM in
 	xterm*)
@@ -22,7 +22,7 @@ PS3=">> "
 is_vim_shell() {
 	if [ ! -z "$VIMRUNTIME" ]
 	then
-		echo "[${_omb_prompt_cyan}vim shell${_omb_prompt_normal}]"
+		echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
 	fi
 }
 
@@ -42,10 +42,10 @@ _omb_theme_PROMPT_COMMAND() {
 		# Yes, the indenting on these is weird, but it has to be like
 		# this otherwise it won't display properly.
 
-		PS1="${TITLEBAR}${_omb_prompt_bold_red}┌─[${_omb_prompt_cyan}$(t | wc -l | sed -e's/ *//')${_omb_prompt_reset_color}]${_omb_prompt_reset_color}$(modern_scm_prompt)[${_omb_prompt_cyan}\W${_omb_prompt_normal}]$(is_vim_shell)
-${_omb_prompt_bold_red}└─▪${_omb_prompt_normal} "
+		PS1="${TITLEBAR}${_omb_prompt_bold_brown}┌─[${_omb_prompt_teal}$(t | wc -l | sed -e's/ *//')${_omb_prompt_reset_color}]${_omb_prompt_reset_color}$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}]$(is_vim_shell)
+${_omb_prompt_bold_brown}└─▪${_omb_prompt_normal} "
 	else
-		PS1="${TITLEBAR}┌─[${_omb_prompt_cyan}$(t | wc -l | sed -e's/ *//')${_omb_prompt_reset_color}]$(modern_scm_prompt)[${_omb_prompt_cyan}\W${_omb_prompt_normal}]$(is_vim_shell)
+		PS1="${TITLEBAR}┌─[${_omb_prompt_teal}$(t | wc -l | sed -e's/ *//')${_omb_prompt_reset_color}]$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}]$(is_vim_shell)
 └─▪ "
 	fi
 }

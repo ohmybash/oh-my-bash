@@ -2,15 +2,15 @@
 
 SCM_THEME_PROMPT_DIRTY=''
 SCM_THEME_PROMPT_CLEAN=''
-SCM_GIT_CHAR="${_omb_prompt_bold_cyan}±${_omb_prompt_normal}"
-SCM_SVN_CHAR="${_omb_prompt_bold_cyan}⑆${_omb_prompt_normal}"
-SCM_HG_CHAR="${_omb_prompt_bold_red}☿${_omb_prompt_normal}"
+SCM_GIT_CHAR="${_omb_prompt_bold_teal}±${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 if [ ! -z $RVM_THEME_PROMPT_COLOR ]; then
     RVM_THEME_PROMPT_COLOR=$(eval echo $`echo ${RVM_THEME_PROMPT_COLOR}`);
 else
-    RVM_THEME_PROMPT_COLOR="${_omb_prompt_red}"
+    RVM_THEME_PROMPT_COLOR="${_omb_prompt_brown}"
 fi
 RVM_THEME_PROMPT_PREFIX="(${RVM_THEME_PROMPT_COLOR}rb${_omb_prompt_normal}: "
 RVM_THEME_PROMPT_SUFFIX=") "
@@ -25,7 +25,7 @@ VIRTUALENV_THEME_PROMPT_SUFFIX=") "
 if [ ! -z $THEME_PROMPT_HOST_COLOR ]; then
     THEME_PROMPT_HOST_COLOR=$(eval echo $`echo ${THEME_PROMPT_HOST_COLOR}`);
 else
-    THEME_PROMPT_HOST_COLOR="$_omb_prompt_blue"
+    THEME_PROMPT_HOST_COLOR="$_omb_prompt_navy"
 fi
 
 doubletime_scm_prompt() {
@@ -57,11 +57,11 @@ git_prompt_status() {
   local git_status_output
   git_status_output=$(git status 2> /dev/null )
   if [ -n "$(echo $git_status_output | grep 'Changes not staged')" ]; then
-    git_status="${_omb_prompt_bold_red}$(scm_prompt_info) ✗"
+    git_status="${_omb_prompt_bold_brown}$(scm_prompt_info) ✗"
   elif [ -n "$(echo $git_status_output | grep 'Changes to be committed')" ]; then
-     git_status="${_omb_prompt_bold_yellow}$(scm_prompt_info) ^"
+     git_status="${_omb_prompt_bold_olive}$(scm_prompt_info) ^"
   elif [ -n "$(echo $git_status_output | grep 'Untracked files')" ]; then
-     git_status="${_omb_prompt_bold_cyan}$(scm_prompt_info) +"
+     git_status="${_omb_prompt_bold_teal}$(scm_prompt_info) +"
   elif [ -n "$(echo $git_status_output | grep 'nothing to commit')" ]; then
      git_status="${_omb_prompt_bold_green}$(scm_prompt_info) ${_omb_prompt_green}✓"
   else
