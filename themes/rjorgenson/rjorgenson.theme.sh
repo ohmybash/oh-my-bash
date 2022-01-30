@@ -53,7 +53,7 @@ function is_integer() { # helper function to make sure input is an integer
 # can't find a version online that accepts ls as an input
 todo_txt_count() {
     if _omb_util_command_exists todo.sh; then # is todo.sh installed
-        count=$(todo.sh ls \
+        local count=$(todo.sh ls \
           | awk '/TODO: [0-9]+ of ([0-9]+) tasks shown/ { print $4 }')
         if is_integer "${count}" ; then # did we get a sane answer back
             echo "${BRACKET_COLOR}[${STRING_COLOR}T:$count${BRACKET_COLOR}]$normal"
@@ -62,17 +62,17 @@ todo_txt_count() {
 }
 
 modern_scm_prompt() {
-    CHAR=$(scm_char)
+    local CHAR=$(scm_char)
     [ "${CHAR}" = "${SCM_NONE_CHAR}" ] \
         || echo "${BRACKET_COLOR}[${CHAR}${BRACKET_COLOR}][${STRING_COLOR}$(scm_prompt_info)${BRACKET_COLOR}]$normal"
 }
 
 _omb_theme_PROMPT_COMMAND() {
-    my_host="${STRING_COLOR}\h${normal}";
-    my_user="${STRING_COLOR}\u${normal}";
-    my_path="${STRING_COLOR}\w${normal}";
+    local my_host="${STRING_COLOR}\h${normal}";
+    local my_user="${STRING_COLOR}\u${normal}";
+    local my_path="${STRING_COLOR}\w${normal}";
 
-    line2="${BRACKET_COLOR}└─$(todo_txt_count)${PROMPT_CHAR}"
+    local line2="${BRACKET_COLOR}└─$(todo_txt_count)${PROMPT_CHAR}"
     # nice prompt
     case "$(id -u)" in
         0)
