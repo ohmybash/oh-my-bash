@@ -1,5 +1,8 @@
 #! bash oh-my-bash.module
 
+_omb_module_require lib:omb-deprecate
+_omb_module_require lib:omb-prompt-colors
+
 CLOCK_CHAR_THEME_PROMPT_PREFIX=''
 CLOCK_CHAR_THEME_PROMPT_SUFFIX=''
 CLOCK_THEME_PROMPT_PREFIX=''
@@ -438,11 +441,11 @@ _omb_util_defun_print _omb_prompt_{print,get}_rvm rvm
 _omb_util_defun_print _omb_prompt_{print,get}_chruby chruby
 _omb_util_defun_print _omb_prompt_{print,get}_ruby_env ruby_env
 
-_omb_util_defun_deprecate 20000 rbfu_version_prompt   _omb_prompt_print_rbfu
-_omb_util_defun_deprecate 20000 rbenv_version_prompt  _omb_prompt_print_rbenv
-_omb_util_defun_deprecate 20000 rvm_version_prompt    _omb_prompt_print_rvm
-_omb_util_defun_deprecate 20000 chruby_version_prompt _omb_prompt_print_chruby
-_omb_util_defun_deprecate 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
+_omb_deprecate_function 20000 rbfu_version_prompt   _omb_prompt_print_rbfu
+_omb_deprecate_function 20000 rbenv_version_prompt  _omb_prompt_print_rbenv
+_omb_deprecate_function 20000 rvm_version_prompt    _omb_prompt_print_rvm
+_omb_deprecate_function 20000 chruby_version_prompt _omb_prompt_print_chruby
+_omb_deprecate_function 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
 
 function _omb_prompt_get_virtualenv {
   virtualenv=
@@ -484,10 +487,10 @@ _omb_util_defun_print _omb_prompt_{print,get}_python_version python_version
 _omb_util_defun_print _omb_prompt_{print,get}_python_venv python_venv
 _omb_util_defun_print _omb_prompt_{print,get}_python_env python_env
 
-_omb_util_defun_deprecate 20000 virtualenv_prompt     _omb_prompt_print_virtualenv
-_omb_util_defun_deprecate 20000 condaenv_prompt       _omb_prompt_print_condaenv
-_omb_util_defun_deprecate 20000 py_interp_prompt      _omb_prompt_print_python_version
-_omb_util_defun_deprecate 20000 python_version_prompt _omb_prompt_print_python_env
+_omb_deprecate_function 20000 virtualenv_prompt     _omb_prompt_print_virtualenv
+_omb_deprecate_function 20000 condaenv_prompt       _omb_prompt_print_condaenv
+_omb_deprecate_function 20000 py_interp_prompt      _omb_prompt_print_python_version
+_omb_deprecate_function 20000 python_version_prompt _omb_prompt_print_python_env
 
 function git_user_info {
   # support two or more initials, set by 'git pair' plugin
@@ -499,7 +502,7 @@ function git_user_info {
 
 function clock_char {
   CLOCK_CHAR=${THEME_CLOCK_CHAR:-"⌚"}
-  CLOCK_CHAR_COLOR=${THEME_CLOCK_CHAR_COLOR:-"$normal"}
+  CLOCK_CHAR_COLOR=${THEME_CLOCK_CHAR_COLOR:-"$_omb_prompt_normal"}
   SHOW_CLOCK_CHAR=${THEME_SHOW_CLOCK_CHAR:-"true"}
 
   if [[ "${SHOW_CLOCK_CHAR}" = "true" ]]; then
@@ -508,7 +511,7 @@ function clock_char {
 }
 
 function clock_prompt {
-  CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$normal"}
+  CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_normal"}
   CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%H:%M:%S"}
   [ -z $THEME_SHOW_CLOCK ] && THEME_SHOW_CLOCK=${THEME_CLOCK_CHECK:-"true"}
   SHOW_CLOCK=$THEME_SHOW_CLOCK
@@ -552,7 +555,7 @@ function prompt_char {
 
 function battery_char {
     if [[ "${THEME_BATTERY_PERCENTAGE_CHECK}" = true ]]; then
-        echo -e "${bold_red}$(battery_percentage)%"
+        echo -e "${_omb_prompt_bold_brown}$(battery_percentage)%"
     fi
 }
 
@@ -583,5 +586,5 @@ function aws_profile {
 
 
 # Returns true if $1 is a shell function.
-_omb_util_defun_deprecate 20000 fn_exists _omb_util_function_exists
-_omb_util_defun_deprecate 20000 safe_append_prompt_command _omb_util_add_prompt_command
+_omb_deprecate_function 20000 fn_exists _omb_util_function_exists
+_omb_deprecate_function 20000 safe_append_prompt_command _omb_util_add_prompt_command

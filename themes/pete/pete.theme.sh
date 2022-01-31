@@ -5,7 +5,7 @@ _omb_theme_PROMPT_COMMAND() {
   history -a
   history -c
   history -r
-  PS1="($(clock_prompt)) $(scm_char) [$blue\u$reset_color@$green\H$reset_color] $yellow\w${reset_color}$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $reset_color "
+  PS1="($(clock_prompt)) $(scm_char) [$_omb_prompt_navy\u$_omb_prompt_reset_color@$_omb_prompt_green\H$_omb_prompt_reset_color] $_omb_prompt_olive\w${_omb_prompt_reset_color}$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_reset_color "
   PS2='> '
   PS4='+ '
 }

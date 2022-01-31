@@ -3,7 +3,7 @@
 source "$OSH/themes/powerline/powerline.base.sh"
 
 function __powerline_last_status_prompt {
-  [[ "$1" -ne 0 ]] && echo "$(set_color ${LAST_STATUS_THEME_PROMPT_COLOR} -) ${1} ${normal}"
+  [[ "$1" -ne 0 ]] && echo "$(set_color ${LAST_STATUS_THEME_PROMPT_COLOR} -) ${1} ${_omb_prompt_normal}"
 }
 
 function __powerline_right_segment {
@@ -20,7 +20,7 @@ function __powerline_right_segment {
     separator_color="$(set_color ${params[1]} ${LAST_SEGMENT_COLOR})"
     (( padding += 1 ))
   fi
-  RIGHT_PROMPT+="${separator_color}${separator_char}${normal}$(set_color - ${params[1]}) ${params[0]} ${normal}$(set_color - ${COLOR})${normal}"
+  RIGHT_PROMPT+="${separator_color}${separator_char}${_omb_prompt_normal}$(set_color - ${params[1]}) ${params[0]} ${_omb_prompt_normal}$(set_color - ${COLOR})${_omb_prompt_normal}"
   RIGHT_PROMPT_LENGTH=$(( ${#params[0]} + RIGHT_PROMPT_LENGTH + padding ))
   LAST_SEGMENT_COLOR="${params[1]}"
   (( SEGMENTS_AT_RIGHT += 1 ))
@@ -43,7 +43,7 @@ function __powerline_prompt_command {
     local info="$(__powerline_${segment}_prompt)"
     [[ -n "${info}" ]] && __powerline_left_segment "${info}"
   done
-  [[ -n "${LEFT_PROMPT}" ]] && LEFT_PROMPT+="$(set_color ${LAST_SEGMENT_COLOR} -)${separator_char}${normal}"
+  [[ -n "${LEFT_PROMPT}" ]] && LEFT_PROMPT+="$(set_color ${LAST_SEGMENT_COLOR} -)${separator_char}${_omb_prompt_normal}"
 
   ## right prompt ##
   if [[ -n "${POWERLINE_RIGHT_PROMPT}" ]]; then

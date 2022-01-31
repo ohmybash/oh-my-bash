@@ -1,9 +1,9 @@
 #! bash oh-my-bash.module
 # git theming
-ZSH_THEME_GIT_PROMPT_PREFIX="${bold_blue}(${yellow}%B"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%b${bold_blue})${reset_color} "
+ZSH_THEME_GIT_PROMPT_PREFIX="${_omb_prompt_bold_navy}(${_omb_prompt_olive}%B"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%b${_omb_prompt_bold_navy})${_omb_prompt_reset_color} "
 ZSH_THEME_GIT_PROMPT_CLEAN=""
-ZSH_THEME_GIT_PROMPT_DIRTY="${bold_red}✗"
+ZSH_THEME_GIT_PROMPT_DIRTY="${_omb_prompt_bold_brown}✗"
 
 
 # LS colors, made with http://geoff.greer.fm/lscolors/
@@ -12,9 +12,9 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=00;36:pi=40;33:so=01;35:do=01;35:bd=40
 
 function _omb_theme_PROMPT_COMMAND() {
 
-    if [ "$(whoami)" = root ]; then no_color=$red; else no_color=$white; fi
+    if [ "$(whoami)" = root ]; then no_color=$_omb_prompt_brown; else no_color=$_omb_prompt_white; fi
 
-    PS1="${no_color}\u${reset_color}:${blue}\W/${reset_color} \[\$(scm_prompt_info)\]$ "
+    PS1="${no_color}\u${_omb_prompt_reset_color}:${_omb_prompt_navy}\W/${_omb_prompt_reset_color} \[\$(scm_prompt_info)\]$ "
     RPROMPT='[\t]'
 }
 

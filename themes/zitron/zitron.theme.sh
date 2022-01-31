@@ -3,7 +3,7 @@
 
 ## git-theme
 # feel free to change git chars.
-GIT_THEME_PROMPT_DIRTY="${bold_yellow}*${normal}"
+GIT_THEME_PROMPT_DIRTY="${_omb_prompt_bold_olive}*${_omb_prompt_normal}"
 GIT_THEME_PROMPT_CLEAN=""
 GIT_THEME_PROMPT_PREFIX=""
 GIT_THEME_PROMPT_SUFFIX=""
@@ -18,7 +18,7 @@ function _omb_theme_PROMPT_COMMAND() {
     # user:host:pwd git-branch(*)$
     # for example:
     # noqqe:deathstar:themes master*$
-    PS1="${no_color}\u:$(hostname)${normal}:${bold_yellow}\W/${normal} $(git_prompt_info)${reset_color}$ "
+    PS1="${no_color}\u:$(hostname)${_omb_prompt_normal}:${_omb_prompt_bold_olive}\W/${_omb_prompt_normal} $(git_prompt_info)${_omb_prompt_reset_color}$ "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

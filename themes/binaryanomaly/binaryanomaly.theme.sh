@@ -30,10 +30,10 @@ function set_host_color() {
 function set_user_color() {
   case $(id -u) in
     0)
-      printf "${red}"
+      printf "${_omb_prompt_brown}"
       ;;
     *)
-      printf "${cyan}"
+      printf "${_omb_prompt_teal}"
       ;;
   esac
 }
@@ -63,21 +63,21 @@ function set_custom_colors() {
 }
 
 __ps_time() {
-  echo "$(clock_prompt)${normal}\n"
+  echo "$(clock_prompt)${_omb_prompt_normal}\n"
 }
 
 function _omb_theme_PROMPT_COMMAND() {
-  ps_reboot="${bright_yellow}$(show_reboot_required)${normal}\n"
+  ps_reboot="${bright_yellow}$(show_reboot_required)${_omb_prompt_normal}\n"
 
-  ps_username="$(set_user_color)\u${normal}"
-  ps_uh_separator="${dark_grey}@${normal}"
-  ps_hostname="$(set_host_color)\h${normal}"
+  ps_username="$(set_user_color)\u${_omb_prompt_normal}"
+  ps_uh_separator="${dark_grey}@${_omb_prompt_normal}"
+  ps_hostname="$(set_host_color)\h${_omb_prompt_normal}"
 
-  ps_path="${yellow}\w${normal}"
+  ps_path="${_omb_prompt_olive}\w${_omb_prompt_normal}"
   ps_scm_prompt="${light_grey}$(scm_prompt)"
 
-  ps_user_mark="${normal} ${normal}"
-  ps_user_input="${normal}"
+  ps_user_mark="${_omb_prompt_normal} ${_omb_prompt_normal}"
+  ps_user_input="${_omb_prompt_normal}"
 
   # Set prompt
   PS1="$ps_reboot$(__ps_time)$ps_username$ps_uh_separator$ps_hostname $ps_path $ps_scm_prompt$ps_user_mark$ps_user_input"
@@ -92,10 +92,10 @@ THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$dark_grey"}
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${bold_red}✗${light_grey}"
-SCM_THEME_PROMPT_CLEAN=" ${green}✓${light_grey}"
-SCM_GIT_CHAR="${green}±${light_grey}"
-SCM_SVN_CHAR="${bold_cyan}⑆${light_grey}"
-SCM_HG_CHAR="${bold_red}☿${light_grey}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${light_grey}"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓${light_grey}"
+SCM_GIT_CHAR="${_omb_prompt_green}±${light_grey}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${light_grey}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${light_grey}"
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

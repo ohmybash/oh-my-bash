@@ -37,6 +37,6 @@ function _omb_theme_PROMPT_COMMAND() {
   PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]@ \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\[$SCM_THEME_PROMPT_PREFIX\]$(clock_prompt) \[$PURPLE\]\$(scm_prompt_info) \n\$ \[$RESET\]"
 }
 
-THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"${white}"}
+THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"${_omb_prompt_white}"}
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

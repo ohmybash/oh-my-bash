@@ -35,11 +35,11 @@ BRACKET_COLOR=$ORANGE
 SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
-SCM_THEME_PROMPT_DIRTY=" ${bold_red}✗${normal}"
-SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓${normal}"
-SCM_GIT_CHAR="${bold_green}±${normal}"
-SCM_SVN_CHAR="${bold_cyan}⑆${normal}"
-SCM_HG_CHAR="${bold_red}☿${normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
+SCM_GIT_CHAR="${_omb_prompt_bold_green}±${_omb_prompt_normal}"
+SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
+SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 #Mysql Prompt
 export MYSQL_PS1="(\u@\h) [\d]> "
@@ -66,7 +66,7 @@ __my_rvm_ruby_version() {
 is_vim_shell() {
         if [ ! -z "$VIMRUNTIME" ]
         then
-                echo "[${cyan}vim shell${normal}]"
+                echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
         fi
 }
 
@@ -84,7 +84,7 @@ modern_scm_prompt() {
 chroot(){
     if [ -n "$debian_chroot" ]
     then
-        my_ps_chroot="${bold_cyan}$debian_chroot${normal}";
+        my_ps_chroot="${_omb_prompt_bold_teal}$debian_chroot${_omb_prompt_normal}";
         echo "($my_ps_chroot)";
     fi
     }
@@ -93,7 +93,7 @@ chroot(){
 my_ve(){
     if [ -n "$VIRTUAL_ENV" ]
     then
-        my_ps_ve="${bold_purple}$ve${normal}";
+        my_ps_ve="${_omb_prompt_bold_purple}$ve${_omb_prompt_normal}";
         echo "($my_ps_ve)";
     fi
     echo "";
@@ -101,12 +101,12 @@ my_ve(){
 
 _omb_theme_PROMPT_COMMAND() {
 
-    my_ps_host="$BOLD$ORANGE\h${normal}";
+    my_ps_host="$BOLD$ORANGE\h${_omb_prompt_normal}";
     # yes, these are the the same for now ...
-    my_ps_host_root="$ORANGE\h${normal}";
+    my_ps_host_root="$ORANGE\h${_omb_prompt_normal}";
 
-    my_ps_user="$BOLD$GREEN\u${normal}"
-    my_ps_root="${bold_red}\u${normal}";
+    my_ps_user="$BOLD$GREEN\u${_omb_prompt_normal}"
+    my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}";
 
     if [ -n "$VIRTUAL_ENV" ]
     then
@@ -115,11 +115,11 @@ _omb_theme_PROMPT_COMMAND() {
 
     # nice prompt
     case "`id -u`" in
-        0) PS1="\n${TITLEBAR}${BRACKET_COLOR}┌─${normal}$(my_ve)$(chroot)[$my_ps_root][$my_ps_host_root]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${green}\w${normal}]$(is_vim_shell)${BRACKET_COLOR}
-└─▪ ${prompt_symbol} ${normal}"
+        0) PS1="\n${TITLEBAR}${BRACKET_COLOR}┌─${_omb_prompt_normal}$(my_ve)$(chroot)[$my_ps_root][$my_ps_host_root]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${_omb_prompt_green}\w${_omb_prompt_normal}]$(is_vim_shell)${BRACKET_COLOR}
+└─▪ ${prompt_symbol} ${_omb_prompt_normal}"
         ;;
-        *) PS1="\n${TITLEBAR}${BRACKET_COLOR}┌─${normal}$(my_ve)$(chroot)[$my_ps_user][$my_ps_host]$(modern_scm_prompt)${normal}$(__my_rvm_ruby_version)[${green}\w${normal}]$(is_vim_shell)${BRACKET_COLOR}
-└─▪ ${prompt_symbol} ${normal}"
+        *) PS1="\n${TITLEBAR}${BRACKET_COLOR}┌─${_omb_prompt_normal}$(my_ve)$(chroot)[$my_ps_user][$my_ps_host]$(modern_scm_prompt)${_omb_prompt_normal}$(__my_rvm_ruby_version)[${_omb_prompt_green}\w${_omb_prompt_normal}]$(is_vim_shell)${BRACKET_COLOR}
+└─▪ ${prompt_symbol} ${_omb_prompt_normal}"
         ;;
     esac
 }

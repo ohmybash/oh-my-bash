@@ -25,7 +25,7 @@ dulcie_background() {
 
 _omb_theme_PROMPT_COMMAND() {
   color_user_root=$(dulcie_color 169)
-  color_user_nonroot="${green}"
+  color_user_nonroot="${_omb_prompt_green}"
   color_host_local=$(dulcie_color 230)
   color_host_remote=$(dulcie_color 214)
   color_rootdir=$(dulcie_color 117)
@@ -48,18 +48,18 @@ _omb_theme_PROMPT_COMMAND() {
       color_host="${color_host_local}"
     fi
 
-    DULCIE_USER="${color_user}\u${reset_color}"
-    DULCIE_HOST="${color_host}\h${reset_color}"
-    DULCIE_WORKINGDIR="${color_workingdir}\W${reset_color}"
-    DULCIE_PROMPTCHAR="${color_user}"'\$'"${reset_color}"
+    DULCIE_USER="${color_user}\u${_omb_prompt_reset_color}"
+    DULCIE_HOST="${color_host}\h${_omb_prompt_reset_color}"
+    DULCIE_WORKINGDIR="${color_workingdir}\W${_omb_prompt_reset_color}"
+    DULCIE_PROMPTCHAR="${color_user}"'\$'"${_omb_prompt_reset_color}"
 
-    SCM_THEME_PROMPT_DIRTY=" ${red}✗${reset_color}"
-    SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓${normal}"
+    SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗${_omb_prompt_reset_color}"
+    SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
     DULCIE_SCM_BACKGROUND="${background_scm}"
     DULCIE_SCM_DIR_COLOR="${color_rootdir}"
-    SCM_THEME_ROOT_SUFFIX="${reset_color}${SCM_THEME_ROOT_SUFFIX}"
-    SCM_THEME_PROMPT_DIRTY=" $(dulcie_color 1)✗${reset_color}"
-    SCM_THEME_PROMPT_CLEAN=" $(dulcie_color 10)✓${reset_color}"
+    SCM_THEME_ROOT_SUFFIX="${_omb_prompt_reset_color}${SCM_THEME_ROOT_SUFFIX}"
+    SCM_THEME_PROMPT_DIRTY=" $(dulcie_color 1)✗${_omb_prompt_reset_color}"
+    SCM_THEME_PROMPT_CLEAN=" $(dulcie_color 10)✓${_omb_prompt_reset_color}"
   else
     DULCIE_USER='\u'
     DULCIE_HOST='\h'
@@ -79,18 +79,18 @@ _omb_theme_PROMPT_COMMAND() {
   # Open the new terminal in the same directory
   declare -f __vte_osc7 > /dev/null && __vte_osc7
 
-  PS1="${reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${reset_color} ${DULCIE_WORKINGDIR}]"
+  PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
   if [[ "${DULCIE_MULTILINE}" -eq "1" ]]; then
-    PS1="${reset_color}[${DULCIE_USER}@${DULCIE_HOST}${reset_color} ${DULCIE_WORKINGDIR}]"
+    PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
     if [[ "$(scm_prompt_info)" ]]; then
       SCM_THEME_PROMPT_PREFIX="${DULCIE_SCM_BACKGROUND}|${DULCIE_SCM_DIR_COLOR}"
-      SCM_THEME_PROMPT_SUFFIX="|${normal}"
+      SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
       PS1="$(scm_prompt_info)\n${PS1}"
     fi
   else
     SCM_THEME_PROMPT_PREFIX=" ${DULCIE_SCM_BACKGROUND}|${DULCIE_SCM_DIR_COLOR}"
-    SCM_THEME_PROMPT_SUFFIX="|${normal}"
-    PS1="${reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${reset_color} ${DULCIE_WORKINGDIR}]"
+    SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
+    PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
   fi
   PS1="${PS1}${DULCIE_PROMPTCHAR} "
 }

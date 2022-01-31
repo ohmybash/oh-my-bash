@@ -42,22 +42,22 @@ VIRTUAL_PROMPT_ENABLED=1
 # COLORS ======================================================================
 ORANGE='\[\e[0;33m\]'
 
-DEFAULT_COLOR="${white}"
+DEFAULT_COLOR="${_omb_prompt_white}"
 
-USER_COLOR="${purple}"
-SUPERUSER_COLOR="${red}"
+USER_COLOR="${_omb_prompt_purple}"
+SUPERUSER_COLOR="${_omb_prompt_brown}"
 MACHINE_COLOR=$ORANGE
 IP_COLOR=$ORANGE
-DIRECTORY_COLOR="${green}"
+DIRECTORY_COLOR="${_omb_prompt_green}"
 
-VE_COLOR="${cyan}"
-RVM_COLOR="${cyan}"
+VE_COLOR="${_omb_prompt_teal}"
+RVM_COLOR="${_omb_prompt_teal}"
 
-REF_COLOR="${purple}"
+REF_COLOR="${_omb_prompt_purple}"
 
 # SCM prompts
-SCM_THEME_PROMPT_DIRTY=" ${bold_red}✗${normal}"
-SCM_THEME_PROMPT_CLEAN=" ${bold_green}✓${normal}"
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_brown}✗${_omb_prompt_normal}"
+SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_THEME_PROMPT_PREFIX=' on '
 SCM_THEME_PROMPT_SUFFIX=''
 
@@ -186,9 +186,9 @@ function _omb_theme_PROMPT_COMMAND() {
     ((UID == 0)) && UC=$SUPERUSER_COLOR
 
     if [[ $VIRTUAL_PROMPT_ENABLED == 1 ]]; then
-        PS1="$(scm_char) ${UC}\u ${DEFAULT_COLOR}at ${MACHINE_COLOR}\h$(ip_prompt_info) ${DEFAULT_COLOR}in ${DIRECTORY_COLOR}$(limited_pwd)${DEFAULT_COLOR}$(virtual_prompt_info)$(scm_prompt_info)${reset_color} \$ "
+        PS1="$(scm_char) ${UC}\u ${DEFAULT_COLOR}at ${MACHINE_COLOR}\h$(ip_prompt_info) ${DEFAULT_COLOR}in ${DIRECTORY_COLOR}$(limited_pwd)${DEFAULT_COLOR}$(virtual_prompt_info)$(scm_prompt_info)${_omb_prompt_reset_color} \$ "
     else
-        PS1="$(scm_char) ${UC}\u ${DEFAULT_COLOR}at ${MACHINE_COLOR}\h$(ip_prompt_info) ${DEFAULT_COLOR}in ${DIRECTORY_COLOR}$(limited_pwd)${DEFAULT_COLOR}$(scm_prompt_info)${reset_color} \$ "
+        PS1="$(scm_char) ${UC}\u ${DEFAULT_COLOR}at ${MACHINE_COLOR}\h$(ip_prompt_info) ${DEFAULT_COLOR}in ${DIRECTORY_COLOR}$(limited_pwd)${DEFAULT_COLOR}$(scm_prompt_info)${_omb_prompt_reset_color} \$ "
     fi
     PS2='> '
     PS4='+ '

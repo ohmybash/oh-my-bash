@@ -1,7 +1,7 @@
 #! bash oh-my-bash.module
 # scm theming
-SCM_THEME_PROMPT_PREFIX="${yellow}("
-SCM_THEME_PROMPT_SUFFIX=")${normal}"
+SCM_THEME_PROMPT_PREFIX="${_omb_prompt_olive}("
+SCM_THEME_PROMPT_SUFFIX=")${_omb_prompt_normal}"
 
 SCM_THEME_PROMPT_DIRTY="*"
 SCM_THEME_PROMPT_CLEAN=""
@@ -25,10 +25,10 @@ scm_prompt() {
 }
 
 _omb_theme_PROMPT_COMMAND() {
-    ps_host="${green}\h${normal}";
-    ps_user_mark="${bold}\$${normal}";
-    ps_root_mark="${normal}§"
-    ps_path="${normal}\w";
+    ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
+    ps_user_mark="${_omb_prompt_bold}\$${_omb_prompt_normal}";
+    ps_root_mark="${_omb_prompt_normal}§"
+    ps_path="${_omb_prompt_normal}\w";
 
     # make it work
     case $(id -u) in

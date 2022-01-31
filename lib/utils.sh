@@ -80,21 +80,6 @@ function _omb_util_defun_print {
   builtin eval -- "function $1 { local $3; $2 \"\$@\" && printf '%s\n' \"\${$3}\"; }"
 }
 
-function __omb_util_defun_deprecate__message {
-  local old=$1 new=$2
-  local v=__omb_util_DeprecateFunction_$old; v=${v//[!a-zA-Z0-9_]/'_'}
-  [[ ${!v+set} ]] && return 0
-  printf 'warning (oh-my-bash): %s\n' "\`$old' is deprecated. Use \`$new'." >&2
-  printf -v "$v" done
-}
-
-function _omb_util_defun_deprecate {
-  local warning=
-  ((_omb_version >= $1)) &&
-    warning='__omb_util_defun_deprecate__message "$2" "$3"; '
-  builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
-}
-
 #
 # Test whether a command---either an alias, a keyword, a function, a builtin,
 # or a file---is defined.
@@ -135,48 +120,115 @@ _omb_util_function_exists() {
   declare -F "$@" &>/dev/null # bash-3.2
 }
 
-
 #
 # Set Colors
 #
 # Use colors, but only if connected to a terminal, and that terminal
-# supports them.
-if which tput >/dev/null 2>&1; then
-    ncolors=$(tput colors)
-fi
-if [[ -t 1 && $ncolors && ncolors -ge 8 ]]; then
-  bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
-  underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
-  reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
-  red=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
-  green=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
-  yellow=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-  blue=$(tput setaf 4 2>/dev/null || tput AF 4 2>/dev/null)
-  purple=$(tput setaf 171 2>/dev/null || tput AF 171 2>/dev/null)
-  tan=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
-else
-  bold=""
-  underline=""
-  reset=""
-  red=""
-  green=""
-  yellow=""
-  blue=""
-  purple=""
-  tan=""
-fi
+# supports them.  These colors are intended to be used with `echo`
+#
+_omb_term_color_initialize() {
+  local name
+  local -a normal_colors=(black brown green olive navy purple teal silver)
+  local -a bright_colors=(gray red lime yellow blue magenta cyan white)
+
+  if [[ ! -t 1 ]]; then
+    _omb_term_colors=
+    _omb_term_bold=
+    _omb_term_underline=
+    _omb_term_reset=
+    _omb_term_normal=
+    _omb_term_reset_color=
+    for name in "${normal_colors[@]}" "${bright_colors[@]}" violet; do
+      printf -v "_omb_term_$name" ''
+      printf -v "_omb_term_background_$name" ''
+      printf -v "_omb_term_bold_$name" ''
+      printf -v "_omb_term_underline_$name" ''
+    done
+    return 0
+  fi
+
+  if _omb_util_binary_exists tput; then
+    _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
+    _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+    _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+    _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+  else
+    _omb_term_colors=
+    _omb_term_bold=$'\e[1m'
+    _omb_term_underline=$'\e[4m'
+    _omb_term_reset=$'\e[0m'
+  fi
+  _omb_term_normal=$'\e[0m'
+  _omb_term_reset_color=$'\e[39m'
+
+  # normal colors
+  if ((_omb_term_colors >= 8)); then
+    local index
+    for ((index = 0; index < 8; index++)); do
+      local fg=$(tput setaf "$index" 2>/dev/null || tput AF "$index" 2>/dev/null)
+      [[ $fg ]] || fg=$'\e[3'$index'm'
+      printf -v "_omb_term_${normal_colors[index]}" %s "$fg"
+      printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+    done
+  else
+    local index
+    for ((index = 0; index < 8; index++)); do
+      printf -v "_omb_term_${normal_colors[index]}" '\e[3%sm' "$index"
+      printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+    done
+  fi
+
+  # bright colors
+  if ((_omb_term_colors >= 16)); then
+    local index
+    for ((index = 0; index < 8; index++)); do
+      local fg=$(tput setaf $((index+8)) 2>/dev/null || tput AF $((index+8)) 2>/dev/null)
+      [[ $fg ]] || fg=$'\e[9'$index'm'
+      local refbg=_omb_term_background_${normal_colors[index]}
+      local bg=${!refbg}$'\e[10'$index'm'
+      printf -v "_omb_term_${bright_colors[index]}" %s "$fg"
+      printf -v "_omb_term_background_${bright_colors[index]}" %s "$bg"
+    done
+  else
+    # copy normal colors to bright colors (with bold)
+    local index
+    for ((index = 0; index < 8; index++)); do
+      local reffg=_omb_term_${normal_colors[index]}
+      local refbg=_omb_term_background_${normal_colors[index]}
+      printf -v "_omb_term_${bright_colors[index]}" %s "$_omb_term_bold${!reffg}"
+      printf -v "_omb_term_background_${bright_colors[index]}" %s "$_omb_term_bold${!refbg}"
+    done
+  fi
+
+  # index colors
+  if ((_omb_term_colors == 256)); then
+    _omb_term_violet=$'\e[38;5;171m'
+    _omb_term_background_violet=$'\e[48;5;171m'
+  else
+    _omb_term_violet=$_omb_term_purple
+    _omb_term_background_violet=$_omb_term_background_purple
+  fi
+
+  # bold / underline versions
+  for name in "${normal_colors[@]}" "${bright_colors[@]}" violet; do
+    local ref=_omb_term_$name
+    printf -v "_omb_term_bold_$name" %s "$_omb_term_bold${!ref}"
+    printf -v "_omb_term_underline_$name" %s "$_omb_term_underline${!ref}"
+  done
+}
+_omb_term_color_initialize
 
 #
 # Headers and Logging
 #
-_omb_log_header()    { printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@"; }
+_omb_log_header()    { printf "\n${_omb_term_bold}${_omb_term_violet}==========  %s  ==========${_omb_term_reset}\n" "$@"; }
 _omb_log_arrow()     { printf "➜ %s\n" "$@"; }
-_omb_log_success()   { printf "${green}✔ %s${reset}\n" "$@"; }
-_omb_log_error()     { printf "${red}✖ %s${reset}\n" "$@"; }
-_omb_log_warning()   { printf "${tan}➜ %s${reset}\n" "$@"; }
-_omb_log_underline() { printf "${underline}${bold}%s${reset}\n" "$@"; }
-_omb_log_bold()      { printf "${bold}%s${reset}\n" "$@"; }
-_omb_log_note()      { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"; }
+_omb_log_success()   { printf "${_omb_term_green}✔ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_error()     { printf "${_omb_term_brown}✖ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_warning()   { printf "${_omb_term_olive}➜ %s${_omb_term_reset}\n" "$@"; }
+_omb_log_underline() { printf "${_omb_term_underline}${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
+_omb_log_bold()      { printf "${_omb_term_bold}%s${_omb_term_reset}\n" "$@"; }
+_omb_log_note()      { printf "${_omb_term_underline}${_omb_term_bold}${_omb_term_navy}Note:${_omb_term_reset}  ${_omb_term_olive}%s${_omb_term_reset}\n" "$@"; }
 
 #
 # USAGE FOR SEEKING CONFIRMATION
@@ -190,7 +242,7 @@ _omb_log_note()      { printf "${underline}${bold}${blue}Note:${reset}  ${yellow
 # fi
 #
 seek_confirmation() {
-  printf "\\n${bold}%s${reset}" "$@"
+  printf "\\n${_omb_term_bold}%s${_omb_term_reset}" "$@"
   read -p " (y/n) " -n 1
   printf "\\n"
 }

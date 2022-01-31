@@ -1,5 +1,8 @@
 #! bash oh-my-bash.module
 # Outputs current branch info in prompt format
+
+_omb_module_require lib:omb-prompt-colors
+
 function git_prompt_info() {
   local ref
   if [[ "$(command git config --get oh-my-bash.hide-status 2>/dev/null)" != "1" ]]; then
@@ -43,13 +46,13 @@ function git_remote_status() {
             git_remote_status="$OSH_THEME_GIT_PROMPT_EQUAL_REMOTE"
         elif [[ $ahead -gt 0 ]] && [[ $behind -eq 0 ]]; then
             git_remote_status="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE"
-            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$reset_color%}"
+            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$_omb_prompt_reset_color%}"
         elif [[ $behind -gt 0 ]] && [[ $ahead -eq 0 ]]; then
             git_remote_status="$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE"
-            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$reset_color%}"
+            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$_omb_prompt_reset_color%}"
         elif [[ $ahead -gt 0 ]] && [[ $behind -gt 0 ]]; then
             git_remote_status="$OSH_THEME_GIT_PROMPT_DIVERGED_REMOTE"
-            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$reset_color%}$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$reset_color%}"
+            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$_omb_prompt_reset_color%}$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$_omb_prompt_reset_color%}"
         fi
 
         if [[ -n $OSH_THEME_GIT_PROMPT_REMOTE_STATUS_DETAILED ]]; then

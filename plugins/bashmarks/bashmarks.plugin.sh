@@ -39,9 +39,6 @@ if [ ! -n "$SDIRS" ]; then
 fi
 touch $SDIRS
 
-RED="0;31m"
-GREEN="0;33m"
-
 # main function
 function bm {
   option="${1}"
@@ -125,9 +122,9 @@ function _goto_bookmark {
     if [ -d "$target" ]; then
         cd "$target"
     elif [ ! -n "$target" ]; then
-        echo -e "\033[${RED}WARNING: '${1}' bashmark does not exist\033[00m"
+        printf '%s\n' "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
     else
-        echo -e "\033[${RED}WARNING: '${target}' does not exist\033[00m"
+        printf '%s\n' "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
     fi
 }
 

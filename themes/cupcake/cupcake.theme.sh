@@ -19,11 +19,11 @@ VIRTUALENV_THEME_PROMPT_SUFFIX=""
 # SCM prompts
 SCM_NONE_CHAR=""
 SCM_GIT_CHAR="[±] "
-SCM_GIT_BEHIND_CHAR="${red}↓${normal}"
-SCM_GIT_AHEAD_CHAR="${bold_green}↑${normal}"
+SCM_GIT_BEHIND_CHAR="${_omb_prompt_brown}↓${_omb_prompt_normal}"
+SCM_GIT_AHEAD_CHAR="${_omb_prompt_bold_green}↑${_omb_prompt_normal}"
 SCM_GIT_UNTRACKED_CHAR="⌀"
-SCM_GIT_UNSTAGED_CHAR="${bold_yellow}•${normal}"
-SCM_GIT_STAGED_CHAR="${bold_green}+${normal}"
+SCM_GIT_UNSTAGED_CHAR="${_omb_prompt_bold_olive}•${_omb_prompt_normal}"
+SCM_GIT_STAGED_CHAR="${_omb_prompt_bold_green}+${_omb_prompt_normal}"
 
 SCM_THEME_PROMPT_DIRTY=""
 SCM_THEME_PROMPT_CLEAN=""
@@ -31,8 +31,8 @@ SCM_THEME_PROMPT_PREFIX=""
 SCM_THEME_PROMPT_SUFFIX=""
 
 # Git status prompts
-GIT_THEME_PROMPT_DIRTY=" ${red}✗${normal}"
-GIT_THEME_PROMPT_CLEAN=" ${bold_green}✓${normal}"
+GIT_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗${_omb_prompt_normal}"
+GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 GIT_THEME_PROMPT_PREFIX=""
 GIT_THEME_PROMPT_SUFFIX=""
 
@@ -63,7 +63,7 @@ function winname {
 
 # Displays the current prompt
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="\n${icon_start}$(_omb_prompt_print_python_venv)${icon_user}${bold_red}\u${normal}${icon_host}${bold_cyan}\h${normal}${icon_directory}${bold_purple}\W${normal}\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on ${icon_branch}  \")${white}$(scm_prompt_info)${normal}\n${icon_end}"
+  PS1="\n${icon_start}$(_omb_prompt_print_python_venv)${icon_user}${_omb_prompt_bold_brown}\u${_omb_prompt_normal}${icon_host}${_omb_prompt_bold_teal}\h${_omb_prompt_normal}${icon_directory}${_omb_prompt_bold_purple}\W${_omb_prompt_normal}\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on ${icon_branch}  \")${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal}\n${icon_end}"
   PS2="${icon_end}"
 }
 

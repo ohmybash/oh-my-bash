@@ -5,10 +5,10 @@
 #
 # Examples
 #
-# echo -ne "${fg[red]}I am running..."
+# echo -ne "${_omb_term_brown}I am running..."
 # ( my_long_task_running ) &
 # spinner
-# echo -ne "...${reset_color} ${fg[green]}DONE${reset_color}"
+# echo -ne "...${_omb_term_reset} ${_omb_term_green}DONE${_omb_term_reset}"
 #
 
 # This spinner is used when there is a terminal.
