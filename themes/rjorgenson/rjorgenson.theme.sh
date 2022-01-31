@@ -16,7 +16,7 @@ SCM_SVN_CHAR="${bold_cyan}⑆${normal}"
 SCM_HG_CHAR="${bold_red}☿${normal}"
 
 PROMPT_CHAR="${OMB_THEME_BRACKET_COLOR}➞ ${normal}"
-if [[ $OSTYPE =~ "darwin" ]]; then
+if [[ $OSTYPE == *darwin* ]]; then
     PROMPT_CHAR="${OMB_THEME_BRACKET_COLOR}➞  ${normal}"
 fi
 
