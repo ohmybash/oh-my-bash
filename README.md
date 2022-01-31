@@ -114,7 +114,7 @@ The default location is `~/.oh-my-bash` (hidden in your home directory)
 If you'd like to change the install directory with the `OSH` environment variable, either by running `export OSH=/your/path` before installing, or by setting it before the end of the install pipeline like this:
 
 ```shell
-export OSH="$HOME/.dotfiles/oh-my-bash"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+export OSH="$HOME/.dotfiles/oh-my-bash"; bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 ```
 
 #### Manual Installation
@@ -156,13 +156,22 @@ If you have any hiccups installing, here are a few common fixes.
 * You _might_ need to modify your `PATH` in `~/.bashrc` if you're not able to find some commands after switching to `oh-my-bash`.
 * If you installed manually or changed the install location, check the `OSH` environment variable in `~/.bashrc`.
 
-### Custom Plugins and Themes
+### Customization of  Plugins and Themes
 
 If you want to override any of the default behaviors, just add a new file (ending in `.sh`) in the `custom/` directory.
 
 If you have many functions that go well together, you can put them as a `XYZ.plugin.sh` file in the `custom/plugins/` directory and then enable this plugin.
 
-If you would like to override the functionality of a plugin distributed with Oh My Bash, create a plugin of the same name in the `custom/plugins/` directory and it will be loaded instead of the one in `plugins/`.
+If you would like to modify an existing module (theme/plugin/aliases/completion) bundled with Oh My Bash, first copy the original module to `custom/` directory and modify it.  It will be loaded instead of the original one.
+
+```bash
+$ cd "$OSH_CUSTOM"
+$ mkdir -p "$OSH_CUSTOM/themes"
+$ cp -r {"$OSH","$OSH_CUSTOM"}/themes/agnoster
+$ EDIT themes/agnoster/agnoster.theme.sh
+```
+
+If you would like to replace an existing module (theme/plugin/aliases/complet) bundled with Oh My Bash, create a module of the same name in the `custom/` directory so that it will be loaded instead of the original one.
 
 ## Getting Updates
 

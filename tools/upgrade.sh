@@ -26,7 +26,13 @@ function _omb_upgrade {
   printf "${BLUE}%s${NORMAL}\n" "Updating Oh My Bash"
 
   if ! command git -C "$OSH" pull --rebase --stat origin master; then
-    printf "${RED}%s${NORMAL}\n" 'There was an error updating. Try again later?'
+    # In case it enters the rebasing mode
+    printf '%s\n' "oh-my-bash: running 'git rebase --abort'..."
+    command git -C "$OSH" rebase --abort
+    printf "${RED}%s${NORMAL}\n" \
+           'There was an error updating.' \
+           "If you have uncommited changes in '$BOLD$OSH$NORMAL$RED', please commit, stash or discard them and retry updating." \
+           "If you have your own local commits in '$BOLD$OSH$NORMAL$RED' that conflict with the upstream changes, please resolve conflicts and merge the upstream manually."
     return 1
   fi
 
