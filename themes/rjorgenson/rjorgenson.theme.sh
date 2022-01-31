@@ -44,7 +44,7 @@ is_vim_shell() {
     fi
 }
 
-function is_integer() { # helper function to make sure input is an integer
+is_integer() { # helper function to make sure input is an integer
     [ "$1" -eq "$1" ] > /dev/null 2>&1
     return $?
 }
