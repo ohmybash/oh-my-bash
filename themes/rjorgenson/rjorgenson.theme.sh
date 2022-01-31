@@ -30,8 +30,8 @@ esac
 
 
 __my_rvm_ruby_version() {
-    local gemset ; gemset=$(echo "${GEM_HOME}" | awk -F'@' '{print $2}')
-    local version ; version=$(echo "${MY_RUBY_HOME}" | awk -F'-' '{print $2}')
+    local gemset ; gemset=$(awk -F'@' '{print $2}' <<< "${GEM_HOME}")
+    local version ; version=$(awk -F'-' '{print $2}' <<< "${MY_RUBY_HOME}")
     [ "${gemset}" != "" ] && gemset="@${gemset}"
     local full="${version}${gemset}"
     [ "${full}" != "" ] \
