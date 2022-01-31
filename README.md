@@ -171,6 +171,8 @@ $ cp -r {"$OSH","$OSH_CUSTOM"}/themes/agnoster
 $ EDIT themes/agnoster/agnoster.theme.sh
 ```
 
+If you would like to track the upstream changes for your customized version of modules, you can optionally directly edit the original files and commit them.  In this case, you need to handle possible conflicts with the upstream in upgrading.
+
 If you would like to replace an existing module (theme/plugin/aliases/complet) bundled with Oh My Bash, create a module of the same name in the `custom/` directory so that it will be loaded instead of the original one.
 
 ## Getting Updates
