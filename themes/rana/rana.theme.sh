@@ -7,7 +7,7 @@
 #  - Monokai colors - http://monokai.nl/blog/2006/07/15/textmate-color-theme/
 #  - Bash_it modern theme
 #
-# by Rana Amrit Parth<ramrit9@gmaiil.com>
+# by Rana Amrit Parth <ramrit9@gmaiil.com>
 
 # For the real Monokai colors you should add these to your .XDefaults or
 # terminal configuration:
@@ -32,51 +32,46 @@
 #*color7: #E5E5E5
 
 # ----------------------------------------------------------------- DEF COLOR
-RCol='\e[0m'    # Text Reset
 
-# Regular
-Bla='\e[0;30m';
-Red='\e[0;31m';
-Gre='\e[0;32m';
-Yel='\e[0;33m';
-Blu='\e[0;34m';
-Pur='\e[0;35m';
-Cya='\e[0;36m';
-Whi='\e[0;37m';
-
-# Bold
-BBla='\e[1;30m';
-BRed='\e[1;31m';
-BYel='\e[1;33m';
-BGre='\e[1;32m';
-BBlu='\e[1;34m';
-BPur='\e[1;35m';
-BCya='\e[1;36m';
-BWhi='\e[1;37m';
-
-# High Intensity
-IBla='\e[0;90m';
-IRed='\e[0;91m';
-IGre='\e[0;92m';
-IYel='\e[0;93m';
-IBlu='\e[0;94m';
-IPur='\e[0;95m';
-ICya='\e[0;96m';
-IWhi='\e[0;97m';
+_omb_deprecate_const 20000 RCol "$_omb_prompt_normal"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_normal}"
+_omb_deprecate_const 20000 Bla  "$_omb_prompt_black"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_black}"
+_omb_deprecate_const 20000 Red  "$_omb_prompt_brown"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_brown}"
+_omb_deprecate_const 20000 Gre  "$_omb_prompt_green"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_green}"
+_omb_deprecate_const 20000 Yel  "$_omb_prompt_olive"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_olive}"
+_omb_deprecate_const 20000 Blu  "$_omb_prompt_navy"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_navy}"
+_omb_deprecate_const 20000 Pur  "$_omb_prompt_purple"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_purple}"
+_omb_deprecate_const 20000 Cya  "$_omb_prompt_teal"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_teal}"
+_omb_deprecate_const 20000 Whi  "$_omb_prompt_silver"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_silver}"
+_omb_deprecate_const 20000 BBla "$_omb_prompt_bold_black"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_black}"
+_omb_deprecate_const 20000 BRed "$_omb_prompt_bold_brown"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_brown}"
+_omb_deprecate_const 20000 BGre "$_omb_prompt_bold_green"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_green}"
+_omb_deprecate_const 20000 BYel "$_omb_prompt_bold_olive"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_olive}"
+_omb_deprecate_const 20000 BBlu "$_omb_prompt_bold_navy"   "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_navy}"
+_omb_deprecate_const 20000 BPur "$_omb_prompt_bold_purple" "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_purple}"
+_omb_deprecate_const 20000 BCya "$_omb_prompt_bold_teal"   "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_teal}"
+_omb_deprecate_const 20000 BWhi "$_omb_prompt_bold_silver" "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_silver}"
+_omb_deprecate_const 20000 IBla "$_omb_prompt_gray"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_gray}"
+_omb_deprecate_const 20000 IRed "$_omb_prompt_red"         "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_red}"
+_omb_deprecate_const 20000 IGre "$_omb_prompt_lime"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_lime}"
+_omb_deprecate_const 20000 IYel "$_omb_prompt_yellow"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_yellow}"
+_omb_deprecate_const 20000 IBlu "$_omb_prompt_blue"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_blue}"
+_omb_deprecate_const 20000 IPur "$_omb_prompt_magenta"     "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_magenta}"
+_omb_deprecate_const 20000 ICya "$_omb_prompt_cyan"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_cyan}"
+_omb_deprecate_const 20000 IWhi "$_omb_prompt_white"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_white}"
 
 # ----------------------------------------------------------------- COLOR CONF
-D_DEFAULT_COLOR="${Whi}"
-D_INTERMEDIATE_COLOR="${BWhi}"
-D_USER_COLOR="${Yel}"
-D_SUPERUSER_COLOR="${Red}"
-D_MACHINE_COLOR="${IYel}"
-D_DIR_COLOR="${Gre}"
-D_GIT_COLOR="${BBlu}"
-D_SCM_COLOR="${BYel}"
-D_BRANCH_COLOR="${BYel}"
-D_CHANGES_COLOR="${Whi}"
-D_CMDFAIL_COLOR="${Red}"
-D_VIMSHELL_COLOR="${Cya}"
+D_DEFAULT_COLOR="$_omb_prompt_silver"
+D_INTERMEDIATE_COLOR="$_omb_prompt_bold_silver"
+D_USER_COLOR="$_omb_prompt_olive"
+D_SUPERUSER_COLOR="$_omb_prompt_brown"
+D_MACHINE_COLOR="$_omb_prompt_yellow"
+D_DIR_COLOR="$_omb_prompt_green"
+D_GIT_COLOR="$_omb_prompt_bold_navy"
+D_SCM_COLOR="$_omb_prompt_bold_olive"
+D_BRANCH_COLOR="$_omb_prompt_bold_olive"
+D_CHANGES_COLOR="$_omb_prompt_silver"
+D_CMDFAIL_COLOR="$_omb_prompt_brown"
+D_VIMSHELL_COLOR="$_omb_prompt_teal"
 
 # ------------------------------------------------------------------ FUNCTIONS
 case $TERM in
@@ -89,88 +84,82 @@ case $TERM in
 esac
 
 is_vim_shell() {
-  if [ ! -z "$VIMRUNTIME" ];
-  then
-    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}\
-vim shell${D_DEFAULT_COLOR} "
+  if [[ ${VIMRUNTIME-} ]]; then
+    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
   fi
 }
 
 mitsuhikos_lastcommandfailed() {
-  code=$?
-  if [ $code != 0 ];
-  then
-    echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}\
-$code ${D_DEFAULT_COLOR}"
+  local status=$?
+  if ((status != 0)); then
+    echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}$status ${D_DEFAULT_COLOR}"
   fi
 }
 
 # vcprompt for scm instead of oh-my-bash default
 demula_vcprompt() {
-  if [ ! -z "$VCPROMPT_EXECUTABLE" ];
-  then
-    local D_VCPROMPT_FORMAT="on ${D_SCM_COLOR}%s${D_INTERMEDIATE_COLOR}:\
-${D_BRANCH_COLOR}%b %r ${D_CHANGES_COLOR}%m%u ${D_DEFAULT_COLOR}"
+  if [[ ${VCPROMPT_EXECUTABLE-} ]]; then
+    local D_VCPROMPT_FORMAT="on ${D_SCM_COLOR}%s${D_INTERMEDIATE_COLOR}:${D_BRANCH_COLOR}%b %r ${D_CHANGES_COLOR}%m%u ${D_DEFAULT_COLOR}"
     $VCPROMPT_EXECUTABLE -f "$D_VCPROMPT_FORMAT"
   fi
 }
 
 # checks if the plugin is installed before calling battery_charge
 safe_battery_charge() {
-  if [ -e "${OSH}/plugins/battery/battery.plugin.sh" ];
-  then
+  if _omb_util_function_exists battery_charge; then
     battery_charge
   fi
 }
 
 prompt_git() {
-	local s='';
-	local branchName='';
+  local s=''
+  local branchName=''
 
-	# Check if the current directory is in a Git repository.
-	if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+  # Check if the current directory is in a Git repository.
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
 
-		# check if the current directory is in .git before running git checks
-		if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
+    # check if the current directory is in .git before running git checks
+    if [[ $(git rev-parse --is-inside-git-dir 2> /dev/null) == false ]]; then
 
-			# Ensure the index is up to date.
-			git update-index --really-refresh -q &>/dev/null;
+      # Ensure the index is up to date.
+      git update-index --really-refresh -q &>/dev/null
 
-			# Check for uncommitted changes in the index.
-			if ! git diff --quiet --ignore-submodules --cached; then
-				s+='+';
-			fi;
+      # Check for uncommitted changes in the index.
+      if ! git diff --quiet --ignore-submodules --cached; then
+        s+='+'
+      fi
 
-			# Check for unstaged changes.
-			if ! git diff-files --quiet --ignore-submodules --; then
-				s+='!';
-			fi;
+      # Check for unstaged changes.
+      if ! git diff-files --quiet --ignore-submodules --; then
+        s+='!'
+      fi
 
-			# Check for untracked files.
-			if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-				s+='?';
-			fi;
+      # Check for untracked files.
+      if [[ $(git ls-files --others --exclude-standard) ]]; then
+        s+='?'
+      fi
 
-			# Check for stashed files.
-			if git rev-parse --verify refs/stash &>/dev/null; then
-				s+='$';
-			fi;
+      # Check for stashed files.
+      if git rev-parse --verify refs/stash &>/dev/null; then
+        s+='$'
+      fi
 
-		fi;
+    fi
 
-		# Get the short symbolic ref.
-		# If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
-		# Otherwise, just give up.
-		branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
-			git rev-parse --short HEAD 2> /dev/null || \
-			echo '(unknown)')";
+    # Get the short symbolic ref.
+    # If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
+    # Otherwise, just give up.
+    branchName=$(
+      git symbolic-ref --quiet --short HEAD 2> /dev/null ||
+        git rev-parse --short HEAD 2> /dev/null ||
+        echo '(unknown)')
 
-		[ -n "${s}" ] && s=" [${s}]";
+    [[ $s ]] && s=" [$s]"
 
-		echo -e "${1}${branchName}${Cya}${s}";
-	else
-		return;
-	fi;
+    echo -e "${1}${branchName}${_omb_prompt_teal}$s"
+  else
+    return
+  fi
 }
 
 # -------------------------------------------------------------- PROMPT OUTPUT
@@ -181,31 +170,22 @@ _omb_theme_PROMPT_COMMAND() {
   local MOVE_CURSOR_RIGHTMOST='\033[500C'
   local MOVE_CURSOR_5_LEFT='\033[5D'
 
-  if [ $(uname) = "Linux" ];
-  then
-    PS1="${TITLEBAR}
-${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}\
-$(safe_battery_charge)${RESTORE_CURSOR}\
-${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}\
-at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}\
-in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}\
-$(prompt_git "$D_INTERMEDIATE_COLOR on $D_GIT_COLOR")\
-${LAST_COMMAND_FAILED}\
-$(demula_vcprompt)\
-$(is_vim_shell)
-${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
-  else
-    PS1="${TITLEBAR}
-${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}\
-at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}\
-in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}\
-$(prompt_git "$D_INTERMEDIATE_COLOR on $D_GIT_COLOR")\
-${LAST_COMMAND_FAILED}\
-$(demula_vcprompt)\
-$(is_vim_shell)\
-$(safe_battery_charge)
-${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
+  PS1=${TITLEBAR}$'\n'
+  if [[ $OSTYPE == linux* ]]; then
+    PS1+=${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}
+    PS1+=$(safe_battery_charge)${RESTORE_CURSOR}
   fi
+  PS1+="${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}"
+  PS1+="at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}"
+  PS1+="in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}"
+  PS1+=$(prompt_git "$D_INTERMEDIATE_COLOR on $D_GIT_COLOR")
+  PS1+=${LAST_COMMAND_FAILED}
+  PS1+=$(demula_vcprompt)
+  PS1+=$(is_vim_shell)
+  if [[ $OSTYPE != linux* ]]; then
+    PS1+=$(safe_battery_charge)
+  fi
+  PS1+=$'\n'"${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
 
   PS2="${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
 }
