@@ -32,51 +32,46 @@
 #*color7: #E5E5E5
 
 # ----------------------------------------------------------------- DEF COLOR
-RCol='\[\e[0m\]'    # Text Reset
 
-# Regular
-Bla='\[\e[0;30m\]';
-Red='\[\e[0;31m\]';
-Gre='\[\e[0;32m\]';
-Yel='\[\e[0;33m\]';
-Blu='\[\e[0;34m\]';
-Pur='\[\e[0;35m\]';
-Cya='\[\e[0;36m\]';
-Whi='\[\e[0;37m\]';
-
-# Bold
-BBla='\[\e[1;30m\]';
-BRed='\[\e[1;31m\]';
-BYel='\[\e[1;33m\]';
-BGre='\[\e[1;32m\]';
-BBlu='\[\e[1;34m\]';
-BPur='\[\e[1;35m\]';
-BCya='\[\e[1;36m\]';
-BWhi='\[\e[1;37m\]';
-
-# High Intensity
-IBla='\[\e[0;90m\]';
-IRed='\[\e[0;91m\]';
-IGre='\[\e[0;92m\]';
-IYel='\[\e[0;93m\]';
-IBlu='\[\e[0;94m\]';
-IPur='\[\e[0;95m\]';
-ICya='\[\e[0;96m\]';
-IWhi='\[\e[0;97m\]';
+_omb_deprecate_const 20000 RCol "$_omb_prompt_normal"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_normal}"
+_omb_deprecate_const 20000 Bla  "$_omb_prompt_black"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_black}"
+_omb_deprecate_const 20000 Red  "$_omb_prompt_brown"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_brown}"
+_omb_deprecate_const 20000 Gre  "$_omb_prompt_green"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_green}"
+_omb_deprecate_const 20000 Yel  "$_omb_prompt_olive"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_olive}"
+_omb_deprecate_const 20000 Blu  "$_omb_prompt_navy"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_navy}"
+_omb_deprecate_const 20000 Pur  "$_omb_prompt_purple"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_purple}"
+_omb_deprecate_const 20000 Cya  "$_omb_prompt_teal"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_teal}"
+_omb_deprecate_const 20000 Whi  "$_omb_prompt_silver"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_silver}"
+_omb_deprecate_const 20000 BBla "$_omb_prompt_bold_black"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_black}"
+_omb_deprecate_const 20000 BRed "$_omb_prompt_bold_brown"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_brown}"
+_omb_deprecate_const 20000 BGre "$_omb_prompt_bold_green"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_green}"
+_omb_deprecate_const 20000 BYel "$_omb_prompt_bold_olive"  "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_olive}"
+_omb_deprecate_const 20000 BBlu "$_omb_prompt_bold_navy"   "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_navy}"
+_omb_deprecate_const 20000 BPur "$_omb_prompt_bold_purple" "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_purple}"
+_omb_deprecate_const 20000 BCya "$_omb_prompt_bold_teal"   "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_teal}"
+_omb_deprecate_const 20000 BWhi "$_omb_prompt_bold_silver" "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_bold_silver}"
+_omb_deprecate_const 20000 IBla "$_omb_prompt_gray"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_gray}"
+_omb_deprecate_const 20000 IRed "$_omb_prompt_red"         "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_red}"
+_omb_deprecate_const 20000 IGre "$_omb_prompt_lime"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_lime}"
+_omb_deprecate_const 20000 IYel "$_omb_prompt_yellow"      "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_yellow}"
+_omb_deprecate_const 20000 IBlu "$_omb_prompt_blue"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_blue}"
+_omb_deprecate_const 20000 IPur "$_omb_prompt_magenta"     "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_magenta}"
+_omb_deprecate_const 20000 ICya "$_omb_prompt_cyan"        "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_cyan}"
+_omb_deprecate_const 20000 IWhi "$_omb_prompt_white"       "${_omb_deprecate_msg_please_use/'%s'/_omb_prompt_white}"
 
 # ----------------------------------------------------------------- COLOR CONF
-D_DEFAULT_COLOR="${Whi}"
-D_INTERMEDIATE_COLOR="${BWhi}"
-D_USER_COLOR="${Yel}"
-D_SUPERUSER_COLOR="${Red}"
-D_MACHINE_COLOR="${IYel}"
-D_DIR_COLOR="${Gre}"
-D_GIT_COLOR="${BBlu}"
-D_SCM_COLOR="${BYel}"
-D_BRANCH_COLOR="${BYel}"
-D_CHANGES_COLOR="${Whi}"
-D_CMDFAIL_COLOR="${Red}"
-D_VIMSHELL_COLOR="${Cya}"
+D_DEFAULT_COLOR="$_omb_prompt_silver"
+D_INTERMEDIATE_COLOR="$_omb_prompt_bold_silver"
+D_USER_COLOR="$_omb_prompt_olive"
+D_SUPERUSER_COLOR="$_omb_prompt_brown"
+D_MACHINE_COLOR="$_omb_prompt_yellow"
+D_DIR_COLOR="$_omb_prompt_green"
+D_GIT_COLOR="$_omb_prompt_bold_navy"
+D_SCM_COLOR="$_omb_prompt_bold_olive"
+D_BRANCH_COLOR="$_omb_prompt_bold_olive"
+D_CHANGES_COLOR="$_omb_prompt_silver"
+D_CMDFAIL_COLOR="$_omb_prompt_brown"
+D_VIMSHELL_COLOR="$_omb_prompt_teal"
 
 # ------------------------------------------------------------------ FUNCTIONS
 case $TERM in
@@ -167,7 +162,7 @@ prompt_git() {
 
 		[ -n "${s}" ] && s=" [${s}]";
 
-		echo -e "${1}${branchName}${Cya}${s}";
+		echo -e "${1}${branchName}${_omb_prompt_teal}${s}";
 	else
 		return;
 	fi;
