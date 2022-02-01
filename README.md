@@ -165,10 +165,9 @@ If you have many functions that go well together, you can put them as a `XYZ.plu
 If you would like to modify an existing module (theme/plugin/aliases/completion) bundled with Oh My Bash, first copy the original module to `custom/` directory and modify it.  It will be loaded instead of the original one.
 
 ```bash
-$ cd "$OSH_CUSTOM"
 $ mkdir -p "$OSH_CUSTOM/themes"
 $ cp -r {"$OSH","$OSH_CUSTOM"}/themes/agnoster
-$ EDIT themes/agnoster/agnoster.theme.sh
+$ EDIT "$OSH_CUSTOM/themes/agnoster/agnoster.theme.sh"
 ```
 
 If you would like to track the upstream changes for your customized version of modules, you can optionally directly edit the original files and commit them.  In this case, you need to handle possible conflicts with the upstream in upgrading.
