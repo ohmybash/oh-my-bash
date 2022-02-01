@@ -7,7 +7,7 @@
 #  - Monokai colors - http://monokai.nl/blog/2006/07/15/textmate-color-theme/
 #  - Bash_it modern theme
 #
-# by Rana Amrit Parth<ramrit9@gmaiil.com>
+# by Rana Amrit Parth <ramrit9@gmaiil.com>
 
 # For the real Monokai colors you should add these to your .XDefaults or
 # terminal configuration:
@@ -84,88 +84,82 @@ case $TERM in
 esac
 
 is_vim_shell() {
-  if [ ! -z "$VIMRUNTIME" ];
-  then
-    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}\
-vim shell${D_DEFAULT_COLOR} "
+  if [[ ${VIMRUNTIME-} ]]; then
+    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
   fi
 }
 
 mitsuhikos_lastcommandfailed() {
-  code=$?
-  if [ $code != 0 ];
-  then
-    echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}\
-$code ${D_DEFAULT_COLOR}"
+  local status=$?
+  if ((status != 0)); then
+    echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}$status ${D_DEFAULT_COLOR}"
   fi
 }
 
 # vcprompt for scm instead of oh-my-bash default
 demula_vcprompt() {
-  if [ ! -z "$VCPROMPT_EXECUTABLE" ];
-  then
-    local D_VCPROMPT_FORMAT="on ${D_SCM_COLOR}%s${D_INTERMEDIATE_COLOR}:\
-${D_BRANCH_COLOR}%b %r ${D_CHANGES_COLOR}%m%u ${D_DEFAULT_COLOR}"
+  if [[ ${VCPROMPT_EXECUTABLE-} ]]; then
+    local D_VCPROMPT_FORMAT="on ${D_SCM_COLOR}%s${D_INTERMEDIATE_COLOR}:${D_BRANCH_COLOR}%b %r ${D_CHANGES_COLOR}%m%u ${D_DEFAULT_COLOR}"
     $VCPROMPT_EXECUTABLE -f "$D_VCPROMPT_FORMAT"
   fi
 }
 
 # checks if the plugin is installed before calling battery_charge
 safe_battery_charge() {
-  if [ -e "${OSH}/plugins/battery/battery.plugin.sh" ];
-  then
+  if _omb_util_function_exists battery_charge; then
     battery_charge
   fi
 }
 
 prompt_git() {
-  local s='';
-  local branchName='';
+  local s=''
+  local branchName=''
 
   # Check if the current directory is in a Git repository.
-  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
 
     # check if the current directory is in .git before running git checks
-    if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
+    if [[ $(git rev-parse --is-inside-git-dir 2> /dev/null) == false ]]; then
 
       # Ensure the index is up to date.
-      git update-index --really-refresh -q &>/dev/null;
+      git update-index --really-refresh -q &>/dev/null
 
       # Check for uncommitted changes in the index.
       if ! git diff --quiet --ignore-submodules --cached; then
-        s+='+';
-      fi;
+        s+='+'
+      fi
 
       # Check for unstaged changes.
       if ! git diff-files --quiet --ignore-submodules --; then
-        s+='!';
-      fi;
+        s+='!'
+      fi
 
       # Check for untracked files.
-      if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-        s+='?';
-      fi;
+      if [[ $(git ls-files --others --exclude-standard) ]]; then
+        s+='?'
+      fi
 
       # Check for stashed files.
       if git rev-parse --verify refs/stash &>/dev/null; then
-        s+='$';
-      fi;
+        s+='$'
+      fi
 
-    fi;
+    fi
 
     # Get the short symbolic ref.
     # If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
     # Otherwise, just give up.
-    branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
-      git rev-parse --short HEAD 2> /dev/null || \
-      echo '(unknown)')";
+    branchName=$(
+      git symbolic-ref --quiet --short HEAD 2> /dev/null ||
+        git rev-parse --short HEAD 2> /dev/null ||
+        echo '(unknown)')
 
-    [ -n "${s}" ] && s=" [${s}]";
+    [[ $s ]] && s=" [$s]"
 
-    echo -e "${1}${branchName}${_omb_prompt_teal}${s}";
+    echo -e "${1}${branchName}${_omb_prompt_teal}$s"
   else
-    return;
-  fi;
+    return
+  fi
 }
 
 # -------------------------------------------------------------- PROMPT OUTPUT
@@ -176,31 +170,22 @@ _omb_theme_PROMPT_COMMAND() {
   local MOVE_CURSOR_RIGHTMOST='\033[500C'
   local MOVE_CURSOR_5_LEFT='\033[5D'
 
-  if [ $(uname) = "Linux" ];
-  then
-    PS1="${TITLEBAR}
-${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}\
-$(safe_battery_charge)${RESTORE_CURSOR}\
-${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}\
-at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}\
-in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}\
-$(prompt_git "$D_INTERMEDIATE_COLOR on $D_GIT_COLOR")\
-${LAST_COMMAND_FAILED}\
-$(demula_vcprompt)\
-$(is_vim_shell)
-${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
-  else
-    PS1="${TITLEBAR}
-${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}\
-at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}\
-in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}\
-$(prompt_git "$D_INTERMEDIATE_COLOR on $D_GIT_COLOR")\
-${LAST_COMMAND_FAILED}\
-$(demula_vcprompt)\
-$(is_vim_shell)\
-$(safe_battery_charge)
-${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
+  PS1=${TITLEBAR}$'\n'
+  if [[ $OSTYPE == linux* ]]; then
+    PS1+=${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}
+    PS1+=$(safe_battery_charge)${RESTORE_CURSOR}
   fi
+  PS1+="${D_USER_COLOR}\u ${D_INTERMEDIATE_COLOR}"
+  PS1+="at ${D_MACHINE_COLOR}\h ${D_INTERMEDIATE_COLOR}"
+  PS1+="in ${D_DIR_COLOR}\w ${D_INTERMEDIATE_COLOR}"
+  PS1+=$(prompt_git "$D_INTERMEDIATE_COLOR on $D_GIT_COLOR")
+  PS1+=${LAST_COMMAND_FAILED}
+  PS1+=$(demula_vcprompt)
+  PS1+=$(is_vim_shell)
+  if [[ $OSTYPE != linux* ]]; then
+    PS1+=$(safe_battery_charge)
+  fi
+  PS1+=$'\n'"${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
 
   PS2="${D_INTERMEDIATE_COLOR}$ ${D_DEFAULT_COLOR}"
 }
