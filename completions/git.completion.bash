@@ -1,27 +1,24 @@
 # bash completion support for Git.
-
-if ! _omb_util_function_exists __gitdir; then
-    is_completion_loaded=0
-    for path in $(type -aP git);
-    do
-        path="${path%/git}"
-        prefix="${path%/bin}"
-        # echo "[debug] Checking $prefix"
-        for file in share/bash-completion/completions/git share/git-core/contrib/completion/git-completion.bash;
+_omb_completion_git_initialize() {
+    if ! _omb_util_function_exists __gitdir; then
+        local is_completion_loaded=0 path
+        for path in $(type -aP git);
         do
-            _file="$prefix/$file"
-            if [[ -f $_file && -r $_file ]]; then
-                echo "[debug] Loading $_file"
-                is_completion_loaded=1
-                source "$_file"
-                break 2
-            fi
+            path="${path%/git}"
+            local prefix="${path%/bin}" file
+            for file in share/bash-completion/completions/git share/git-core/contrib/completion/git-completion.bash;
+            do
+                local _file="$prefix/$file"
+                if [[ -f $_file && -r $_file ]]; then
+                    is_completion_loaded=1
+                    source "$_file"
+                    break 2
+                fi
+            done
         done
-    done
-    if [[ $is_completion_loaded == 0 ]]; then
-        # echo "[debug] No completion found: fallbacking"
-        source "$OSH/tools/git-completion.bash"
+        if [[ $is_completion_loaded == 0 ]]; then
+            source "$OSH/tools/git-completion.bash"
+        fi
     fi
-# else
-#    echo "[debug] __gitdir is a defined function: doing nothing"
-fi
+}
+_omb_completion_git_initialize
