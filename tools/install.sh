@@ -3,9 +3,12 @@
 # Checks the minium version of bash (v3.2) installed,
 # stops the installation if check fails
 if [ -z "${BASH_VERSION-}" ]; then
-  printf "Error: Bash 3.2 required for Oh My Bash.\n"
-  printf "Error: Install Bash and try running this script with Bash.\n"
-  return 1 &>/dev/null || exit 1
+  printf "Error: Bash 3.2 or higher is required for Oh My Bash.\n"
+  printf "Error: Install Bash and try running this installation script with Bash.\n"
+  if command -v bash >/dev/null 2>&1; then
+    printf 'Example: \033[31;1mbash\033[0;34m -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"\n'
+  fi
+  return 1 >/dev/null 2>&1 || exit 1
 fi
 
 if [[ ! ${BASH_VERSINFO[0]-} ]] || ((BASH_VERSINFO[0] < 3 || BASH_VERSINFO[0] == 3 && BASH_VERSINFO[1] < 2)); then
