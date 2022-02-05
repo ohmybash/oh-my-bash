@@ -1,3 +1,4 @@
+#! bash oh-my-bash.module
 # bash completion support for Git.
 _omb_completion_git_initialize() {
     if ! _omb_util_function_exists __gitdir; then
@@ -7,7 +8,7 @@ _omb_completion_git_initialize() {
         git_paths+=("/usr/bin/git")
         for path in "${git_paths[@]}"; do
             if [[ -L $path ]]; then
-                path=$(readlink -f $path)
+                path=$(_omb_util_readlink "$path")
             fi
             # Note: In the case of symbolic link, the true binary name can
             # contain prefix or suffix for architectures and versions.
