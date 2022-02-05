@@ -14,12 +14,10 @@ _omb_completion_git_initialize() {
             # contain prefix or suffix for architectures and versions.
             path="${path%/*}"
             local prefix="${path%/bin}" file
-            for file in share/bash-completion/completions/git share/git-core/contrib/completion/git-completion.bash;
-            do
-                local _file="$prefix/$file"
-                if [[ -f $_file && -r $_file ]]; then
-                    source "$_file"
-                    return
+            for file in "$prefix"/share/{bash-completion/completions/git,git-core/contrib/completion/git-completion.bash}; do
+                if [[ -f $file && -r $file && -s $file ]]; then
+                    source "$file"
+                    return $?
                 fi
             done
         done
@@ -27,3 +25,4 @@ _omb_completion_git_initialize() {
     fi
 }
 _omb_completion_git_initialize
+unset -f _omb_completion_git_initialize
