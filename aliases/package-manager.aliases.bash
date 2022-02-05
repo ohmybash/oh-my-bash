@@ -1,61 +1,70 @@
 #!/usr/bin/env bash
 # Created by Jacob Hrbek github.com in 2019
-#  ---------------------------------------------------------------------------
 
-# Logic for root usage
-if [ -n "$EUID" ] && _omb_util_binary_exists emerge sudo; then
-  [ -z "$OMB_USE_ROOT" ] && export OMB_ROOT=true
+# A local temporary variable
+declare _omb_tmp_sudo
+
+# Switch for the use of "sudo"
+_omb_tmp_sudo=
+if [[ ${OMB_ALIAS_PACKAGE_MANAGER_SUDO+set} ]]; then
+  _omb_tmp_sudo=${OMB_ALIAS_PACKAGE_MANAGER_SUDO:+$OMB_ALIAS_PACKAGE_MANAGER_SUDO }
+elif [[ ${OMB_USE_SUDO-true} == true ]]; then
+  if ((EUID != 0)) && _omb_util_binary_exists sudo; then
+    _omb_tmp_sudo='sudo '
+  fi
 fi
 
 # Portage - Enoch Merge
 if _omb_util_binary_exists emerge; then
-  alias em="${OMB_ROOT:+sudo }emerge" # Enoch Merge
-  alias es="${OMB_ROOT:+sudo }emerge --search" # Enoch Search
-  alias esync="${OMB_ROOT:+sudo }emerge --sync" # Enoch SYNC
-  alias eb="${OMB_ROOT:+sudo }ebuild" # Enoch Build
-  alias er="${OMB_ROOT:+sudo }emerge -c" # Enoch Remove
-  alias ers="${OMB_ROOT:+sudo }emerge -c" # Enoch Remove Systempackage
-  alias emfu="${OMB_ROOT:+sudo }emerge --sync && ${OMB_ROOT:+sudo }emerge -uDUj @world"
-  alias elip="${OMB_ROOT:+sudo }eix-installed -a" # Enoch List Installed Packages
+  alias em="${_omb_tmp_sudo}emerge" # Enoch Merge
+  alias es="${_omb_tmp_sudo}emerge --search" # Enoch Search
+  alias esync="${_omb_tmp_sudo}emerge --sync" # Enoch SYNC
+  alias eb="${_omb_tmp_sudo}ebuild" # Enoch Build
+  alias er="${_omb_tmp_sudo}emerge -c" # Enoch Remove
+  alias ers="${_omb_tmp_sudo}emerge -c" # Enoch Remove Systempackage
+  alias emfu="${_omb_tmp_sudo}emerge --sync && ${_omb_tmp_sudo}emerge -uDUj @world"
+  alias elip="${_omb_tmp_sudo}eix-installed -a" # Enoch List Installed Packages
 fi
 
 # Paludis - Cave
 if _omb_util_binary_exists cave; then
-  alias cave="${OMB_ROOT:+sudo }cave"
-  alias cr="${OMB_ROOT:+sudo }cave resolve" # Cave Resolve
-  alias cui="${OMB_ROOT:+sudo }cave uninstall" # Cave UnInstall
-  alias cs="${OMB_ROOT:+sudo }cave show" # Cave Show
-  alias cli="${OMB_ROOT:+sudo }cave print-ids --matching '*/*::/'" # Cave List Installed
+  alias cave="${_omb_tmp_sudo}cave"
+  alias cr="${_omb_tmp_sudo}cave resolve" # Cave Resolve
+  alias cui="${_omb_tmp_sudo}cave uninstall" # Cave UnInstall
+  alias cs="${_omb_tmp_sudo}cave show" # Cave Show
+  alias cli="${_omb_tmp_sudo}cave print-ids --matching '*/*::/'" # Cave List Installed
 fi
 
 # Advanced Packaging Tool - APT
 if _omb_util_binary_exists apt; then
-  alias apt="${OMB_ROOT:+sudo }apt" # Advanced Packaging Tool
-  alias aptfu="${OMB_ROOT:+sudo }apt update -y && ${OMB_ROOT:+sudo }apt upgrade -y && ${OMB_ROOT:+sudo }apt dist-upgrade -y && ${OMB_ROOT:+sudo }apt autoremove -y"
-  alias apti="${OMB_ROOT:+sudo }apt install -y" # Apt install
-  alias apts="${OMB_ROOT:+sudo }apt-cache search" # Apt search
-  alias aptr="${OMB_ROOT:+sudo }apt remove -y" # Apt remove
-  alias aptar="${OMB_ROOT:+sudo }apt autoremove -y" # Apt Auto Remove
-  alias aptli="${OMB_ROOT:+sudo }apt list --installed"
+  alias apt="${_omb_tmp_sudo}apt" # Advanced Packaging Tool
+  alias aptfu="${_omb_tmp_sudo}apt update -y && ${_omb_tmp_sudo}apt upgrade -y && ${_omb_tmp_sudo}apt dist-upgrade -y && ${_omb_tmp_sudo}apt autoremove -y"
+  alias apti="${_omb_tmp_sudo}apt install -y" # Apt install
+  alias apts="${_omb_tmp_sudo}apt-cache search" # Apt search
+  alias aptr="${_omb_tmp_sudo}apt remove -y" # Apt remove
+  alias aptar="${_omb_tmp_sudo}apt autoremove -y" # Apt Auto Remove
+  alias aptli="${_omb_tmp_sudo}apt list --installed"
 fi
 
 # Debian PacKaGe - DPKG
 if _omb_util_binary_exists dpkg; then
-  alias dpkg="${OMB_ROOT:+sudo }dpkg"
+  alias dpkg="${_omb_tmp_sudo}dpkg"
 fi
 
 # # Zypper = Zen Yast Package Program (ZYPP?)
 # if _omb_util_binary_exists zypper; then
 #   # Yast = Yet Another Silly/Setup Thing/Thing
-#   alias lcp="${OMB_ROOT:+sudo }zypper"
-#   alias lcpi="${OMB_ROOT:+sudo }zypper install"
-#   alias lcps="${OMB_ROOT:+sudo }zypper search"
-#   alias lcpsi="${OMB_ROOT:+sudo }zypper source-install"
-#   alias lcpr="${OMB_ROOT:+sudo }zypper remove"
+#   alias lcp="${_omb_tmp_sudo}zypper"
+#   alias lcpi="${_omb_tmp_sudo}zypper install"
+#   alias lcps="${_omb_tmp_sudo}zypper search"
+#   alias lcpsi="${_omb_tmp_sudo}zypper source-install"
+#   alias lcpr="${_omb_tmp_sudo}zypper remove"
 #   if grep -q 'openSUSE Tumbleweed' /etc/os-release; then
 #     # Zypper update kills the system - LCP
-#     alias lcpfu="${OMB_ROOT:+sudo }zypper dup"
+#     alias lcpfu="${_omb_tmp_sudo}zypper dup"
 #     # Because Geeko uses sublime3 to call sublime_text instead of something that makes sence like 'subl'..
-#     alias subl="${OMB_ROOT:+sudo }sublime3"
+#     alias subl="${_omb_tmp_sudo}sublime3"
 #   fi
 # fi
+
+unset -v _omb_tmp_sudo

@@ -176,12 +176,15 @@ If you would like to replace an existing module (theme/plugin/aliases/complet) b
 
 ### Configuration
 
-#### SUDO logic
-oh-my-bash is using logic to use sudo if EUID variable and sudo doesn't return false.
+#### Disable internal uses of `sudo`
 
-To disable this use `OMB_USE_ROOT` variable with `false` value in your `~/.bashrc`
+Some plugins of oh-my-bash internally use `sudo` when it is necessary.  However, this might clutter with the `sudo` log.  To disable the use of `sudo` by oh-my-bash, `OMB_USE_SUDO` can be set to `false` in `~/.bashrc`.
 
-To overwrite this you can use `OMB_ROOT` with `true` value.
+```bash
+OMB_USE_SUDO=false
+```
+
+Each plugin might provides finer configuration variables to control the use of `sudo` by each plugin.
 
 ## Getting Updates
 
