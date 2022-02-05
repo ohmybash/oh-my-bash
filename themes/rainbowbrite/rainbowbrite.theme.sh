@@ -11,9 +11,9 @@ _omb_theme_PROMPT_COMMAND() {
   history -c
   history -r
   # displays user@server in purple
-  # PS1="$_omb_prompt_brown$(scm_char) $_omb_prompt_purple\u@\h$_omb_prompt_reset_color:$_omb_prompt_navy\w$_omb_prompt_olive$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
+  # PS1="$_omb_prompt_brown$(scm_char) $_omb_prompt_purple\u@\h$_omb_prompt_reset_color:$_omb_prompt_navy\w$_omb_prompt_olive$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_gray\$$_omb_prompt_reset_color "
   # no user@server
-  PS1="$_omb_prompt_brown$(scm_char) $_omb_prompt_navy\w$_omb_prompt_olive$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_black\$$_omb_prompt_reset_color "
+  PS1="$_omb_prompt_brown$(scm_char) $_omb_prompt_navy\w$_omb_prompt_olive$(scm_prompt_info)$(_omb_prompt_print_ruby_env) $_omb_prompt_gray\$$_omb_prompt_reset_color "
   PS2='> '
   PS4='+ '
 }
