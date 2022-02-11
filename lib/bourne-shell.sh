@@ -60,13 +60,25 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
+  if ! alias ls >/dev/null 2>&1; then
+    alias ls='ls --color=auto'
+  fi
+  #if ! alias dir >/dev/null 2>&1; then
+  #  alias dir='dir --color=auto'
+  #fi
+  #if ! alias vdir; then
+  #  alias vdir='vdir --color=auto'
+  #fi
 
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
+  if ! alias grep >/dev/null 2>&1; then
+    alias grep='grep --color=auto'
+  fi
+  if ! alias fgrep >/dev/null 2>&1; then
+    alias fgrep='fgrep --color=auto'
+  fi
+  if ! alias egrep >/dev/null 2>&1; then
+    alias egrep='egrep --color=auto'
+  fi
 fi
 
 # colored GCC warnings and errors
