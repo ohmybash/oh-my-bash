@@ -174,6 +174,18 @@ If you would like to track the upstream changes for your customized version of m
 
 If you would like to replace an existing module (theme/plugin/aliases/complet) bundled with Oh My Bash, create a module of the same name in the `custom/` directory so that it will be loaded instead of the original one.
 
+### Configuration
+
+#### Disable internal uses of `sudo`
+
+Some plugins of oh-my-bash internally use `sudo` when it is necessary.  However, this might clutter with the `sudo` log.  To disable the use of `sudo` by oh-my-bash, `OMB_USE_SUDO` can be set to `false` in `~/.bashrc`.
+
+```bash
+OMB_USE_SUDO=false
+```
+
+Each plugin might provides finer configuration variables to control the use of `sudo` by each plugin.
+
 ## Getting Updates
 
 By default, you will be prompted to check for upgrades every few weeks. If you would like `oh-my-bash` to automatically upgrade itself without prompting you, set the following in your `~/.bashrc`:

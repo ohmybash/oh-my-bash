@@ -49,6 +49,10 @@ OSH_THEME="font"
 # Would you like to use another custom folder than $OSH/custom?
 # OSH_CUSTOM=/path/to/new-custom-folder
 
+# To disable the uses of "sudo" by oh-my-bash, please set "false" to
+# this variable.  The default behavior for the empty value is "true".
+OMB_USE_SUDO=true
+
 # Which completions would you like to load? (completions can be found in ~/.oh-my-bash/completions/*)
 # Custom completions may be added to ~/.oh-my-bash/custom/completions/
 # Example format: completions=(ssh git bundler gem pip pip3)
