@@ -329,8 +329,8 @@ function svn_prompt_vars {
   fi
   SCM_PREFIX=${SVN_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
   SCM_SUFFIX=${SVN_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-  SCM_BRANCH=$(svn info 2> /dev/null | awk -F/ '/^URL:/ { for (i=0; i<=NF; i++) { if ($i == "branches" || $i == "tags" ) { print $(i+1); break }; if ($i == "trunk") { print $i; break } } }') || return
-  SCM_CHANGE=$(svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
+  SCM_BRANCH=$(command svn info 2> /dev/null | awk -F/ '/^URL:/ { for (i=0; i<=NF; i++) { if ($i == "branches" || $i == "tags" ) { print $(i+1); break }; if ($i == "trunk") { print $i; break } } }') || return
+  SCM_CHANGE=$(command svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
 }
 
 # this functions returns absolute location of .hg directory if one exists

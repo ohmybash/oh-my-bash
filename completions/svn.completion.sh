@@ -79,7 +79,7 @@ function _svn_grcut()
 function _svn_info()
 {
   local what=$1 line=
-  LANG=C LC_MESSAGES=C svn info --non-interactive 2> /dev/null | \
+  LANG=C LC_MESSAGES=C command svn info --non-interactive 2> /dev/null | \
   while read line ; do
     [[ $line == *"$what: "* ]] && echo ${line#*: }
   done
@@ -689,7 +689,7 @@ _svn()
 
 		# build status command and options
 		# "--quiet" removes 'unknown' files
-		local status='svn status --non-interactive'
+		local status='command svn status --non-interactive'
 
 		[[ $SVN_BASH_COMPL_EXT == *recurse* ]] || \
 		    status="$status --non-recursive"

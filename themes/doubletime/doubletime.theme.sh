@@ -33,7 +33,7 @@ function doubletime_scm_prompt {
   if [ $CHAR = $SCM_NONE_CHAR ]; then
     return
   elif [ $CHAR = $SCM_GIT_CHAR ]; then
-    echo "$(git_prompt_status)"
+    echo "$(command git_prompt_status)"
   else
     echo "[$(scm_prompt_info)]"
   fi
@@ -55,7 +55,7 @@ _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 function git_prompt_status {
   local git_status_output
-  git_status_output=$(git status 2> /dev/null )
+  git_status_output=$(command git status 2> /dev/null )
   if [ -n "$(echo $git_status_output | grep 'Changes not staged')" ]; then
     git_status="${_omb_prompt_bold_brown}$(scm_prompt_info) ✗"
   elif [ -n "$(echo $git_status_output | grep 'Changes to be committed')" ]; then
