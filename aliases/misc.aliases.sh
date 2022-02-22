@@ -108,5 +108,13 @@ alias herr='tail /var/log/httpd/error_log'              # herr:             Tail
 alias apacheLogs="less +F /var/log/apache2/error_log"   # Apachelogs:       Shows apache error logs
 
 #   ---------------------------------------
-#   9.  REMINDERS & NOTES
+#   9.  OTHER ALIASES
 #   ---------------------------------------
+
+# Aliases by Jacob Hrbek
+# Outputs List of Loadable Modules (llm) for current kernel
+alias llm="find /lib/modules/$(uname -r) -type f -name '*.ko*'"
+# Used for piping to remote pastebin from cmdline to generate a url
+_omb_util_binary_exists curl && ix() { curl -n -F 'f:1=<-' http://ix.io ; }
+# Used for piping to clipboard
+_omb_util_binary_exists xclip && alias xcopy="xclip -se c"
