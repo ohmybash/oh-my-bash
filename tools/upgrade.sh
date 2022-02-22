@@ -25,10 +25,14 @@ function _omb_upgrade {
 
   printf "${BLUE}%s${NORMAL}\n" "Updating Oh My Bash"
 
-  if ! command git -C "$OSH" pull --rebase --stat origin master; then
+  # Note: The git option "-C PATH" is only supported from git-1.8.5
+  # (https://github.com/git/git/commit/44e1e4d6 2013-09).  On the other hand,
+  # the synonym "--git-dir=PATH/.git --work-tree=PATH" is supported from
+  # git-1.5.3 (https://github.com/git/git/commit/892c41b9 2007-06).
+  if ! command git --git-dir="$OSH/.git" --work-tree="$OSH" pull --rebase --stat origin master; then
     # In case it enters the rebasing mode
     printf '%s\n' "oh-my-bash: running 'git rebase --abort'..."
-    command git -C "$OSH" rebase --abort
+    command git --git-dir="$OSH/.git" --work-tree="$OSH" rebase --abort
     printf "${RED}%s${NORMAL}\n" \
            'There was an error updating.' \
            "If you have uncommited changes in '$BOLD$OSH$NORMAL$RED', please commit, stash or discard them and retry updating." \
