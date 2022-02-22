@@ -133,15 +133,15 @@ function git_prompt_info() {
 
 # Parse hg info
 function hg_prompt_info() {
-    if [[ -n $(hg status 2> /dev/null) ]]; then
+    if [[ -n $(command hg status 2> /dev/null) ]]; then
         local state=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
         local state=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
     local prefix=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     local suffix=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    local branch=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
-    local changeset=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
+    local branch=$(command hg summary 2> /dev/null | grep branch | awk '{print $2}')
+    local changeset=$(command hg summary 2> /dev/null | grep parent | awk '{print $2}')
 
     echo -e "$prefix${REF_COLOR}${branch}${DEFAULT_COLOR}:${changeset#*:}$state$suffix"
 }

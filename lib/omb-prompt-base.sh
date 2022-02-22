@@ -354,7 +354,7 @@ function get_hg_root {
 }
 
 function hg_prompt_vars {
-    if [[ -n $(hg status 2> /dev/null) ]]; then
+    if [[ -n $(command hg status 2> /dev/null) ]]; then
       SCM_DIRTY=1
         SCM_STATE=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
@@ -370,14 +370,14 @@ function hg_prompt_vars {
         # Mercurial holds it's current branch in .hg/branch file
         SCM_BRANCH=$(cat "$HG_ROOT/branch")
     else
-        SCM_BRANCH=$(hg summary 2> /dev/null | grep branch: | awk '{print $2}')
+        SCM_BRANCH=$(command hg summary 2> /dev/null | grep branch: | awk '{print $2}')
     fi
 
     if [ -f "$HG_ROOT/dirstate" ]; then
         # Mercurial holds various information about the working directory in .hg/dirstate file. More on http://mercurial.selenic.com/wiki/DirState
         SCM_CHANGE=$(hexdump -n 10 -e '1/1 "%02x"' "$HG_ROOT/dirstate" | cut -c-12)
     else
-        SCM_CHANGE=$(hg summary 2> /dev/null | grep parent: | awk '{print $2}')
+        SCM_CHANGE=$(command hg summary 2> /dev/null | grep parent: | awk '{print $2}')
     fi
 }
 
