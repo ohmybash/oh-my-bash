@@ -15,3 +15,7 @@ alias gops='cd $GOPATH/src'
 alias gor='go run'
 alias got='go test'
 alias gov='go vet'
+
+# Set $GOPATH and $GOPATH/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
