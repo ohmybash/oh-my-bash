@@ -29,7 +29,7 @@ function _omb_upgrade {
   # (https://github.com/git/git/commit/44e1e4d6 2013-09).  On the other hand,
   # the synonym "--git-dir=PATH/.git --work-tree=PATH" is supported from
   # git-1.5.3 (https://github.com/git/git/commit/892c41b9 2007-06).
-  if ! command git --git-dir="$OSH/.git" --work-tree="$OSH" pull --rebase --stat origin master; then
+  if ! command git --git-dir="$OSH/.git" --work-tree="$OSH" pull --autostash --rebase --stat origin master; then
     # In case it enters the rebasing mode
     printf '%s\n' "oh-my-bash: running 'git rebase --abort'..."
     command git --git-dir="$OSH/.git" --work-tree="$OSH" rebase --abort
