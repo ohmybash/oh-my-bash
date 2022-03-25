@@ -94,9 +94,14 @@ In case you did not find a suitable theme for your needs, please have a look at 
 
 If you're feeling feisty, you can let the computer select one randomly for you each time you open a new terminal window.
 
-
 ```shell
 OSH_THEME="random" # (...please let it be pie... please be some pie..)
+```
+
+The selected theme name can be checked by the following command:
+
+```shell
+$ echo "$OMB_THEME_RANDOM_SELECTED"
 ```
 
 ## Advanced Topics
