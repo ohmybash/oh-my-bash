@@ -12,12 +12,13 @@ _omb_module_require lib:omb-prompt-colors
 # This library only works for BASH 4.x to keep the minimum compatibility for macOS.
 # shellcheck disable=SC2034
 if
+  # shellcheck disable=SC2168
   if ((_omb_bash_version >= 40200)); then
     declare -gA _omb_spectrum_fx=()
     declare -gA _omb_spectrum_fg=()
     declare -gA _omb_spectrum_bg=()
     declare -gA FX FG BG
-  elif ((_omb_bash_version >= 40000)) && local _ble_local_test 2>/dev/null; then
+  elif ((_omb_bash_version >= 40000)) && ! local _omb_local_test 2>/dev/null; then
     declare -A _omb_spectrum_fx=()
     declare -A _omb_spectrum_fg=()
     declare -A _omb_spectrum_bg=()
