@@ -11,10 +11,21 @@ _omb_module_require lib:omb-prompt-colors
 
 # This library only works for BASH 4.x to keep the minimum compatibility for macOS.
 # shellcheck disable=SC2034
-if ((_omb_bash_version >= 40000)); then
-  declare -gA _omb_spectrum_fx=()
-  declare -gA _omb_spectrum_fg=()
-  declare -gA _omb_spectrum_bg=()
+if
+  if ((_omb_bash_version >= 40200)); then
+    declare -gA _omb_spectrum_fx=()
+    declare -gA _omb_spectrum_fg=()
+    declare -gA _omb_spectrum_bg=()
+    declare -gA FX FG BG
+  elif ((_omb_bash_version >= 40000)) && local _ble_local_test 2>/dev/null; then
+    declare -A _omb_spectrum_fx=()
+    declare -A _omb_spectrum_fg=()
+    declare -A _omb_spectrum_bg=()
+    declare -A FX FG BG
+  else
+    false
+  fi
+then
   function _omb_spectrum__initialize() {
     _omb_spectrum_fx=(
       [reset]=$'\e[00m'
@@ -32,7 +43,6 @@ if ((_omb_bash_version >= 40000)); then
   }
   _omb_spectrum__initialize
 
-  declare -gA FX FG BG
   _omb_deprecate_const 20000 _RED "$_omb_term_brown"   "${_omb_deprecate_msg_please_use/'%s'/_omb_term_brown}"
   _omb_deprecate_const 20000 _NC  "$_omb_term_reset" "${_omb_deprecate_msg_please_use/'%s'/_omb_term_reset}"
   function _omb_spectrum__deprecate() {
