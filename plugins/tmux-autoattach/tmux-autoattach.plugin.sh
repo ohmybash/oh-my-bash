@@ -8,11 +8,11 @@
 [ -z "$OSH_PLUGIN_TMUX_AUTOATTACH_BEHAVIOR" ] && OSH_PLUGIN_TMUX_AUTOATTACH_BEHAVIOR="detach"
 
 _osh_plugin_tmux_autoattach_exit() {
-	[ -z "$TMUX" ] && tmux -2u new -A && exit
+	[ -z "$TMUX" ] && tmux -2u new -As0 && exit
 }
 
 _osh_plugin_tmux_autoattach_detach() {
-	[ -z "$TMUX" ] && tmux -2u new -A
+	[ -z "$TMUX" ] && tmux -2u new -As0
 }
 
 case "$OSH_PLUGIN_TMUX_AUTOATTACH_BEHAVIOR" in
