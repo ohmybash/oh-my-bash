@@ -41,9 +41,10 @@ _omb_install_print_help() {
     '' \
     'OPTIONS' \
     '  --help            show this help' \
+    '  --version         show version' \
     '  --usage           show usage' \
-    '  --unattended      attend the meeting' \
-    '  --help            show version' \
+    '  --dry-run         do not perform the actual installation' \
+    '  --unattended      do not fall in to the new Bash session after the install' \
     ''
 }
 

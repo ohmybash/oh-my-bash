@@ -122,6 +122,16 @@ If you'd like to change the install directory with the `OSH` environment variabl
 export OSH="$HOME/.dotfiles/oh-my-bash"; bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 ```
 
+#### Unattended install
+
+If you're running the Oh My Bash install script as part of an automated install, you can pass the
+flag `--unattended` to the `install.sh` script. This will have the effect of not trying to change
+the default shell, and also won't run `bash` when the installation has finished.
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
+```
+
 #### Manual Installation
 
 ##### 1. Clone the repository:
