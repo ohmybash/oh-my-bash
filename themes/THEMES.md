@@ -236,6 +236,10 @@
 
 [![](tylenol/tylenol-dark.png)](tylenol/tylenol-dark.png)
 
+## `vscode`
+
+[![](vscode/vscode-dark.png)](vscode/vscode-dark.png)
+
 ## `wanelo`
 
 [![](wanelo/wanelo-dark.png)](wanelo/wanelo-dark.png)
