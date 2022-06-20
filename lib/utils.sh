@@ -317,6 +317,7 @@ _omb_util_prompt_command_hook() {
     _omb_util_setexit "$status" "$lastarg"
     eval -- "$hook"
   done
+  _omb_util_setexit "$status"
 }
 
 _omb_util_unload_hook+=('_omb_util_prompt_command=()')
