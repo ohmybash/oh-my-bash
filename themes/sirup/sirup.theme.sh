@@ -1,16 +1,8 @@
 #! bash oh-my-bash.module
 # For unstaged(*) and staged(+) values next to branch name in __git_ps1
 GIT_PS1_SHOWDIRTYSTATE="enabled"
-
-function omb_theme_syrup_python_venv {
-  local python_venv=""
-
-  if [[ -n "${VIRTUAL_ENV}" ]]; then
-    python_venv=$(basename "${VIRTUAL_ENV}")
-  fi
-
-  [[ -n "${python_venv}" ]] && echo "[${python_venv}] "
-}
+OMB_PROMPT_VIRTUALENV_FORMAT='[%s] '
+OMB_PROMPT_CONDAENV_FORMAT='[%s] '
 
 function _omb_theme_sirup_rubygem {
   local gemset=$(command awk -F'@' '{print $2}' <<< "$GEM_HOME")
@@ -25,7 +17,9 @@ function _omb_theme_sirup_rubygem {
  
 function _omb_theme_PROMPT_COMMAND {
   # Check http://github.com/Sirupsen/dotfiles for screenshot
-  PS1="$_omb_prompt_purple$(omb_theme_syrup_python_venv)$_omb_prompt_navy\W/$_omb_prompt_bold_navy$(_omb_theme_sirup_rubygem)$_omb_prompt_bold_green$(__git_ps1 " (%s)") ${_omb_prompt_normal}$ "
+  local python_venv
+  _omb_prompt_get_python_venv
+  PS1="$_omb_prompt_purple$python_venv$_omb_prompt_navy\W/$_omb_prompt_bold_navy$(_omb_theme_sirup_rubygem)$_omb_prompt_bold_green$(__git_ps1 " (%s)") ${_omb_prompt_normal}$ "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
