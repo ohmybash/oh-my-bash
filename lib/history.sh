@@ -16,10 +16,10 @@ shopt -s histappend
 # Save multi-line commands as one command
 shopt -s cmdhist
 
-# use readline on history
+# Re-edit the command line for failing history expansions
 shopt -s histreedit
 
-# load history line onto readline buffer for editing
+# Re-edit the result of history expansions
 shopt -s histverify
 
 # save history with newlines instead of ; where possible
@@ -28,9 +28,10 @@ shopt -s lithist
 # Record each line as it gets issued
 _omb_util_add_prompt_command 'history -a'
 
-# Huge history. Doesn't appear to slow things down, so why not?
-HISTSIZE=500000
-HISTFILESIZE=100000
+# Unlimited history size. Doesn't appear to slow things down, so why not?
+# Export these variables to apply them also to the child shell sessions.
+export HISTSIZE=
+export HISTFILESIZE=
 
 # Avoid duplicate entries
 HISTCONTROL="erasedups:ignoreboth"
