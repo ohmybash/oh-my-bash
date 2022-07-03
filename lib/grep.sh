@@ -23,7 +23,7 @@ fi
 
 # export grep settings
 if ((${#_omb_grep_options[@]} > 0)); then
-  alias grep="grep ${_omb_grep_options[*]}"
+  _omb_util_alias grep="grep ${_omb_grep_options[*]}"
 fi
 
 # clean up

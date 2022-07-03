@@ -60,38 +60,25 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  if ! alias ls >/dev/null 2>&1; then
-    alias ls='ls --color=auto'
-  fi
-  #if ! alias dir >/dev/null 2>&1; then
-  #  alias dir='dir --color=auto'
-  #fi
-  #if ! alias vdir; then
-  #  alias vdir='vdir --color=auto'
-  #fi
-
-  if ! alias grep >/dev/null 2>&1; then
-    alias grep='grep --color=auto'
-  fi
-  if ! alias fgrep >/dev/null 2>&1; then
-    alias fgrep='fgrep --color=auto'
-  fi
-  if ! alias egrep >/dev/null 2>&1; then
-    alias egrep='egrep --color=auto'
-  fi
+  _omb_util_alias ls='ls --color=auto'
+  #_omb_util_alias ls='dir --color=auto'
+  #_omb_util_alias vdir='vdir --color=auto'
+  _omb_util_alias grep='grep --color=auto'
+  _omb_util_alias fgrep='fgrep --color=auto'
+  _omb_util_alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+_omb_util_alias ll='ls -alF'
+_omb_util_alias la='ls -A'
+_omb_util_alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+_omb_util_alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
