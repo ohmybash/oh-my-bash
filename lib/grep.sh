@@ -24,6 +24,8 @@ fi
 # export grep settings
 if ((${#_omb_grep_options[@]} > 0)); then
   _omb_util_alias grep="grep ${_omb_grep_options[*]}"
+  _omb_util_alias grep="fgrep ${_omb_grep_options[*]}"
+  _omb_util_alias grep="egrep ${_omb_grep_options[*]}"
 fi
 
 # clean up
