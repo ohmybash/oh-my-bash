@@ -134,6 +134,16 @@ the default shell, and also won't run `bash` when the installation has finished.
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
 ```
 
+#### System-wide installation
+
+For example, Oh My Bash can be installed to `/usr/local/share/oh-my-bash` for the system-wide installation by specifying the option `--prefix=PATH`.
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --prefix=/usr/local
+```
+
+The Bash startup file `.bashrc` needs to be manually set up by each user.
+
 #### Manual Installation
 
 ##### 1. Clone the repository:

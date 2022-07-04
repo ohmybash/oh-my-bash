@@ -45,14 +45,37 @@ _omb_install_print_help() {
     '  --usage           show usage' \
     '  --dry-run         do not perform the actual installation' \
     '  --unattended      do not fall in to the new Bash session after the install' \
+    '  --prefix=PATH     install oh-my-bash into "PATH/share/oh-my-bash"' \
     ''
 }
 
+## @fn _omb_install_readargs [options...]
+##   @var[out] install_opts
+##   @var[out] install_prefix
 _omb_install_readargs() {
+  install_opts=
+  install_prefix=
   while (($#)); do
     local arg=$1; shift
     if [[ :$install_opts: != *:literal:* ]]; then
       case $arg in
+      --prefix=*)
+        arg=${arg#*=}
+        if [[ $arg ]]; then
+          install_prefix=$arg
+        else
+          install_opts+=:error
+          printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL ${RED}the option argument for '--prefix' is empty.$NORMAL" >&2
+        fi
+        continue ;;
+      --prefix)
+        if (($#)); then
+          install_prefix=$1; shift
+        else
+          install_opts+=:error
+          printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL ${RED}an option argument for '$arg' is missing.$NORMAL" >&2
+        fi
+        continue ;;
       --help | --usage | --unattended | --dry-run)
         install_opts+=:${arg#--}
         continue ;;
@@ -65,16 +88,16 @@ _omb_install_readargs() {
       -*)
         install_opts+=:error
         if [[ $arg == -[!-]?* ]]; then
-          printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL ${RED}unrecognized options '$arg'.$NORMAL"
+          printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL ${RED}unrecognized options '$arg'.$NORMAL" >&2
         else
-          printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL ${RED}unrecognized option '$arg'.$NORMAL"
+          printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL ${RED}unrecognized option '$arg'.$NORMAL" >&2
         fi
         continue ;;
       esac
     fi
 
     install_opts+=:error
-    printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL unrecognized argument '$arg'."
+    printf 'install (oh-my-bash): %s\n' "$RED$BOLD[Error]$NORMAL unrecognized argument '$arg'." >&2
   done
 }
 
@@ -85,6 +108,69 @@ _omb_install_run() {
     printf '%s\n' "$BOLD\$ $*$NORMAL" >&5
     command "$@"
   fi
+}
+
+_omb_install_banner() {
+  # MOTD message :)
+  printf '%s' "$GREEN"
+  printf '%s\n' \
+    '         __                          __               __  ' \
+    '  ____  / /_     ____ ___  __  __   / /_  ____ ______/ /_ ' \
+    ' / __ \/ __ \   / __ `__ \/ / / /  / __ \/ __ `/ ___/ __ \' \
+    '/ /_/ / / / /  / / / / / / /_/ /  / /_/ / /_/ (__  ) / / /' \
+    '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ ' \
+    '                        /____/                            .... is now installed!'
+  printf '%s' "$NORMAL"
+}
+
+## @fn _omb_install_user_bashrc
+##   @var[in] install_opts
+##   @var[in] OSH
+_omb_install_user_bashrc() {
+  printf "${BLUE}Looking for an existing bash config...${NORMAL}\n"
+  if [[ -f ~/.bashrc || -h ~/.bashrc ]]; then
+    local bashrc_backup=~/.bashrc.omb-backup-$(date +%Y%m%d%H%M%S)
+    printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to $bashrc_backup${NORMAL}\n"
+    _omb_install_run mv ~/.bashrc "$bashrc_backup"
+  fi
+
+  printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
+  _omb_install_run cp "$OSH"/templates/bashrc.osh-template ~/.bashrc
+  sed "/^export OSH=/ c\\
+export OSH=$OSH
+  " ~/.bashrc >| ~/.bashrc.omb-temp
+  _omb_install_run mv -f ~/.bashrc.omb-temp ~/.bashrc
+
+  set +e
+  _omb_install_banner
+  printf '%s\n' "${GREEN}Please look over the ~/.bashrc file to select a theme, plugins, completions, aliases, and options${NORMAL}"
+  printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
+
+  if [[ :$install_opts: == *:dry-run:* ]]; then
+    printf '%s\n' "$GREEN$BOLD[dryrun]$NORMAL Sample bashrc is created at '$BOLD$HOME/.bashrc-ombtemp$NORMAL'."
+  elif [[ :$install_opts: != *:unattended:* ]]; then
+    if [[ $- == *i* ]]; then
+      # In case install.sh is sourced from the interactive Bash
+      source ~/.bashrc
+    else
+      exec bash
+    fi
+  fi
+}
+
+_omb_install_system_bashrc() {
+  printf "${BLUE}Creating a bashrc template at '$OSH/bashrc'...${NORMAL}\n"
+  local q=\' Q="'\''"
+  local osh="'${OSH//$q/$Q}'"
+  osh=${osh//$'\n'/$'\\\n'}
+  local sed_script='/^export OSH=.*/c \
+'"export OSH=$osh"
+  _omb_install_run sed "$sed_script" "$OSH"/templates/bashrc.osh-template >| "$OSH"/bashrc
+
+  _omb_install_banner
+  printf '%s\n' "${GREEN}To enable Oh My Bash, please copy '${BOLD}$OSH/bashrc${NORMAL}${GREEN}' to '${BOLD}~/.bashrc${NORMAL}${GREEN}'.${NORMAL}"
+  printf '%s\n' "${GREEN}Please look over the ~/.bashrc file to select a theme, plugins, completions, aliases, and options${NORMAL}"
+  printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
 }
 
 _omb_install_main() {
@@ -110,7 +196,7 @@ _omb_install_main() {
     local NORMAL=""
   fi
 
-  local install_opts=
+  local install_opts install_prefix
   _omb_install_readargs "$@"
 
   if [[ :$install_opts: == *:error:* ]]; then
@@ -136,18 +222,22 @@ _omb_install_main() {
     return 0
   fi
 
+  if [[ $install_prefix ]]; then
+    [[ $install_prefix == /* ]] ||
+      install_prefix=$PWD/$install_prefix
+    local OSH=$install_prefix/share/oh-my-bash
+  elif [[ ! $OSH ]]; then
+    OSH=~/.oh-my-bash
+  fi
+
   # Only enable exit-on-error after the non-critical colorization stuff,
   # which may fail on systems lacking tput or terminfo
 
   set -e
 
-  if [[ ! $OSH ]]; then
-    OSH=~/.oh-my-bash
-  fi
-
   if [[ -d $OSH ]]; then
-    printf "${YELLOW}You already have Oh My Bash installed.${NORMAL}\n"
-    printf "You'll need to remove $OSH if you want to re-install.\n"
+    printf '%s\n' "${YELLOW}You already have Oh My Bash installed.${NORMAL}" >&2
+    printf '%s\n' "You'll need to remove '$OSH' if you want to re-install it." >&2
     return 1
   fi
 
@@ -176,43 +266,10 @@ _omb_install_main() {
     return 1
   }
 
-  printf "${BLUE}Looking for an existing bash config...${NORMAL}\n"
-  if [[ -f ~/.bashrc || -h ~/.bashrc ]]; then
-    local bashrc_backup=~/.bashrc.omb-backup-$(date +%Y%m%d%H%M%S)
-    printf "${YELLOW}Found ~/.bashrc.${NORMAL} ${GREEN}Backing up to $bashrc_backup${NORMAL}\n"
-    _omb_install_run mv ~/.bashrc "$bashrc_backup"
-  fi
-
-  printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
-  _omb_install_run cp "$OSH"/templates/bashrc.osh-template ~/.bashrc
-  sed "/^export OSH=/ c\\
-export OSH=$OSH
-  " ~/.bashrc >| ~/.bashrc.omb-temp
-  _omb_install_run mv -f ~/.bashrc.omb-temp ~/.bashrc
-
-  set +e
-
-  # MOTD message :)
-  printf '%s' "$GREEN"
-  printf '%s\n' \
-    '         __                          __               __  ' \
-    '  ____  / /_     ____ ___  __  __   / /_  ____ ______/ /_ ' \
-    ' / __ \/ __ \   / __ `__ \/ / / /  / __ \/ __ `/ ___/ __ \' \
-    '/ /_/ / / / /  / / / / / / /_/ /  / /_/ / /_/ (__  ) / / /' \
-    '\____/_/ /_/  /_/ /_/ /_/\__, /  /_.___/\__,_/____/_/ /_/ ' \
-    '                        /____/                            .... is now installed!' \
-    "Please look over the ~/.bashrc file to select plugins, themes, and options"
-  printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
-
-  if [[ :$install_opts: == *:dry-run:* ]]; then
-    printf '%s\n' "$GREEN$BOLD[dryrun]$NORMAL Sample bashrc is created at '$BOLD$HOME/.bashrc-ombtemp$NORMAL'."
-  elif [[ :$install_opts: != *:unattended:* ]]; then
-    if [[ $- == *i* ]]; then
-      # In case install.sh is sourced from the interactive Bash
-      source ~/.bashrc
-    else
-      exec bash
-    fi
+  if [[ $install_prefix ]]; then
+    _omb_install_system_bashrc
+  else
+    _omb_install_user_bashrc
   fi
 }
 

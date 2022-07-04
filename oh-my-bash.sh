@@ -34,11 +34,19 @@ fi
 
 # Set OSH_CUSTOM to the path where your custom config files
 # and plugins exists, or else we will use the default custom/
-: "${OSH_CUSTOM:=$OSH/custom}"
+if [[ ! ${OSH_CUSTOM-} ]]; then
+  OSH_CUSTOM=$OSH/custom
+  [[ -d $OSH_CUSTOM && -O $OSH_CUSTOM ]] ||
+    OSH_CUSTOM=${XDG_DATA_HOME:-$HOME/.local/share}/oh-my-bash/custom
+fi
 
 # Set OSH_CACHE_DIR to the path where cache files should be created
 # or else we will use the default cache/
-: "${OSH_CACHE_DIR:=$OSH/cache}"
+if [[ ! ${OSH_CACHE_DIR-} ]]; then
+  OSH_CACHE_DIR=$OSH/cache
+  [[ -d $OSH_CACHE_DIR && -O $OSH_CACHE_DIR ]] ||
+    OSH_CACHE_DIR=${XDG_STATE_HOME:-$HOME/.local/state}/oh-my-bash/cache
+fi
 
 _omb_module_loaded=
 _omb_module_require() {
