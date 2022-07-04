@@ -91,7 +91,7 @@ function ___brainy_prompt_user_info {
 	color=$_omb_prompt_bold_navy
 	if [ "${THEME_SHOW_SUDO}" == "true" ]; then
 		if [ $(sudo -n id -u 2>&1 | grep 0) ]; then
-			color=$_omb_prompt_bold_brown
+			color=$_omb_prompt_bold_purple
 		fi
 	fi
 	box="[|]"
@@ -122,7 +122,8 @@ function ___brainy_prompt_python {
 	[ "${THEME_SHOW_PYTHON}" != "true" ] && return
 	color=$_omb_prompt_bold_olive
 	box="[|]"
-	info="$(python_version_prompt)"
+	info="$(_omb_prompt_print_virtualenv)$(_omb_prompt_print_condaenv)"
+	[ -z "${info}" ] && return
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_navy}" "${box}"
 }
 
@@ -256,7 +257,7 @@ export SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal
 THEME_SHOW_SUDO=${THEME_SHOW_SUDO:-"true"}
 THEME_SHOW_SCM=${THEME_SHOW_SCM:-"true"}
 THEME_SHOW_RUBY=${THEME_SHOW_RUBY:-"false"}
-THEME_SHOW_PYTHON=${THEME_SHOW_PYTHON:-"false"}
+THEME_SHOW_PYTHON=${THEME_SHOW_PYTHON:-"true"}
 THEME_SHOW_CLOCK=${THEME_SHOW_CLOCK:-"true"}
 THEME_SHOW_TODO=${THEME_SHOW_TODO:-"false"}
 THEME_SHOW_BATTERY=${THEME_SHOW_BATTERY:-"false"}
@@ -288,7 +289,7 @@ function __brainy_ps2 {
 function _omb_theme_PROMPT_COMMAND {
     exitcode="$?"
 
-    PS1="$(__brainy_ps1)"
+    PS1="\[\e]0;\u@\h: \w\a\]$(__brainy_ps1)"
     PS2="$(__brainy_ps2)"
 }
 
