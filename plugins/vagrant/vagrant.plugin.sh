@@ -1,21 +1,23 @@
 #! bash oh-my-bash.module
+
 # Functions
-function vagrant-version(){
+function vagrant-version() {
     vagrant --version
 }
 
-function vagrant-init(){
-    if [ -n "$1" ] ; then
+function vagrant-init() {
+    if [[ $1 ]]; then
         echo "Vagrant init for : $1 Creating...."
         vagrant init -m "$1"
     else
-        echo "Usage : vai <box name>"
-        echo "Example : vai centos/7"
+        echo "Usage : vai <box name>" >&2
+        echo "Example : vai centos/7" >&2
+        return 2
     fi
 }
 
-function vagrant-up(){
-    if [ -n "$1" ] ; then
+function vagrant-up() {
+    if [[ $1 ]]; then
         echo "Vagrant up for provider : $1 Running...."
         vagrant up --provider "$1"
     else
@@ -24,7 +26,7 @@ function vagrant-up(){
     fi
 }
 
-function vagrant-plugin-vm(){
+function vagrant-plugin-vm() {
     case "$1" in
         "virtualbox")
             echo "Vagrant plugin install for provider : $1 Running...."
@@ -35,14 +37,15 @@ function vagrant-plugin-vm(){
             vagrant plugin install vagrant-libvirt
         ;;
         *)
-            echo "Usage : vapvm <provider name>"
-            echo "Example : vapvm virtualbox"
+            echo "Usage : vapvm <provider name>" >&2
+            echo "Example : vapvm virtualbox" >&2
+            return 2
         ;;
     esac
 }
 
-function vagrant-status(){
-    if [ -f "Vagrantfile" ]; then
+function vagrant-status() {
+    if [[ -f Vagrantfile ]]; then
         vagrant status
     else
         vagrant global-status
@@ -50,7 +53,7 @@ function vagrant-status(){
 }
 
 
-# Alias
+# Aliases
 alias va='vagrant'
 alias vaver='vagrant-version'
 alias vaconf='vagrant ssh-config'

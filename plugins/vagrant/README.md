@@ -2,18 +2,18 @@
 
 ## Introduction
 
-The `vagrant plugin` adds several aliases for useful [vagrant](https://www.vagrantup.com/downloads) commands and [aliases](#aliases).
+The `vagrant plugin` adds several useful aliases for [vagrant](https://www.vagrantup.com/downloads) commands and [aliases](#aliases).
 
-To use it, add `vagrant` to the plugins array of your bashrc file:
+To use them, add `vagrant` to the `plugins` array of your bashrc file:
 
-```
+```bash
 plugins=(... vagrant)
 ```
 
 ## Aliases
 
-| Command           | Description                                                   |
-|:------------------|:--------------------------------------------------------------|
+| Command            | Description                                                  |
+|:-------------------|:-------------------------------------------------------------|
 | `va`               | command `vagrant`                                            |
 | `vaver`            | Show the vagrant version in this host                        |
 | `vaconf`           | command `vagrant ssh-config`                                 |
