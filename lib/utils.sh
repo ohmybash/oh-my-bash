@@ -388,3 +388,15 @@ _omb_util_glob_expand() {
   [[ :$shopt: == *:failglob:* ]] && shopt -s failglob
   return 0
 }
+
+_omb_util_alias() {
+  case ${OMB_DEFAULT_ALIASES:-enable} in
+  (disable) return 0 ;;
+  (check) alias -- "${1%%=*}" &>/dev/null && return 0 ;;
+  (enable) ;;
+  (*)
+    _omb_log_error "invalid value: OMB_DEFAULT_ALIASES='${OMB_DEFAULT_ALIASES-}' (expect: enable|disable|check)" >&2
+    return 2
+  esac
+  alias -- "$1"
+}
