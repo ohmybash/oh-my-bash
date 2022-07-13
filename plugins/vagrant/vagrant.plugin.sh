@@ -55,22 +55,24 @@ function vagrant-status() {
 
 function vagrant-ssh() {
     local VMCOUNT
-    VMCOUNT="$(vagrant status | grep -c running)"
+    VMCOUNT=$(vagrant status | grep -c running)
     local VMDEFAULT
-    VMDEFAULT="$(vagrant status | grep -w default | grep -c running)"
+    VMDEFAULT=$(vagrant status | grep -w default | grep -c running)
 
-    if [ "$VMDEFAULT" == 1 ]; then
-        if [[ "$1" ]]; then echo "SKIP : $1 Server...."; fi
+    if ((VMDEFAULT == 1)); then
+        if [[ $1 ]]; then
+            echo "SKIP : $1 Server...."
+        fi
         echo "Login to : default Server...."
         vagrant ssh
-    elif [[ $1 ]] && [ "$VMCOUNT" -gt 1 ]; then
+    elif [[ $1 ]] && ((VMCOUNT > 1)); then
         echo "Login to : $1 Server...."
         vagrant ssh "$1"
-    elif [ "$VMCOUNT" == 0 ]; then
+    elif ((VMCOUNT == 0)); then
         echo "Seems like that not there running servers" >&2
-        return 2
+        return 1
     else
-        echo -e "Please choose some server from this list:\\n"
+        echo -e "Please choose a server from this list:\\n"
         vagrant status | awk '/running/{print $1}'
         echo -e "\\nThen fill: vagrant ssh [ option ]"
     fi
