@@ -15,7 +15,7 @@ function ansible-role-init(){
     fi
 }
 
-# Alias
+# Aliases
 alias a='ansible '
 alias aconf='ansible-config '
 alias acon='ansible-console '

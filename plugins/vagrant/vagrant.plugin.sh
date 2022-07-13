@@ -1,4 +1,5 @@
 #! bash oh-my-bash.module
+# Author: Enzo Arroyo <enzo@arroyof.com>
 
 # Functions
 function vagrant-version() {
@@ -52,6 +53,29 @@ function vagrant-status() {
     fi
 }
 
+function vagrant-ssh() {
+    local VMCOUNT
+    VMCOUNT="$(vagrant status | grep -c running)"
+    local VMDEFAULT
+    VMDEFAULT="$(vagrant status | grep -w default | grep -c running)"
+
+    if [ "$VMDEFAULT" == 1 ]; then
+        if [[ "$1" ]]; then echo "SKIP : $1 Server...."; fi
+        echo "Login to : default Server...."
+        vagrant ssh
+    elif [[ $1 ]] && [ "$VMCOUNT" -gt 1 ]; then
+        echo "Login to : $1 Server...."
+        vagrant ssh "$1"
+    elif [ "$VMCOUNT" == 0 ]; then
+        echo "Seems like that not there running servers" >&2
+        return 2
+    else
+        echo -e "Please choose some server from this list:\\n"
+        vagrant status | awk '/running/{print $1}'
+        echo -e "\\nThen fill: vagrant ssh [ option ]"
+    fi
+}
+
 
 # Aliases
 alias va='vagrant'
@@ -68,6 +92,7 @@ alias vah='vagrant halt'
 alias vat='vagrant destroy -f'
 alias vai='vagrant-init'
 alias varel='vagrant reload'
+alias vassh='vagrant-ssh'
 alias vaba='vagrant box add'
 alias vabr='vagrant box remove'
 alias vavl='vagrant box list'
