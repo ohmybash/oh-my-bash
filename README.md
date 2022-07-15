@@ -136,13 +136,19 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/mast
 
 #### System-wide installation
 
-For example, Oh My Bash can be installed to `/usr/local/share/oh-my-bash` for the system-wide installation by specifying the option `--prefix=PATH`.
+For example, Oh My Bash can be installed to `/usr/local/share/oh-my-bash` for the system-wide installation by specifying the option `--prefix=PREFIX`.
 
 ```sh
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --prefix=/usr/local
 ```
 
-The Bash startup file `.bashrc` needs to be manually set up by each user.
+To enable Oh My Bash, the Bash startup file `.bashrc` needs to be manually set up by each user.
+The template of `.bashrc` is available in `PREFIX/share/oh-my-bash/bashrc`.
+The users can copy the template file to `~/.bashrc` and edit it.
+
+```bash
+cp /usr/local/share/oh-my-bash/bashrc ~/.bashrc
+```
 
 #### Manual Installation
 
