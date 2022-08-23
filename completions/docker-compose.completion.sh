@@ -552,7 +552,7 @@ _docker_compose() {
 	done
 
 	local completions_func=_docker_compose_${command//-/_}
-	_omb_util_function_exists $completions_func && $completions_func
+	_omb_util_function_exists "$completions_func" && "$completions_func"
 
 	eval "$previous_extglob_setting"
 	return 0

@@ -133,7 +133,7 @@ _packer_completion ()
     _omb_util_function_exists _get_comp_words_by_ref && _get_comp_words_by_ref -n = cur
 
     COMPREPLY=()
-    local i c=1 command
+    local i c=1 command=
 
     while [ $c -lt $COMP_CWORD ]; do
         i="${COMP_WORDS[c]}"
@@ -144,7 +144,7 @@ _packer_completion ()
         ((c++))
     done
 
-    if [ -z $command ]; then
+    if [ -z "$command" ]; then
         case "$cur" in
             '-'*)
                 __packercomp "-machine-readable --help --version"
@@ -157,7 +157,7 @@ _packer_completion ()
     fi
 
     local completion_func="__packer_${command}"
-    _omb_util_function_exists $completion_func && $completion_func
+    _omb_util_function_exists "$completion_func" && "$completion_func"
 }
 
 complete -o nospace -F _packer_completion packer

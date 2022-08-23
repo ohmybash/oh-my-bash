@@ -244,7 +244,7 @@ _docker_machine() {
 
     local completion_func=_docker_machine_"${command//-/_}"
     if _omb_util_function_exists "${completion_func}"; then
-        ${completion_func}
+        "${completion_func}"
     fi
 
     return 0
