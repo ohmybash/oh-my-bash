@@ -1,5 +1,15 @@
 #! bash oh-my-bash.module
-#  ---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Note on copyright (2022-08-23): The contents of this file seems to have been
+# originally introduced in a blog post [1].  The author also put it on Gist
+# [2]. The blog post says "feel free to take whatever", but the license is not
+# explicitly specified.  Aliases are moved to general.aliases.sh.
+#
+# [1] Nathaniel Landau, "My Mac OSX Bash Profile",
+#     https://natelandau.com/my-mac-osx-bash_profile/, 2013-07-02.
+# [2] https://gist.github.com/natelandau/10654137
+#
+#------------------------------------------------------------------------------
 #
 #  Description:  This file holds all base BASH functions
 #
@@ -16,7 +26,7 @@
 #
 #  X.   Reminders & Notes
 #
-#  ---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 #   -----------------------------
 #   1.  MAKE TERMINAL BETTER
