@@ -21,9 +21,39 @@
 #   1.  MAKE TERMINAL BETTER
 #   -----------------------------
 
-alias cp='cp -iv'                           # Preferred 'cp' implementation
-alias mv='mv -iv'                           # Preferred 'mv' implementation
-alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+# Determines the use of the option `-v' on the first call
+# Ref. https://github.com/ohmybash/oh-my-bash/issues/351
+function _omb_alias_general_cp_init {
+  if (tmp=$(_omb_util_mktemp); trap 'rm -f "$tmp"{,.2}' EXIT; command cp -v "$tmp" "$tmp.2" &>/dev/null); then
+    alias cp='cp -iv' && unset -f "$FUNCNAME"
+    command cp -iv "$@"
+  else
+    alias cp='cp -i' && unset -f "$FUNCNAME"
+    command cp -i "$@"
+  fi
+}
+function _omb_alias_general_mv_init {
+  if (tmp=$(_omb_util_mktemp); trap 'rm -f "$tmp.2"' EXIT; command mv -v "$tmp" "$tmp.2" &>/dev/null); then
+    alias mv='mv -iv' && unset -f "$FUNCNAME"
+    command mv -iv "$@"
+  else
+    alias mv='mv -i' && unset -f "$FUNCNAME"
+    command mv -i "$@"
+  fi
+}
+function _omb_alias_general_mkdir_init {
+  if command mkdir -pv . &>/dev/null; then
+    alias mkdir='mkdir -pv' && unset -f "$FUNCNAME"
+    command mkdir -pv "$@"
+  else
+    alias mkdir='mkdir -p' && unset -f "$FUNCNAME"
+    command mkdir -p "$@"
+  fi
+}
+
+alias cp='_omb_alias_general_cp_init'       # Preferred 'cp' implementation
+alias mv='_omb_alias_general_mv_init'       # Preferred 'mv' implementation
+alias mkdir='_omb_alias_general_mkdir_init' # Preferred 'mkdir' implementation
 alias ll='ls -lAFh'                         # Preferred 'ls' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias nano='nano -W'                        # Preferred 'nano' implementation

@@ -400,3 +400,12 @@ _omb_util_alias() {
   esac
   alias -- "$1"
 }
+
+function _omb_util_mktemp {
+  local template=tmp.oh-my-bash.XXXXXXXXXX
+  if type -t mktemp &>/dev/null; then
+    mktemp -t "$template"
+  else
+    m4 -D template="${TMPDIR:-/tmp}/$template" <<< 'mkstemp(template)'
+  fi
+}
