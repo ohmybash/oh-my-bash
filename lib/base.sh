@@ -124,7 +124,7 @@ zipf () { zip -r "$1".zip "$1" ; }           # zipf:         To create a ZIP arc
 #   mkiso:  creates iso from current dir in the parent dir (unless defined)
 #   ---------------------------------------------------------
     mkiso () {
-      if type "mkisofs" > /dev/null; then
+      if _omb_util_command_exists mkisofs; then
         if [ -z ${1+x} ]; then
           local isoname=${PWD##*/}
         else

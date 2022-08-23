@@ -403,7 +403,7 @@ _omb_util_alias() {
 
 function _omb_util_mktemp {
   local template=tmp.oh-my-bash.XXXXXXXXXX
-  if type -t mktemp &>/dev/null; then
+  if _omb_util_command_exists mktemp; then
     mktemp -t "$template"
   else
     m4 -D template="${TMPDIR:-/tmp}/$template" <<< 'mkstemp(template)'

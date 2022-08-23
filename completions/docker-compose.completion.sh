@@ -39,7 +39,7 @@ __docker_compose_to_extglob() {
 # suppress trailing whitespace
 __docker_compose_nospace() {
 	# compopt is not available in ancient bash versions
-	type compopt &>/dev/null && compopt -o nospace
+	_omb_util_command_exists compopt && compopt -o nospace
 }
 
 # Extracts all service names from the compose file.

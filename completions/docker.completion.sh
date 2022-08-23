@@ -406,7 +406,7 @@ __docker_subcommands() {
 # suppress trailing whitespace
 __docker_nospace() {
 	# compopt is not available in ancient bash versions
-	type compopt &>/dev/null && compopt -o nospace
+	_omb_util_command_exists compopt && compopt -o nospace
 }
 
 __docker_complete_resolved_hostname() {
