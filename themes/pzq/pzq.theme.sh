@@ -28,7 +28,7 @@ D_VIMSHELL_COLOR="${cyan}"
 # ------------------------------------------------------------------ FUNCTIONS
 case $TERM in
   xterm*)
-      TITLEBAR="\033]0;\w\007"
+      TITLEBAR='\[\033]0;\w\e\\\]'
       ;;
   *)
       TITLEBAR=""
@@ -44,7 +44,7 @@ vim shell${D_DEFAULT_COLOR} "
 }
 
 mitsuhikos_lastcommandfailed() {
-  code=$?
+  local code=$?
   if [ $code != 0 ];
   then
     echo " ${D_DEFAULT_COLOR}C:${D_CMDFAIL_COLOR}\
@@ -90,17 +90,17 @@ prompt_git() {
 
 limited_pwd() {
   # Max length of PWD to display
-  MAX_PWD_LENGTH=20
+  local MAX_PWD_LENGTH=20
 
   # Replace $HOME with ~ if possible 
-  RELATIVE_PWD=${PWD/#$HOME/\~}
+  local RELATIVE_PWD=${PWD/#$HOME/\~}
 
   local offset=$((${#RELATIVE_PWD}-$MAX_PWD_LENGTH))
 
   if [ $offset -gt "0" ]
   then
       local truncated_symbol="..."
-      TRUNCATED_PWD=${RELATIVE_PWD:$offset:$MAX_PWD_LENGTH}
+      local TRUNCATED_PWD=${RELATIVE_PWD:$offset:$MAX_PWD_LENGTH}
       echo -e "${truncated_symbol}/${TRUNCATED_PWD#*/}"
   else
       echo -e "${RELATIVE_PWD}"
@@ -110,16 +110,16 @@ limited_pwd() {
 prompt_python() {
   # for virtualenv
   if [[ $VIRTUAL_ENV ]]; then
-    virtualenv=`basename "$VIRTUAL_ENV"`
-    VIRTUALENV_THEME_PROMPT_PREFIX='('
-    VIRTUALENV_THEME_PROMPT_SUFFIX=')'
+    local virtualenv=$(basename "$VIRTUAL_ENV")
+    local VIRTUALENV_THEME_PROMPT_PREFIX='('
+    local VIRTUALENV_THEME_PROMPT_SUFFIX=')'
     echo -e "${VIRTUALENV_THEME_PROMPT_PREFIX}$virtualenv${VIRTUALENV_THEME_PROMPT_SUFFIX}"
   fi
 
   # for condaenv
   if [[ $CONDA_DEFAULT_ENV ]]; then
-    CONDAENV_THEME_PROMPT_PREFIX='('
-    CONDAENV_THEME_PROMPT_SUFFIX=')'
+    local CONDAENV_THEME_PROMPT_PREFIX='('
+    local CONDAENV_THEME_PROMPT_SUFFIX=')'
     echo -e "${CONDAENV_THEME_PROMPT_PREFIX}${CONDA_DEFAULT_ENV}${CONDAENV_THEME_PROMPT_SUFFIX}"
   fi
 }
@@ -127,15 +127,15 @@ prompt_python() {
 # -------------------------------------------------------------- PROMPT OUTPUT
 prompt() {
   local LAST_COMMAND_FAILED=$(mitsuhikos_lastcommandfailed)
-  local SAVE_CURSOR='\033[s'
-  local RESTORE_CURSOR='\033[u'
-  local MOVE_CURSOR_RIGHTMOST='\033[500C'
+  local SAVE_CURSOR='\[\e7'
+  local RESTORE_CURSOR='\e8\]'
+  local MOVE_CURSOR_RIGHTMOST='\033['${COLUMNS:-9999}'C'
   local MOVE_CURSOR_5_LEFT='\033[5D'
   local THEME_CLOCK_FORMAT="%H:%M:%S %y-%m-%d"
   # Replace $HOME with ~ if possible 
   local RELATIVE_PWD=${PWD/#$HOME/\~}
 
-  if [ $(uname) = "Linux" ];
+  if [ "$OSTYPE" = "linux-gnu" ];
   then
     PS1="${TITLEBAR}$(prompt_python)
 ${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}\
