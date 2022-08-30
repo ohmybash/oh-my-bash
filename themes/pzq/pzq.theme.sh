@@ -97,9 +97,9 @@ limited_pwd() {
   if ((offset > 0)); then
     local truncated_symbol='...'
     local TRUNCATED_PWD=${RELATIVE_PWD:offset:MAX_PWD_LENGTH}
-    echo -e "${truncated_symbol}/${TRUNCATED_PWD#*/}"
+    echo -n "${truncated_symbol}/${TRUNCATED_PWD#*/}"
   else
-    echo -e "${RELATIVE_PWD}"
+    echo -n "${RELATIVE_PWD}"
   fi
 }
 
