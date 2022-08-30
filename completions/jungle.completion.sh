@@ -1,2 +1,2 @@
 #! bash oh-my-bash.module
-[[ -x "$(which jungle)" ]] &>/dev/null  && eval "$(_JUNGLE_COMPLETE=source jungle)"
+_omb_util_binary_exists jungle && eval "$(_JUNGLE_COMPLETE=source jungle)"

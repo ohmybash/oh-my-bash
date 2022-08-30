@@ -176,7 +176,7 @@ _omb_install_system_bashrc() {
 _omb_install_main() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
-  if hash tput >/dev/null 2>&1; then
+  if type -P tput &>/dev/null; then
     local ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || echo -1)
   fi
 

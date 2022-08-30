@@ -6,8 +6,8 @@
 
 function_exists()
 {
-	declare -F $1 > /dev/null
-	return $?
+	_omb_util_function_exists "$1"
+	return "$?"
 }
 
 function_exists _get_comp_words_by_ref ||

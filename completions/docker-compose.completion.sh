@@ -39,7 +39,7 @@ __docker_compose_to_extglob() {
 # suppress trailing whitespace
 __docker_compose_nospace() {
 	# compopt is not available in ancient bash versions
-	type compopt &>/dev/null && compopt -o nospace
+	_omb_util_command_exists compopt && compopt -o nospace
 }
 
 # Extracts all service names from the compose file.
@@ -552,7 +552,7 @@ _docker_compose() {
 	done
 
 	local completions_func=_docker_compose_${command//-/_}
-	declare -F $completions_func >/dev/null && $completions_func
+	_omb_util_function_exists "$completions_func" && "$completions_func"
 
 	eval "$previous_extglob_setting"
 	return 0

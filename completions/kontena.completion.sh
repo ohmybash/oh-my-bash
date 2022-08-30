@@ -1,2 +1,2 @@
 #! bash oh-my-bash.module
-which kontena &> /dev/null && . "$( kontena whoami --bash-completion-path )"
+_omb_util_binary_exists kontena && . "$( kontena whoami --bash-completion-path )"

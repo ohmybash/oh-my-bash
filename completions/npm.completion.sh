@@ -3,7 +3,7 @@
 # npm (Node Package Manager) completion
 # https://docs.npmjs.com/cli/completion
 
-if command -v npm &>/dev/null
+if _omb_util_command_exists npm
 then
   eval "$(npm completion)"
 fi

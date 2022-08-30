@@ -135,8 +135,8 @@ ___brainy_prompt_ruby() {
 }
 
 ___brainy_prompt_todo() {
-	[ "${THEME_SHOW_TODO}" != "true" ] ||
-	[ -z "$(which todo.sh)" ] && return
+	[ "${THEME_SHOW_TODO}" != "true" ] && return
+	_omb_util_binary_exists todo.sh || return
 	color=$_omb_prompt_bold_white
 	box="[|]"
 	info="t:$(todo.sh ls | egrep "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"

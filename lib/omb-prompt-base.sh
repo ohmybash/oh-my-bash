@@ -104,9 +104,9 @@ function _omb_prompt_format {
 function scm {
   if [[ "$SCM_CHECK" = false ]]; then SCM=$SCM_NONE
   elif [[ -f .git/HEAD ]]; then SCM=$SCM_GIT
-  elif which git &> /dev/null && [[ -n "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
+  elif _omb_util_binary_exists git && [[ -n "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
   elif [[ -d .hg ]]; then SCM=$SCM_HG
-  elif which hg &> /dev/null && [[ -n "$(hg root 2> /dev/null)" ]]; then SCM=$SCM_HG
+  elif _omb_util_binary_exists hg && [[ -n "$(hg root 2> /dev/null)" ]]; then SCM=$SCM_HG
   elif [[ -d .svn ]]; then SCM=$SCM_SVN
   else SCM=$SCM_NONE
   fi

@@ -394,7 +394,7 @@ __docker_subcommands() {
 				subcommand_pos=$counter
 				local subcommand=${words[$counter]}
 				local completions_func=_docker_${command}_${subcommand}
-				declare -F $completions_func >/dev/null && $completions_func
+				_omb_util_function_exists "$completions_func" && "$completions_func"
 				return 0
 				;;
 		esac
@@ -406,11 +406,11 @@ __docker_subcommands() {
 # suppress trailing whitespace
 __docker_nospace() {
 	# compopt is not available in ancient bash versions
-	type compopt &>/dev/null && compopt -o nospace
+	_omb_util_command_exists compopt && compopt -o nospace
 }
 
 __docker_complete_resolved_hostname() {
-	command -v host >/dev/null 2>&1 || return
+	_omb_util_command_exists host || return
 	COMPREPLY=( $(host 2>/dev/null "${cur%:}" | awk '/has address/ {print $4}') )
 }
 
@@ -2953,7 +2953,7 @@ _docker() {
 	fi
 
 	local completions_func=_docker_${command}
-	declare -F $completions_func >/dev/null && $completions_func
+	_omb_util_function_exists "$completions_func" && "$completions_func"
 
 	eval "$previous_extglob_setting"
 	return 0
