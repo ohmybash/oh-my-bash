@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Theme inspired on:
+# Theme inspired by:
 #  - ys theme - https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/ys.zsh-theme
 #  - rana theme - https://github.com/ohmybash/oh-my-bash/blob/master/themes/rana/rana.theme.sh
 #
@@ -31,11 +31,11 @@ D_VIMSHELL_COLOR="$_omb_prompt_teal"
 # ------------------------------------------------------------------ FUNCTIONS
 case $TERM in
   xterm*)
-      TITLEBAR='\[\033]0;\w\e\\\]'
-      ;;
+    TITLEBAR='\[\e]0;\w\e\\\]'
+    ;;
   *)
-      TITLEBAR=""
-      ;;
+    TITLEBAR=""
+    ;;
 esac
 
 is_vim_shell() {
@@ -70,7 +70,7 @@ prompt_git() {
   local branchName=''
 
   # Check if the current directory is in a Git repository.
-  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
     # Get the short symbolic ref.
     # If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
     # Otherwise, just give up.
@@ -92,15 +92,14 @@ limited_pwd() {
   # Replace $HOME with ~ if possible 
   local RELATIVE_PWD=${PWD/#$HOME/\~}
 
-  local offset=$((${#RELATIVE_PWD}-$MAX_PWD_LENGTH))
+  local offset=$((${#RELATIVE_PWD}-MAX_PWD_LENGTH))
 
-  if [ $offset -gt "0" ]
-  then
-      local truncated_symbol="..."
-      local TRUNCATED_PWD=${RELATIVE_PWD:$offset:$MAX_PWD_LENGTH}
-      echo -e "${truncated_symbol}/${TRUNCATED_PWD#*/}"
+  if ((offset > 0)); then
+    local truncated_symbol='...'
+    local TRUNCATED_PWD=${RELATIVE_PWD:offset:MAX_PWD_LENGTH}
+    echo -e "${truncated_symbol}/${TRUNCATED_PWD#*/}"
   else
-      echo -e "${RELATIVE_PWD}"
+    echo -e "${RELATIVE_PWD}"
   fi
 }
 
