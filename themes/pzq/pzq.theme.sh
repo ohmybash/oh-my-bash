@@ -6,6 +6,9 @@
 #
 # by Ziqiang Pei<ziqiangpei@foxmail.com>
 
+OMB_PROMPT_CONDAENV_FORMAT='(%s)'
+OMB_PROMPT_VIRTUALENV_FORMAT='(%s)'
+
 # ----------------------------------------------------------------- COLOR CONF
 D_DEFAULT_COLOR="${white}"
 D_INTERMEDIATE_COLOR="${bold_white}"
@@ -107,23 +110,6 @@ limited_pwd() {
   fi
 }
 
-prompt_python() {
-  # for virtualenv
-  if [[ $VIRTUAL_ENV ]]; then
-    local virtualenv=$(basename "$VIRTUAL_ENV")
-    local VIRTUALENV_THEME_PROMPT_PREFIX='('
-    local VIRTUALENV_THEME_PROMPT_SUFFIX=')'
-    echo -e "${VIRTUALENV_THEME_PROMPT_PREFIX}$virtualenv${VIRTUALENV_THEME_PROMPT_SUFFIX}"
-  fi
-
-  # for condaenv
-  if [[ $CONDA_DEFAULT_ENV ]]; then
-    local CONDAENV_THEME_PROMPT_PREFIX='('
-    local CONDAENV_THEME_PROMPT_SUFFIX=')'
-    echo -e "${CONDAENV_THEME_PROMPT_PREFIX}${CONDA_DEFAULT_ENV}${CONDAENV_THEME_PROMPT_SUFFIX}"
-  fi
-}
-
 # -------------------------------------------------------------- PROMPT OUTPUT
 prompt() {
   local LAST_COMMAND_FAILED=$(mitsuhikos_lastcommandfailed)
@@ -135,9 +121,12 @@ prompt() {
   # Replace $HOME with ~ if possible 
   local RELATIVE_PWD=${PWD/#$HOME/\~}
 
+  local python_venv
+  _omb_prompt_get_python_venv
+
   if [ "$OSTYPE" = "linux-gnu" ];
   then
-    PS1="${TITLEBAR}$(prompt_python)
+    PS1="${TITLEBAR}$python_venv
 ${SAVE_CURSOR}${MOVE_CURSOR_RIGHTMOST}${MOVE_CURSOR_5_LEFT}\
 $(safe_battery_charge)${RESTORE_CURSOR}\
 ${D_NUMBER_COLOR}# ${D_USER_COLOR}\u ${D_DEFAULT_COLOR}\
@@ -150,7 +139,7 @@ $(demula_vcprompt)\
 $(is_vim_shell)
 ${D_DOLLOR_COLOR}$ ${D_DEFAULT_COLOR}"
   else
-    PS1="${TITLEBAR}$(prompt_python)
+    PS1="${TITLEBAR}$python_venv
 ${D_NUMBER_COLOR}# ${D_USER_COLOR}\u ${D_DEFAULT_COLOR}\
 @ ${D_MACHINE_COLOR}\h ${D_DEFAULT_COLOR}\
 in ${D_DIR_COLOR}${RELATIVE_PWD} ${D_INTERMEDIATE_COLOR}\
