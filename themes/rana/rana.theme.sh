@@ -76,11 +76,11 @@ D_VIMSHELL_COLOR="$_omb_prompt_teal"
 # ------------------------------------------------------------------ FUNCTIONS
 case $TERM in
   xterm*)
-      TITLEBAR="\033]0;\w\007"
-      ;;
+    TITLEBAR='\[\e]0;\w\e\\\]'
+    ;;
   *)
-      TITLEBAR=""
-      ;;
+    TITLEBAR=""
+    ;;
 esac
 
 is_vim_shell() {
@@ -165,10 +165,10 @@ prompt_git() {
 # -------------------------------------------------------------- PROMPT OUTPUT
 _omb_theme_PROMPT_COMMAND() {
   local LAST_COMMAND_FAILED=$(mitsuhikos_lastcommandfailed)
-  local SAVE_CURSOR='\033[s'
-  local RESTORE_CURSOR='\033[u'
-  local MOVE_CURSOR_RIGHTMOST='\033[500C'
-  local MOVE_CURSOR_5_LEFT='\033[5D'
+  local SAVE_CURSOR='\[\e7'
+  local RESTORE_CURSOR='\e8\]'
+  local MOVE_CURSOR_RIGHTMOST='\e['${COLUMNS:-9999}'C'
+  local MOVE_CURSOR_5_LEFT='\e[5D'
 
   PS1=${TITLEBAR}$'\n'
   if [[ $OSTYPE == linux* ]]; then

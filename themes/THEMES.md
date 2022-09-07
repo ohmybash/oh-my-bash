@@ -188,6 +188,10 @@
 
 [![](purity/purity-dark.png)](purity/purity-dark.png)
 
+## `pzq`
+
+[![](pzq/pzq-dark.png)](pzq/pzq-dark.png)
+
 ## `rainbowbrite`
 
 [![](rainbowbrite/rainbowbrite-dark.png)](rainbowbrite/rainbowbrite-dark.png)
