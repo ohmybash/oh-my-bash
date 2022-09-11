@@ -204,6 +204,10 @@
 
 [![](rjorgenson/rjorgenson-dark.png)](rjorgenson/rjorgenson-dark.png)
 
+## `robbyrussell`
+
+[![](robbyrussell/robbyrussell-dark.png)](robbyrussell/robbyrussell-dark.png)
+
 ## `roderik`
 
 [![](roderik/roderik-dark.png)](roderik/roderik-dark.png)
