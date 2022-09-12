@@ -23,6 +23,7 @@ function _omb_theme_PROMPT_COMMAND() {
     local scm_info=$(scm_prompt_info)
 
     PS1+=${scm_info:+$scm_info }
+    PS1+=${_omb_prompt_normal}
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
