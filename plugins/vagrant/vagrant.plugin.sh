@@ -22,24 +22,24 @@ function vagrant-up() {
         echo "Vagrant up for provider : $1 Running...."
         vagrant up --provider "$1"
     else
-        echo "Vagrant up for provider : virtualbox Running...."
+        echo "Vagrant up for default provider : virtualbox Running...."
         vagrant up
     fi
 }
 
-function vagrant-plugin-vm() {
+function vagrant-integration-plugin() {
     case "$1" in
         "virtualbox")
-            echo "Vagrant plugin install for provider : $1 Running...."
+            echo "Vagrant generic plugin install for provider : $1 Running...."
             vagrant plugin install vagrant-vbguest
         ;;
         "libvirt")
-            echo "Vagrant plugin install for provider : $1 Running...."
+            echo "Vagrant generic plugin install for provider : $1 Running...."
             vagrant plugin install vagrant-libvirt
         ;;
         *)
-            echo "Usage : vapvm <provider name>" >&2
-            echo "Example : vapvm virtualbox" >&2
+            echo "Usage : vapg <provider name> [virtualbox, libvirt]" >&2
+            echo "Example : vapg virtualbox" >&2
             return 2
         ;;
     esac
@@ -55,8 +55,8 @@ function vagrant-status() {
 
 function vagrant-ssh() {
     local VMCOUNT
-    VMCOUNT=$(vagrant status | grep -c running)
     local VMDEFAULT
+    VMCOUNT=$(vagrant status | grep -c running)
     VMDEFAULT=$(vagrant status | grep -w default | grep -c running)
 
     if ((VMDEFAULT == 1)); then
@@ -86,7 +86,7 @@ alias vaconf='vagrant ssh-config'
 alias vastat='vagrant-status'
 alias vacheck='vagrant validate'
 alias vaport='vagrant port'
-alias vapvm='vagrant-plugin-vm'
+alias vaip='vagrant-integration-plugin'
 alias vapi='vagrant plugin install'
 alias vapr='vagrant plugin uninstall'
 alias vau='vagrant-up'
@@ -94,7 +94,7 @@ alias vah='vagrant halt'
 alias vat='vagrant destroy -f'
 alias vai='vagrant-init'
 alias varel='vagrant reload'
-alias vassh='vagrant-ssh'
+alias vacon='vagrant-ssh'
 alias vaba='vagrant box add'
 alias vabr='vagrant box remove'
 alias vavl='vagrant box list'
