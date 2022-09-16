@@ -25,30 +25,27 @@
 # Ref. https://github.com/ohmybash/oh-my-bash/issues/351
 function _omb_alias_general_cp_init {
   if (tmp=$(_omb_util_mktemp); trap 'rm -f "$tmp"{,.2}' EXIT; command cp -v "$tmp" "$tmp.2" &>/dev/null); then
-    alias cp='cp -iv' && unset -f "$FUNCNAME"
-    command cp -iv "$@"
+    alias cp='cp -iv' && function _omb_alias_general_cp_init { command cp -iv "$@"; }
   else
-    alias cp='cp -i' && unset -f "$FUNCNAME"
-    command cp -i "$@"
-  fi
+    alias cp='cp -i' && function _omb_alias_general_cp_init { command cp -i "$@"; }
+  fi &&
+    _omb_alias_general_cp_init "$@"
 }
 function _omb_alias_general_mv_init {
   if (tmp=$(_omb_util_mktemp); trap 'rm -f "$tmp.2"' EXIT; command mv -v "$tmp" "$tmp.2" &>/dev/null); then
-    alias mv='mv -iv' && unset -f "$FUNCNAME"
-    command mv -iv "$@"
+    alias mv='mv -iv' && function _omb_alias_general_mv_init { command mv -iv "$@"; }
   else
-    alias mv='mv -i' && unset -f "$FUNCNAME"
-    command mv -i "$@"
-  fi
+    alias mv='mv -i' && function _omb_alias_general_mv_init { command mv -i "$@"; }
+  fi &&
+    _omb_alias_general_mv_init "$@"
 }
 function _omb_alias_general_mkdir_init {
   if command mkdir -pv . &>/dev/null; then
-    alias mkdir='mkdir -pv' && unset -f "$FUNCNAME"
-    command mkdir -pv "$@"
+    alias mkdir='mkdir -pv' && function _omb_alias_general_mkdir_init { command mkdir -pv "$@"; }
   else
-    alias mkdir='mkdir -p' && unset -f "$FUNCNAME"
-    command mkdir -p "$@"
-  fi
+    alias mkdir='mkdir -p' && function _omb_alias_general_mkdir_init { command mkdir -p "$@"; }
+  fi &&
+    _omb_alias_general_mkdir_init "$@"
 }
 
 alias cp='_omb_alias_general_cp_init'       # Preferred 'cp' implementation
