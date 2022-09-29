@@ -17,7 +17,7 @@ function _vault_mounts() {
 }
 
 function _vault() {
-  local VAULT_COMMANDS=$(vault 2>&1 | egrep '^ +' | awk '{print $1}')
+  local VAULT_COMMANDS=$(vault 2>&1 | command grep -E '^ +' | awk '{print $1}')
 
   local cur
   local prev

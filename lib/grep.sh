@@ -24,8 +24,11 @@ fi
 # export grep settings
 if ((${#_omb_grep_options[@]} > 0)); then
   _omb_util_alias grep="grep ${_omb_grep_options[*]}"
-  _omb_util_alias fgrep="fgrep ${_omb_grep_options[*]}"
-  _omb_util_alias egrep="egrep ${_omb_grep_options[*]}"
+  _omb_util_alias fgrep="grep -F ${_omb_grep_options[*]}"
+  _omb_util_alias egrep="grep -E ${_omb_grep_options[*]}"
+else
+  _omb_util_alias fgrep='grep -F'
+  _omb_util_alias egrep='grep -E'
 fi
 
 # clean up

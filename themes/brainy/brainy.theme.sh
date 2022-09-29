@@ -139,7 +139,7 @@ ___brainy_prompt_todo() {
 	_omb_util_binary_exists todo.sh || return
 	color=$_omb_prompt_bold_white
 	box="[|]"
-	info="t:$(todo.sh ls | egrep "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"
+	info="t:$(todo.sh ls | command grep -E "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_green}" "${box}"
 }
 
