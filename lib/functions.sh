@@ -49,9 +49,16 @@ function open_command() {
 #    0 if the alias was found,
 #    1 if it does not exist
 #
-function alias_value() {
-    [ "${BASH_ALIASES[$1]}" ] && echo ${BASH_ALIASES[$1]}
-}
+if ((_omb_bash_version >= 40000)); then
+  function alias_value() {
+    [[ ${BASH_ALIASES[$1]+set} ]] && echo "${BASH_ALIASES[$1]}"
+  }
+else
+  function alias_value() {
+    local value=
+    value=$(alias "$1" 2>/dev/null) && eval "value=${value#*=}" && echo "$value"
+  }
+fi
 
 #
 # Try to get the value of an alias,
