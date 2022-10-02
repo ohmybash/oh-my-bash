@@ -1,3 +1,3 @@
 # bash preexec
 
-this allows to set the window title on termux
+This plugin loads `bash-preexec.sh` bundled with OMB if necessary.
