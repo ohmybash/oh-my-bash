@@ -360,7 +360,7 @@ build_prompt() {
 # this doesn't work... new model: create a prompt via a PR variable and
 # use that.
 
-set_bash_prompt() {
+_omb_theme_PROMPT_COMMAND() {
     local RETVAL=$?
     local PR=""
     local PRIGHT=""
@@ -382,5 +382,4 @@ set_bash_prompt() {
     #     PS1='\[$(tput sc; printf "%*s" $COLUMNS "$PRIGHT"; tput rc)\]'$PR
     PS1+=$PR
 }
-
-PROMPT_COMMAND=set_bash_prompt
+_omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
