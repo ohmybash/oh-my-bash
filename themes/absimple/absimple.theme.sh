@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 # vim: ft=bash ts=2 sw=2 sts=2
 #
-# absimple theme 
-# an agnoster fork for bash
+# absimple theme: a fork of the agnoster theme
 #
-# tested on termux at android 2022-02-15
+# Tested on Termux in Android 2022-02-15
 #
-# the aim of this theme is to only show you *relevant* information.
-# ie: it will only show git information when in a git working directory.
-# also, everything from the current user and hostname to whether the last call exited with an error or whether background jobs are running in this shell will all be displayed automatically when appropriate.
+# The aim of this theme is to only show you relevant information: The
+# git information will only be shown in a git working directory.
+# Similarly, everything will be displayed automatically when
+# appropriate, including the current user and the hostname, whether
+# the last call exited with an error, and whether background jobs are
+# running in this shell.
 
 PROMPT_DIRTRIM=2 # bash4 and above
 
