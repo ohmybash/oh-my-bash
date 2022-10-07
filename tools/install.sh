@@ -137,7 +137,7 @@ _omb_install_user_bashrc() {
   printf "${BLUE}Using the Oh My Bash template file and adding it to ~/.bashrc${NORMAL}\n"
   _omb_install_run cp "$OSH"/templates/bashrc.osh-template ~/.bashrc
   sed "/^export OSH=/ c\\
-export OSH=$OSH
+export OSH='${OSH//\'/\'\\\'\'}'
   " ~/.bashrc >| ~/.bashrc.omb-temp
   _omb_install_run mv -f ~/.bashrc.omb-temp ~/.bashrc
 
@@ -230,6 +230,10 @@ _omb_install_main() {
     OSH=~/.oh-my-bash
   fi
 
+  if [[ ! $OSH_REPOSITORY ]]; then
+    OSH_REPOSITORY=https://github.com/ohmybash/oh-my-bash.git
+  fi
+
   # Only enable exit-on-error after the non-critical colorization stuff,
   # which may fail on systems lacking tput or terminfo
 
@@ -261,7 +265,7 @@ _omb_install_main() {
       return 1
     fi
   fi
-  _omb_install_run git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git "$OSH" || {
+  _omb_install_run git clone --depth=1 "$OSH_REPOSITORY" "$OSH" || {
     printf "Error: git clone of oh-my-bash repo failed\n"
     return 1
   }
