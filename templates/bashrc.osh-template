@@ -42,9 +42,16 @@ OSH_THEME="font"
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+# stamp shown in the history command output.  One of the following values can
+# be used to specify the timestamp format.
+# * 'mm/dd/yyyy'     # mm/dd/yyyy + time
+# * 'dd.mm.yyyy'     # dd.mm.yyyy + time
+# * 'yyyy-mm-dd'     # yyyy-mm-dd + time
+# * '[mm/dd/yyyy]'   # [mm/dd/yyyy] + [time] with colors
+# * '[dd.mm.yyyy]'   # [dd.mm.yyyy] + [time] with colors
+# * '[yyyy-mm-dd]'   # [yyyy-mm-dd] + [time] with colors
+# If not set, the default value is 'yyyy-mm-dd'.
+# HIST_STAMPS='yyyy-mm-dd'
 
 # Uncomment the following line if you do not want OMB to overwrite the existing
 # aliases by the default OMB aliases defined in lib/*.sh
