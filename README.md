@@ -261,6 +261,9 @@ Oh My Bash has a vibrant community of happy users and delightful contributors. W
 
 Thank you so much!
 
+## Similar projects
+https://github.com/magicmonty/bash-git-prompt
+
 ## License
 
 Oh My Bash is derived from [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh).
