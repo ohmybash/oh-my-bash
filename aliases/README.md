@@ -67,3 +67,13 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=sudo
 # Do not use sudo but directly run the package manager
 OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 ```
+
+## alias:terraform
+
+| Alias    | Command                      |
+| -------- | ---------------------------- |
+| `t`      | `terraform`                  |
+| `tinit`  | `terraform init`             |
+| `tplan`  | `terraform plan`             |
+| `tapply` | `terraform apply`            |
+| `tfmt`   | `terraform fmt`              | 
