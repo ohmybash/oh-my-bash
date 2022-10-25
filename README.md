@@ -263,6 +263,7 @@ Thank you so much!
 
 ## Similar projects
 https://github.com/magicmonty/bash-git-prompt
+https://github.com/jandedobbeleer/oh-my-posh
 
 ## License
 
