@@ -262,7 +262,7 @@ Oh My Bash has a vibrant community of happy users and delightful contributors. W
 Thank you so much!
 
 ## Similar projects
-https://github.com/magicmonty/bash-git-prompt
+https://github.com/magicmonty/bash-git-prompt  
 https://github.com/jandedobbeleer/oh-my-posh
 
 ## License
