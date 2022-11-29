@@ -42,6 +42,9 @@ function parse_git_branch {
 
 function _omb_theme_PROMPT_COMMAND() {
   PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+  if [[ $CONDA_SHLVL == 1 ]]; then
+    PS1="\[${BOLD}${WHITE}\]<$(basename $CONDA_DEFAULT_ENV)> $PS1"
+  fi
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
