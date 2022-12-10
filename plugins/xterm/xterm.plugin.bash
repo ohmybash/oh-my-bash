@@ -27,7 +27,7 @@ function _omb_plugin_xterm_short_command {
 }
 
 function _omb_plugin_xterm_set_title {
-  local title=${1:-xterm}
+  local title=${1:-terminal}
   printf '\e]0;%s\e\\' "$title"
 }
 
