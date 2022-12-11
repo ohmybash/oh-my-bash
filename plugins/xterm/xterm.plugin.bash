@@ -20,14 +20,14 @@ function _omb_plugin_xterm_short_dirname {
 
 function _omb_plugin_xterm_short_command {
   local input_command="$*"
-  if [[ ${OMB_PLUGIN_XTERM_SHORT_TERM_LINE-} == true ]] ((${#input_command} > 8)); then
+  if [[ ${OMB_PLUGIN_XTERM_SHORT_TERM_LINE-} == true ]] && ((${#input_command} > 8)); then
     input_command=${input_command%% *}
   fi
   echo "$input_command"
 }
 
 function _omb_plugin_xterm_set_title {
-  local title=${1-}
+  local title=${1:-terminal}
   printf '\e]0;%s\e\\' "$title"
 }
 
