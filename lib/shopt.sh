@@ -43,10 +43,13 @@ if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
 else
 	# By default, case sensitivity is disabled.
 	bind "set completion-ignore-case on"
-fi
 
-# Treat hyphens and underscores as equivalent
-bind "set completion-map-case on"
+	# Treat hyphens and underscores as equivalent
+	# CASE_SENSITIVE must be off
+	if [[ ${OMB_HYPHEN_INSENSITIVE:-${HYPHEN_INSENSITIVE:-false}} == true ]]; then
+		bind "set completion-map-case on"
+	fi
+fi
 
 # Display matches for ambiguous patterns at first tab press
 bind "set show-all-if-ambiguous on"
