@@ -1,6 +1,12 @@
 #! bash oh-my-bash.module
-#  ---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Note on copyright (2022-08-23): The aliases defined in this file seems to
+# originally come from a blog post [1].  See also the comments in lib/base.sh.
 #
+# [1] Nathaniel Landau, "My Mac OSX Bash Profile",
+#     https://natelandau.com/my-mac-osx-bash_profile/, 2013-07-02.
+#
+#------------------------------------------------------------------------------
 #  Description:  This file holds many useful BASH aliases and save our lives!
 #
 #  Sections:
@@ -15,7 +21,7 @@
 #
 #  X.   Reminders & Notes
 #
-#  ---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 #   -------------------------------
 #   1.  FILE AND FOLDER MANAGEMENT
