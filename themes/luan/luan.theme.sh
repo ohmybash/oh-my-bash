@@ -14,6 +14,10 @@ RVM_THEME_PROMPT_PREFIX=""
 RVM_THEME_PROMPT_SUFFIX=""
 
 function _omb_theme_PROMPT_COMMAND() {
+    python_venv=""
+    if [[ -n "${VIRTUAL_ENV}" ]]; then
+      python_venv="($(basename "${VIRTUAL_ENV}")) "
+    fi
     dtime="$(clock_prompt)"
     user_host="${_omb_prompt_green}\u@${_omb_prompt_teal}\h${_omb_prompt_normal}"
     current_dir="${_omb_prompt_bold_navy}\w${_omb_prompt_normal}"
@@ -23,7 +27,7 @@ function _omb_theme_PROMPT_COMMAND() {
     arrow="${_omb_prompt_bold_white}▶${_omb_prompt_normal} "
     prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
 
-    PS1="${dtime}${user_host}:${current_dir} ${rvm_ruby} ${git_branch}
+    PS1="${dtime}${python_venv}${user_host}:${current_dir} ${rvm_ruby} ${git_branch}
       $arrow $prompt"
 }
 
