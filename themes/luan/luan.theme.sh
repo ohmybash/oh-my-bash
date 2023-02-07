@@ -10,6 +10,9 @@ GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 GIT_THEME_PROMPT_PREFIX="(${_omb_prompt_olive}"
 GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_normal})"
 
+VIRTUALENV_THEME_PROMPT_PREFIX='('
+VIRTUALENV_THEME_PROMPT_SUFFIX=') '
+
 RVM_THEME_PROMPT_PREFIX=""
 RVM_THEME_PROMPT_SUFFIX=""
 
@@ -18,12 +21,13 @@ function _omb_theme_PROMPT_COMMAND() {
     user_host="${_omb_prompt_green}\u@${_omb_prompt_teal}\h${_omb_prompt_normal}"
     current_dir="${_omb_prompt_bold_navy}\w${_omb_prompt_normal}"
     rvm_ruby="${_omb_prompt_bold_brown}$(_omb_prompt_print_ruby_env)${_omb_prompt_normal}"
+    python_venv="$(_omb_prompt_print_python_venv)"
     git_branch="$(scm_prompt_info)${_omb_prompt_normal}"
     prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
     arrow="${_omb_prompt_bold_white}▶${_omb_prompt_normal} "
     prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
 
-    PS1="${dtime}${user_host}:${current_dir} ${rvm_ruby} ${git_branch}
+    PS1="${dtime}${python_venv}${user_host}:${current_dir} ${rvm_ruby} ${git_branch}
       $arrow $prompt"
 }
 

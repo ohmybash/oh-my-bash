@@ -85,6 +85,8 @@ CONDAENV_THEME_PROMPT_SUFFIX='|'
 PYTHON_THEME_PROMPT_PREFIX=' |'
 PYTHON_THEME_PROMPT_SUFFIX='|'
 
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
+
 ## @fn _omb_prompt_format var value fmt_prefix[:deprecated]
 ##   @param[in] var
 ##   @param[in] value
@@ -467,6 +469,8 @@ function _omb_prompt_get_python_version {
 }
 
 function _omb_prompt_get_python_venv {
+  python_venv=
+  [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} == true ]] || return 1
   local virtualenv condaenv
   _omb_prompt_get_virtualenv
   _omb_prompt_get_condaenv
