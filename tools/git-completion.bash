@@ -1854,7 +1854,7 @@ _git_gitk ()
 # 2: The tag file to list symbol names from.
 # 3: A prefix to be added to each listed symbol name (optional).
 # 4: A suffix to be appended to each listed symbol name (optional).
-__git_match_ctag () {
+function __git_match_ctag {
 	awk -v pfx="${3-}" -v sfx="${4-}" "
 		/^${1//\//\\/}/ { print pfx \$1 sfx }
 		" "$2"
@@ -1869,7 +1869,7 @@ __git_match_ctag () {
 #               the current word to be completed.
 # --sfx=<suffix>: A suffix to be appended to each symbol name instead
 #                 of the default space.
-__git_complete_symbol () {
+function __git_complete_symbol {
 	local tags=tags pfx="" cur_="${cur-}" sfx=" "
 
 	while test $# != 0; do
@@ -3332,7 +3332,7 @@ _git_worktree ()
 	esac
 }
 
-__git_complete_common () {
+function __git_complete_common {
 	local command="$1"
 
 	case "$cur" in
@@ -3343,7 +3343,7 @@ __git_complete_common () {
 }
 
 __git_cmds_with_parseopt_helper=
-__git_support_parseopt_helper () {
+function __git_support_parseopt_helper {
 	test -n "$__git_cmds_with_parseopt_helper" ||
 		__git_cmds_with_parseopt_helper="$(__git --list-cmds=parseopt)"
 
@@ -3357,11 +3357,11 @@ __git_support_parseopt_helper () {
 	esac
 }
 
-__git_have_func () {
+function __git_have_func {
 	declare -f -- "$1" >/dev/null 2>&1
 }
 
-__git_complete_command () {
+function __git_complete_command {
 	local command="$1"
 	local completion_func="_git_${command//-/_}"
 	if ! __git_have_func $completion_func &&

@@ -15,7 +15,7 @@
 # [3] https://github.com/microsoft/vscode-dev-containers/blob/172a918f40e31bd24da8e64135026ec9f26c91b0/containers/javascript-node/.devcontainer/library-scripts/common-debian.sh#L303-L320
 #
 
-_omb_theme_vscode_initialize() {
+function _omb_theme_vscode_initialize {
     local userpart='`export XIT=$? \
         && [ ! -z "${GITHUB_USER}" ] && echo -n "\[\033[0;32m\]@${GITHUB_USER} " || echo -n "\[\033[0;32m\]\u " \
         && [ "$XIT" -ne "0" ] && echo -n "\[\033[1;31m\]➜" || echo -n "\[\033[0m\]➜"`'
@@ -37,5 +37,5 @@ _omb_theme_vscode_initialize() {
 }
 _omb_theme_vscode_initialize
 
-_omb_theme_PROMPT_COMMAND() { true; }
+function _omb_theme_PROMPT_COMMAND { true; }
 PROMPT_DIRTRIM=4

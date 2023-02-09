@@ -5,7 +5,7 @@ SCM_THEME_PROMPT_SUFFIX=""
 SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}with changes"
 SCM_THEME_PROMPT_CLEAN=""
 
-venv() {
+function venv {
   if [ ! -z "$VIRTUAL_ENV" ]
   then
     local env=$VIRTUAL_ENV
@@ -13,11 +13,11 @@ venv() {
   fi
 }
 
-last_two_dirs() {
+function last_two_dirs {
   pwd|rev|awk -F / '{print $1,$2}'|rev|sed s_\ _/_|sed "s|$(sed 's,\/,,'<<<$HOME)|~|g"
 }
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
   PS1="${_omb_prompt_olive}# ${_omb_prompt_reset_color}$(last_two_dirs)$(scm_prompt_info)${_omb_prompt_reset_color}$(venv)${_omb_prompt_reset_color} ${_omb_prompt_teal}\n> ${_omb_prompt_reset_color}"
 }
 

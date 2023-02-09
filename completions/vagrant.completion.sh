@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 
-__pwdln() {
+function __pwdln {
    pwdmod="${PWD}/"
    itr=0
    until [[ -z "$pwdmod" ]];do
@@ -33,7 +33,7 @@ __pwdln() {
    echo -n $(($itr-1))
 }
 
-__vagrantinvestigate() {
+function __vagrantinvestigate {
     if [ -f "${PWD}/.vagrant" -o -d "${PWD}/.vagrant" ];then
       echo "${PWD}/.vagrant"
       return 0
@@ -50,7 +50,7 @@ __vagrantinvestigate() {
    return 1
 }
 
-_vagrant() {
+function _vagrant {
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     commands="snapshot box connect destroy docker-logs docker-run global-status halt help init list-commands login package plugin provision rdp reload resume rsync rsync-auto share ssh ssh-config status suspend up version"

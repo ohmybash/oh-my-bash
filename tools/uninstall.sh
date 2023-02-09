@@ -3,12 +3,12 @@
 # Note: this file is intentionally written in POSIX sh so that oh-my-bash can
 # be uninstalled without bash.
 
-_omb_uninstall_contains_omb() {
+function _omb_uninstall_contains_omb {
   command grep -qE '(source|\.)[[:space:]]+.*[/[:space:]]oh-my-bash\.sh' "$1" 2>/dev/null
 }
 
 # Find the latest bashrc that do not source oh-my-bash.sh
-_omb_uninstall_find_bashrc_original() {
+function _omb_uninstall_find_bashrc_original {
   _omb_uninstall_bashrc_original=
   printf '%s\n' "Looking for original bash config..."
   IFS='

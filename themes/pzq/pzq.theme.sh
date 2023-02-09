@@ -38,13 +38,13 @@ case $TERM in
     ;;
 esac
 
-is_vim_shell() {
+function is_vim_shell {
   if [[ ${VIMRUNTIME-} ]]; then
     echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
   fi
 }
 
-mitsuhikos_lastcommandfailed() {
+function mitsuhikos_lastcommandfailed {
   local status=$?
   if ((status != 0)); then
     echo " ${D_DEFAULT_COLOR}C:${D_CMDFAIL_COLOR}$code ${D_DEFAULT_COLOR}"
@@ -52,7 +52,7 @@ mitsuhikos_lastcommandfailed() {
 }
 
 # vcprompt for scm instead of oh-my-bash default
-demula_vcprompt() {
+function demula_vcprompt {
   if [[ ${VCPROMPT_EXECUTABLE-} ]]; then
     local D_VCPROMPT_FORMAT="on ${D_SCM_COLOR}%s${D_INTERMEDIATE_COLOR}:${D_BRANCH_COLOR}%b %r ${D_CHANGES_COLOR}%m%u ${D_DEFAULT_COLOR}"
     $VCPROMPT_EXECUTABLE -f "$D_VCPROMPT_FORMAT"
@@ -60,13 +60,13 @@ demula_vcprompt() {
 }
 
 # checks if the plugin is installed before calling battery_charge
-safe_battery_charge() {
+function safe_battery_charge {
   if _omb_util_function_exists battery_charge; then
     battery_charge
   fi
 }
 
-prompt_git() {
+function prompt_git {
   local branchName=''
 
   # Check if the current directory is in a Git repository.
@@ -85,7 +85,7 @@ prompt_git() {
   fi
 }
 
-limited_pwd() {
+function limited_pwd {
   # Max length of PWD to display
   local MAX_PWD_LENGTH=20
 
@@ -104,7 +104,7 @@ limited_pwd() {
 }
 
 # -------------------------------------------------------------- PROMPT OUTPUT
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
   local LAST_COMMAND_FAILED=$(mitsuhikos_lastcommandfailed)
   local SAVE_CURSOR='\[\e7'
   local RESTORE_CURSOR='\e8\]'

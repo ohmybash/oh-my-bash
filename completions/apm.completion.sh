@@ -3,7 +3,7 @@
 # apm-bash-completion is written by Ugur Ozyilmazel
 # repo: https://github.com/vigo/apm-bash-completion
 
-__apm(){
+function __apm {
     local cur prev options apm_command
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -30,7 +30,7 @@ __apm(){
     fi
     COMPREPLY=($(compgen -W "$options" -- "$cur"))
 }
-__apm_get_command() {
+function __apm_get_command {
     local i
     for ((i=1; i < $COMP_CWORD; ++i)); do
         local arg=${COMP_WORDS[$i]}

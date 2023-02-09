@@ -19,14 +19,14 @@ esac
 
 PS3=">> "
 
-is_vim_shell() {
+function is_vim_shell {
 	if [ ! -z "$VIMRUNTIME" ]
 	then
 		echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
 	fi
 }
 
-modern_scm_prompt() {
+function modern_scm_prompt {
 	CHAR=$(scm_char)
 	if [ $CHAR = $SCM_NONE_CHAR ]
 	then
@@ -36,7 +36,7 @@ modern_scm_prompt() {
 	fi
 }
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
 	if (($? != 0)); then
     local border_color=$_omb_prompt_bold_brown
   else

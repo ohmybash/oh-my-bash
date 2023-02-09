@@ -40,7 +40,7 @@ _sdkman_complete()
   return 0
 }
 
-_sdkman_candidate_versions(){
+function _sdkman_candidate_versions {
 
   CANDIDATE_LOCAL_VERSIONS=$(__sdkman_cleanup_local_versions $1)
   if [ "$SDKMAN_OFFLINE_MODE" = "true" ]; then
@@ -52,7 +52,7 @@ _sdkman_candidate_versions(){
 
 }
 
-__sdkman_cleanup_local_versions(){
+function __sdkman_cleanup_local_versions {
 
   __sdkman_build_version_csv $1
   echo $CSV | tr ',' ' '

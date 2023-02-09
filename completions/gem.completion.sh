@@ -1,7 +1,7 @@
 #! bash oh-my-bash.module
 # Completion for gem
 
-_installcomp() {
+function _installcomp {
   if [ -z "$REMOTE_GEMS" ]
   then
     REMOTE_GEMS=( $(gem list --remote --no-versions | tr '\n' ' ') )
@@ -11,7 +11,7 @@ _installcomp() {
   COMPREPLY=( $(compgen -W "${REMOTE_GEMS[*]}" -- $cur) )
 }
 
-_uninstallcomp() {
+function _uninstallcomp {
   if [ -z "$LOCAL_GEMS" ]
   then
     LOCAL_GEMS=( $(gem list --no-versions | sed 's/\*\*\* LOCAL GEMS \*\*\*//' | tr '\n' ' ') )
@@ -21,7 +21,7 @@ _uninstallcomp() {
   COMPREPLY=( $(compgen -W "${LOCAL_GEMS[*]}" -- $cur) )
 }
 
-_gem() {
+function _gem {
   local cur=${COMP_WORDS[COMP_CWORD]}
   local prev=${COMP_WORDS[COMP_CWORD-1]}
   case $prev in

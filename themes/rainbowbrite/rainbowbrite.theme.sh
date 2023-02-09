@@ -5,7 +5,7 @@
 # ± ~/path/to (branch ✓) $
 # in glorious red / blue / yellow color scheme
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
   # Save history
   history -a
   history -c

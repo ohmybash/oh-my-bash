@@ -38,7 +38,7 @@ function set_user_color() {
   esac
 }
 
-scm_prompt() {
+function scm_prompt {
   CHAR=$(scm_char)
   if [ $CHAR = $SCM_NONE_CHAR ]
     then
@@ -62,7 +62,7 @@ function set_custom_colors() {
   powder_blue="\[$(tput setaf 153)\]"
 }
 
-__ps_time() {
+function __ps_time {
   echo "$(clock_prompt)${_omb_prompt_normal}\n"
 }
 

@@ -55,7 +55,7 @@ esac
 
 PS3=">> "
 
-__my_rvm_ruby_version() {
+function __my_rvm_ruby_version {
     local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
   [ "$gemset" != "" ] && gemset="@$gemset"
     local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
@@ -63,14 +63,14 @@ __my_rvm_ruby_version() {
   [ "$full" != "" ] && echo "[$full]"
 }
 
-is_vim_shell() {
+function is_vim_shell {
         if [ ! -z "$VIMRUNTIME" ]
         then
                 echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
         fi
 }
 
-modern_scm_prompt() {
+function modern_scm_prompt {
         CHAR=$(scm_char)
         if [ $CHAR = $SCM_NONE_CHAR ]
         then
@@ -81,7 +81,7 @@ modern_scm_prompt() {
 }
 
 # show chroot if exist
-chroot(){
+function chroot {
     if [ -n "$debian_chroot" ]
     then
         my_ps_chroot="${_omb_prompt_bold_teal}$debian_chroot${_omb_prompt_normal}";
@@ -90,7 +90,7 @@ chroot(){
     }
 
 # show virtualenvwrapper
-my_ve(){
+function my_ve {
     if [ -n "$VIRTUAL_ENV" ]
     then
         my_ps_ve="${_omb_prompt_bold_purple}$ve${_omb_prompt_normal}";
@@ -99,7 +99,7 @@ my_ve(){
     echo "";
     }
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
 
     my_ps_host="$BOLD$ORANGE\h${_omb_prompt_normal}";
     # yes, these are the the same for now ...

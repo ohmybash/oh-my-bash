@@ -28,7 +28,7 @@ else
     THEME_PROMPT_HOST_COLOR="$_omb_prompt_navy"
 fi
 
-doubletime_scm_prompt() {
+function doubletime_scm_prompt {
   CHAR=$(scm_char)
   if [ $CHAR = $SCM_NONE_CHAR ]; then
     return
@@ -53,7 +53,7 @@ $(doubletime_scm_prompt)$_omb_prompt_reset_color $ "
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
-git_prompt_status() {
+function git_prompt_status {
   local git_status_output
   git_status_output=$(git status 2> /dev/null )
   if [ -n "$(echo $git_status_output | grep 'Changes not staged')" ]; then

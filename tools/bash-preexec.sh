@@ -75,7 +75,7 @@ __bp_install_string=$'__bp_trap_string="$(trap -p DEBUG)"\ntrap - DEBUG\n__bp_in
 
 # Fails if any of the given variables are readonly
 # Reference https://stackoverflow.com/a/4441178
-__bp_require_not_readonly() {
+function __bp_require_not_readonly {
   local var
   for var; do
     if ! ( unset "$var" 2> /dev/null ); then
@@ -88,7 +88,7 @@ __bp_require_not_readonly() {
 # Remove ignorespace and or replace ignoreboth from HISTCONTROL
 # so we can accurately invoke preexec with a command from our
 # history even if it starts with a space.
-__bp_adjust_histcontrol() {
+function __bp_adjust_histcontrol {
     local histcontrol
     histcontrol="${HISTCONTROL:-}"
     histcontrol="${histcontrol//ignorespace}"
@@ -112,7 +112,7 @@ declare -a preexec_functions
 
 # Trims leading and trailing whitespace from $2 and writes it to the variable
 # name passed as $1
-__bp_trim_whitespace() {
+function __bp_trim_whitespace {
     local var=${1:?} text=${2:-}
     text="${text#"${text%%[![:space:]]*}"}"   # remove leading whitespace characters
     text="${text%"${text##*[![:space:]]}"}"   # remove trailing whitespace characters
@@ -123,7 +123,7 @@ __bp_trim_whitespace() {
 # Trims whitespace and removes any leading or trailing semicolons from $2 and
 # writes the resulting string to the variable name passed as $1. Used for
 # manipulating substrings in PROMPT_COMMAND
-__bp_sanitize_string() {
+function __bp_sanitize_string {
     local var=${1:?} text=${2:-} sanitized
     __bp_trim_whitespace sanitized "$text"
     sanitized=${sanitized%;}
@@ -135,14 +135,14 @@ __bp_sanitize_string() {
 # This function is installed as part of the PROMPT_COMMAND;
 # It sets a variable to indicate that the prompt was just displayed,
 # to allow the DEBUG trap to know that the next command is likely interactive.
-__bp_interactive_mode() {
+function __bp_interactive_mode {
     __bp_preexec_interactive_mode="on";
 }
 
 
 # This function is installed as part of the PROMPT_COMMAND.
 # It will invoke any functions defined in the precmd_functions array.
-__bp_precmd_invoke_cmd() {
+function __bp_precmd_invoke_cmd {
     # Save the returned value from our last command, and from each process in
     # its pipeline. Note: this MUST be the first thing done in this function.
     # BP_PIPESTATUS may be unused, ignore
@@ -177,11 +177,11 @@ __bp_precmd_invoke_cmd() {
 # Sets a return value in $?. We may want to get access to the $? variable in our
 # precmd functions. This is available for instance in zsh. We can simulate it in bash
 # by setting the value here.
-__bp_set_ret_value() {
+function __bp_set_ret_value {
     return ${1:+"$1"}
 }
 
-__bp_in_prompt_command() {
+function __bp_in_prompt_command {
 
     local prompt_command_array
     IFS=$'\n;' read -rd '' -a prompt_command_array <<< "${PROMPT_COMMAND:-}"
@@ -204,7 +204,7 @@ __bp_in_prompt_command() {
 # interactive prompt display.  Its purpose is to inspect the current
 # environment to attempt to detect if the current command is being invoked
 # interactively, and invoke 'preexec' if so.
-__bp_preexec_invoke_exec() {
+function __bp_preexec_invoke_exec {
 
     # Save the contents of $_ so that it can be restored later on.
     # https://stackoverflow.com/questions/40944532/bash-preserve-in-a-debug-trap#40944702
@@ -288,7 +288,7 @@ __bp_preexec_invoke_exec() {
     __bp_set_ret_value "$preexec_ret_value" "$__bp_last_argument_prev_command"
 }
 
-__bp_install() {
+function __bp_install {
     # Exit if we already have this installed.
     if [[ "${PROMPT_COMMAND:-}" == *"__bp_precmd_invoke_cmd"* ]]; then
         return 1;
@@ -351,7 +351,7 @@ __bp_install() {
 # Sets an installation string as part of our PROMPT_COMMAND to install
 # after our session has started. This allows bash-preexec to be included
 # at any point in our bash profile.
-__bp_install_after_session_init() {
+function __bp_install_after_session_init {
     # bash-preexec needs to modify these variables in order to work correctly
     # if it can't, just stop the installation
     __bp_require_not_readonly PROMPT_COMMAND HISTCONTROL HISTTIMEFORMAT || return

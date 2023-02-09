@@ -7,7 +7,7 @@
 ## Parsers ##
 #############
 
-____brainy_top_left_parse() {
+function ____brainy_top_left_parse {
 	ifs_old="${IFS}"
 	IFS="|"
 	args=( $1 )
@@ -22,7 +22,7 @@ ____brainy_top_left_parse() {
 	_TOP_LEFT+=" "
 }
 
-____brainy_top_right_parse() {
+function ____brainy_top_right_parse {
 	ifs_old="${IFS}"
 	IFS="|"
 	args=( $1 )
@@ -39,7 +39,7 @@ ____brainy_top_right_parse() {
 	(( __SEG_AT_RIGHT += 1 ))
 }
 
-____brainy_bottom_parse() {
+function ____brainy_bottom_parse {
 	ifs_old="${IFS}"
 	IFS="|"
 	args=( $1 )
@@ -48,7 +48,7 @@ ____brainy_bottom_parse() {
 	[ ${#args[1]} -gt 0 ] && _BOTTOM+=" "
 }
 
-____brainy_top() {
+function ____brainy_top {
 	_TOP_LEFT=""
 	_TOP_RIGHT=""
 	__TOP_RIGHT_LEN=0
@@ -74,7 +74,7 @@ ____brainy_top() {
 	printf "%s%s" "${_TOP_LEFT}" "${_TOP_RIGHT}"
 }
 
-____brainy_bottom() {
+function ____brainy_bottom {
 	_BOTTOM=""
 	for seg in $___BRAINY_BOTTOM; do
 		info="$(___brainy_prompt_"${seg}")"
@@ -87,7 +87,7 @@ ____brainy_bottom() {
 ## Segments ##
 ##############
 
-___brainy_prompt_user_info() {
+function ___brainy_prompt_user_info {
 	color=$_omb_prompt_bold_navy
 	if [ "${THEME_SHOW_SUDO}" == "true" ]; then
 		if [ $(sudo -n id -u 2>&1 | grep 0) ]; then
@@ -103,14 +103,14 @@ ___brainy_prompt_user_info() {
 	fi
 }
 
-___brainy_prompt_dir() {
+function ___brainy_prompt_dir {
 	color=$_omb_prompt_bold_olive
 	box="[|]"
 	info="\w"
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
 }
 
-___brainy_prompt_scm() {
+function ___brainy_prompt_scm {
 	[ "${THEME_SHOW_SCM}" != "true" ] && return
 	color=$_omb_prompt_bold_green
 	box="$(scm_char) "
@@ -118,7 +118,7 @@ ___brainy_prompt_scm() {
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
 }
 
-___brainy_prompt_python() {
+function ___brainy_prompt_python {
 	[ "${THEME_SHOW_PYTHON}" != "true" ] && return
 	color=$_omb_prompt_bold_olive
 	box="[|]"
@@ -126,7 +126,7 @@ ___brainy_prompt_python() {
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_navy}" "${box}"
 }
 
-___brainy_prompt_ruby() {
+function ___brainy_prompt_ruby {
 	[ "${THEME_SHOW_RUBY}" != "true" ] && return
 	color=$_omb_prompt_bold_white
 	box="[|]"
@@ -134,7 +134,7 @@ ___brainy_prompt_ruby() {
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_brown}" "${box}"
 }
 
-___brainy_prompt_todo() {
+function ___brainy_prompt_todo {
 	[ "${THEME_SHOW_TODO}" != "true" ] && return
 	_omb_util_binary_exists todo.sh || return
 	color=$_omb_prompt_bold_white
@@ -143,7 +143,7 @@ ___brainy_prompt_todo() {
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_green}" "${box}"
 }
 
-___brainy_prompt_clock() {
+function ___brainy_prompt_clock {
 	[ "${THEME_SHOW_CLOCK}" != "true" ] && return
 	color=$THEME_CLOCK_COLOR
 	box="[|]"
@@ -151,7 +151,7 @@ ___brainy_prompt_clock() {
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_purple}" "${box}"
 }
 
-___brainy_prompt_battery() {
+function ___brainy_prompt_battery {
 	[ ! -e "$OSH/plugins/battery/battery.plugin.sh" ] ||
 	[ "${THEME_SHOW_BATTERY}" != "true" ] && return
 	info=$(battery_percentage)
@@ -167,13 +167,13 @@ ___brainy_prompt_battery() {
 	printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
 }
 
-___brainy_prompt_exitcode() {
+function ___brainy_prompt_exitcode {
 	[ "${THEME_SHOW_EXITCODE}" != "true" ] && return
 	color=$_omb_prompt_bold_purple
 	[ "$exitcode" -ne 0 ] && printf "%s|%s" "${color}" "${exitcode}"
 }
 
-___brainy_prompt_char() {
+function ___brainy_prompt_char {
 	color=$_omb_prompt_bold_white
 	prompt_char="${__BRAINY_PROMPT_CHAR_PS1}"
 	printf "%s|%s" "${color}" "${prompt_char}"
@@ -183,19 +183,19 @@ ___brainy_prompt_char() {
 ## cli ##
 #########
 
-__brainy_show() {
+function __brainy_show {
   typeset _seg=${1:-}
 	shift
 	export THEME_SHOW_${_seg}=true
 }
 
-__brainy_hide() {
+function __brainy_hide {
 	typeset _seg=${1:-}
 	shift
 	export THEME_SHOW_${_seg}=false
 }
 
-_brainy_completion() {
+function _brainy_completion {
 	local cur _action actions segments
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
@@ -217,7 +217,7 @@ _brainy_completion() {
 	return 0
 }
 
-brainy() {
+function brainy {
 	typeset action=${1:-}
 	shift
 	typeset segs=${*:-}
@@ -276,16 +276,16 @@ ___BRAINY_BOTTOM=${___BRAINY_BOTTOM:-"exitcode char"}
 ## Prompt ##
 ############
 
-__brainy_ps1() {
+function __brainy_ps1 {
 	printf "%s%s%s" "$(____brainy_top)" "$(____brainy_bottom)" "${_omb_prompt_normal}"
 }
 
-__brainy_ps2() {
+function __brainy_ps2 {
 	color=$_omb_prompt_bold_white
 	printf "%s%s%s" "${color}" "${__BRAINY_PROMPT_CHAR_PS2}  " "${_omb_prompt_normal}"
 }
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
     exitcode="$?"
 
     PS1="$(__brainy_ps1)"

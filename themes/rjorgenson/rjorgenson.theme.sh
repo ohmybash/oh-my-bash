@@ -29,7 +29,7 @@ case $TERM in
 esac
 
 
-__my_rvm_ruby_version() {
+function __my_rvm_ruby_version {
     local gemset ; gemset=$(awk -F'@' '{print $2}' <<< "${GEM_HOME}")
     local version ; version=$(awk -F'-' '{print $2}' <<< "${MY_RUBY_HOME}")
     [ "${gemset}" != "" ] && gemset="@${gemset}"
@@ -38,20 +38,20 @@ __my_rvm_ruby_version() {
       && echo "${OMB_THEME_BRACKET_COLOR}[${OMB_THEME_STRING_COLOR}${full}${OMB_THEME_BRACKET_COLOR}]${_omb_prompt_normal}"
 }
 
-is_vim_shell() {
+function is_vim_shell {
     if [ -n "${VIMRUNTIME}" ] ; then
         echo "${OMB_THEME_BRACKET_COLOR}[${OMB_THEME_STRING_COLOR}vim shell${OMB_THEME_BRACKET_COLOR}]${_omb_prompt_normal}"
     fi
 }
 
-is_integer() { # helper function to make sure input is an integer
+function is_integer { # helper function to make sure input is an integer
     [ "$1" -eq "$1" ] > /dev/null 2>&1
     return $?
 }
 
 # XXX do we need/want to integrate with todo.sh? We don't provide it and I
 # can't find a version online that accepts ls as an input
-todo_txt_count() {
+function todo_txt_count {
     if _omb_util_command_exists todo.sh; then # is todo.sh installed
         local count=$(todo.sh ls \
           | awk '/TODO: [0-9]+ of ([0-9]+) tasks shown/ { print $4 }')
@@ -61,7 +61,7 @@ todo_txt_count() {
     fi
 }
 
-modern_scm_prompt() {
+function modern_scm_prompt {
     local CHAR=$(scm_char)
     if [ ! "${CHAR}" = "${SCM_NONE_CHAR}" ] ; then
         printf "%s" \
@@ -71,7 +71,7 @@ modern_scm_prompt() {
     fi
 }
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
     local my_host="${OMB_THEME_STRING_COLOR}\h${_omb_prompt_normal}";
     local my_user="${OMB_THEME_STRING_COLOR}\u${_omb_prompt_normal}";
     local my_path="${OMB_THEME_STRING_COLOR}\w${_omb_prompt_normal}";

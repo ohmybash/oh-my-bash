@@ -28,7 +28,7 @@ function get_hour_color {
     echo "$hour_color"
 }
 
-__emperor_clock() {
+function __emperor_clock {
   THEME_CLOCK_COLOR=$(get_hour_color)
   clock_prompt
 }

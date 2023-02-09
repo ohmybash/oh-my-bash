@@ -13,7 +13,7 @@
 # TODO: is it ok to use '--timeout 2' ?
 
 
-_salt_get_grains(){
+function _salt_get_grains {
     if [ "$1" = 'local' ] ; then
         salt-call --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" |sed 's:\([a-z0-9]\) :\1\: :g'
     else
@@ -21,7 +21,7 @@ _salt_get_grains(){
     fi
 }
 
-_salt_get_grain_values(){
+function _salt_get_grain_values {
     if [ "$1" = 'local' ] ; then
         salt-call --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
     else
@@ -30,7 +30,7 @@ _salt_get_grain_values(){
 }
 
 
-_salt(){
+function _salt {
     local cur prev opts pprev ppprev
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -128,7 +128,7 @@ _salt(){
 complete -F _salt salt
 
 
-_saltkey(){
+function _saltkey {
     local cur prev opts prev pprev
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -204,7 +204,7 @@ _saltkey(){
 
 complete -F _saltkey salt-key
 
-_saltcall(){
+function _saltcall {
     local cur prev opts pprev ppprev
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -257,7 +257,7 @@ _saltcall(){
 complete -F _saltcall salt-call
 
 
-_saltcp(){
+function _saltcp {
     local cur prev opts target prefpart postpart helper filt pprev ppprev
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"

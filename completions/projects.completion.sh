@@ -1,5 +1,5 @@
 #! bash oh-my-bash.module
-_pj() {
+function _pj {
   [ -z "$PROJECT_PATHS" ] && return
   shift
   [ "$1" == "open" ] && shift

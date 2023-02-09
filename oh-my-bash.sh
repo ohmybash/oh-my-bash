@@ -49,7 +49,7 @@ if [[ ! ${OSH_CACHE_DIR-} ]]; then
 fi
 
 _omb_module_loaded=
-_omb_module_require() {
+function _omb_module_require {
   local status=0
   local -a files=()
   while (($#)); do
@@ -95,11 +95,11 @@ _omb_module_require() {
   return "$status"
 }
 
-_omb_module_require_lib()        { _omb_module_require "${@/#/lib:}"; }
-_omb_module_require_plugin()     { _omb_module_require "${@/#/plugin:}"; }
-_omb_module_require_alias()      { _omb_module_require "${@/#/alias:}"; }
-_omb_module_require_completion() { _omb_module_require "${@/#/completion:}"; }
-_omb_module_require_theme()      { _omb_module_require "${@/#/theme:}"; }
+function _omb_module_require_lib        { _omb_module_require "${@/#/lib:}"; }
+function _omb_module_require_plugin     { _omb_module_require "${@/#/plugin:}"; }
+function _omb_module_require_alias      { _omb_module_require "${@/#/alias:}"; }
+function _omb_module_require_completion { _omb_module_require "${@/#/completion:}"; }
+function _omb_module_require_theme      { _omb_module_require "${@/#/theme:}"; }
 
 # Load all of the config files in ~/.oh-my-bash/lib that end in .sh
 # TIP: Add files you don't want in git to .gitignore

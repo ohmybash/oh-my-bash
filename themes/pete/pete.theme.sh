@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
   # Save history
   history -a
   history -c

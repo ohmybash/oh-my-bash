@@ -1,10 +1,10 @@
 #! bash oh-my-bash.module
-_vboxmanage_realopts() {
+function _vboxmanage_realopts {
     echo $(vboxmanage|grep -i vboxmanage|cut -d' ' -f2|grep '\['|tr -s '[\[\|\]\n' ' ')
     echo " "
 }
 
-__vboxmanage_startvm() {
+function __vboxmanage_startvm {
     RUNNING=$(vboxmanage list runningvms | cut -d' ' -f1 | tr -d '"')
     TOTAL=$(vboxmanage list vms | cut -d' ' -f1 | tr -d '"')
 
@@ -21,7 +21,7 @@ __vboxmanage_startvm() {
     echo $AVAILABLE
 }
 
-__vboxmanage_list() {
+function __vboxmanage_list {
     INPUT=$(vboxmanage list | tr -s '[\[\]\|\n]' ' ' | cut -d' ' -f4-)
     
     PRUNED=""
@@ -40,7 +40,7 @@ __vboxmanage_list() {
 }
 
 
-__vboxmanage_list_vms() {
+function __vboxmanage_list_vms {
     VMS=""
     if [ "x$1" == "x" ]; then
 	SEPARATOR=" "
@@ -56,7 +56,7 @@ __vboxmanage_list_vms() {
     echo $VMS
 }
 
-__vboxmanage_list_runningvms() {
+function __vboxmanage_list_runningvms {
     VMS=""
     if [ "$1" == "" ]; then
 	SEPARATOR=" "
@@ -73,7 +73,7 @@ __vboxmanage_list_runningvms() {
 
 }
 
-__vboxmanage_controlvm() {
+function __vboxmanage_controlvm {
     echo "pause resume reset poweroff savestate acpipowerbutton"
     echo "acpisleepbutton keyboardputscancode guestmemoryballoon"
     echo "gueststatisticsinterval usbattach usbdetach vrde vrdeport"
@@ -93,7 +93,7 @@ __vboxmanage_controlvm() {
 
 }
 
-__vboxmanage_default() {
+function __vboxmanage_default {
     realopts=$(_vboxmanage_realopts)
     opts=$realopts$(vboxmanage | grep -i vboxmanage | cut -d' ' -f2 | grep -v '\[' | sort | uniq)
     pruned=""
@@ -144,7 +144,7 @@ __vboxmanage_default() {
     return 0
 }
 
-_vboxmanage() {
+function _vboxmanage {
     # vboxmanage | grep -i vboxmanage | cut -d' ' -f2 | sort | uniq
     local cur p1 p2 p3 p4 opts
     COMPREPLY=()

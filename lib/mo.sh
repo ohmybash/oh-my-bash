@@ -47,7 +47,7 @@
 #                       a help message.
 #
 # Returns nothing.
-mo() {
+function mo {
     # This function executes in a subshell so IFS is reset.
     # Namespace this variable so we don't conflict with desired values.
     local moContent f2source files doubleHyphens
@@ -120,7 +120,7 @@ mo() {
 # $4 - If -z, do standalone tag processing before finishing
 #
 # Returns nothing.
-_moFindEndTag() {
+function _moFindEndTag {
     local content remaining scanned standaloneBytes tag
 
     #: Find open tags
@@ -191,7 +191,7 @@ _moFindEndTag() {
 # $3 - Needle
 #
 # Returns nothing.
-_moFindString() {
+function _moFindString {
     local pos string
 
     string=${2%%$3*}
@@ -207,7 +207,7 @@ _moFindString() {
 # $3 - Desired variable name
 #
 # Returns nothing.
-_moFullTagName() {
+function _moFullTagName {
     if [[ -z "${2-}" ]] || [[ "$2" == *.* ]]; then
         local "$1" && _moIndirect "$1" "$3"
     else
@@ -223,7 +223,7 @@ _moFullTagName() {
 # $2-@ - File names (optional)
 #
 # Returns nothing.
-_moGetContent() {
+function _moGetContent {
     local content filename target
 
     target=$1
@@ -251,7 +251,7 @@ _moGetContent() {
 # $3 - The string to reindent
 #
 # Returns nothing.
-_moIndentLines() {
+function _moIndentLines {
     local content fragment len posN posR result trimmed
 
     result=""
@@ -315,7 +315,7 @@ _moIndentLines() {
 #   echo "$dest"  # writes "the value"
 #
 # Returns nothing.
-_moIndirect() {
+function _moIndirect {
     unset -v "$1"
     printf -v "$1" '%s' "$2"
 }
@@ -336,7 +336,7 @@ _moIndirect() {
 #   echo "${dest[@]}" # writes "one two three"
 #
 # Returns nothing.
-_moIndirectArray() {
+function _moIndirectArray {
     unset -v "$1"
 
     # IFS must be set to a string containing space or unset in order for
@@ -365,7 +365,7 @@ _moIndirectArray() {
 #   fi
 #
 # Returns 0 if the name is not empty, 1 otherwise.
-_moIsArray() {
+function _moIsArray {
     # Namespace this variable so we don't conflict with what we're testing.
     local moTestResult
 
@@ -395,7 +395,7 @@ _moIsArray() {
 #   fi
 #
 # Returns 0 if the name is a function, 1 otherwise.
-_moIsFunction() {
+function _moIsFunction {
     local functionList functionName
 
     functionList=$(declare -F)
@@ -431,7 +431,7 @@ _moIsFunction() {
 #   echo "${before:0:${RESULT_ARRAY[0]}}...${after:${RESULT_ARRAY[1]}}"
 #
 # Returns nothing.
-_moIsStandalone() {
+function _moIsStandalone {
     local afterTrimmed beforeTrimmed char
 
     _moTrimChars beforeTrimmed "$2" false true " " $'\t'
@@ -466,7 +466,7 @@ _moIsStandalone() {
 # $3-$* - Elements to join
 #
 # Returns nothing.
-_moJoin() {
+function _moJoin {
     local joiner part result target
 
     target=$1
@@ -488,7 +488,7 @@ _moJoin() {
 # $2 - Filename to load
 #
 # Returns nothing.
-_moLoadFile() {
+function _moLoadFile {
     local content len
 
     # The subshell removes any trailing newlines.  We forcibly add
@@ -511,7 +511,7 @@ _moLoadFile() {
 # $3-@ - Names to insert into the parsed content
 #
 # Returns nothing.
-_moLoop() {
+function _moLoop {
     local content context contextBase
 
     content=$1
@@ -533,7 +533,7 @@ _moLoop() {
 # $3 - true when no content before this, false otherwise
 #
 # Returns nothing.
-_moParse() {
+function _moParse {
     # Keep naming variables mo* here to not overwrite needed variables
     # used in the string replacements
     local moBlock moContent moCurrent moIsBeginning moTag
@@ -669,7 +669,7 @@ _moParse() {
 # $6 - Current context name
 #
 # Returns nothing.
-_moPartial() {
+function _moPartial {
     # Namespace variables here to prevent conflicts.
     local moContent moFilename moIndent moPartial moStandalone
 
@@ -713,7 +713,7 @@ _moPartial() {
 # $2 - Current context
 #
 # Returns nothing.
-_moShow() {
+function _moShow {
     # Namespace these variables
     local moJoined moNameParts
 
@@ -747,7 +747,7 @@ _moShow() {
 # $4 - Ending delimiter (optional)
 #
 # Returns nothing.
-_moSplit() {
+function _moSplit {
     local pos result
 
     result=( "$2" )
@@ -784,7 +784,7 @@ _moSplit() {
 # $5 - true/false: is this the beginning of the content?
 #
 # Returns nothing.
-_moStandaloneAllowed() {
+function _moStandaloneAllowed {
     local bytes
 
     if _moIsStandalone bytes "$2" "$4" "$5"; then
@@ -807,7 +807,7 @@ _moStandaloneAllowed() {
 # $4 - Content after the tag
 #
 # Returns nothing.
-_moStandaloneDenied() {
+function _moStandaloneDenied {
     echo -n "$2"
     local "$1" && _moIndirect "$1" "$4"
 }
@@ -827,7 +827,7 @@ _moStandaloneDenied() {
 #
 # Returns 0 if the name is not empty, 1 otherwise.  When MO_FALSE_IS_EMPTY
 # is set, this returns 1 if the name is "false".
-_moTest() {
+function _moTest {
     # Test for functions
     _moIsFunction "$1" && return 0
 
@@ -857,7 +857,7 @@ _moTest() {
 # $5-@ - Characters to trim
 #
 # Returns nothing.
-_moTrimChars() {
+function _moTrimChars {
     local back current front last target varName
 
     target=$1
@@ -886,7 +886,7 @@ _moTrimChars() {
 # $2 - The string
 #
 # Returns nothing.
-_moTrimWhitespace() {
+function _moTrimWhitespace {
     local result
 
     _moTrimChars result "$2" true true $'\r' $'\n' $'\t' " "
@@ -902,7 +902,7 @@ _moTrimWhitespace() {
 # $1 - Filename that has the help message
 #
 # Returns nothing.
-_moUsage() {
+function _moUsage {
     grep '^#/' "${MO_ORIGINAL_COMMAND}" | cut -c 4-
 }
 

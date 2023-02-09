@@ -7,7 +7,7 @@
 
 
 
-_serverProfiles(){
+function _serverProfiles {
     if [[ $COMP_WORDS == *standalone.sh* ]]
     then
       serverdir="../standalone/configuration/"
@@ -33,7 +33,7 @@ _serverProfiles(){
     fi
 }
 
-_bindingAddress(){
+function _bindingAddress {
   # from /etc/bash_completion.d/ssh
     COMPREPLY=( "${COMPREPLY[@]}" $( compgen -W \
     "0.0.0.0 $( PATH="$PATH:/sbin" ifconfig -a | \
@@ -42,7 +42,7 @@ _bindingAddress(){
     -- "$cur" ) )
 }
 
-_jboss(){
+function _jboss {
     
     local cur prev words cword
     COMPREPLY=()

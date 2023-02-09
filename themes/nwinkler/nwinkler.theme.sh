@@ -23,7 +23,7 @@ function prompt_end() {
   echo -e "$PROMPT_END"
 }
 
-_omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
   local exit_status=$?
   if [[ $exit_status -eq 0 ]]; then PROMPT_END=$PROMPT_END_CLEAN
     else PROMPT_END=$PROMPT_END_DIRTY

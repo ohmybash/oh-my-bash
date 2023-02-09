@@ -87,7 +87,7 @@ alias gdct='git describe --tags `git rev-list --tags --max-count=1`'
 alias gdt='git diff-tree --no-commit-id --name-only -r'
 alias gdw='git diff --word-diff'
 
-gdv() {
+function gdv {
   git diff -w "$@" | view -
 }
 #compdef _git gdv=git-diff
@@ -96,7 +96,7 @@ alias gf='git fetch'
 alias gfa='git fetch --all --prune'
 alias gfo='git fetch origin'
 
-gfg() {
+function gfg {
   git ls-files | grep "$@"
 }
 #compdef _grep gfg
@@ -104,13 +104,13 @@ gfg() {
 alias gg='git gui citool'
 alias gga='git gui citool --amend'
 
-ggf() {
+function ggf {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git push --force origin "${b:=$1}"
 }
 #compdef _git ggf=git-checkout
 
-ggl() {
+function ggl {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
     git pull origin "${*}"
   else
@@ -120,7 +120,7 @@ ggl() {
 }
 #compdef _git ggl=git-checkout
 
-ggp() {
+function ggp {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
     git push origin "${*}"
   else
@@ -130,7 +130,7 @@ ggp() {
 }
 #compdef _git ggp=git-checkout
 
-ggpnp() {
+function ggpnp {
   if [[ "$#" == 0 ]]; then
     ggl && ggp
   else
@@ -139,7 +139,7 @@ ggpnp() {
 }
 #compdef _git ggpnp=git-checkout
 
-ggu() {
+function ggu {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git pull --rebase origin "${b:=$1}"
 }

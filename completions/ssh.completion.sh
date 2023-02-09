@@ -3,7 +3,7 @@
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
 
-_sshcomplete() {
+function _sshcomplete {
     local CURRENT_PROMPT="${COMP_WORDS[COMP_CWORD]}"
     if [[ ${CURRENT_PROMPT} == *@*  ]] ; then
       local OPTIONS="-P ${CURRENT_PROMPT/@*/}@ -- ${CURRENT_PROMPT/*@/}"

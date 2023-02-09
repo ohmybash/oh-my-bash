@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 # bash completion support for Git.
-_omb_completion_git_initialize() {
+function _omb_completion_git_initialize {
     if ! _omb_util_function_exists __gitdir; then
         local git_paths path
         IFS=$'\n' read -r -d '' -a git_paths <<< "$(type -aP git)"

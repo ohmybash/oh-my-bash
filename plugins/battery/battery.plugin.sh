@@ -1,10 +1,10 @@
 #! bash oh-my-bash.module
 
-_omb_plugin_battery__upower_print_info() {
+function _omb_plugin_battery__upower_print_info {
   upower -i "$(upower -e | sed -n '/BAT/{p;q;}')"
 }
 
-ac_adapter_connected(){
+function ac_adapter_connected {
   if _omb_util_command_exists upower;
   then
     _omb_plugin_battery__upower_print_info | grep -qE 'state[:[:blank:]]*(charging|fully-charged)'
@@ -28,7 +28,7 @@ ac_adapter_connected(){
   fi
 }
 
-ac_adapter_disconnected(){
+function ac_adapter_disconnected {
   if _omb_util_command_exists upower;
   then
     _omb_plugin_battery__upower_print_info | grep -qE 'state[:[:blank:]]*discharging'
@@ -55,7 +55,7 @@ ac_adapter_disconnected(){
 ## @fn battery_percentage
 ##   @about 'displays battery charge as a percentage of full (100%)'
 ##   @group 'battery'
-battery_percentage(){
+function battery_percentage {
   if _omb_util_command_exists upower;
   then
     local UPOWER_OUTPUT=$(_omb_plugin_battery__upower_print_info | sed -n 's/.*percentage[:[:blank:]]*\([0-9%]\{1,\}\)$/\1/p')
@@ -129,7 +129,7 @@ battery_percentage(){
 ## @fn battery_charge
 ##   @about 'graphical display of your battery charge'
 ##   @group 'battery'
-battery_charge(){
+function battery_charge {
   # Full char
   local F_C='▸'
   # Depleted char

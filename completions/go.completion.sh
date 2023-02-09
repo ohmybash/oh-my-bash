@@ -10,10 +10,10 @@ complete -f -X '!*.6' 6l
 complete -f -X '!*.5' 5l
 complete -f -X '!*.go' 8g 6g 5g gofmt gccgo
 
-_go_clear_cache() {
+function _go_clear_cache {
   unset _go_imports
 }
-_go_importpath_cache() {
+function _go_importpath_cache {
    if [ -z "$_go_imports" ]; then
     _go_imports=$(go list all 2>/dev/null)
     export _go_imports

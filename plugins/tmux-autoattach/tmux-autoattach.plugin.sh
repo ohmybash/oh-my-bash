@@ -15,11 +15,11 @@
 #
 # [1] https://github.com/ohmybash/oh-my-bash/pull/332
 
-_osh_plugin_tmux_autoattach_exit() {
+function _osh_plugin_tmux_autoattach_exit {
 	[ -z "$TMUX" ] && tmux -2u new -As0 && exit
 }
 
-_osh_plugin_tmux_autoattach_detach() {
+function _osh_plugin_tmux_autoattach_detach {
 	[ -z "$TMUX" ] && tmux -2u new -As0
 }
 

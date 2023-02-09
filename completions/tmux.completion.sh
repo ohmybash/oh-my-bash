@@ -57,7 +57,7 @@ function _tmux_complete_window() {
     COMPREPLY=( ${COMPREPLY[@]:-} $(compgen -W "${sessions}" -- "${cur}") )
 }
 
-_tmux() {
+function _tmux {
     local cur prev
     local i cmd cmd_index option option_index
     local opts=""

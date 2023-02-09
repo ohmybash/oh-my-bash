@@ -12,7 +12,7 @@
 #
 
 # This spinner is used when there is a terminal.
-term_spinner() {
+function term_spinner {
   local pid=$!
   local delay=0.1
   local spinstr='|/-\'
@@ -26,7 +26,7 @@ term_spinner() {
   printf "    \b\b\b\b"
 }
 
-no_term_spinner() {
+function no_term_spinner {
   local pid=$!
   local delay=0.1
   local spinstr='|/-\'
@@ -37,7 +37,7 @@ no_term_spinner() {
   echo " ✓ "
 }
 
-spinner() {
+function spinner {
   if [[ -z "$TERM" ]]; then
     no_term_spinner
   else

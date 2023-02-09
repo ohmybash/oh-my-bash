@@ -34,32 +34,32 @@
 
 #   mcd:   Makes new Dir and jumps inside
 #   --------------------------------------------------------------------
-mcd () { mkdir -p -- "$*" ; cd -- "$*" || exit ; }
+function mcd { mkdir -p -- "$*" ; cd -- "$*" || exit ; }
 
 #   mans:   Search manpage given in agument '1' for term given in argument '2' (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.
 #           Example: mans mplayer codec
 #   --------------------------------------------------------------------
-mans () { man "$1" | grep -iC2 --color=always "$2" | less ; }
+function mans { man "$1" | grep -iC2 --color=always "$2" | less ; }
 
 #   showa: to remind yourself of an alias (given some part of it)
 #   ------------------------------------------------------------
-showa () { /usr/bin/grep --color=always -i -a1 "$@" ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc ; }
+function showa { /usr/bin/grep --color=always -i -a1 "$@" ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc ; }
 
 #   quiet: mute output of a command
 #   ------------------------------------------------------------
-quiet () {
+function quiet {
   "$*" &> /dev/null &
 }
 
 #   lsgrep: search through directory contents with grep
 #   ------------------------------------------------------------
 # shellcheck disable=SC2010
-lsgrep () { ls | grep "$*" ; }
+function lsgrep { ls | grep "$*" ; }
 
 #   banish-cookies: redirect .adobe and .macromedia files to /dev/null
 #   ------------------------------------------------------------
-banish-cookies () {
+function banish-cookies {
   rm -r ~/.macromedia ~/.adobe
   ln -s /dev/null ~/.adobe
   ln -s /dev/null ~/.macromedia
@@ -67,7 +67,7 @@ banish-cookies () {
 
 #   show the n most used commands. defaults to 10
 #   ------------------------------------------------------------
-hstats() {
+function hstats {
   if [[ $# -lt 1 ]]; then
     NUM=10
   else
@@ -81,11 +81,11 @@ hstats() {
 #   2.  FILE AND FOLDER MANAGEMENT
 #   -------------------------------
 
-zipf () { zip -r "$1".zip "$1" ; }           # zipf:         To create a ZIP archive of a folder
+function zipf { zip -r "$1".zip "$1" ; }           # zipf:         To create a ZIP archive of a folder
 
 #   extract:  Extract most know archives with one command
 #   ---------------------------------------------------------
-extract () {
+function extract {
   if [ -f "$1" ] ; then
     case "$1" in
     *.tar.bz2)   tar xjf "$1"     ;;
@@ -108,7 +108,7 @@ extract () {
 
 #   buf:  back up file with timestamp
 #   ---------------------------------------------------------
-buf () {
+function buf {
   local filename filetime
   filename=$1
   filetime=$(date +%Y%m%d_%H%M%S)
@@ -117,13 +117,13 @@ buf () {
 
 #   del:  move files to hidden folder in tmp, that gets cleared on each reboot
 #   ---------------------------------------------------------
-del() {
+function del {
   mkdir -p /tmp/.trash && mv "$@" /tmp/.trash;
 }
 
 #   mkiso:  creates iso from current dir in the parent dir (unless defined)
 #   ---------------------------------------------------------
-mkiso () {
+function mkiso {
   if _omb_util_command_exists mkisofs; then
     if [ -z ${1+x} ]; then
       local isoname=${PWD##*/}
@@ -159,12 +159,12 @@ mkiso () {
 #   3.  SEARCHING
 #   ---------------------------
 
-ff () { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
+function ff { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
 # shellcheck disable=SC2145
-ffs () { /usr/bin/find . -name "$@"'*' ; }  # ffs:      Find file whose name starts with a given string
+function ffs { /usr/bin/find . -name "$@"'*' ; }  # ffs:      Find file whose name starts with a given string
 # shellcheck disable=SC2145
-ffe () { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name ends with a given string
-bigfind() {
+function ffe { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name ends with a given string
+function bigfind {
   if [[ $# -lt 1 ]]; then
     echo_warn "Usage: bigfind DIRECTORY"
     return
@@ -183,11 +183,11 @@ bigfind() {
 #       E.g. findPid '/d$/' finds pids of all processes with names ending in 'd'
 #       Without the 'sudo' it will only find processes of the current user
 #   -----------------------------------------------------
-findPid () { lsof -t -c "$@" ; }
+function findPid { lsof -t -c "$@" ; }
 
 #   my_ps: List processes owned by my user:
 #   ------------------------------------------------------------
-my_ps() { ps "$@" -u "$USER" -o pid,%cpu,%mem,start,time,bsdtime,command ; }
+function my_ps { ps "$@" -u "$USER" -o pid,%cpu,%mem,start,time,bsdtime,command ; }
 
 
 #   ---------------------------
@@ -196,7 +196,7 @@ my_ps() { ps "$@" -u "$USER" -o pid,%cpu,%mem,start,time,bsdtime,command ; }
 
 #   ips:  display all ip addresses for this host
 #   -------------------------------------------------------------------
-ips () {
+function ips {
   if _omb_util_command_exists ifconfig
   then
     ifconfig | awk '/inet /{ print $2 }'
@@ -210,20 +210,20 @@ ips () {
 
 #   down4me:  checks whether a website is down for you, or everybody
 #   -------------------------------------------------------------------
-down4me () {
+function down4me {
   curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 }
 
 #   myip:  displays your ip address, as seen by the Internet
 #   -------------------------------------------------------------------
-myip () {
+function myip {
   res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
   echo -e "Your public IP is: ${_omb_term_bold_green} $res ${_omb_term_normal}"
 }
 
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
-ii() {
+function ii {
   echo -e "\\nYou are logged on ${_omb_term_brown}$HOST"
   echo -e "\\nAdditionnal information:$NC " ; uname -a
   echo -e "\\n${_omb_term_brown}Users logged on:$NC " ; w -h
@@ -242,7 +242,7 @@ ii() {
 
 #   batch_chmod: Batch chmod for all files & sub-directories in the current one
 #   -------------------------------------------------------------------
-batch_chmod() {
+function batch_chmod {
   echo -ne "${_omb_term_bold_navy}Applying 0755 permission for all directories..."
   (find . -type d -print0 | xargs -0 chmod 0755) &
   spinner
@@ -256,7 +256,7 @@ batch_chmod() {
 
 #   usage: disk usage per directory, in Mac OS X and Linux
 #   -------------------------------------------------------------------
-usage () {
+function usage {
   if [ "$(uname)" = "Darwin" ]; then
     if [ -n "$1" ]; then
       du -hd 1 "$1"
@@ -274,7 +274,7 @@ usage () {
 
 #   pickfrom: picks random line from file
 #   -------------------------------------------------------------------
-pickfrom () {
+function pickfrom {
   local file=$1
   [ -z "$file" ] && reference "$FUNCNAME" && return
   length=$(wc -l < "$file")
@@ -290,7 +290,7 @@ pickfrom () {
 # shellcheck disable=SC2005
 # shellcheck disable=SC2034
 # shellcheck disable=SC2086
-passgen () {
+function passgen {
   local i pass length=${1:-4}
   pass=$(echo $(for i in $(eval echo "{1..$length}"); do pickfrom /usr/share/dict/words; done))
   echo "With spaces (easier to memorize): $pass"
@@ -307,11 +307,11 @@ passgen () {
 #   8.  WEB DEVELOPMENT
 #   ---------------------------------------
 
-httpHeaders () { /usr/bin/curl -I -L "$@" ; }             # httpHeaders:      Grabs headers from web page
+function httpHeaders { /usr/bin/curl -I -L "$@" ; }             # httpHeaders:      Grabs headers from web page
 
 #   httpDebug:  Download a web page and show info on what took time
 #   -------------------------------------------------------------------
-httpDebug () { /usr/bin/curl "$@" -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\\n" ; }
+function httpDebug { /usr/bin/curl "$@" -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\\n" ; }
 
 
 
