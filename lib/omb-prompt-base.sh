@@ -85,8 +85,6 @@ CONDAENV_THEME_PROMPT_SUFFIX='|'
 PYTHON_THEME_PROMPT_PREFIX=' |'
 PYTHON_THEME_PROMPT_SUFFIX='|'
 
-OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
-
 ## @fn _omb_prompt_format var value fmt_prefix[:deprecated]
 ##   @param[in] var
 ##   @param[in] value

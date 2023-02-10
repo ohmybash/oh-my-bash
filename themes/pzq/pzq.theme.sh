@@ -8,6 +8,7 @@
 
 OMB_PROMPT_CONDAENV_FORMAT='(%s)'
 OMB_PROMPT_VIRTUALENV_FORMAT='(%s)'
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
 
 # ----------------------------------------------------------------- COLOR CONF
 D_DEFAULT_COLOR="$_omb_prompt_white"

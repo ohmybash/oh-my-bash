@@ -218,6 +218,20 @@ If you would like to replace an existing module (theme/plugin/aliases/complet) b
 
 ### Configuration
 
+#### Enable/disable python venv
+
+The python virtualenv/condaenv information in the prompt may be enabled by the following line in `~/.bashrc`.
+
+```bash
+OMB_PROMPT_SHOW_PYTHON_VENV=true
+```
+
+Some themes turn on it by default.  If you would like to turn it off, you may disable it by the following line in `~/.bashrc`:
+
+```bash
+OMB_PROMPT_SHOW_PYTHON_VENV=false
+```
+
 #### Disable internal uses of `sudo`
 
 Some plugins of oh-my-bash internally use `sudo` when it is necessary.  However, this might clutter with the `sudo` log.  To disable the use of `sudo` by oh-my-bash, `OMB_USE_SUDO` can be set to `false` in `~/.bashrc`.
