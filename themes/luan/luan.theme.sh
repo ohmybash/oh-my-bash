@@ -26,7 +26,7 @@ function _omb_theme_PROMPT_COMMAND() {
   local arrow="${_omb_prompt_bold_white}▶${_omb_prompt_normal} "
   local prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
 
-  PS1="${dtime}${python_venv}${user_host}:${current_dir} ${ruby_env}${git_branch}
+  PS1="${dtime}${user_host}:${current_dir} ${python_venv}${ruby_env}${git_branch}
       $arrow $prompt"
 }
 
