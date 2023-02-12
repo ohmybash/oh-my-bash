@@ -135,11 +135,12 @@ function bg_color {
 # this changes from BASH v3 to BASH v4.
 function ansi {
     local seq
-    declare -a mycodes=("${!1}")
+    local -a mycodes=("${!1}")
 
     debug "ansi: ${!1} all: $* aka ${mycodes[@]}"
 
     seq=""
+    local i
     for ((i = 0; i < ${#mycodes[@]}; i++)); do
         if [[ -n $seq ]]; then
             seq="${seq};"
@@ -160,7 +161,7 @@ function ansi_single {
 # rendering default background/foreground.
 function prompt_segment {
     local bg fg
-    declare -a codes
+    local -a codes
 
     debug "Prompting $1 $2 $3"
 
@@ -183,10 +184,10 @@ function prompt_segment {
     fi
 
     debug "Codes: "
-    # declare -p codes
+    # local -p codes
 
     if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-        declare -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
+        local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
         debug "pre prompt " $(ansi intermediate[@])
         PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
         debug "post prompt " $(ansi codes[@])
@@ -202,10 +203,10 @@ function prompt_segment {
 # End the prompt, closing any open segments
 function prompt_end {
     if [[ -n $CURRENT_BG ]]; then
-        declare -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
+        local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
         PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
     fi
-    declare -a reset=($(text_effect reset))
+    local -a reset=($(text_effect reset))
     PR="$PR $(ansi reset[@])"
     CURRENT_BG=''
 }
@@ -317,16 +318,16 @@ function __command_rprompt {
     done
     [ -z "$times" ] || printf "%${n}s$times\\r" ''
 }
-# _omb_util_add_prompt_command __command_rprompt
 
 # this doens't wrap code in \[ \]
 function ansi_r {
     local seq
-    declare -a mycodes2=("${!1}")
+    local -a mycodes2=("${!1}")
 
     debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
 
     seq=""
+    local i
     for ((i = 0; i < ${#mycodes2[@]}; i++)); do
         if [[ -n $seq ]]; then
             seq="${seq};"
@@ -343,7 +344,7 @@ function ansi_r {
 # rendering default background/foreground.
 function prompt_right_segment {
     local bg fg
-    declare -a codes
+    local -a codes
 
     debug "Prompt right"
     debug "Prompting $1 $2 $3"
@@ -367,13 +368,13 @@ function prompt_right_segment {
     fi
 
     debug "Right Codes: "
-    # declare -p codes
+    # local -p codes
 
     # right always has a separator
     # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
     #     $CURRENT_RBG=
     # fi
-    declare -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
+    local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
     # PRIGHT="$PRIGHT---"
     debug "pre prompt " $(ansi_r intermediate2[@])
     PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
@@ -432,11 +433,10 @@ function build_prompt {
 # use that.
 
 function _omb_theme_PROMPT_COMMAND {
-    RETVAL=$?
-    PR=""
-    PRIGHT=""
-    CURRENT_BG=NONE
-    PR="$(ansi_single $(text_effect reset))"
+    local RETVAL=$?
+    local PRIGHT=""
+    local CURRENT_BG=NONE
+    local PR="$(ansi_single $(text_effect reset))"
     build_prompt
 
     # uncomment below to use right prompt
