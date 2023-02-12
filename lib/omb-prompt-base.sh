@@ -75,7 +75,9 @@ CHRUBY_THEME_PROMPT_SUFFIX='|'
 # # new
 # OMB_PROMPT_VIRTUALENV_FORMAT=' |%s|'
 # OMB_PROMPT_CONDAENV_FORMAT=' |%s|'
+# OMB_PROMPT_CONDAENV_USE_BASENAME=true
 # OMB_PROMPT_PYTHON_VERSION_FORMAT=' |%s|'
+# OMB_PROMPT_SHOW_PYTHON_VENV=true
 
 # deprecate
 VIRTUALENV_THEME_PROMPT_PREFIX=' |'
@@ -456,8 +458,13 @@ function _omb_prompt_get_virtualenv {
 
 function _omb_prompt_get_condaenv {
   condaenv=
-  [[ ${CONDA_DEFAULT_ENV-} ]] || return 1
-  _omb_prompt_format condaenv "$CONDA_DEFAULT_ENV" OMB_PROMPT_CONDAENV:CONDAENV_THEME_PROMPT
+  [[ ${CONDA_DEFAULT_ENV-} && ${CONDA_SHLVL-} != 0 ]] || return 1
+
+  local condaenv=$CONDA_DEFAULT_ENV
+  if [[ ${OMB_PROMPT_CONDAENV_USE_BASENAME-} == true ]]; then
+    condaenv=$(basename "$condaenv")
+  fi
+  _omb_prompt_format condaenv "$condaenv" OMB_PROMPT_CONDAENV:CONDAENV_THEME_PROMPT
 }
 
 function _omb_prompt_get_python_version {

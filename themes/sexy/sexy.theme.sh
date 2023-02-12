@@ -3,6 +3,11 @@
 # Screenshot: http://cloud.gf3.ca/M5rG
 # A big thanks to \amethyst on Freenode
 
+OMB_PROMPT_VIRTUALENV_FORMAT=$_omb_prompt_bold_silver'<%s> '
+OMB_PROMPT_CONDAENV_FORMAT=$_omb_prompt_bold_silver'<%s> '
+OMB_PROMPT_CONDAENV_USE_BASENAME=true
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false}
+
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color &>/dev/null; then
   export TERM=gnome-256color
 elif [[ $TERM != dumb ]] && infocmp xterm-256color &>/dev/null; then
@@ -43,10 +48,9 @@ function parse_git_branch {
 }
 
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
-  if [[ $CONDA_SHLVL == 1 ]]; then
-    PS1="\[${BOLD}${WHITE}\]<$(basename $CONDA_DEFAULT_ENV)> $PS1"
-  fi
+  local python_venv
+  _omb_prompt_get_python_venv
+  PS1="$python_venv\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
