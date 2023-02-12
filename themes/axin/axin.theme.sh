@@ -21,8 +21,15 @@ if ((_omb_term_colors >= 256)); then
   PURPLE=$_omb_prompt_bold'\['$(tput setaf 141)'\]'
 fi
 
+OMB_PROMPT_VIRTUALENV_FORMAT=$WHITE'<%s> '
+OMB_PROMPT_CONDAENV_FORMAT=$WHITE'<%s> '
+OMB_PROMPT_CONDAENV_USE_BASENAME=true
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false}
+
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="${MAGENTA}\u ${WHITE}@ ${ORANGE}\h ${WHITE}in ${GREEN}\w${WHITE}$SCM_THEME_PROMPT_PREFIX$(clock_prompt) ${PURPLE}\$(scm_prompt_info) \n\$ ${RESET}"
+  local python_venv
+  _omb_prompt_get_python_venv
+  PS1="$python_venv${MAGENTA}\u ${WHITE}@ ${ORANGE}\h ${WHITE}in ${GREEN}\w${WHITE}$SCM_THEME_PROMPT_PREFIX$(clock_prompt) ${PURPLE}\$(scm_prompt_info) \n\$ ${RESET}"
 }
 
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"${_omb_prompt_white}"}
