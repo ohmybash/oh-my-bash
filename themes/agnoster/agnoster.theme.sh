@@ -212,31 +212,28 @@ function prompt_end {
 
 ### virtualenv prompt
 function prompt_virtualenv {
-    if [[ -n $VIRTUAL_ENV ]]; then
-        # Python could output the version information in both stdout and
-        # stderr (e.g. if using pyenv, the output goes to stderr).
-        VERSION_OUTPUT=$($VIRTUAL_ENV/bin/python --version 2>&1)
+  if [[ -d $VIRTUAL_ENV ]]; then
+    # Python could output the version information in both stdout and
+    # stderr (e.g. if using pyenv, the output goes to stderr).
+    local VERSION_OUTPUT=$("$VIRTUAL_ENV"/bin/python --version 2>&1)
 
-        # The last word of the output of `python --version`
-        # corresponds to the version number.
-        VENV_VERSION=$(echo $VERSION_OUTPUT | awk '{print $NF}')
+    # The last word of the output of `python --version`
+    # corresponds to the version number.
+    local VENV_VERSION=$(awk '{print $NF}' <<< "$VERSION_OUTPUT")
 
-        color=cyan
-        prompt_segment $color $PRIMARY_FG
-        prompt_segment $color white "[v] $(basename $VENV_VERSION)"
-    fi
+    prompt_segment cyan white "[v] $(basename "$VENV_VERSION")"
+  fi
 }
 
 ### conda env prompt
-prompt_conda_env() {
-    if [[ -n $CONDA_PREFIX ]]; then
-        if [[ -z $CONDA_PROMPT_MODIFIER ]]; then
-            CONDA_PROMPT_MODIFIER=$(basename $CONDA_PREFIX)
-        fi
-        CONDA_PYTHON_VERSION=$($CONDA_PREFIX/bin/python -c 'import platform;print(platform.python_version())')
-        prompt_segment cyan $PRIMARY_FG
-        prompt_segment cyan white "[c] $CONDA_PROMPT_MODIFIER $CONDA_PYTHON_VERSION"
+function prompt_condaenv {
+  if [[ -d $CONDA_PREFIX ]]; then
+    if [[ ! $CONDA_PROMPT_MODIFIER ]]; then
+      CONDA_PROMPT_MODIFIER=$(basename "$CONDA_PREFIX")
     fi
+    local CONDA_PYTHON_VERSION=$("$CONDA_PREFIX"/bin/python -c 'import platform;print(platform.python_version())')
+    prompt_segment cyan white "[c] $CONDA_PROMPT_MODIFIER $CONDA_PYTHON_VERSION"
+  fi
 }
 
 ### Prompt components
@@ -422,7 +419,7 @@ function build_prompt {
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
     if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
       prompt_virtualenv
-      prompt_conda_env
+      prompt_condaenv
     fi
     prompt_dir
     prompt_git
