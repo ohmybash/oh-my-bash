@@ -3,6 +3,7 @@
 GIT_PS1_SHOWDIRTYSTATE="enabled"
 OMB_PROMPT_VIRTUALENV_FORMAT='[%s] '
 OMB_PROMPT_CONDAENV_FORMAT='[%s] '
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false}
 
 function _omb_theme_sirup_rubygem {
   local gemset=$(command awk -F'@' '{print $2}' <<< "$GEM_HOME")
