@@ -68,6 +68,11 @@
 PROMPT_DIRTRIM=2 # bash4 and above
 
 ######################################################################
+## Configurations in Oh My Bash
+
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
+
+######################################################################
 DEBUG=0
 function debug {
     if [[ ${DEBUG} -ne 0 ]]; then
@@ -415,8 +420,10 @@ function build_prompt {
     prompt_status
     #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
-    prompt_virtualenv
-    prompt_conda_env
+    if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
+      prompt_virtualenv
+      prompt_conda_env
+    fi
     prompt_dir
     prompt_git
     prompt_end
