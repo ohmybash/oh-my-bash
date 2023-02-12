@@ -21,15 +21,15 @@
 # 07:45:05 (venv) user@host ~ →
 #
 
-export SCM_NONE_CHAR=''
-export SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
-export SCM_THEME_PROMPT_CLEAN=""
-export SCM_THEME_PROMPT_PREFIX="${_omb_prompt_green}|"
-export SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
-export SCM_GIT_SHOW_MINIMAL_INFO=true
+SCM_NONE_CHAR=''
+SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
+SCM_THEME_PROMPT_CLEAN=""
+SCM_THEME_PROMPT_PREFIX="${_omb_prompt_green}|"
+SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
+SCM_GIT_SHOW_MINIMAL_INFO=true
 
-export VIRTUALENV_THEME_PROMPT_PREFIX='('
-export VIRTUALENV_THEME_PROMPT_SUFFIX=') '
+OMB_PROMPT_VIRTUALENV_FORMAT='(%s) '
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
 
 function _omb_theme_PROMPT_COMMAND() {
     # This needs to be first to save last command return code

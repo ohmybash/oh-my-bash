@@ -10,20 +10,23 @@ GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 GIT_THEME_PROMPT_PREFIX="(${_omb_prompt_olive}"
 GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_normal})"
 
-RVM_THEME_PROMPT_PREFIX=""
-RVM_THEME_PROMPT_SUFFIX=""
+OMB_PROMPT_RVM_FORMAT="%s"
+OMB_PROMPT_VIRTUALENV_FORMAT='(%s) '
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false}
 
 function _omb_theme_PROMPT_COMMAND() {
-    dtime="$(clock_prompt)"
-    user_host="${_omb_prompt_green}\u@${_omb_prompt_teal}\h${_omb_prompt_normal}"
-    current_dir="${_omb_prompt_bold_navy}\w${_omb_prompt_normal}"
-    rvm_ruby="${_omb_prompt_bold_brown}$(_omb_prompt_print_ruby_env)${_omb_prompt_normal}"
-    git_branch="$(scm_prompt_info)${_omb_prompt_normal}"
-    prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
-    arrow="${_omb_prompt_bold_white}▶${_omb_prompt_normal} "
-    prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
+  local dtime="$(clock_prompt)"
+  local user_host="${_omb_prompt_green}\u@${_omb_prompt_teal}\h${_omb_prompt_normal}"
+  local current_dir="${_omb_prompt_bold_navy}\w${_omb_prompt_normal}"
+  local ruby_env python_venv
+  _omb_prompt_get_ruby_env && ruby_env="$_omb_prompt_bold_brown$ruby_env$_omb_prompt_normal "
+  _omb_prompt_get_python_venv
+  local git_branch="$(scm_prompt_info)${_omb_prompt_normal}"
+  local prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
+  local arrow="${_omb_prompt_bold_white}▶${_omb_prompt_normal} "
+  local prompt="${_omb_prompt_bold_green}\$${_omb_prompt_normal} "
 
-    PS1="${dtime}${user_host}:${current_dir} ${rvm_ruby} ${git_branch}
+  PS1="${dtime}${user_host}:${current_dir} ${python_venv}${ruby_env}${git_branch}
       $arrow $prompt"
 }
 
