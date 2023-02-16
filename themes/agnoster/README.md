@@ -6,7 +6,7 @@ I recommend: https://github.com/powerline/fonts.git
 ```
 git clone https://github.com/powerline/fonts.git fonts
 cd fonts
-install.sh
+sh install.sh
 ```
 
 The aim of this theme is to only show you *relevant* information. Like most
@@ -30,3 +30,7 @@ ton of work, recommend going to zsh for now. If you know how to fix this,
 would appreciate it!
 
 ![ScreenShot](agnoster-bash-sshot.png)
+
+The direct upstream of the theme is [agnoster-bash](https://github.com/speedenator/agnoster-bash).
+The current base is [`1165d1b3`](https://github.com/speedenator/agnoster-bash/commit/1165d1b3f125f52e7d4df953166d3c62774638fc).
+New updates in the upstream can be found [here](https://github.com/speedenator/agnoster-bash/compare/1165d1b3f125f52e7d4df953166d3c62774638fc...master).
