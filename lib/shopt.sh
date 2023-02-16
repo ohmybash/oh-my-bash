@@ -27,9 +27,10 @@ shopt -s nocaseglob;
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
 
 # Perform file completion in a case insensitive fashion
-if [[ ${CASE_SENSITIVE-} == false ]]; then
+# Note: CASE_SENSITIVE is the compatibility name
+if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == false ]]; then
 	bind "set completion-ignore-case on"
-elif [[ ${CASE_SENSITIVE-} == true ]]; then
+elif [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
 	bind "set completion-ignore-case off"
 else
 	# By default, case sensitivity is disabled.
