@@ -358,13 +358,13 @@ function prompt_git {
 # Mercurial: clean, modified and uncomitted files
 function prompt_hg {
   local rev st branch
-  if $(hg id >/dev/null 2>&1); then
-    if $(hg prompt >/dev/null 2>&1); then
-      if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
+  if hg id &>/dev/null; then
+    if hg prompt &>/dev/null; then
+      if [[ $(hg prompt "{status|unknown}") == '?' ]]; then
         # if files are not added
         prompt_segment red white
         st='±'
-      elif [[ -n $(hg prompt "{status|modified}") ]]; then
+      elif [[ $(hg prompt "{status|modified}") ]]; then
         # if any modification
         prompt_segment yellow black
         st='±'
@@ -377,10 +377,10 @@ function prompt_hg {
       st=""
       rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
       branch=$(hg id -b 2>/dev/null)
-      if `hg st | grep -q "^\?"`; then
+      if hg st | grep -q "^\?"; then
         prompt_segment red white
         st='±'
-      elif `hg st | grep -q "^[MA]"`; then
+      elif hg st | grep -q "^[MA]"; then
         prompt_segment yellow black
         st='±'
       else
