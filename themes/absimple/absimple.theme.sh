@@ -12,172 +12,16 @@
 # the last call exited with an error, and whether background jobs are
 # running in this shell.
 
-PROMPT_DIRTRIM=2 # bash4 and above
 
-######################################################################
-DEBUG=0
-function debug {
-    if [[ ${DEBUG} -ne 0 ]]; then
-        >&2 echo -e $*
-    fi
-}
+# Note: a most part of this theme is the same as "agnoster", so let us source
+# the original theme "agnoster" and just override its functions.  In this way,
+# the maintenance becomes easier.
+source "$OSH/themes/agnoster/agnoster.theme.sh"
 
 ######################################################################
 ### Segment drawing
 # A few utility functions to make it easy and re-usable to draw segmented prompts
 
-CURRENT_BG='NONE'
-CURRENT_RBG='NONE'
-SEGMENT_SEPARATOR=''
-RIGHT_SEPARATOR=''
-LEFT_SUBSEG=''
-RIGHT_SUBSEG=''
-
-function text_effect {
-    case "$1" in
-        reset)      echo 0;;
-        bold)       echo 1;;
-        underline)  echo 4;;
-    esac
-}
-
-# to add colors, see
-# http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
-# under the "256 (8-bit) Colors" section, and follow the example for orange below
-function fg_color {
-    case "$1" in
-        black)      echo 30;;
-        red)        echo 31;;
-        green)      echo 32;;
-        yellow)     echo 33;;
-        blue)       echo 34;;
-        magenta)    echo 35;;
-        cyan)       echo 36;;
-        white)      echo 37;;
-        orange)     echo 38\;5\;166;;
-    esac
-}
-
-function bg_color {
-    case "$1" in
-        black)      echo 40;;
-        red)        echo 41;;
-        green)      echo 42;;
-        yellow)     echo 43;;
-        blue)       echo 44;;
-        magenta)    echo 45;;
-        cyan)       echo 46;;
-        white)      echo 47;;
-        orange)     echo 48\;5\;166;;
-    esac;
-}
-
-function ansi {
-    local seq
-    local -a mycodes=("${!1}")
-
-    debug "ansi: ${!1} all: $* aka ${mycodes[@]}"
-
-    seq=""
-    local i
-    for ((i = 0; i < ${#mycodes[@]}; i++)); do
-        if [[ -n $seq ]]; then
-            seq="${seq};"
-        fi
-        seq="${seq}${mycodes[$i]}"
-    done
-    debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-    echo -ne '\[\033['${seq}'m\]'
-    # PR="$PR\[\033[${seq}m\]"
-}
-
-function ansi_single {
-    echo -ne '\[\033['$1'm\]'
-}
-
-# Begin a segment
-# Takes two arguments, background and foreground. Both can be omitted,
-# rendering default background/foreground.
-function prompt_segment {
-    local bg fg
-    local -a codes
-
-    debug "Prompting $1 $2 $3"
-
-    # if commented out from kruton's original... I'm not clear
-    # if it did anything, but it messed up things like
-    # prompt_status - Erik 1/14/17
-
-    #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-    codes=("${codes[@]}" $(text_effect reset))
-    #    fi
-    if [[ -n $1 ]]; then
-        bg=$(bg_color $1)
-        codes=("${codes[@]}" $bg)
-        debug "Added $bg as background to codes"
-    fi
-    if [[ -n $2 ]]; then
-        fg=$(fg_color $2)
-        codes=("${codes[@]}" $fg)
-        debug "Added $fg as foreground to codes"
-    fi
-
-    debug "Codes: "
-    # local -p codes
-
-    if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-        local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
-        debug "pre prompt " $(ansi intermediate[@])
-        PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
-        debug "post prompt " $(ansi codes[@])
-        PR="$PR$(ansi codes[@]) "
-    else
-        debug "no current BG, codes is $codes[@]"
-        PR="$PR$(ansi codes[@]) "
-    fi
-    CURRENT_BG=$1
-    [[ -n $3 ]] && PR="$PR$3"
-}
-
-# End the prompt, closing any open segments
-function prompt_end {
-    if [[ -n $CURRENT_BG ]]; then
-        local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
-        PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
-    fi
-    local -a reset=($(text_effect reset))
-    PR="$PR $(ansi reset[@])"
-    CURRENT_BG=''
-}
-
-### virtualenv prompt
-function prompt_virtualenv {
-    if [[ -n $VIRTUAL_ENV ]]; then
-        # Python could output the version information in both stdout and
-        # stderr (e.g. if using pyenv, the output goes to stderr).
-        VERSION_OUTPUT=$($VIRTUAL_ENV/bin/python --version 2>&1)
-
-        # The last word of the output of `python --version`
-        # corresponds to the version number.
-        VENV_VERSION=$(echo $VERSION_OUTPUT | awk '{print $NF}')
-
-        color=cyan
-        prompt_segment $color $PRIMARY_FG
-        prompt_segment $color white "$(basename $VENV_VERSION)"
-    fi
-}
-
-### Prompt components
-# Each component will draw itself, and hide itself if no information needs to be shown
-
-# Context: user@hostname (who am I and where am I)
-function prompt_context {
-    local user=`whoami`
-
-    if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
-        prompt_segment black default "$user@\h"
-    fi
-}
 
 # prints history followed by HH:MM, useful for remembering what
 # we did previously
@@ -185,56 +29,12 @@ function prompt_histdt {
     prompt_segment black default "\!" # \A"
 }
 
-
-function git_status_dirty {
-    dirty=$(git status -s 2> /dev/null | tail -n 1)
-    [[ -n $dirty ]] && echo " ●"
-}
-
-# Git: branch/detached head, dirty status
-function prompt_git {
-    local ref dirty
-    if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-        ZSH_THEME_GIT_PROMPT_DIRTY='±'
-        dirty=$(git_status_dirty)
-        ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-        if [[ -n $dirty ]]; then
-            prompt_segment yellow black
-        else
-            prompt_segment green black
-        fi
-        PR="$PR${ref/refs\/heads\// }$dirty"
-    fi
-}
-
 # Dir: current working directory
 function prompt_dir {
     prompt_segment blue black '\W'
 }
 
-# Status:
-# - was there an error
-# - am I root
-# - are there background jobs?
-function prompt_status {
-    local symbols
-    symbols=()
-    [[ $RETVAL -ne 0 ]] && symbols+="$(ansi_single $(fg_color red))✘"
-    [[ $UID -eq 0 ]] && symbols+="$(ansi_single $(fg_color yellow))⚡"
-    [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="$(ansi_single $(fg_color cyan))⚙"
-
-    [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
-}
-
 ######################################################################
-#
-# experimental right prompt stuff
-# requires setting prompt_foo to use PRIGHT vs PR
-# doesn't quite work per above
-
-function rightprompt {
-    printf "%*s" $COLUMNS "$PRIGHT"
-}
 
 # quick right prompt I grabbed to test things.
 function __command_rprompt {
@@ -248,98 +48,6 @@ function __command_rprompt {
     done
     [ -z "$times" ] || printf "%${n}s$times\\r" ''
 }
-# PROMPT_COMMAND=__command_rprompt
-
-# this doens't wrap code in \[ \]
-function ansi_r {
-    local seq
-    local -a mycodes2=("${!1}")
-
-    debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
-
-    seq=""
-    local i
-    for ((i = 0; i < ${#mycodes2[@]}; i++)); do
-        if [[ -n $seq ]]; then
-            seq="${seq};"
-        fi
-        seq="${seq}${mycodes2[$i]}"
-    done
-    debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-    echo -ne '\033['${seq}'m'
-    # PR="$PR\[\033[${seq}m\]"
-}
-
-# Begin a segment on the right
-# Takes two arguments, background and foreground. Both can be omitted,
-# rendering default background/foreground.
-function prompt_right_segment {
-    local bg fg
-    local -a codes
-
-    debug "Prompt right"
-    debug "Prompting $1 $2 $3"
-
-    # if commented out from kruton's original... I'm not clear
-    # if it did anything, but it messed up things like
-    # prompt_status - Erik 1/14/17
-
-    #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-    codes=("${codes[@]}" $(text_effect reset))
-    #    fi
-    if [[ -n $1 ]]; then
-        bg=$(bg_color $1)
-        codes=("${codes[@]}" $bg)
-        debug "Added $bg as background to codes"
-    fi
-    if [[ -n $2 ]]; then
-        fg=$(fg_color $2)
-        codes=("${codes[@]}" $fg)
-        debug "Added $fg as foreground to codes"
-    fi
-
-    debug "Right Codes: "
-    # local -p codes
-
-    # right always has a separator
-    # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
-    #     $CURRENT_RBG=
-    # fi
-    local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
-    # PRIGHT="$PRIGHT---"
-    debug "pre prompt " $(ansi_r intermediate2[@])
-    PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
-    debug "post prompt " $(ansi_r codes[@])
-    PRIGHT="$PRIGHT$(ansi_r codes[@]) "
-    # else
-    #     debug "no current BG, codes is $codes[@]"
-    #     PRIGHT="$PRIGHT$(ansi codes[@]) "
-    # fi
-    CURRENT_RBG=$1
-    [[ -n $3 ]] && PRIGHT="$PRIGHT$3"
-}
-
-######################################################################
-## Emacs prompt --- for dir tracking
-# stick the following in your .emacs if you use this:
-
-# (setq dirtrack-list '(".*DIR *\\([^ ]*\\) DIR" 1 nil))
-# (defun dirtrack-filter-out-pwd-prompt (string)
-#   "dirtrack-mode doesn't remove the PWD match from the prompt.  This does."
-#   ;; TODO: support dirtrack-mode's multiline regexp.
-#   (if (and (stringp string) (string-match (first dirtrack-list) string))
-#       (replace-match "" t t string 0)
-#     string))
-# (add-hook 'shell-mode-hook
-#           #'(lambda ()
-#               (dirtrack-mode 1)
-#               (add-hook 'comint-preoutput-filter-functions
-#                         'dirtrack-filter-out-pwd-prompt t t)))
-
-function prompt_emacsdir {
-    # no color or other setting... this will be deleted per above
-    PR="DIR \w DIR$PR"
-}
 
 ######################################################################
 ## Main prompt
@@ -349,7 +57,10 @@ function build_prompt {
     prompt_status
     [[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     #[[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
-    prompt_virtualenv
+    if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
+      prompt_virtualenv
+      prompt_condaenv
+    fi
     prompt_dir
     prompt_git
     prompt_end
@@ -362,11 +73,9 @@ function build_prompt {
 
 function _omb_theme_PROMPT_COMMAND {
     local RETVAL=$?
-    local PR=""
     local PRIGHT=""
     local CURRENT_BG=NONE
-
-    PR="$(ansi_single $(text_effect reset))"
+    local PR="$(ansi_single $(text_effect reset))"
     build_prompt
 
     PS1=""

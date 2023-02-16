@@ -68,6 +68,11 @@
 PROMPT_DIRTRIM=2 # bash4 and above
 
 ######################################################################
+## Configurations in Oh My Bash
+
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
+
+######################################################################
 DEBUG=0
 function debug {
     if [[ ${DEBUG} -ne 0 ]]; then
@@ -130,11 +135,12 @@ function bg_color {
 # this changes from BASH v3 to BASH v4.
 function ansi {
     local seq
-    declare -a mycodes=("${!1}")
+    local -a mycodes=("${!1}")
 
     debug "ansi: ${!1} all: $* aka ${mycodes[@]}"
 
     seq=""
+    local i
     for ((i = 0; i < ${#mycodes[@]}; i++)); do
         if [[ -n $seq ]]; then
             seq="${seq};"
@@ -155,7 +161,7 @@ function ansi_single {
 # rendering default background/foreground.
 function prompt_segment {
     local bg fg
-    declare -a codes
+    local -a codes
 
     debug "Prompting $1 $2 $3"
 
@@ -178,10 +184,10 @@ function prompt_segment {
     fi
 
     debug "Codes: "
-    # declare -p codes
+    # local -p codes
 
     if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-        declare -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
+        local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
         debug "pre prompt " $(ansi intermediate[@])
         PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
         debug "post prompt " $(ansi codes[@])
@@ -197,29 +203,38 @@ function prompt_segment {
 # End the prompt, closing any open segments
 function prompt_end {
     if [[ -n $CURRENT_BG ]]; then
-        declare -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
+        local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
         PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
     fi
-    declare -a reset=($(text_effect reset))
+    local -a reset=($(text_effect reset))
     PR="$PR $(ansi reset[@])"
     CURRENT_BG=''
 }
 
 ### virtualenv prompt
 function prompt_virtualenv {
-    if [[ -n $VIRTUAL_ENV ]]; then
-        # Python could output the version information in both stdout and
-        # stderr (e.g. if using pyenv, the output goes to stderr).
-        VERSION_OUTPUT=$($VIRTUAL_ENV/bin/python --version 2>&1)
+  if [[ -d $VIRTUAL_ENV ]]; then
+    # Python could output the version information in both stdout and
+    # stderr (e.g. if using pyenv, the output goes to stderr).
+    local VERSION_OUTPUT=$("$VIRTUAL_ENV"/bin/python --version 2>&1)
 
-        # The last word of the output of `python --version`
-        # corresponds to the version number.
-        VENV_VERSION=$(echo $VERSION_OUTPUT | awk '{print $NF}')
+    # The last word of the output of `python --version`
+    # corresponds to the version number.
+    local VENV_VERSION=$(awk '{print $NF}' <<< "$VERSION_OUTPUT")
 
-        color=cyan
-        prompt_segment $color $PRIMARY_FG
-        prompt_segment $color white "$(basename $VENV_VERSION)"
+    prompt_segment cyan white "[v] $(basename "$VENV_VERSION")"
+  fi
+}
+
+### conda env prompt
+function prompt_condaenv {
+  if [[ -d $CONDA_PREFIX ]]; then
+    if [[ ! $CONDA_PROMPT_MODIFIER ]]; then
+      CONDA_PROMPT_MODIFIER=$(basename "$CONDA_PREFIX")
     fi
+    local CONDA_PYTHON_VERSION=$("$CONDA_PREFIX"/bin/python -c 'import platform;print(platform.python_version())')
+    prompt_segment cyan white "[c] $CONDA_PROMPT_MODIFIER $CONDA_PYTHON_VERSION"
+  fi
 }
 
 ### Prompt components
@@ -303,16 +318,16 @@ function __command_rprompt {
     done
     [ -z "$times" ] || printf "%${n}s$times\\r" ''
 }
-# _omb_util_add_prompt_command __command_rprompt
 
 # this doens't wrap code in \[ \]
 function ansi_r {
     local seq
-    declare -a mycodes2=("${!1}")
+    local -a mycodes2=("${!1}")
 
     debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
 
     seq=""
+    local i
     for ((i = 0; i < ${#mycodes2[@]}; i++)); do
         if [[ -n $seq ]]; then
             seq="${seq};"
@@ -329,7 +344,7 @@ function ansi_r {
 # rendering default background/foreground.
 function prompt_right_segment {
     local bg fg
-    declare -a codes
+    local -a codes
 
     debug "Prompt right"
     debug "Prompting $1 $2 $3"
@@ -353,13 +368,13 @@ function prompt_right_segment {
     fi
 
     debug "Right Codes: "
-    # declare -p codes
+    # local -p codes
 
     # right always has a separator
     # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
     #     $CURRENT_RBG=
     # fi
-    declare -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
+    local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
     # PRIGHT="$PRIGHT---"
     debug "pre prompt " $(ansi_r intermediate2[@])
     PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
@@ -403,7 +418,10 @@ function build_prompt {
     prompt_status
     #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
-    prompt_virtualenv
+    if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
+      prompt_virtualenv
+      prompt_condaenv
+    fi
     prompt_dir
     prompt_git
     prompt_end
@@ -415,11 +433,10 @@ function build_prompt {
 # use that.
 
 function _omb_theme_PROMPT_COMMAND {
-    RETVAL=$?
-    PR=""
-    PRIGHT=""
-    CURRENT_BG=NONE
-    PR="$(ansi_single $(text_effect reset))"
+    local RETVAL=$?
+    local PRIGHT=""
+    local CURRENT_BG=NONE
+    local PR="$(ansi_single $(text_effect reset))"
     build_prompt
 
     # uncomment below to use right prompt
