@@ -22,6 +22,12 @@ function _omb_theme_PROMPT_COMMAND() {
 
     PS1="${arrow}  ${user_name} ${base_directory} "
 
+    local VIRTUALENV_THEME_PROMPT_PREFIX="${_omb_prompt_bold_purple}vitualenv:(${_omb_prompt_reset_color}"
+    local VIRTUALENV_THEME_PROMPT_SUFFIX="${_omb_prompt_bold_purple}) ${_omb_prompt_reset_color}"
+    local python_venv; _omb_prompt_get_python_venv
+  
+    PS1+=${python_venv}
+
     local scm_info=$(scm_prompt_info)
 
     PS1+=${scm_info:+$scm_info }
