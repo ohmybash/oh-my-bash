@@ -46,7 +46,13 @@ else
 
 	# Treat hyphens and underscores as equivalent
 	# CASE_SENSITIVE must be off
-	if [[ ${OMB_HYPHEN_INSENSITIVE:-${HYPHEN_INSENSITIVE:-false}} == true ]]; then
+	if [[ ! ${OMB_HYPHEN_SENSITIVE-} && ${HYPHEN_INSENSITIVE} ]]; then
+		case $HYPHEN_INSENSITIVE in
+		(true)  OMB_HYPHEN_SENSITIVE=true ;;
+		(false) OMB_HYPHEN_SENSITIVE=false ;;
+		esac
+	fi
+	if [[ ${OMB_HYPHEN_SENSITIVE-} == false ]]; then
 		bind "set completion-map-case on"
 	fi
 fi
