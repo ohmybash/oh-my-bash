@@ -145,9 +145,9 @@ OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
 ######################################################################
 DEBUG=0
 function debug {
-    if [[ ${DEBUG} -ne 0 ]]; then
-        >&2 echo -e $*
-    fi
+  if [[ ${DEBUG} -ne 0 ]]; then
+    >&2 echo -e $*
+  fi
 }
 
 ######################################################################
@@ -162,123 +162,123 @@ LEFT_SUBSEG=''
 RIGHT_SUBSEG=''
 
 function text_effect {
-    case "$1" in
-        reset)      echo 0;;
-        bold)       echo 1;;
-        underline)  echo 4;;
-    esac
+  case "$1" in
+  reset)      echo 0;;
+  bold)       echo 1;;
+  underline)  echo 4;;
+  esac
 }
 
 # to add colors, see
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 # under the "256 (8-bit) Colors" section, and follow the example for orange below
 function fg_color {
-    case "$1" in
-        black)      echo 30;;
-        red)        echo 31;;
-        green)      echo 32;;
-        yellow)     echo 33;;
-        blue)       echo 34;;
-        magenta)    echo 35;;
-        cyan)       echo 36;;
-        white)      echo 37;;
-        orange)     echo 38\;5\;166;;
-    esac
+  case "$1" in
+  black)      echo 30;;
+  red)        echo 31;;
+  green)      echo 32;;
+  yellow)     echo 33;;
+  blue)       echo 34;;
+  magenta)    echo 35;;
+  cyan)       echo 36;;
+  white)      echo 37;;
+  orange)     echo 38\;5\;166;;
+  esac
 }
 
 function bg_color {
-    case "$1" in
-        black)      echo 40;;
-        red)        echo 41;;
-        green)      echo 42;;
-        yellow)     echo 43;;
-        blue)       echo 44;;
-        magenta)    echo 45;;
-        cyan)       echo 46;;
-        white)      echo 47;;
-        orange)     echo 48\;5\;166;;
-    esac;
+  case "$1" in
+  black)      echo 40;;
+  red)        echo 41;;
+  green)      echo 42;;
+  yellow)     echo 43;;
+  blue)       echo 44;;
+  magenta)    echo 45;;
+  cyan)       echo 46;;
+  white)      echo 47;;
+  orange)     echo 48\;5\;166;;
+  esac;
 }
 
 # TIL: declare is global not local, so best use a different name
 # for codes (mycodes) as otherwise it'll clobber the original.
 # this changes from BASH v3 to BASH v4.
 function ansi {
-    local seq
-    local -a mycodes=("${!1}")
+  local seq
+  local -a mycodes=("${!1}")
 
-    debug "ansi: ${!1} all: $* aka ${mycodes[@]}"
+  debug "ansi: ${!1} all: $* aka ${mycodes[@]}"
 
-    seq=""
-    local i
-    for ((i = 0; i < ${#mycodes[@]}; i++)); do
-        if [[ -n $seq ]]; then
-            seq="${seq};"
-        fi
-        seq="${seq}${mycodes[$i]}"
-    done
-    debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-    echo -ne '\[\033['${seq}'m\]'
-    # PR="$PR\[\033[${seq}m\]"
+  seq=""
+  local i
+  for ((i = 0; i < ${#mycodes[@]}; i++)); do
+    if [[ -n $seq ]]; then
+      seq="${seq};"
+    fi
+    seq="${seq}${mycodes[$i]}"
+  done
+  debug "ansi debug:" '\\[\\033['${seq}'m\\]'
+  echo -ne '\[\033['${seq}'m\]'
+  # PR="$PR\[\033[${seq}m\]"
 }
 
 function ansi_single {
-    echo -ne '\[\033['$1'm\]'
+  echo -ne '\[\033['$1'm\]'
 }
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
 # rendering default background/foreground.
 function prompt_segment {
-    local bg fg
-    local -a codes
+  local bg fg
+  local -a codes
 
-    debug "Prompting $1 $2 $3"
+  debug "Prompting $1 $2 $3"
 
-    # if commented out from kruton's original... I'm not clear
-    # if it did anything, but it messed up things like
-    # prompt_status - Erik 1/14/17
+  # if commented out from kruton's original... I'm not clear
+  # if it did anything, but it messed up things like
+  # prompt_status - Erik 1/14/17
 
-    #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-    codes=("${codes[@]}" $(text_effect reset))
-    #    fi
-    if [[ -n $1 ]]; then
-        bg=$(bg_color $1)
-        codes=("${codes[@]}" $bg)
-        debug "Added $bg as background to codes"
-    fi
-    if [[ -n $2 ]]; then
-        fg=$(fg_color $2)
-        codes=("${codes[@]}" $fg)
-        debug "Added $fg as foreground to codes"
-    fi
+  #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
+  codes=("${codes[@]}" $(text_effect reset))
+  #    fi
+  if [[ -n $1 ]]; then
+    bg=$(bg_color $1)
+    codes=("${codes[@]}" $bg)
+    debug "Added $bg as background to codes"
+  fi
+  if [[ -n $2 ]]; then
+    fg=$(fg_color $2)
+    codes=("${codes[@]}" $fg)
+    debug "Added $fg as foreground to codes"
+  fi
 
-    debug "Codes: "
-    # local -p codes
+  debug "Codes: "
+  # local -p codes
 
-    if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-        local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
-        debug "pre prompt " $(ansi intermediate[@])
-        PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
-        debug "post prompt " $(ansi codes[@])
-        PR="$PR$(ansi codes[@]) "
-    else
-        debug "no current BG, codes is $codes[@]"
-        PR="$PR$(ansi codes[@]) "
-    fi
-    CURRENT_BG=$1
-    [[ -n $3 ]] && PR="$PR$3"
+  if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
+    local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
+    debug "pre prompt " $(ansi intermediate[@])
+    PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
+    debug "post prompt " $(ansi codes[@])
+    PR="$PR$(ansi codes[@]) "
+  else
+    debug "no current BG, codes is $codes[@]"
+    PR="$PR$(ansi codes[@]) "
+  fi
+  CURRENT_BG=$1
+  [[ -n $3 ]] && PR="$PR$3"
 }
 
 # End the prompt, closing any open segments
 function prompt_end {
-    if [[ -n $CURRENT_BG ]]; then
-        local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
-        PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
-    fi
-    local -a reset=($(text_effect reset))
-    PR="$PR $(ansi reset[@])"
-    CURRENT_BG=''
+  if [[ -n $CURRENT_BG ]]; then
+    local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
+    PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
+  fi
+  local -a reset=($(text_effect reset))
+  PR="$PR $(ansi reset[@])"
+  CURRENT_BG=''
 }
 
 ### virtualenv prompt
@@ -312,88 +312,88 @@ function prompt_condaenv {
 
 # Context: user@hostname (who am I and where am I)
 function prompt_context {
-    local user=$(whoami)
+  local user=$(whoami)
 
-    if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
-        prompt_segment black default "$user@\h"
-    fi
+  if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
+    prompt_segment black default "$user@\h"
+  fi
 }
 
 # prints history followed by HH:MM, useful for remembering what
 # we did previously
 function prompt_histdt {
-    prompt_segment black default "\! [\A]"
+  prompt_segment black default "\! [\A]"
 }
 
 
 function git_status_dirty {
-    dirty=$(git status -s 2> /dev/null | tail -n 1)
-    [[ -n $dirty ]] && echo " ●"
+  dirty=$(git status -s 2> /dev/null | tail -n 1)
+  [[ -n $dirty ]] && echo " ●"
 }
 
 function git_stash_dirty {
-    stash=$(git stash list 2> /dev/null | tail -n 1)
-    [[ -n $stash ]] && echo " ⚑"
+  stash=$(git stash list 2> /dev/null | tail -n 1)
+  [[ -n $stash ]] && echo " ⚑"
 }
 
 # Git: branch/detached head, dirty status
 function prompt_git {
-    local ref dirty
-    if git rev-parse --is-inside-work-tree &>/dev/null; then
-        ZSH_THEME_GIT_PROMPT_DIRTY='±'
-        dirty=$(git_status_dirty)
-        stash=$(git_stash_dirty)
-        ref=$(git symbolic-ref HEAD 2> /dev/null) ||
-          ref="➦ $(git describe --exact-match --tags HEAD 2> /dev/null)" ||
-          ref="➦ $(git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
-        if [[ -n $dirty ]]; then
-            prompt_segment yellow black
-        else
-            prompt_segment green black
-        fi
-        PR="$PR${ref/refs\/heads\// }$stash$dirty"
+  local ref dirty
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
+    ZSH_THEME_GIT_PROMPT_DIRTY='±'
+    dirty=$(git_status_dirty)
+    stash=$(git_stash_dirty)
+    ref=$(git symbolic-ref HEAD 2> /dev/null) ||
+      ref="➦ $(git describe --exact-match --tags HEAD 2> /dev/null)" ||
+      ref="➦ $(git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
+    if [[ -n $dirty ]]; then
+      prompt_segment yellow black
+    else
+      prompt_segment green black
     fi
+    PR="$PR${ref/refs\/heads\// }$stash$dirty"
+  fi
 }
 
 # Mercurial: clean, modified and uncomitted files
 function prompt_hg {
-    local rev st branch
-    if $(hg id >/dev/null 2>&1); then
-        if $(hg prompt >/dev/null 2>&1); then
-            if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
-                # if files are not added
-                prompt_segment red white
-                st='±'
-            elif [[ -n $(hg prompt "{status|modified}") ]]; then
-                # if any modification
-                prompt_segment yellow black
-                st='±'
-            else
-                # if working copy is clean
-                prompt_segment green black $CURRENT_FG
-            fi
-            PR="$PR$(hg prompt "☿ {rev}@{branch}") $st"
-        else
-            st=""
-            rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
-            branch=$(hg id -b 2>/dev/null)
-            if `hg st | grep -q "^\?"`; then
-                prompt_segment red white
-                st='±'
-            elif `hg st | grep -q "^[MA]"`; then
-                prompt_segment yellow black
-                st='±'
-            else
-                prompt_segment green black $CURRENT_FG
-            fi
-            PR="$PR☿ $rev@$branch $st"
-        fi
+  local rev st branch
+  if $(hg id >/dev/null 2>&1); then
+    if $(hg prompt >/dev/null 2>&1); then
+      if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
+        # if files are not added
+        prompt_segment red white
+        st='±'
+      elif [[ -n $(hg prompt "{status|modified}") ]]; then
+        # if any modification
+        prompt_segment yellow black
+        st='±'
+      else
+        # if working copy is clean
+        prompt_segment green black $CURRENT_FG
+      fi
+      PR="$PR$(hg prompt "☿ {rev}@{branch}") $st"
+    else
+      st=""
+      rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
+      branch=$(hg id -b 2>/dev/null)
+      if `hg st | grep -q "^\?"`; then
+        prompt_segment red white
+        st='±'
+      elif `hg st | grep -q "^[MA]"`; then
+        prompt_segment yellow black
+        st='±'
+      else
+        prompt_segment green black $CURRENT_FG
+      fi
+      PR="$PR☿ $rev@$branch $st"
     fi
+  fi
 }
 
 # Dir: current working directory
 function prompt_dir {
-    prompt_segment blue black '\w'
+  prompt_segment blue black '\w'
 }
 
 # Status:
@@ -401,13 +401,13 @@ function prompt_dir {
 # - am I root
 # - are there background jobs?
 function prompt_status {
-    local symbols
-    symbols=()
-    [[ $RETVAL -ne 0 ]] && symbols+="$(ansi_single $(fg_color red))✘"
-    [[ $UID -eq 0 ]] && symbols+="$(ansi_single $(fg_color yellow))⚡"
-    [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="$(ansi_single $(fg_color cyan))⚙"
+  local symbols
+  symbols=()
+  [[ $RETVAL -ne 0 ]] && symbols+="$(ansi_single $(fg_color red))✘"
+  [[ $UID -eq 0 ]] && symbols+="$(ansi_single $(fg_color yellow))⚡"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="$(ansi_single $(fg_color cyan))⚙"
 
-    [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
 ######################################################################
@@ -417,89 +417,89 @@ function prompt_status {
 # doesn't quite work per above
 
 function rightprompt {
-    printf "%*s" $COLUMNS "$PRIGHT"
+  printf "%*s" $COLUMNS "$PRIGHT"
 }
 
 # quick right prompt I grabbed to test things.
 function __command_rprompt {
-    local times= n=$COLUMNS tz
-    for tz in ZRH:Europe/Zurich PIT:US/Eastern \
-              MTV:US/Pacific TOK:Asia/Tokyo; do
-        [ $n -gt 40 ] || break
-        times="$times ${tz%%:*}\e[30;1m:\e[0;36;1m"
-        times="$times$(TZ=${tz#*:} date +%H:%M)\e[0m"
-        n=$(( $n - 10 ))
-    done
-    [ -z "$times" ] || printf "%${n}s$times\\r" ''
+  local times= n=$COLUMNS tz
+  for tz in ZRH:Europe/Zurich PIT:US/Eastern \
+                              MTV:US/Pacific TOK:Asia/Tokyo; do
+    [ $n -gt 40 ] || break
+    times="$times ${tz%%:*}\e[30;1m:\e[0;36;1m"
+    times="$times$(TZ=${tz#*:} date +%H:%M)\e[0m"
+    n=$(( $n - 10 ))
+  done
+  [ -z "$times" ] || printf "%${n}s$times\\r" ''
 }
 
 # this doens't wrap code in \[ \]
 function ansi_r {
-    local seq
-    local -a mycodes2=("${!1}")
+  local seq
+  local -a mycodes2=("${!1}")
 
-    debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
+  debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
 
-    seq=""
-    local i
-    for ((i = 0; i < ${#mycodes2[@]}; i++)); do
-        if [[ -n $seq ]]; then
-            seq="${seq};"
-        fi
-        seq="${seq}${mycodes2[$i]}"
-    done
-    debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-    echo -ne '\033['${seq}'m'
-    # PR="$PR\[\033[${seq}m\]"
+  seq=""
+  local i
+  for ((i = 0; i < ${#mycodes2[@]}; i++)); do
+    if [[ -n $seq ]]; then
+      seq="${seq};"
+    fi
+    seq="${seq}${mycodes2[$i]}"
+  done
+  debug "ansi debug:" '\\[\\033['${seq}'m\\]'
+  echo -ne '\033['${seq}'m'
+  # PR="$PR\[\033[${seq}m\]"
 }
 
 # Begin a segment on the right
 # Takes two arguments, background and foreground. Both can be omitted,
 # rendering default background/foreground.
 function prompt_right_segment {
-    local bg fg
-    local -a codes
+  local bg fg
+  local -a codes
 
-    debug "Prompt right"
-    debug "Prompting $1 $2 $3"
+  debug "Prompt right"
+  debug "Prompting $1 $2 $3"
 
-    # if commented out from kruton's original... I'm not clear
-    # if it did anything, but it messed up things like
-    # prompt_status - Erik 1/14/17
+  # if commented out from kruton's original... I'm not clear
+  # if it did anything, but it messed up things like
+  # prompt_status - Erik 1/14/17
 
-    #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-    codes=("${codes[@]}" $(text_effect reset))
-    #    fi
-    if [[ -n $1 ]]; then
-        bg=$(bg_color $1)
-        codes=("${codes[@]}" $bg)
-        debug "Added $bg as background to codes"
-    fi
-    if [[ -n $2 ]]; then
-        fg=$(fg_color $2)
-        codes=("${codes[@]}" $fg)
-        debug "Added $fg as foreground to codes"
-    fi
+  #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
+  codes=("${codes[@]}" $(text_effect reset))
+  #    fi
+  if [[ -n $1 ]]; then
+    bg=$(bg_color $1)
+    codes=("${codes[@]}" $bg)
+    debug "Added $bg as background to codes"
+  fi
+  if [[ -n $2 ]]; then
+    fg=$(fg_color $2)
+    codes=("${codes[@]}" $fg)
+    debug "Added $fg as foreground to codes"
+  fi
 
-    debug "Right Codes: "
-    # local -p codes
+  debug "Right Codes: "
+  # local -p codes
 
-    # right always has a separator
-    # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
-    #     $CURRENT_RBG=
-    # fi
-    local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
-    # PRIGHT="$PRIGHT---"
-    debug "pre prompt " $(ansi_r intermediate2[@])
-    PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
-    debug "post prompt " $(ansi_r codes[@])
-    PRIGHT="$PRIGHT$(ansi_r codes[@]) "
-    # else
-    #     debug "no current BG, codes is $codes[@]"
-    #     PRIGHT="$PRIGHT$(ansi codes[@]) "
-    # fi
-    CURRENT_RBG=$1
-    [[ -n $3 ]] && PRIGHT="$PRIGHT$3"
+  # right always has a separator
+  # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
+  #     $CURRENT_RBG=
+  # fi
+  local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
+  # PRIGHT="$PRIGHT---"
+  debug "pre prompt " $(ansi_r intermediate2[@])
+  PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
+  debug "post prompt " $(ansi_r codes[@])
+  PRIGHT="$PRIGHT$(ansi_r codes[@]) "
+  # else
+  #     debug "no current BG, codes is $codes[@]"
+  #     PRIGHT="$PRIGHT$(ansi codes[@]) "
+  # fi
+  CURRENT_RBG=$1
+  [[ -n $3 ]] && PRIGHT="$PRIGHT$3"
 }
 
 ######################################################################
@@ -520,26 +520,26 @@ function prompt_right_segment {
 #                         'dirtrack-filter-out-pwd-prompt t t)))
 
 function prompt_emacsdir {
-    # no color or other setting... this will be deleted per above
-    PR="DIR \w DIR$PR"
+  # no color or other setting... this will be deleted per above
+  PR="DIR \w DIR$PR"
 }
 
 ######################################################################
 ## Main prompt
 
 function build_prompt {
-    [[ ! -z ${AG_EMACS_DIR+x} ]] && prompt_emacsdir
-    prompt_status
-    #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
-    [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
-    if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
-      prompt_virtualenv
-      prompt_condaenv
-    fi
-    prompt_dir
-    prompt_git
-    prompt_hg
-    prompt_end
+  [[ ! -z ${AG_EMACS_DIR+x} ]] && prompt_emacsdir
+  prompt_status
+  #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
+  [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
+  if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
+    prompt_virtualenv
+    prompt_condaenv
+  fi
+  prompt_dir
+  prompt_git
+  prompt_hg
+  prompt_end
 }
 
 # from orig...
@@ -548,14 +548,14 @@ function build_prompt {
 # use that.
 
 function _omb_theme_PROMPT_COMMAND {
-    local RETVAL=$?
-    local PRIGHT=""
-    local CURRENT_BG=NONE
-    local PR="$(ansi_single $(text_effect reset))"
-    build_prompt
+  local RETVAL=$?
+  local PRIGHT=""
+  local CURRENT_BG=NONE
+  local PR="$(ansi_single $(text_effect reset))"
+  build_prompt
 
-    # uncomment below to use right prompt
-    #     PS1='\[$(tput sc; printf "%*s" $COLUMNS "$PRIGHT"; tput rc)\]'$PR
-    PS1=$PR
+  # uncomment below to use right prompt
+  #     PS1='\[$(tput sc; printf "%*s" $COLUMNS "$PRIGHT"; tput rc)\]'$PR
+  PS1=$PR
 }
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
