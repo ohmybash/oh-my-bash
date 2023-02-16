@@ -1,4 +1,74 @@
 #! bash oh-my-bash.module
+#------------------------------------------------------------------------------
+# MIT License
+#
+# Copyright (c) 2012-2014 Isaac Wolkerstorfer (@agnoster) and contributors.
+# Copyright (c) 2014 Kenny Root (@kruton).
+# Copyright (c) 2017-2019 Erik Selberg and contributors (https://github.com/speedenator/agnoster-bash/contributors).
+# Copyright (c) 2019-present Toan Nguyen and contributors (https://github.com/ohmybash/oh-my-bash/graphs/contributors).
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+#
+# Remarks:
+#
+# * Copyright 2012-2014 Isaac Wolkerstorfer (@agnoster) and contributors.
+#
+#   The agnoster theme originates from @agnoster's Zsh theme [1].  The version
+#   in OMB can be traced back to [1] (updates were stopped in 2014), but the
+#   latest version of the Zsh theme is found in [2].
+#
+#   [1] https://gist.github.com/agnoster/3712874
+#   [2] https://github.com/agnoster/agnoster-zsh-theme
+#
+#   The original theme does not seem to specify the license, so strictly
+#   speaking, we are not explicitly allowed to modify and redistribute the
+#   agnoster theme.  The MIT license is proposed [3], but no action has appeard
+#   to that.
+#
+#   [3] https://github.com/agnoster/agnoster-zsh-theme/pull/152
+#
+# * Copyright 2014 Kenny Root (@kruton)
+#
+#   Then the theme was translated to Bash by @kruton [4].  The license does not
+#   seem to be specified again.
+#
+#   [4] https://gist.github.com/kruton/8345450
+#
+# * Copyright 2017-2019 Erik Selberg (@speedenator)
+#
+#   Then @speedenator has updated the theme by @kruton [5].
+#
+#   [5] https://github.com/speedenator/agnoster-bash
+#
+#   At this time, the MIT license is specified.  However, @speedenator seem to
+#   claim the copyright for the work from 2012, which is actually the copyright
+#   infringement.  The user @speedenator seems to have started to contribute
+#   only from 2017.
+#
+# * Copyright 2019-present Toan Nguyen (@nntoan) and contributors.
+#
+#   The theme is imported into OMB by PR #54 [6].
+#
+#   [6] https://github.com/ohmybash/oh-my-bash/pull/54.
+#
+#------------------------------------------------------------------------------
 # vim: ft=bash ts=2 sw=2 sts=2
 #
 # agnoster's Theme - https://gist.github.com/3712874
