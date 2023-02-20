@@ -1,14 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Note: this file is intentionally written in POSIX sh so that oh-my-bash can
 # be uninstalled without bash.
 
-function _omb_uninstall_contains_omb {
+_omb_uninstall_contains_omb() {
   command grep -qE '(source|\.)[[:space:]]+.*[/[:space:]]oh-my-bash\.sh' "$1" 2>/dev/null
 }
 
 # Find the latest bashrc that do not source oh-my-bash.sh
-function _omb_uninstall_find_bashrc_original {
+_omb_uninstall_find_bashrc_original() {
   _omb_uninstall_bashrc_original=
   printf '%s\n' "Looking for original bash config..."
   IFS='
@@ -29,7 +29,7 @@ function _omb_uninstall_find_bashrc_original {
   fi
 }
 
-read -r -p "Are you sure you want to remove Oh My Bash? [y/N] " _omb_uninstall_confirmation
+read -r ${BASH_VERSION:+-p} "Are you sure you want to remove Oh My Bash? [y/N] " _omb_uninstall_confirmation
 if [ "$_omb_uninstall_confirmation" != y ] && [ "$_omb_uninstall_confirmation" != Y ]; then
   printf '%s\n' "Uninstall cancelled"
   unset _omb_uninstall_confirmation
@@ -79,9 +79,9 @@ unset _omb_uninstall_bashrc_uninstalled
 echo "Thanks for trying out Oh My Bash. It has been uninstalled."
 case $- in
 *i*)
+  # shellcheck disable=SC3044,SC3046,SC1090
   if [ -n "${BASH_VERSION-}" ]; then
     declare -f _omb_util_unload >/dev/null 2>&1 && _omb_util_unload
-    # shellcheck disable=SC1090
     source ~/.bashrc
   fi ;;
 esac
