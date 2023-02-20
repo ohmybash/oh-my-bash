@@ -33,6 +33,7 @@ read -r -p "Are you sure you want to remove Oh My Bash? [y/N] " _omb_uninstall_c
 if [ "$_omb_uninstall_confirmation" != y ] && [ "$_omb_uninstall_confirmation" != Y ]; then
   printf '%s\n' "Uninstall cancelled"
   unset _omb_uninstall_confirmation
+  # shellcheck disable=SC2317
   return 0 2>/dev/null || exit 0
 fi
 unset _omb_uninstall_confirmation
@@ -52,6 +53,7 @@ if ! _omb_uninstall_contains_omb ~/.bashrc; then
   fi
   printf '%s\n' "uninstall: Canceled." >&2
   unset _omb_uninstall_bashrc_original
+  # shellcheck disable=SC2317
   return 1 2>/dev/null || exit 1
 fi
 
@@ -79,6 +81,7 @@ case $- in
 *i*)
   if [ -n "${BASH_VERSION-}" ]; then
     declare -f _omb_util_unload >/dev/null 2>&1 && _omb_util_unload
+    # shellcheck disable=SC1090
     source ~/.bashrc
   fi ;;
 esac
