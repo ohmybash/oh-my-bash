@@ -460,7 +460,7 @@ function _omb_prompt_get_condaenv {
   condaenv=
   [[ ${CONDA_DEFAULT_ENV-} && ${CONDA_SHLVL-} != 0 ]] || return 1
 
-  local condaenv=$CONDA_DEFAULT_ENV
+  condaenv=$CONDA_DEFAULT_ENV
   if [[ ${OMB_PROMPT_CONDAENV_USE_BASENAME-} == true ]]; then
     condaenv=$(basename "$condaenv")
   fi
