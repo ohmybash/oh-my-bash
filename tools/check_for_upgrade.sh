@@ -44,7 +44,7 @@ function _omb_upgrade_check {
 
 # Cancel upgrade if the current user doesn't have write permissions for the
 # oh-my-bash directory.
-[[ -w "$OSH" ]] || return 0
+[[ -w $OSH ]] || return 0
 
 # Cancel upgrade if git is unavailable on the system
 type -P git &>/dev/null || return 0

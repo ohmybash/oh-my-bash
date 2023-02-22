@@ -200,7 +200,7 @@ function _omb_install_main {
   fi
 
   local RED GREEN YELLOW BLUE BOLD NORMAL
-  if [[ -t 1 && -n $ncolors && $ncolors -ge 8 ]]; then
+  if [[ -t 1 && $ncolors && $ncolors -ge 8 ]]; then
     RED=$(tput setaf 1 2>/dev/null || tput AF 1 2>/dev/null)
     GREEN=$(tput setaf 2 2>/dev/null || tput AF 2 2>/dev/null)
     YELLOW=$(tput setaf 3 2>/dev/null || tput AF 3 2>/dev/null)
@@ -278,7 +278,7 @@ function _omb_install_main {
     return 1
   }
   # The Windows (MSYS) Git is not compatible with normal use on cygwin
-  if [[ $OSTYPE = cygwin ]]; then
+  if [[ $OSTYPE == cygwin ]]; then
     if command git --version | command grep msysgit > /dev/null; then
       echo "Error: Windows/MSYS Git is not supported on Cygwin"
       echo "Error: Make sure the Cygwin git package is installed and is first on the path"
