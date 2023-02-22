@@ -194,8 +194,8 @@ function _omb_install_system_bashrc {
 function _omb_install_main {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
+  local ncolors=
   if type -P tput &>/dev/null; then
-    local ncolors
     ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || echo -1)
   fi
 
