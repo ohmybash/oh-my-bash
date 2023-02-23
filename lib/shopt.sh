@@ -19,18 +19,26 @@ PROMPT_DIRTRIM=2
 bind Space:magic-space
 
 # Turn on recursive globbing (enables ** to recurse all directories)
-shopt -s globstar 2> /dev/null                                                                                   
+shopt -s globstar 2> /dev/null
 
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
+# Case-sensitive globbing (used in pathname expansion) and matching
+# (used in case, [[]], word expansions and command completions)
+if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
+   shopt -u nocaseglob
+   shopt -u nocasematch
+else
+   shopt -s nocaseglob
+   shopt -s nocasematch
+fi
 
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
 
-# Perform file completion in a case insensitive fashion
+# Conditionally perform file completion in a case insensitive fashion.
+# Setting OMB_CASE_SENSITIVE to 'true' will switch from the default,
+# case insensitive, matching to the case-sensitive one
+#
 # Note: CASE_SENSITIVE is the compatibility name
-if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == false ]]; then
-	bind "set completion-ignore-case on"
-elif [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
+if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
 	bind "set completion-ignore-case off"
 else
 	# By default, case sensitivity is disabled.
