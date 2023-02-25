@@ -152,7 +152,7 @@ export OSH='${OSH//\'/\'\\\'\'}'
     if [[ -h ~/.bash_profile ]]; then
       _omb_install_run rm -f ~/.bash_profile
     fi
-    _omb_install_run mv -f "$OSH"/templates/bash_profile.osh-template ~/.bash_profile
+    _omb_install_run cp -f "$OSH"/templates/bash_profile.osh-template ~/.bash_profile
   else
     command grep -qE '(source|\.)[[:space:]].*/\.bashrc' ~/.bash_profile 2>/dev/null ||
       printf '%s\n' "${GREEN}Please make sure that ~/.bash_profile contains \"source ~/.bashrc\"${NORMAL}"
