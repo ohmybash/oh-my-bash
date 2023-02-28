@@ -21,5 +21,5 @@ alias lu='ls -lur'              # sort by access time
 #   ------------------------------------------
 alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
 
-alias dud='du -d 1 -h'                      # Short and human-readable file listing
-alias duf='du -sh *'                        # Short and human-readable directory listing
+alias dud='du -d 1 -h'                      # Short and human-readable directory listing
+alias duf='du -sh *'                        # Short and human-readable file listing
