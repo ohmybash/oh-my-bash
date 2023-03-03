@@ -128,6 +128,22 @@ function _omb_install_banner {
   printf '%s' "$NORMAL"
 }
 
+function _omb_install_has_proper_bash_profile {
+  if [[ -s ~/.bash_profile ]]; then
+    if command grep -qE '(source|\.)[[:space:]].*/\.bashrc' ~/.bash_profile 2>/dev/null; then
+      return 0
+    fi
+  fi
+
+  if [[ -s ~/.profile ]]; then
+    if command grep -qE '(source|\.)[[:space:]].*/\.bashrc' ~/.profile 2>/dev/null; then
+      return 0
+    fi
+  fi
+    
+  return 1
+}
+
 ## @fn _omb_install_user_bashrc
 ##   @var[in] install_opts
 ##   @var[in] OSH
@@ -146,16 +162,18 @@ export OSH='${OSH//\'/\'\\\'\'}'
   " "$OSH"/templates/bashrc.osh-template >| ~/.bashrc.omb-temp &&
     _omb_install_run mv -f ~/.bashrc.omb-temp ~/.bashrc
 
-  # If no file is found at ~/.bash_profile, we create it with the default
-  # content.
-  if [[ ! -e ~/.bash_profile ]]; then
-    if [[ -h ~/.bash_profile ]]; then
-      _omb_install_run rm -f ~/.bash_profile
-    fi
-    _omb_install_run cp -f "$OSH"/templates/bash_profile.osh-template ~/.bash_profile
-  else
-    command grep -qE '(source|\.)[[:space:]].*/\.bashrc' ~/.bash_profile 2>/dev/null ||
+  # If "source ~/.bashrc" is not found in ~/.bash_profile or ~/.profile, we try
+  # to create a new ~/.bash_profile with the default content or show messages
+  # for user to add "source ~/.bashrc" in the existing ~/.bash_profile.
+  if ! _omb_install_has_proper_bash_profile; then
+    if [[ ! -e ~/.bash_profile ]]; then
+      if [[ -h ~/.bash_profile ]]; then
+        _omb_install_run rm -f ~/.bash_profile
+      fi
+      _omb_install_run cp -f "$OSH"/templates/bash_profile.osh-template ~/.bash_profile
+    else
       printf '%s\n' "${GREEN}Please make sure that ~/.bash_profile contains \"source ~/.bashrc\"${NORMAL}"
+    fi
   fi
 
   set +e
