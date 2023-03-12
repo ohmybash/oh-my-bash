@@ -364,7 +364,7 @@ function _omb_util_add_prompt_command {
 }
 
 function _omb_util_glob_expand {
-  local set=$- shopt gignore=$GLOBIGNORE
+  local __set=$- __shopt __gignore=$GLOBIGNORE
   _omb_util_get_shopt failglob nullglob extglob
 
   shopt -u failglob
@@ -375,17 +375,17 @@ function _omb_util_glob_expand {
 
   eval -- "$1=($2)"
 
-  GLOBIGNORE=$gignore
+  GLOBIGNORE=$__gignore
   # Note: dotglob is changed by GLOBIGNORE
-  if [[ :$shopt: == *:dotglob:* ]]; then
+  if [[ :$__shopt: == *:dotglob:* ]]; then
     shopt -s dotglob
   else
     shopt -u dotglob
   fi
-  [[ $set == *f* ]] && set -f
-  [[ :$shopt: != *:extglob:* ]] && shopt -u extglob
-  [[ :$shopt: != *:nullglob:* ]] && shopt -u nullglob
-  [[ :$shopt: == *:failglob:* ]] && shopt -s failglob
+  [[ $__set == *f* ]] && set -f
+  [[ :$__shopt: != *:extglob:* ]] && shopt -u extglob
+  [[ :$__shopt: != *:nullglob:* ]] && shopt -u nullglob
+  [[ :$__shopt: == *:failglob:* ]] && shopt -s failglob
   return 0
 }
 
