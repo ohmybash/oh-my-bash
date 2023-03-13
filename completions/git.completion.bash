@@ -14,8 +14,8 @@ function _omb_completion_git_initialize {
             # contain prefix or suffix for architectures and versions.
             path="${path%/*}"
             local files
-            _omb_util_glob_expand files '"$prefix"/share/{bash-completion/completions/git,git-*/contrib/completion/git-completion.bash}'
             local prefix="${path%/bin}" file
+            _omb_util_glob_expand files '"$prefix"/share/{bash-completion/completions/git,{,doc/}git-*/contrib/completion/git-completion.bash}'
             for file in "${files[@]}"; do
                 if [[ -f $file && -r $file && -s $file ]]; then
                     source "$file"
