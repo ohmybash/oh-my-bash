@@ -285,15 +285,16 @@ function pushover {
 }
 
 ## @fn _omb_util_get_shopt optnames...
+##   @var[out] __shopt
 if ((_omb_bash_version >= 40100)); then
-  function _omb_util_get_shopt { shopt=$BASHOPTS; }
+  function _omb_util_get_shopt { __shopt=$BASHOPTS; }
 else
   function _omb_util_get_shopt {
-    shopt=
+    __shopt=
     local opt
     for opt; do
       if shopt -q "$opt" &>/dev/null; then
-        shopt=${shopt:+$shopt:}$opt
+        __shopt=${__shopt:+$__shopt:}$opt
       fi
     done
   }
