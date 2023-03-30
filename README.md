@@ -97,6 +97,13 @@ OSH_THEME="agnoster" # (this is one of the fancy ones)
 # see https://github.com/ohmybash/oh-my-bash/wiki/Themes#agnoster
 ```
 
+To modify theme automatically, you can use this sed command to edit OSH_THEME.
+
+```shell
+theme="powerline"
+sed -i "s/\(^OSH_THEME=\"\)\([^\"\\n]*\)\(\".*$\)/\1$theme\3/g" ~/.bashrc
+```
+
 Open up a new terminal window and your prompt should look something like this:
 
 ![Agnoster theme](img/example_powerline.png)
