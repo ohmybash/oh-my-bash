@@ -49,8 +49,8 @@ To activate it, add `debian` to `plugins(...)` in your `.bashrc` file:
 
 ## alias:Docker
 
-|  Alias  |  Command                      |  Description                                                                               |
-| :------ | :---------------------------- | :----------------------------------------------------------------------------------------- |
+|  Alias    |  Command                      |  Description                                                                             |
+| :------   | :---------------------------- | :--------------------------------------------------------------------------------------- |
 | `dbl`     | `docker build`                | Build an image from a Dockerfile                                                         |
 | `dcin`    | `docker container inspect`    | Display detailed information on one or more containers                                   |
 | `dcls`    | `docker container ls`         | List all the running docker containers                                                   |
