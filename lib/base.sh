@@ -49,7 +49,7 @@ function showa { /usr/bin/grep --color=always -i -a1 "$@" ~/Library/init/bash/al
 #   quiet: mute output of a command
 #   ------------------------------------------------------------
 function quiet {
-  "$*" &> /dev/null &
+  "$@" &> /dev/null &
 }
 
 #   lsgrep: search through directory contents with grep

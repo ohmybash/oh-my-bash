@@ -146,7 +146,7 @@ OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
 DEBUG=0
 function debug {
   if [[ ${DEBUG} -ne 0 ]]; then
-    >&2 echo -e $*
+    >&2 echo -e "$@"
   fi
 }
 
