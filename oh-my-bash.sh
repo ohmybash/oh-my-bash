@@ -10,7 +10,7 @@ case $- in
     *) return;;
 esac
 
-if [ ! -n "${BASH_VERSION-}" ]; then
+if [ -z "${BASH_VERSION-}" ]; then
   printf '%s\n' 'oh-my-bash: This is not a Bash. Use OMB with Bash 3.2 or higher.' >&2
   return 1
 fi
