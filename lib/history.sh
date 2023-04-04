@@ -39,7 +39,7 @@ HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="exit:ls:bg:fg:history:clear"
 
 # Enable incremental history search with up/down arrows (also Readline goodness)
-# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-hi
+# Learn more about this here: https://codeinthehole.com/tips/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
 # bash4 specific ??
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
