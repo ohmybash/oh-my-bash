@@ -3,14 +3,16 @@
 
 _omb_module_require lib:omb-prompt-colors
 
-function git_prompt_info() {
-  local ref
-  if [[ "$(command git config --get oh-my-bash.hide-status 2>/dev/null)" != "1" ]]; then
-    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
-    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
-    echo "$OSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$OSH_THEME_GIT_PROMPT_SUFFIX"
-  fi
-}
+# # Note: The same name of a functionis defined in omb-prompt-base.  We comment
+# # out this function for now.
+# function git_prompt_info() {
+#   local ref
+#   if [[ "$(command git config --get oh-my-bash.hide-status 2>/dev/null)" != "1" ]]; then
+#     ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+#     ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+#     echo "$OSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$OSH_THEME_GIT_PROMPT_SUFFIX"
+#   fi
+# }
 
 # Checks if working tree is dirty
 function parse_git_dirty() {
