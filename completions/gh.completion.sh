@@ -322,7 +322,7 @@ EOF
       format=${format//\p/\2}
       format=${format//\o/\3}
     fi
-    command git config --get-regexp 'remote\.[^.]*\.url' |
+    _omb_prompt_git config --get-regexp 'remote\.[^.]*\.url' |
     grep -E ' ((https?|git)://|git@)github\.com[:/][^:/]+/[^/]+$' |
     sed -E 's#^remote\.([^.]+)\.url +.+[:/](([^/]+)/[^.]+)(\.git)?$#'"$format"'#'
   }
@@ -332,12 +332,12 @@ EOF
   function __hub_heads {
     local i remote repo branch dir=$(__gitdir)
     if [ -d "$dir" ]; then
-      command git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+      _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
         "refs/heads/"
       for i in $(__hub_github_repos); do
         remote=${i%%:*}
         repo=${i#*:}
-        command git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+        _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
           "refs/remotes/${remote}/" | while read branch; do
           echo "${repo}:${branch#${remote}/}"
         done
@@ -351,11 +351,11 @@ EOF
   function __hub_revlist {
     local i remote=${1:-origin} dir=$(__gitdir)
     if [ -d "$dir" ]; then
-      command git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+      _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
         "refs/remotes/${remote}/" | while read i; do
         echo "${i#${remote}/}"
       done
-      command git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+      _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
         "refs/tags/"
     fi
   }

@@ -104,10 +104,14 @@ function _omb_prompt_format {
   printf -v "$1" "$__format" "$2"
 }
 
+function _omb_prompt_git {
+  command git "$@"
+}
+
 function scm {
   if [[ "$SCM_CHECK" = false ]]; then SCM=$SCM_NONE
   elif [[ -f .git/HEAD ]]; then SCM=$SCM_GIT
-  elif _omb_util_binary_exists git && [[ -n "$(command git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
+  elif _omb_util_binary_exists git && [[ -n "$(_omb_prompt_git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
   elif [[ -d .hg ]]; then SCM=$SCM_HG
   elif _omb_util_binary_exists hg && [[ -n "$(command hg root 2> /dev/null)" ]]; then SCM=$SCM_HG
   elif [[ -d .svn ]]; then SCM=$SCM_SVN
@@ -169,7 +173,7 @@ function scm_prompt_info_common {
 # This is added to address bash shell interpolation vulnerability described
 # here: https://github.com/njhartwell/pw3nage
 function git_clean_branch {
-  local unsafe_ref=$(command git symbolic-ref -q HEAD 2> /dev/null)
+  local unsafe_ref=$(_omb_prompt_git symbolic-ref -q HEAD 2> /dev/null)
   local stripped_ref=${unsafe_ref##refs/heads/}
   local clean_ref=${stripped_ref//[\$\`\\]/-}
   clean_ref=${clean_ref//[^[:print:]]/-} # strip escape sequences, etc.
@@ -182,15 +186,15 @@ function git_prompt_minimal_info {
   local git_status_flags=('--porcelain')
   SCM_STATE=${SCM_THEME_PROMPT_CLEAN}
 
-  if [[ "$(command git config --get bash-it.hide-status)" != "1" ]]; then
+  if [[ "$(_omb_prompt_git config --get bash-it.hide-status)" != "1" ]]; then
     # Get the branch reference
     ref=$(git_clean_branch) || \
-    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+    ref=$(_omb_prompt_git rev-parse --short HEAD 2> /dev/null) || return 0
     SCM_BRANCH=${SCM_THEME_BRANCH_PREFIX}${ref}
 
     # Get the status
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && git_status_flags+='-untracked-files=no'
-    status=$(command git status ${git_status_flags} 2> /dev/null | tail -n1)
+    status=$(_omb_prompt_git status ${git_status_flags} 2> /dev/null | tail -n1)
 
     if [[ -n ${status} ]]; then
       SCM_DIRTY=1
@@ -240,10 +244,10 @@ function git_prompt_vars {
   local git_status_flags=''
   [[ "$(command git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]] || return 1
   SCM_STATE=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
-  if [[ "$(command git config --get bash-it.hide-status)" != "1" ]]; then
+  if [[ "$(_omb_prompt_git config --get bash-it.hide-status)" != "1" ]]; then
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && git_status_flags='-uno'
-    local status_lines=$((command git status --porcelain ${git_status_flags} -b 2> /dev/null ||
-                          command git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
+    local status_lines=$((_omb_prompt_git status --porcelain ${git_status_flags} -b 2> /dev/null ||
+                          _omb_prompt_git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
     local status=$(awk 'NR==1' <<< "$status_lines")
     local counts=$(awk 'NR==2' <<< "$status_lines")
     IFS=$'\t' read -r untracked_count unstaged_count staged_count <<< "$counts"
@@ -261,7 +265,7 @@ function git_prompt_vars {
 
   [[ "${SCM_GIT_SHOW_CURRENT_USER}" == "true" ]] && details+="$(git_user_info)"
 
-  SCM_CHANGE=$(command git rev-parse --short HEAD 2>/dev/null)
+  SCM_CHANGE=$(_omb_prompt_git rev-parse --short HEAD 2>/dev/null)
 
   local ref=$(git_clean_branch)
 
@@ -275,7 +279,7 @@ function git_prompt_vars {
       local remote_name=${tracking_info%%/*}
       local remote_branch=${tracking_info#${remote_name}/}
       local remote_info=""
-      local num_remotes=$(command git remote | wc -l 2> /dev/null)
+      local num_remotes=$(_omb_prompt_git remote | wc -l 2> /dev/null)
       [[ "${SCM_BRANCH}" = "${remote_branch}" ]] && local same_branch_name=true
       if ([[ "${SCM_GIT_SHOW_REMOTE_INFO}" = "auto" ]] && [[ "${num_remotes}" -ge 2 ]]) ||
           [[ "${SCM_GIT_SHOW_REMOTE_INFO}" = "true" ]]; then
@@ -295,11 +299,11 @@ function git_prompt_vars {
     SCM_GIT_DETACHED="false"
   else
     local detached_prefix=""
-    ref=$(command git describe --tags --exact-match 2> /dev/null)
+    ref=$(_omb_prompt_git describe --tags --exact-match 2> /dev/null)
     if [[ -n "$ref" ]]; then
       detached_prefix=${SCM_THEME_TAG_PREFIX}
     else
-      ref=$(command git describe --contains --all HEAD 2> /dev/null)
+      ref=$(_omb_prompt_git describe --contains --all HEAD 2> /dev/null)
       ref=${ref#remotes/}
       [[ -z "$ref" ]] && ref=${SCM_CHANGE}
       detached_prefix=${SCM_THEME_DETACHED_PREFIX}
@@ -313,7 +317,7 @@ function git_prompt_vars {
   [[ "${status}" =~ ${ahead_re} ]] && SCM_BRANCH+=" ${SCM_GIT_AHEAD_CHAR}${BASH_REMATCH[1]}"
   [[ "${status}" =~ ${behind_re} ]] && SCM_BRANCH+=" ${SCM_GIT_BEHIND_CHAR}${BASH_REMATCH[1]}"
 
-  local stash_count="$(command git stash list 2> /dev/null | wc -l | tr -d ' ')"
+  local stash_count="$(_omb_prompt_git stash list 2> /dev/null | wc -l | tr -d ' ')"
   [[ "${stash_count}" -gt 0 ]] && SCM_BRANCH+=" {${stash_count}}"
 
   SCM_BRANCH+=${details}
@@ -508,9 +512,9 @@ _omb_deprecate_function 20000 python_version_prompt _omb_prompt_print_python_env
 
 function git_user_info {
   # support two or more initials, set by 'git pair' plugin
-  SCM_CURRENT_USER=$(command git config user.initials | sed 's% %+%')
+  SCM_CURRENT_USER=$(_omb_prompt_git config user.initials | sed 's% %+%')
   # if `user.initials` weren't set, attempt to extract initials from `user.name`
-  [[ -z "${SCM_CURRENT_USER}" ]] && SCM_CURRENT_USER=$(printf "%s" $(for word in $(command git config user.name | tr 'A-Z' 'a-z'); do printf "%1.1s" $word; done))
+  [[ -z "${SCM_CURRENT_USER}" ]] && SCM_CURRENT_USER=$(printf "%s" $(for word in $(_omb_prompt_git config user.name | tr 'A-Z' 'a-z'); do printf "%1.1s" $word; done))
   [[ -n "${SCM_CURRENT_USER}" ]] && printf "%s" "$SCM_THEME_CURRENT_USER_PREFFIX$SCM_CURRENT_USER$SCM_THEME_CURRENT_USER_SUFFIX"
 }
 
