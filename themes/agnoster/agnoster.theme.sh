@@ -341,8 +341,8 @@ function prompt_git {
   local ref dirty
   if command git rev-parse --is-inside-work-tree &>/dev/null; then
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
-    dirty=$(command git_status_dirty)
-    stash=$(command git_stash_dirty)
+    dirty=$(git_status_dirty)
+    stash=$(git_stash_dirty)
     ref=$(command git symbolic-ref HEAD 2> /dev/null) ||
       ref="➦ $(command git describe --exact-match --tags HEAD 2> /dev/null)" ||
       ref="➦ $(command git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
