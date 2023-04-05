@@ -327,25 +327,25 @@ function prompt_histdt {
 
 
 function git_status_dirty {
-  dirty=$(git status -s 2> /dev/null | tail -n 1)
+  dirty=$(command git status -s 2> /dev/null | tail -n 1)
   [[ -n $dirty ]] && echo " ●"
 }
 
 function git_stash_dirty {
-  stash=$(git stash list 2> /dev/null | tail -n 1)
+  stash=$(command git stash list 2> /dev/null | tail -n 1)
   [[ -n $stash ]] && echo " ⚑"
 }
 
 # Git: branch/detached head, dirty status
 function prompt_git {
   local ref dirty
-  if git rev-parse --is-inside-work-tree &>/dev/null; then
+  if command git rev-parse --is-inside-work-tree &>/dev/null; then
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
-    dirty=$(git_status_dirty)
-    stash=$(git_stash_dirty)
-    ref=$(git symbolic-ref HEAD 2> /dev/null) ||
-      ref="➦ $(git describe --exact-match --tags HEAD 2> /dev/null)" ||
-      ref="➦ $(git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
+    dirty=$(command git_status_dirty)
+    stash=$(command git_stash_dirty)
+    ref=$(command git symbolic-ref HEAD 2> /dev/null) ||
+      ref="➦ $(command git describe --exact-match --tags HEAD 2> /dev/null)" ||
+      ref="➦ $(command git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else

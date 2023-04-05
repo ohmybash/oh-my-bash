@@ -118,47 +118,47 @@ function virtual_prompt_info() {
 
 # Parse git info
 function git_prompt_info() {
-    if [[ -n $(git status -s 2> /dev/null |grep -v ^# |grep -v "working directory clean") ]]; then
+    if [[ -n $(command git status -s 2> /dev/null |grep -v ^# |grep -v "working directory clean") ]]; then
         local state=${GIT_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
         local state=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
     local prefix=${GIT_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     local suffix=${GIT_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    local ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    local commit_id=$(git rev-parse HEAD 2>/dev/null) || return
+    local ref=$(command git symbolic-ref HEAD 2> /dev/null) || return
+    local commit_id=$(command git rev-parse HEAD 2>/dev/null) || return
 
     echo -e "$prefix${REF_COLOR}${ref#refs/heads/}${DEFAULT_COLOR}:${commit_id:0:$MAX_GIT_HEX_LENGTH}$state$suffix"
 }
 
 # Parse hg info
 function hg_prompt_info() {
-    if [[ -n $(hg status 2> /dev/null) ]]; then
+    if [[ -n $(command hg status 2> /dev/null) ]]; then
         local state=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
         local state=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
     local prefix=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     local suffix=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    local branch=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
-    local changeset=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
+    local branch=$(command hg summary 2> /dev/null | grep branch | awk '{print $2}')
+    local changeset=$(command hg summary 2> /dev/null | grep parent | awk '{print $2}')
 
     echo -e "$prefix${REF_COLOR}${branch}${DEFAULT_COLOR}:${changeset#*:}$state$suffix"
 }
 
 # Parse svn info
 function svn_prompt_info() {
-    if [[ -n $(svn status --ignore-externals -q 2> /dev/null) ]]; then
+    if [[ -n $(command svn status --ignore-externals -q 2> /dev/null) ]]; then
         local state=${SVN_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
         local state=${SVN_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
     local prefix=${SVN_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     local suffix=${SVN_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    local ref=$(svn info 2> /dev/null | awk -F/ '/^URL:/ { for (i=0; i<=NF; i++) { if ($i == "branches" || $i == "tags" ) { print $(i+1); break }; if ($i == "trunk") { print $i; break } } }') || return
+    local ref=$(command svn info 2> /dev/null | awk -F/ '/^URL:/ { for (i=0; i<=NF; i++) { if ($i == "branches" || $i == "tags" ) { print $(i+1); break }; if ($i == "trunk") { print $i; break } } }') || return
     [[ -z $ref ]] && return
 
-    local revision=$(svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
+    local revision=$(command svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
 
     echo -e "$prefix${REF_COLOR}$ref${DEFAULT_COLOR}:$revision$state$suffix"
 }
