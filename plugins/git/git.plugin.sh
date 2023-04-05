@@ -35,98 +35,98 @@ function work_in_progress() {
 # (sorted alphabetically)
 #
 
-alias g='git'
+alias g='command git'
 
-alias ga='git add'
-alias gaa='git add --all'
-alias gapa='git add --patch'
-alias gau='git add --update'
+alias ga='command git add'
+alias gaa='command git add --all'
+alias gapa='command git add --patch'
+alias gau='command git add --update'
 
-alias gb='git branch'
-alias gba='git branch -a'
-alias gbd='git branch -d'
-alias gbD='git branch --delete --force'
-alias gbda='git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
-alias gbl='git blame -b -w'
-alias gbnm='git branch --no-merged'
-alias gbr='git branch --remote'
-alias gbs='git bisect'
-alias gbsb='git bisect bad'
-alias gbsg='git bisect good'
-alias gbsr='git bisect reset'
-alias gbss='git bisect start'
+alias gb='command git branch'
+alias gba='command git branch -a'
+alias gbd='command git branch -d'
+alias gbD='command git branch --delete --force'
+alias gbda='command git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
+alias gbl='command git blame -b -w'
+alias gbnm='command git branch --no-merged'
+alias gbr='command git branch --remote'
+alias gbs='command git bisect'
+alias gbsb='command git bisect bad'
+alias gbsg='command git bisect good'
+alias gbsr='command git bisect reset'
+alias gbss='command git bisect start'
 
-alias gc='git commit -v'
-alias gc!='git commit -v --amend'
-alias gcn!='git commit -v --no-edit --amend'
-alias gca='git commit -v -a'
-alias gca!='git commit -v -a --amend'
-alias gcan!='git commit -v -a --no-edit --amend'
-alias gcans!='git commit -v -a -s --no-edit --amend'
-alias gcam='git commit -a -m'
-alias gcsm='git commit -s -m'
-alias gcb='git checkout -b'
-alias gcf='git config --list'
-alias gcl='git clone --recursive'
-alias gclean='git clean -fd'
-alias gpristine='git reset --hard && git clean -dfx'
-alias gcm='git checkout master'
-alias gcd='git checkout develop'
-alias gcmsg='git commit -m'
-alias gco='git checkout'
-alias gcount='git shortlog -sn'
+alias gc='command git commit -v'
+alias gc!='command git commit -v --amend'
+alias gcn!='command git commit -v --no-edit --amend'
+alias gca='command git commit -v -a'
+alias gca!='command git commit -v -a --amend'
+alias gcan!='command git commit -v -a --no-edit --amend'
+alias gcans!='command git commit -v -a -s --no-edit --amend'
+alias gcam='command git commit -a -m'
+alias gcsm='command git commit -s -m'
+alias gcb='command git checkout -b'
+alias gcf='command git config --list'
+alias gcl='command git clone --recursive'
+alias gclean='command git clean -fd'
+alias gpristine='command git reset --hard && git clean -dfx'
+alias gcm='command git checkout master'
+alias gcd='command git checkout develop'
+alias gcmsg='command git commit -m'
+alias gco='command git checkout'
+alias gcount='command git shortlog -sn'
 #compdef _git gcount complete -F _git gcount
-alias gcp='git cherry-pick'
-alias gcpa='git cherry-pick --abort'
-alias gcpc='git cherry-pick --continue'
-alias gcps='git cherry-pick -s'
-alias gcs='git commit -S'
+alias gcp='command git cherry-pick'
+alias gcpa='command git cherry-pick --abort'
+alias gcpc='command git cherry-pick --continue'
+alias gcps='command git cherry-pick -s'
+alias gcs='command git commit -S'
 
-alias gd='git diff'
-alias gdca='git diff --cached'
-alias gdct='git describe --tags `git rev-list --tags --max-count=1`'
-alias gdt='git diff-tree --no-commit-id --name-only -r'
-alias gdw='git diff --word-diff'
+alias gd='command git diff'
+alias gdca='command git diff --cached'
+alias gdct='command git describe --tags `git rev-list --tags --max-count=1`'
+alias gdt='command git diff-tree --no-commit-id --name-only -r'
+alias gdw='command git diff --word-diff'
 
 function gdv {
-  git diff -w "$@" | view -
+  command git diff -w "$@" | view -
 }
 #compdef _git gdv=git-diff
 
-alias gf='git fetch'
-alias gfa='git fetch --all --prune'
-alias gfo='git fetch origin'
+alias gf='command git fetch'
+alias gfa='command git fetch --all --prune'
+alias gfo='command git fetch origin'
 
 function gfg {
-  git ls-files | grep "$@"
+  command git ls-files | grep "$@"
 }
 #compdef _grep gfg
 
-alias gg='git gui citool'
-alias gga='git gui citool --amend'
+alias gg='command git gui citool'
+alias gga='command git gui citool --amend'
 
 function ggf {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
-  git push --force origin "${b:=$1}"
+  command git push --force origin "${b:=$1}"
 }
 #compdef _git ggf=git-checkout
 
 function ggl {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
-    git pull origin "${*}"
+    command git pull origin "${*}"
   else
     [[ "$#" == 0 ]] && local b="$(git_current_branch)"
-    git pull origin "${b:=$1}"
+    command git pull origin "${b:=$1}"
   fi
 }
 #compdef _git ggl=git-checkout
 
 function ggp {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
-    git push origin "${*}"
+    command git push origin "${*}"
   else
     [[ "$#" == 0 ]] && local b="$(git_current_branch)"
-    git push origin "${b:=$1}"
+    command git push origin "${b:=$1}"
   fi
 }
 #compdef _git ggp=git-checkout
@@ -142,105 +142,105 @@ function ggpnp {
 
 function ggu {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
-  git pull --rebase origin "${b:=$1}"
+  command git pull --rebase origin "${b:=$1}"
 }
 #compdef _git ggu=git-checkout
 
 alias ggpur='ggu'
 #compdef _git ggpur=git-checkout
 
-alias ggpull='git pull origin $(git_current_branch)'
+alias ggpull='command git pull origin $(git_current_branch)'
 #compdef _git ggpull=git-checkout
 
-alias ggpush='git push origin $(git_current_branch)'
+alias ggpush='command git push origin $(git_current_branch)'
 #compdef _git ggpush=git-checkout
 
-alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
-alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias ggsup='command git branch --set-upstream-to=origin/$(git_current_branch)'
+alias gpsup='command git push --set-upstream origin $(git_current_branch)'
 
-alias ghh='git help'
+alias ghh='command git help'
 
-alias gignore='git update-index --assume-unchanged'
-alias gignored='git ls-files -v | grep "^[[:lower:]]"'
-alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
+alias gignore='command git update-index --assume-unchanged'
+alias gignored='command git ls-files -v | grep "^[[:lower:]]"'
+alias git-svn-dcommit-push='command git svn dcommit && git push github master:svntrunk'
 #compdef _git git-svn-dcommit-push=git
 
 alias gk='\gitk --all --branches'
-#compdef _git gk='gitk'
+#compdef _git gk='command gitk'
 alias gke='\gitk --all $(git log -g --pretty=%h)'
-#compdef _git gke='gitk'
+#compdef _git gke='command gitk'
 
-alias gl='git pull'
-alias glg='git log --stat'
-alias glgp='git log --stat -p'
-alias glgg='git log --graph'
-alias glgga='git log --graph --decorate --all'
-alias glgm='git log --graph --max-count=10'
-alias glo='git log --oneline --decorate'
-alias glol="git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias glola="git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all"
-alias glog='git log --oneline --decorate --graph'
-alias gloga='git log --oneline --decorate --graph --all'
+alias gl='command git pull'
+alias glg='command git log --stat'
+alias glgp='command git log --stat -p'
+alias glgg='command git log --graph'
+alias glgga='command git log --graph --decorate --all'
+alias glgm='command git log --graph --max-count=10'
+alias glo='command git log --oneline --decorate'
+alias glol="command git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glola="command git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all"
+alias glog='command git log --oneline --decorate --graph'
+alias gloga='command git log --oneline --decorate --graph --all'
 alias glp="_git_log_prettily"
 #compdef _git glp=git-log
 
-alias gm='git merge'
-alias gmom='git merge origin/master'
-alias gmt='git mergetool --no-prompt'
-alias gmtvim='git mergetool --no-prompt --tool=vimdiff'
-alias gmum='git merge upstream/master'
+alias gm='command git merge'
+alias gmom='command git merge origin/master'
+alias gmt='command git mergetool --no-prompt'
+alias gmtvim='command git mergetool --no-prompt --tool=vimdiff'
+alias gmum='command git merge upstream/master'
 
-alias gp='git push'
-alias gpd='git push --dry-run'
-alias gpoat='git push origin --all && git push origin --tags'
+alias gp='command git push'
+alias gpd='command git push --dry-run'
+alias gpoat='command git push origin --all && git push origin --tags'
 #compdef _git gpoat=git-push
-alias gpu='git push upstream'
-alias gpv='git push -v'
+alias gpu='command git push upstream'
+alias gpv='command git push -v'
 
-alias gr='git remote'
-alias gra='git remote add'
-alias grb='git rebase'
-alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
-alias grbi='git rebase -i'
-alias grbm='git rebase master'
-alias grbs='git rebase --skip'
-alias grh='git reset HEAD'
-alias grhh='git reset HEAD --hard'
-alias grmv='git remote rename'
-alias grrm='git remote remove'
-alias grset='git remote set-url'
-alias grt='cd $(git rev-parse --show-toplevel || echo ".")'
-alias gru='git reset --'
-alias grup='git remote update'
-alias grv='git remote -v'
+alias gr='command git remote'
+alias gra='command git remote add'
+alias grb='command git rebase'
+alias grba='command git rebase --abort'
+alias grbc='command git rebase --continue'
+alias grbi='command git rebase -i'
+alias grbm='command git rebase master'
+alias grbs='command git rebase --skip'
+alias grh='command git reset HEAD'
+alias grhh='command git reset HEAD --hard'
+alias grmv='command git remote rename'
+alias grrm='command git remote remove'
+alias grset='command git remote set-url'
+alias grt='cd $(command git rev-parse --show-toplevel || echo ".")'
+alias gru='command git reset --'
+alias grup='command git remote update'
+alias grv='command git remote -v'
 
-alias gsb='git status -sb'
-alias gsd='git svn dcommit'
-alias gsi='git submodule init'
-alias gsps='git show --pretty=short --show-signature'
-alias gsr='git svn rebase'
-alias gss='git status -s'
-alias gst='git status'
-alias gsta='git stash save'
-alias gstaa='git stash apply'
-alias gstc='git stash clear'
-alias gstd='git stash drop'
-alias gstl='git stash list'
-alias gstp='git stash pop'
-alias gsts='git stash show --text'
-alias gsu='git submodule update'
+alias gsb='command git status -sb'
+alias gsd='command git svn dcommit'
+alias gsi='command git submodule init'
+alias gsps='command git show --pretty=short --show-signature'
+alias gsr='command git svn rebase'
+alias gss='command git status -s'
+alias gst='command git status'
+alias gsta='command git stash save'
+alias gstaa='command git stash apply'
+alias gstc='command git stash clear'
+alias gstd='command git stash drop'
+alias gstl='command git stash list'
+alias gstp='command git stash pop'
+alias gsts='command git stash show --text'
+alias gsu='command git submodule update'
 
-alias gts='git tag -s'
-alias gtv='git tag | sort -V'
+alias gts='command git tag -s'
+alias gtv='command git tag | sort -V'
 
-alias gunignore='git update-index --no-assume-unchanged'
-alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
-alias gup='git pull --rebase'
-alias gupv='git pull --rebase -v'
-alias gupa='git pull --rebase --autostash'
-alias gupav='git pull --rebase --autostash -v'
-alias glum='git pull upstream master'
+alias gunignore='command git update-index --no-assume-unchanged'
+alias gunwip='command git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
+alias gup='command git pull --rebase'
+alias gupv='command git pull --rebase -v'
+alias gupa='command git pull --rebase --autostash'
+alias gupav='command git pull --rebase --autostash -v'
+alias glum='command git pull upstream master'
 
-alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
-alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
+alias gwch='command git whatchanged -p --abbrev-commit --pretty=medium'
+alias gwip='command git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
