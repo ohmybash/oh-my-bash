@@ -32,7 +32,7 @@ function _vault() {
   if [[ $prev =~ ^(policies|policy-write|policy-delete) ]]; then
     local policies=$(vault policies 2> /dev/null)
     COMPREPLY=($(compgen -W "$policies" -- $cur))
-  elif [ "$(echo $line | wc -w)" -le 2 ]; then
+  elif [ "$(echo "$line" | wc -w)" -le 2 ]; then
     if [[ "$line" =~ ^vault\ (read|write|delete|list)\ $ ]]; then
       COMPREPLY=($(compgen -W "$(_vault_mounts)" -- ''))
     else

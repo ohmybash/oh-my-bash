@@ -83,9 +83,9 @@ function _vagrant {
                 vagrant_state_file=$(__vagrantinvestigate) || return 1
                 if [[ -f $vagrant_state_file ]]
                 then
-                      running_vm_list=$(grep 'active' $vagrant_state_file | sed -e 's/"active"://' | tr ',' '\n' | cut -d '"' -f 2 | tr '\n' ' ')
+                      running_vm_list=$(grep 'active' "$vagrant_state_file" | sed -e 's/"active"://' | tr ',' '\n' | cut -d '"' -f 2 | tr '\n' ' ')
                 else
-                      running_vm_list=$(find $vagrant_state_file -type f -name "id" | awk -F"/" '{print $(NF-2)}')
+                      running_vm_list=$(find "$vagrant_state_file" -type f -name "id" | awk -F"/" '{print $(NF-2)}')
                 fi
                 COMPREPLY=($(compgen -W "${running_vm_list}" -- ${cur}))
                 return 0
