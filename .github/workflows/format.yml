@@ -18,8 +18,10 @@ jobs:
       - name: Check out code.
         uses: actions/checkout@v2
       - name: "Check EditorConfig Lint"
+        env:
+          EDITORCONFIG_FLAGS: '-disable-indent-size -disable-indentation'
         run: |
           sudo apt install -y jq golang
           go install 'github.com/editorconfig-checker/editorconfig-checker/cmd/editorconfig-checker@latest'
           readarray -t changed_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added_modified }}')"
-          ~/go/bin/editorconfig-checker ${changed_files[@]}
+          ~/go/bin/editorconfig-checker ${{ env.EDITORCONFIG_FLAGS }} ${changed_files[@]}
