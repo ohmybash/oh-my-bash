@@ -15,7 +15,7 @@ function _omb_theme_sirup_rubygem {
   local full=$version$gemset
   [[ $full ]] && echo "$full"
 }
- 
+
 function _omb_theme_PROMPT_COMMAND {
   # Check http://github.com/Sirupsen/dotfiles for screenshot
   local python_venv

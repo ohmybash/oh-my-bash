@@ -11,7 +11,7 @@
 ############################---Usage---#########################################
 
 # Copy below functions (delay and progress fuctions) into your shell script directly
-# Then invoke progress function to show progress bar 
+# Then invoke progress function to show progress bar
 
 # In other way, you could import source indirectly then using. Nothing different
 
@@ -28,7 +28,7 @@ function delay()
 
 #
 # Description : print out executing progress
-# 
+#
 CURRENT_PROGRESS=0
 function progress()
 {

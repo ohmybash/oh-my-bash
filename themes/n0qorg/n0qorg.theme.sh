@@ -19,7 +19,6 @@ GIT_THEME_PROMPT_PREFIX="${_omb_prompt_bold_navy}(${_omb_prompt_bold_white}"
 GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_bold_navy})"
 
 ## alternate chars
-# 
 SCM_THEME_PROMPT_DIRTY="*"
 SCM_THEME_PROMPT_CLEAN=""
 SCM_THEME_PROMPT_PREFIX="("

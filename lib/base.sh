@@ -247,7 +247,7 @@ function batch_chmod {
   (find . -type d -print0 | xargs -0 chmod 0755) &
   spinner
   echo -ne "${_omb_term_normal}"
-  
+
   echo -ne "${_omb_term_bold_navy}Applying 0644 permission for all files..."
   (find . -type f -print0 | xargs -0 chmod 0644) &
   spinner

@@ -140,7 +140,7 @@ function _omb_install_has_proper_bash_profile {
       return 0
     fi
   fi
-    
+
   return 1
 }
 
