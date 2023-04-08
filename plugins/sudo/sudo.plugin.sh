@@ -8,4 +8,6 @@ function _omb_plugin_sudo_add_sudo {
   ((READLINE_POINT += 5))
 }
 
-bind -x '"\e\e": _omb_plugin_sudo_add_sudo'
+bind -m emacs -x '"\e\e": _omb_plugin_sudo_add_sudo'
+bind -m vi-insert -x '"\e\e": _omb_plugin_sudo_add_sudo'
+bind -m vi-command -x '"\e\e": _omb_plugin_sudo_add_sudo'
