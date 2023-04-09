@@ -402,6 +402,30 @@ function _omb_util_alias {
   alias -- "$1"
 }
 
+function _omb_util_alias_delayed__init {
+  local _omb_name=$1 _omb_init=${FUNCNAME[1]}
+  local _omb_command=$_omb_name
+  "_omb_util_alias_select_$_omb_name"
+
+  if [[ ! $_omb_command || $_omb_command == "$_omb_name" ]]; then
+    unalias "$_omb_name"
+  else
+    alias "$_omb_name=$_omb_command"
+  fi || return 1
+
+  eval -- "function $_omb_init { command ${_omb_command:-$_omb_name} \"\$@\"; }" && "$_omb_init" "${@:2}"
+}
+function _omb_util_alias_delayed {
+  local name=$1 opts=${2-}
+  local func=_omb_util_alias_init_$name
+  eval -- "function $func { _omb_util_alias_delayed__init $name \"\$@\"; }"
+  if [[ :$opts: == *:force:* ]]; then
+    alias "$name=$func"
+  else
+    _omb_util_alias "$name=$func"
+  fi
+}
+
 function _omb_util_mktemp {
   local template=tmp.oh-my-bash.XXXXXXXXXX
   if _omb_util_command_exists mktemp; then
