@@ -162,7 +162,7 @@ function __powerline_prompt_command {
   done
   [[ "${last_status}" -ne 0 ]] && __powerline_left_segment $(__powerline_last_status_prompt ${last_status})
   [[ -n "${LEFT_PROMPT}" ]] && LEFT_PROMPT+="$(set_color ${LAST_SEGMENT_COLOR} -)${separator_char}${_omb_prompt_normal}"
-  [[ "${POWERLINE_PROMPT_NEWLINE=}" == true ]] && END_PROMPT=" \n" || END_PROMPT=""
+  [[ ${POWERLINE_PROMPT_NEWLINE-} == true ]] && END_PROMPT="\n" || END_PROMPT=" "
 
   PS1="${LEFT_PROMPT}${END_PROMPT}"
 
