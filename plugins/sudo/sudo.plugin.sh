@@ -1,7 +1,7 @@
 #! bash oh-my-bash.module
 
 function _omb_plugin_sudo__is_inserted {
-  [[ "${READLINE_LINE::5}" = "sudo " ]]
+  [[ "$READLINE_LINE" = 'sudo '* ]]
 }
 
 function _omb_plugin_sudo_add_sudo {
