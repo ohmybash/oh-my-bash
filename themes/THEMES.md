@@ -164,6 +164,10 @@
 
 [![](powerline/powerline-dark.png)](powerline/powerline-dark.png)
 
+## `powerline-light`
+
+[![](powerline-light/powerline-light.png)](powerline-light/powerline-light.png)
+
 ## `powerline-multiline`
 
 [![](powerline-multiline/powerline-multiline-dark.png)](powerline-multiline/powerline-multiline-dark.png)
