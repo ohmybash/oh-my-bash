@@ -1,7 +1,8 @@
 #! bash oh-my-bash.module
+# Upstream: https://github.com/django/django/blob/90c59b4e12e6ff41407694a460f5f30c4688dbfd/extras/django_bash_completion
+#
 # #########################################################################
-# This bash script adds tab-completion feature to django-admin.py and
-# manage.py.
+# This bash script adds tab-completion feature to django-admin and manage.py.
 #
 # Testing it out without installing
 # =================================
@@ -37,14 +38,13 @@ function _omb_completion_django {
     COMP_CWORD=$COMP_CWORD \
 	  DJANGO_AUTO_COMPLETE=1 "$1"))
 }
-complete -F _omb_completion_django -o default django-admin.py manage.py django-admin
+# When the django-admin.py deprecation ends, remove django-admin.py.
+complete -F _omb_completion_django -o default manage.py django-admin
 
 function _omb_completion_django_python {
   if ((COMP_CWORD >= 2)); then
-    local PYTHON_EXE=$(basename -- "${COMP_WORDS[0]}")
-    if command grep -E "python([2-9]\.[0-9])?" >/dev/null 2>&1 <<< "$PYTHON_EXE"; then
-      local PYTHON_SCRIPT=$(basename -- "${COMP_WORDS[1]}")
-      if command grep -E "manage\.py|django-admin(\.py)?" >/dev/null 2>&1 <<< "$PYTHON_SCRIPT"; then
+    if command grep -qE "python([3-9]\.[0-9])?" <<< "${COMP_WORDS[0]##*/}"; then
+      if command grep -qE "manage\.py|django-admin" <<< "${COMP_WORDS[1]##*/}"; then
         COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]:1}" \
           COMP_CWORD=$((COMP_CWORD - 1)) \
           DJANGO_AUTO_COMPLETE=1 "${COMP_WORDS[@]}"))
@@ -62,7 +62,9 @@ function _omb_completion_django_init {
     local python
     for python in "${python_interpreters[@]}"; do
       [[ -x $python ]] || continue
-      pythons+=("$(basename -- "$python")")
+      [[ $python == *-config ]] || continue
+      python=${python##*/}
+      [[ $python ]] && pythons+=("$python")
     done
     _omb_util_split pythons "$(printf '%s\n' "${pythons[@]}" | sort -u)" $'\n'
   fi
