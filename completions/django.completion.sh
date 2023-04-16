@@ -55,17 +55,16 @@ function _omb_completion_django_python {
 
 function _omb_completion_django_init {
   # Support for multiple interpreters.
-  local -a pythons=()
+  local -a pythons=(python)
   if _omb_util_command_exists whereis; then
     local python_interpreters
     _omb_util_split python_interpreters "$(whereis python | cut -d " " -f 2-)"
     local python
     for python in "${python_interpreters[@]}"; do
+      [[ -x $python ]] || continue
       pythons+=("$(basename -- "$python")")
     done
     _omb_util_split pythons "$(printf '%s\n' "${pythons[@]}" | sort -u)" $'\n'
-  else
-    pythons=(python)
   fi
 
   complete -F _omb_completion_django_python -o default "${pythons[@]}"
