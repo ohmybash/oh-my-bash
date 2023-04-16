@@ -364,6 +364,15 @@ function _omb_util_add_prompt_command {
   fi
 }
 
+## @fn _omb_util_split array str [sep]
+function _omb_util_split {
+  local __set=$- IFS=${3:-$' \t\n'}
+  set -f
+  eval -- "$1=(\$2)"
+  [[ $__set == *f* ]] || set +f
+  return 0
+}
+
 function _omb_util_glob_expand {
   local __set=$- __shopt __gignore=$GLOBIGNORE
   _omb_util_get_shopt failglob nullglob extglob
