@@ -50,7 +50,7 @@ function modern_scm_prompt {
 # show chroot if exist
 function chroot {
     if [ -n "$debian_chroot" ]
-    then 
+    then
         my_ps_chroot="${_omb_prompt_bold_teal}$debian_chroot${_omb_prompt_normal}";
         echo "($my_ps_chroot)";
     fi
@@ -59,7 +59,7 @@ function chroot {
 # show virtualenvwrapper
 function my_ve {
     if [ -n "$VIRTUAL_ENV" ]
-    then 
+    then
         my_ps_ve="${_omb_prompt_bold_purple}$ve${_omb_prompt_normal}";
         echo "($my_ps_ve)";
     fi
@@ -71,7 +71,7 @@ function _omb_theme_PROMPT_COMMAND {
     my_ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
     # yes, these are the the same for now ...
     my_ps_host_root="${_omb_prompt_green}\h${_omb_prompt_normal}";
- 
+
     my_ps_user="${_omb_prompt_bold_green}\u${_omb_prompt_normal}"
     my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}";
 

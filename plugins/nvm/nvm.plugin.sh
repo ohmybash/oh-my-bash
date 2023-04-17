@@ -1,5 +1,5 @@
 #! bash oh-my-bash.module
-# Description: automatically load nvm 
+# Description: automatically load nvm
 #
 # @var[opt] OMB_PLUGIN_NVM_AUTO_USE enable .nvmrc autoload
 
@@ -52,7 +52,7 @@ if _omb_util_command_exists nvm && [[ ${OMB_PLUGIN_NVM_AUTO_USE-} == true ]]; th
     done
     echo "$path"
   }
-  
+
   function _omb_plugin_nvm_cd {
     cd "$@" || return "$?"
     local nvm_path=$(_omb_plugin_nvm_find_up .nvmrc)

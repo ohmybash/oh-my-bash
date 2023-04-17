@@ -11,6 +11,8 @@ _omb_uninstall_contains_omb() {
 _omb_uninstall_find_bashrc_original() {
   _omb_uninstall_bashrc_original=
   printf '%s\n' "Looking for original bash config..."
+  _omb_uninstall_old_ifs_set=${IFS+set}
+  _omb_uninstall_old_ifs=${IFS-}
   IFS='
 '
   for _omb_uninstall_file in $(printf '%s\n' ~/.bashrc.omb-backup-?????????????? | sort -r) ~/.bashrc.pre-oh-my-bash; do
@@ -19,9 +21,13 @@ _omb_uninstall_find_bashrc_original() {
     _omb_uninstall_bashrc_original=$_omb_uninstall_file
     break
   done
-  unset _omb_uninstall_file
-  IFS=' 	
-'
+  if [ "$_omb_uninstall_old_ifs_set" = set ]; then
+    IFS=$_omb_uninstall_old_ifs
+  else
+    unset -v IFS
+  fi
+  unset -v _omb_uninstall_file _omb_uninstall_old_ifs_set _omb_uninstall_old_ifs
+
   if [ -n "$_omb_uninstall_bashrc_original" ]; then
     printf '%s\n' "-> Found at '$_omb_uninstall_bashrc_original'."
   else

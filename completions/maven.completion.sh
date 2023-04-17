@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 # Bash completion support for maven
-# inspired from : 
+# inspired from :
 #  - https://github.com/juven/maven-bash-completion
 #  - https://github.com/parisjug/maven-bash-completion
 
@@ -67,7 +67,7 @@ __find_mvn_projects()
 }
 
 function_exists _realpath ||
-_realpath () 
+_realpath ()
 {
     if [[ -f "$1" ]]
     then
@@ -85,7 +85,7 @@ _realpath ()
         fi
     else
         # file *cannot* exist
-        return 1 # failure    
+        return 1 # failure
     fi
 
     # reassemble realpath
@@ -105,13 +105,13 @@ __pom_hierarchy()
     	## <parent> is present but not defined, assume ../pom.xml
     	if [ -z "$parent_pom_relative" ]; then
     	    parent_pom_relative="../pom.xml"
-    	fi 
+    	fi
 
     	## if pom exists continue else break
     	parent_pom=`_realpath "${pom%/*}/$parent_pom_relative"`
-        if [ -n "$parent_pom" ]; then 
+        if [ -n "$parent_pom" ]; then
             pom=$parent_pom
-    	else 
+    	else
     	    break
         fi
     	POM_HIERARCHY+=("$pom")
@@ -175,7 +175,7 @@ _mvn()
     local plugin_goals_liquibase="liquibase:changelogSync|liquibase:changelogSyncSQL|liquibase:clearCheckSums|liquibase:dbDoc|liquibase:diff|liquibase:dropAll|liquibase:help|liquibase:migrate|liquibase:listLocks|liquibase:migrateSQL|liquibase:releaseLocks|liquibase:rollback|liquibase:rollbackSQL|liquibase:status|liquibase:tag|liquibase:update|liquibase:updateSQL|liquibase:updateTestingRollback"
     local plugin_goals_nexus_staging="nexus-staging:close|nexus-staging:deploy|nexus-staging:deploy-staged|nexus-staging:deploy-staged-repository|nexus-staging:drop|nexus-staging:help|nexus-staging:promote|nexus-staging:rc-close|nexus-staging:rc-drop|nexus-staging:rc-list|nexus-staging:rc-list-profiles|nexus-staging:rc-promote|nexus-staging:rc-release|nexus-staging:release"
     #mvn help:describe -Dplugin=io.quarkus:quarkus-maven-plugin:0.15.0
-    local plugin_goals_quarkus="quarkus:add-extension|quarkus:add-extensions|quarkus:analyze-call-tree|quarkus:build|quarkus:create|quarkus:create-example-config|quarkus:dev|quarkus:help|quarkus:list-extensions|quarkus:native-image|quarkus:remote-dev"    
+    local plugin_goals_quarkus="quarkus:add-extension|quarkus:add-extensions|quarkus:analyze-call-tree|quarkus:build|quarkus:create|quarkus:create-example-config|quarkus:dev|quarkus:help|quarkus:list-extensions|quarkus:native-image|quarkus:remote-dev"
     local plugin_goals_pmd="pmd:pmd|pmd:cpd|pmd:check|pmd:cpd-check"
     local plugin_goals_properties="properties:read-project-properties|properties:write-project-properties|properties:write-active-profile-properties|properties:set-system-properties"
     local plugin_goals_release="release:clean|release:prepare|release:rollback|release:perform|release:stage|release:branch|release:update-versions"
@@ -203,7 +203,7 @@ _mvn()
     local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-Dit.test|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip|-Dcobertura.skip=true|-Dfindbugs.skip=true||-DperformRelease=true|-Dgpg.skip=true|-DforkCount"
 
     local profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
-    
+
     local profiles="${profile_settings}|"
     for item in ${POM_HIERARCHY[*]}
     do

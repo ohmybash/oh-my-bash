@@ -1,0 +1,27 @@
+name: "Check EditorConfig Format"
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+jobs:
+  lint:
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Get Changed Files"
+        id: "files"
+        uses: "masesgroup/retrieve-changed-files@v2"
+        with:
+          format: "json"
+      - name: Check out code.
+        uses: actions/checkout@v2
+      - name: "Check EditorConfig Lint"
+        env:
+          EDITORCONFIG_FLAGS: '-disable-indent-size -disable-indentation'
+        run: |
+          sudo apt install -y jq golang
+          go install 'github.com/editorconfig-checker/editorconfig-checker/cmd/editorconfig-checker@latest'
+          readarray -t changed_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added_modified }}')"
+          ~/go/bin/editorconfig-checker ${{ env.EDITORCONFIG_FLAGS }} ${changed_files[@]}

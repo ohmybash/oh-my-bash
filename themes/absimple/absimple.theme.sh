@@ -80,7 +80,7 @@ function _omb_theme_PROMPT_COMMAND {
 
     PS1=""
     # date randomly or once per hour
-    if (( $(shuf -i 1-20 -n 1 --random-source=/dev/urandom) == 1 )) ; then #TK || (($PSDATE != $(date +%H))) ; then 
+    if (( $(shuf -i 1-20 -n 1 --random-source=/dev/urandom) == 1 )) ; then #TK || (($PSDATE != $(date +%H))) ; then
         PS1+="\$(date +%a) $(date +%Y-%m-%d) "
     fi
     PSDATE=$(date +%H)

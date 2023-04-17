@@ -90,7 +90,7 @@ function limited_pwd {
   # Max length of PWD to display
   local MAX_PWD_LENGTH=20
 
-  # Replace $HOME with ~ if possible 
+  # Replace $HOME with ~ if possible
   local RELATIVE_PWD=${PWD/#$HOME/\~}
 
   local offset=$((${#RELATIVE_PWD}-MAX_PWD_LENGTH))
@@ -112,7 +112,7 @@ function _omb_theme_PROMPT_COMMAND {
   local MOVE_CURSOR_RIGHTMOST='\e['${COLUMNS:-9999}'C'
   local MOVE_CURSOR_5_LEFT='\e[5D'
   local THEME_CLOCK_FORMAT="%H:%M:%S %y-%m-%d"
-  # Replace $HOME with ~ if possible 
+  # Replace $HOME with ~ if possible
   local RELATIVE_PWD=${PWD/#$HOME/\~}
 
   local python_venv
