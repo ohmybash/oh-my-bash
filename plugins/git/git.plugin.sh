@@ -87,6 +87,7 @@ alias gdca='command git diff --cached'
 alias gdct='command git describe --tags `git rev-list --tags --max-count=1`'
 alias gdt='command git diff-tree --no-commit-id --name-only -r'
 alias gdw='command git diff --word-diff'
+alias gdtool='command git difftool -d'
 
 function gdv {
   command git diff -w "$@" | view -
