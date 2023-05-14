@@ -1,7 +1,8 @@
 #! bash oh-my-bash.module
+# Upstream: https://github.com/django/django/blob/90c59b4e12e6ff41407694a460f5f30c4688dbfd/extras/django_bash_completion
+#
 # #########################################################################
-# This bash script adds tab-completion feature to django-admin.py and
-# manage.py.
+# This bash script adds tab-completion feature to django-admin and manage.py.
 #
 # Testing it out without installing
 # =================================
@@ -32,42 +33,43 @@
 #
 # To uninstall, just remove the line from your .bash_profile and .bashrc.
 
-_django_completion()
-{
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                   COMP_CWORD=$COMP_CWORD \
-	               DJANGO_AUTO_COMPLETE=1 $1 ) )
+function _omb_completion_django {
+  COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]}" \
+    COMP_CWORD=$COMP_CWORD \
+	  DJANGO_AUTO_COMPLETE=1 "$1"))
 }
-complete -F _django_completion -o default django-admin.py manage.py django-admin
+# When the django-admin.py deprecation ends, remove django-admin.py.
+complete -F _omb_completion_django -o default manage.py django-admin
 
-_python_django_completion()
-{
-    if [[ ${COMP_CWORD} -ge 2 ]]; then
-        PYTHON_EXE=$( basename -- ${COMP_WORDS[0]} )
-        echo $PYTHON_EXE | command grep -E "python([2-9]\.[0-9])?" >/dev/null 2>&1
-        if [[ $? == 0 ]]; then
-            PYTHON_SCRIPT=$( basename -- ${COMP_WORDS[1]} )
-            echo $PYTHON_SCRIPT | command grep -E "manage\.py|django-admin(\.py)?" >/dev/null 2>&1
-            if [[ $? == 0 ]]; then
-                COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]:1}" \
-                               COMP_CWORD=$(( COMP_CWORD-1 )) \
-                               DJANGO_AUTO_COMPLETE=1 ${COMP_WORDS[*]} ) )
-            fi
-        fi
+function _omb_completion_django_python {
+  if ((COMP_CWORD >= 2)); then
+    if command grep -qE "python([3-9]\.[0-9])?" <<< "${COMP_WORDS[0]##*/}"; then
+      if command grep -qE "manage\.py|django-admin" <<< "${COMP_WORDS[1]##*/}"; then
+        COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]:1}" \
+          COMP_CWORD=$((COMP_CWORD - 1)) \
+          DJANGO_AUTO_COMPLETE=1 "${COMP_WORDS[@]}"))
+      fi
     fi
+  fi
 }
 
-# Support for multiple interpreters.
-unset pythons
-if _omb_util_command_exists whereis; then
-    python_interpreters=$(whereis python | cut -d " " -f 2-)
-    for python in $python_interpreters; do
-        pythons="${pythons} $(basename -- $python)"
+function _omb_completion_django_init {
+  # Support for multiple interpreters.
+  local -a pythons=(python)
+  if _omb_util_command_exists whereis; then
+    local python_interpreters
+    _omb_util_split python_interpreters "$(whereis python | cut -d " " -f 2-)"
+    local python
+    for python in "${python_interpreters[@]}"; do
+      [[ -x $python ]] || continue
+      [[ $python == *-config ]] || continue
+      python=${python##*/}
+      [[ $python ]] && pythons+=("$python")
     done
-    pythons=$(echo $pythons | tr " " "\n" | sort -u | tr "\n" " ")
-else
-    pythons=python
-fi
+    _omb_util_split pythons "$(printf '%s\n' "${pythons[@]}" | sort -u)" $'\n'
+  fi
 
-complete -F _python_django_completion -o default $pythons
-
+  complete -F _omb_completion_django_python -o default "${pythons[@]}"
+  unset -f "$FUNCNAME"
+}
+_omb_completion_django_init

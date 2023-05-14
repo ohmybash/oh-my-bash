@@ -243,7 +243,7 @@ function _omb_log_note      { printf "${_omb_term_underline}${_omb_term_bold}${_
 #
 function seek_confirmation {
   printf "\\n${_omb_term_bold}%s${_omb_term_reset}" "$@"
-  read -p " (y/n) " -n 1
+  read -rp " (y/n) " -n 1
   printf "\\n"
 }
 
@@ -309,6 +309,7 @@ function _omb_util_unload {
 }
 
 _omb_util_original_PS1=$PS1
+# shellcheck disable=SC2016
 _omb_util_unload_hook+=('PS1=$_omb_util_original_PS1')
 
 _omb_util_prompt_command=()
@@ -362,6 +363,15 @@ function _omb_util_add_prompt_command {
       PROMPT_COMMAND="$hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
     fi
   fi
+}
+
+## @fn _omb_util_split array str [sep]
+function _omb_util_split {
+  local __set=$- IFS=${3:-$' \t\n'}
+  set -f
+  eval -- "$1=(\$2)"
+  [[ $__set == *f* ]] || set +f
+  return 0
 }
 
 function _omb_util_glob_expand {

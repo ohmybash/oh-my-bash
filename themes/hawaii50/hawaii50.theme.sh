@@ -169,7 +169,7 @@ function limited_pwd() {
     # Replace $HOME with ~ if possible
     local RELATIVE_PWD=${PWD/#$HOME/\~}
 
-    local offset=$((${#RELATIVE_PWD}-$MAX_PWD_LENGTH))
+    local offset=$((${#RELATIVE_PWD}-MAX_PWD_LENGTH))
 
     if ((offset > 0)); then
         local truncated_symbol="..."

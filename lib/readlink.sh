@@ -87,6 +87,7 @@ function _omb_util_readlink__resolve {
     readlink=$(type -P readlink)
     case $readlink in
     (/bin/readlink | /usr/bin/readlink)
+      # shellcheck disable=SC2100
       _omb_util_readlink_type=readlink-f
       function _omb_util_readlink__resolve { readlink -f -- "$1"; } ;;
     esac ;;

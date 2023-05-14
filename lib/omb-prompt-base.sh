@@ -244,7 +244,7 @@ function git_prompt_vars {
                           command git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
     local status=$(awk 'NR==1' <<< "$status_lines")
     local counts=$(awk 'NR==2' <<< "$status_lines")
-    IFS=$'\t' read untracked_count unstaged_count staged_count <<< "$counts"
+    IFS=$'\t' read -r untracked_count unstaged_count staged_count <<< "$counts"
     if [[ "${untracked_count}" -gt 0 || "${unstaged_count}" -gt 0 || "${staged_count}" -gt 0 ]]; then
       SCM_DIRTY=1
       if [[ "${SCM_GIT_SHOW_DETAILS}" = "true" ]]; then
@@ -341,7 +341,7 @@ function svn_prompt_vars {
 # - .hg is located in ~/Projects/Foo/.hg
 # - get_hg_root starts at ~/Projects/Foo/Bar and sees that there is no .hg directory, so then it goes into ~/Projects/Foo
 function get_hg_root {
-    local CURRENT_DIR=$(pwd)
+    local CURRENT_DIR=$PWD
 
     while [ "$CURRENT_DIR" != "/" ]; do
         if [ -d "$CURRENT_DIR/.hg" ]; then
@@ -349,7 +349,7 @@ function get_hg_root {
             return
         fi
 
-        CURRENT_DIR=$(dirname $CURRENT_DIR)
+        CURRENT_DIR=$(dirname "$CURRENT_DIR")
     done
 }
 
