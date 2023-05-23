@@ -237,6 +237,7 @@ function git_status_summary {
 function git_prompt_vars {
   local details=''
   local git_status_flags=''
+  [[ "$(command git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]] || return 1
   SCM_STATE=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
   if [[ "$(command git config --get bash-it.hide-status)" != "1" ]]; then
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && git_status_flags='-uno'
