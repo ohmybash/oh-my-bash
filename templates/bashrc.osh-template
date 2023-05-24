@@ -41,6 +41,14 @@ OSH_THEME="font"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+# Uncomment the following line if you don't want the repository to be considered dirty
+# if there are untracked files.
+# SCM_GIT_DISABLE_UNTRACKED_DIRTY="true"
+
+# Uncomment the following line if you want to completely ignore the presence
+# of untracked files in the repository.
+# SCM_GIT_IGNORE_UNTRACKED="true"
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.  One of the following values can
 # be used to specify the timestamp format.
