@@ -30,6 +30,7 @@ THEME_BATTERY_PERCENTAGE_CHECK=${THEME_BATTERY_PERCENTAGE_CHECK:=true}
 
 SCM_GIT_SHOW_DETAILS=${SCM_GIT_SHOW_DETAILS:=true}
 SCM_GIT_SHOW_REMOTE_INFO=${SCM_GIT_SHOW_REMOTE_INFO:=auto}
+SCM_GIT_DISABLE_UNTRACKED_DIRTY=${SCM_GIT_DISABLE_UNTRACKED_DIRTY:=false}
 SCM_GIT_IGNORE_UNTRACKED=${SCM_GIT_IGNORE_UNTRACKED:=false}
 SCM_GIT_SHOW_CURRENT_USER=${SCM_GIT_SHOW_CURRENT_USER:=false}
 SCM_GIT_SHOW_MINIMAL_INFO=${SCM_GIT_SHOW_MINIMAL_INFO:=false}
@@ -247,13 +248,14 @@ function git_prompt_vars {
     local counts=$(awk 'NR==2' <<< "$status_lines")
     IFS=$'\t' read -r untracked_count unstaged_count staged_count <<< "$counts"
     if [[ "${untracked_count}" -gt 0 || "${unstaged_count}" -gt 0 || "${staged_count}" -gt 0 ]]; then
-      SCM_DIRTY=1
       if [[ "${SCM_GIT_SHOW_DETAILS}" = "true" ]]; then
         [[ "${staged_count}" -gt 0 ]] && details+=" ${SCM_GIT_STAGED_CHAR}${staged_count}" && SCM_DIRTY=3
         [[ "${unstaged_count}" -gt 0 ]] && details+=" ${SCM_GIT_UNSTAGED_CHAR}${unstaged_count}" && SCM_DIRTY=2
-        [[ "${untracked_count}" -gt 0 ]] && details+=" ${SCM_GIT_UNTRACKED_CHAR}${untracked_count}" && SCM_DIRTY=1
+        [[ "${untracked_count}" -gt 0 ]] && details+=" ${SCM_GIT_UNTRACKED_CHAR}${untracked_count}" &&
+          [[ "$SCM_GIT_DISABLE_UNTRACKED_DIRTY" != "true" ]] && SCM_DIRTY=1
       fi
-      SCM_STATE=${GIT_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
+      [[ "$SCM_GIT_DISABLE_UNTRACKED_DIRTY" != "true" || "${unstaged_count}" -gt 0 || "${staged_count}" -gt 0 ]] &&
+        SCM_STATE=${GIT_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     fi
   fi
 
