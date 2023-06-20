@@ -1,5 +1,37 @@
 # aliases
 
+## alias:cd
+
+Handy aliases for directory navigation commands using pushd/popd.
+To activate it, add cd to plugins(...) in your .bashrc file:
+
+plugins=(... cd)
+
+| Alias       | Command∗                     |
+| ----------- | ---------------------------- |
+| `cd <dir>`  | `pushd <dir>`                |
+| `cd..`      | `pushd ..`                   |
+| `..`        | `pushd ..`                   |
+| `...`       | `pushd ../..`                |
+| `.3`        | `pushd ../../../`            |
+| `.4`        | `pushd ../../../../`         |
+| `.5`        | `pushd ../../../../../`      |
+| `.6`        | `pushd ../../../../../../`   |
+| `-`         | `cd -`                       |
+| `1`         | `cd -1`                      |
+| `2`         | `cd -2`                      |
+| `3`         | `cd -3`                      |
+| `4`         | `cd -4`                      |
+| `5`         | `cd -5`                      |
+| `6`         | `cd -6`                      |
+| `7`         | `cd -7`                      |
+| `8`         | `cd -8`                      |
+| `9`         | `cd -9`                      |
+
+∗ The summary table above shows the aliases and the effective command
+  it corresponds to, however the real command is a function that better
+  manages the directory stack than simple pushd/popd operations.
+
 ## alias:debian
 
 Shorted aliases for most used Debian specific commands.
