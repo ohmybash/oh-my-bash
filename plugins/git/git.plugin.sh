@@ -245,3 +245,9 @@ alias glum='command git pull upstream master'
 
 alias gwch='command git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='command git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
+
+alias gwt='git worktree'
+alias gwta='git worktree add'
+alias gwtls='git worktree list'
+alias gwtmv='git worktree move'
+alias gwtrm='git worktree remove'
