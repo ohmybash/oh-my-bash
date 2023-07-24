@@ -29,12 +29,9 @@ function _omb_theme_PROMPT_COMMAND() {
   local BC=$(battery_percentage)
   [[ $BC == no && $BC == -1 ]] && BC=
   BC=${BC:+${_omb_prompt_teal}-${_omb_prompt_green}($BC%)}
-#
-#   local python_venv
-#   _omb_prompt_get_python_venv
-#   python_venv=$_omb_prompt_white$python_venv
- local python_venv; _omb_prompt_get_python_venv
-    python_venv=$_omb_prompt_white$python_venv
+
+  local python_venv
+  _omb_prompt_get_python_venv
 
   PS1=$TITLEBAR"\n${_omb_prompt_teal}┌─${_omb_prompt_bold_white}[\u@\h]${_omb_prompt_teal}─${_omb_prompt_bold_olive}(\w)$(scm_prompt_info)$python_venv\n${_omb_prompt_teal}└─${_omb_prompt_bold_green}[\A]$SC$BC${_omb_prompt_teal}-${_omb_prompt_bold_teal}[${_omb_prompt_green}${_omb_prompt_bold_green}\$${_omb_prompt_bold_teal}]${_omb_prompt_green} "
 }
@@ -45,10 +42,8 @@ SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 SCM_THEME_PROMPT_PREFIX="${_omb_prompt_bold_teal}("
 SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_bold_teal})${_omb_prompt_reset_color}"
 
-# OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:-true}
-# OMB_PROMPT_VIRTUALENV_FORMAT="${_omb_prompt_bold_gray}(%s)${_omb_prompt_reset_color}"
-# OMB_PROMPT_CONDAENV_FORMAT="${_omb_prompt_bold_gray}(%s)${_omb_prompt_reset_color}"
-OMB_PROMPT_VIRTUALENV_FORMAT='(%s) '
-OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:-false}
+OMB_PROMPT_VIRTUALENV_FORMAT="${_omb_prompt_bold_gray}(%s)${_omb_prompt_reset_color}"
+OMB_PROMPT_CONDAENV_FORMAT="${_omb_prompt_bold_gray}(%s)${_omb_prompt_reset_color}"
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
