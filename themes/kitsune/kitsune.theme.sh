@@ -33,7 +33,7 @@ function _omb_theme_PROMPT_COMMAND() {
   local python_venv
   _omb_prompt_get_python_venv
 
-  PS1=$TITLEBAR"\n${_omb_prompt_teal}┌─${_omb_prompt_bold_white}[\u@\h]${_omb_prompt_teal}─${_omb_prompt_bold_olive}(\w)$(scm_prompt_info)$_omb_prompt_get_python_venv\n${_omb_prompt_teal}└─${_omb_prompt_bold_green}[\A]$SC$BC${_omb_prompt_teal}-${_omb_prompt_bold_teal}[${_omb_prompt_green}${_omb_prompt_bold_green}\$${_omb_prompt_bold_teal}]${_omb_prompt_green} "
+  PS1=$TITLEBAR"\n${_omb_prompt_teal}┌─${_omb_prompt_bold_white}[\u@\h]${_omb_prompt_teal}─${_omb_prompt_bold_olive}(\w)$(scm_prompt_info)$python_venv\n${_omb_prompt_teal}└─${_omb_prompt_bold_green}[\A]$SC$BC${_omb_prompt_teal}-${_omb_prompt_bold_teal}[${_omb_prompt_green}${_omb_prompt_bold_green}\$${_omb_prompt_bold_teal}]${_omb_prompt_green} "
 }
 
 # scm theming
