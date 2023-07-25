@@ -301,20 +301,12 @@ function prompt_virtualenv {
 function prompt_pyenv {
   if [[ $PYENV_VIRTUALENV_INIT == 1 ]] && _omb_util_binary_exists pyenv; then
     # Priority is shell > local > global
-    local PYENV_SHELL=$(pyenv shell 2>&1)
-    local PYENV_LOCAL=$(pyenv local 2>&1)
-    local PYENV_GLOBAL=$(pyenv global 2>&1)
-    # pyenv shell is not set
-    if [[ "$PYENV_SHELL" == *"pyenv: no shell-specific version configured"* ]]; then
-      # Check if pyenv local is set
-      if [[ "$PYENV_LOCAL" == *"pyenv: no local version configured"* ]]; then
-        # Neither are set, we're using the global version
-        local PYENV_VERSION=$PYENV_GLOBAL
-      else
-        local PYENV_VERSION=$PYENV_LOCAL
-      fi
+    # When pyenv shell is set, the environment variable $PYENV_VERSION is set with the value we want
+    if [[ -n $PYENV_VERSION ]]; then
+      local PYENV_VERSION="$PYENV_VERSION"
+      # Otherwise, fall back to pyenv local/global to get the version
     else
-      local PYENV_VERSION=$PYENV_SHELL
+      local PYENV_VERSION=$(pyenv local 2>/dev/null || pyenv global 2>/dev/null)
     fi
     # If it is not the system's python, then display additional info
     if [[ "$PYENV_VERSION" != "system" ]]; then
