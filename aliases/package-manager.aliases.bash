@@ -67,4 +67,22 @@ fi
 #   fi
 # fi
 
+# Fedora PacKaGe - dnf
+if _omb_util_binary_exists dnf; then
+  alias dnf="${_omb_tmp_sudo}dnf" # DNF Packaging Tool
+  alias dnfl="${_omb_tmp_sudo}dnf list" # DNF Packaging Tool - List
+  alias dnfli="${_omb_tmp_sudo}dnf list installed" # DNF Packaging Tool - List Installed
+  alias dnfgl="${_omb_tmp_sudo}dnf grouplist" # DNF Packaging Tool - Group List
+  alias dnfmc="${_omb_tmp_sudo}dnf makecache" # DNF Packaging Tool - Make Cache
+  alias dnfp="${_omb_tmp_sudo}dnf info" # DNF Packaging Tool - Search
+  alias dnfs="${_omb_tmp_sudo}dnf search" # DNF Packaging Tool - Make Cache
+
+  alias dnfu="${_omb_tmp_sudo}dnf upgrade" # DNF Packaging Tool - Update
+  alias dnfi="${_omb_tmp_sudo}dnf install" # DNF Packaging Tool - Install
+  alias dnfgi="${_omb_tmp_sudo}dnf group install" # DNF Packaging Tool - Group Install
+  alias dnfr="${_omb_tmp_sudo}dnf remove" # DNF Packaging Tool - Remove
+  alias dnfgr="${_omb_tmp_sudo}dnf groupremove" # DNF Packaging Tool - group Remove
+  alias dnfc="${_omb_tmp_sudo}dnf clean all" # DNF Packaging Tool - Clean All
+fi
+
 unset -v _omb_tmp_sudo
