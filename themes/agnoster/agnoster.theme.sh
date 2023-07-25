@@ -283,7 +283,8 @@ function prompt_end {
 
 ### virtualenv prompt
 function prompt_virtualenv {
-  if [[ -d $VIRTUAL_ENV ]]; then
+  # Exclude pyenv
+  if [[ -d $VIRTUAL_ENV ]] && [[ $PYENV_VIRTUALENV_INIT != 1 ]]; then
     # Python could output the version information in both stdout and
     # stderr (e.g. if using pyenv, the output goes to stderr).
     local VERSION_OUTPUT=$("$VIRTUAL_ENV"/bin/python --version 2>&1)
@@ -293,6 +294,39 @@ function prompt_virtualenv {
     local VENV_VERSION=$(awk '{print $NF}' <<< "$VERSION_OUTPUT")
 
     prompt_segment cyan white "[v] $(basename "$VENV_VERSION")"
+  fi
+}
+
+### pyenv prompt
+function prompt_pyenv {
+  if [[ $PYENV_VIRTUALENV_INIT == 1 ]]; then
+    # Priority is shell > local > global
+    local PYENV_SHELL=$(pyenv shell 2>&1)
+    local PYENV_LOCAL=$(pyenv local 2>&1)
+    local PYENV_GLOBAL=$(pyenv global 2>&1)
+    # pyenv shell is not set
+    if [[ "$PYENV_SHELL" == *"pyenv: no shell-specific version configured"* ]]; then
+      # Check if pyenv local is set
+      if [[ "$PYENV_LOCAL" == *"pyenv: no local version configured"* ]]; then
+        # Neither are set, we're using the global version
+        local PYENV_VERSION=$PYENV_GLOBAL
+      else
+        local PYENV_VERSION=$PYENV_LOCAL
+      fi
+    else
+      local PYENV_VERSION=$PYENV_SHELL
+    fi
+    # If it is not the system's python, then display additional info
+    if [[ "$PYENV_VERSION" != "system" ]]; then
+      # It's a pyenv virtualenv, get the version number
+      if [[ -d $PYENV_VIRTUAL_ENV ]]; then
+        local VERSION_OUTPUT=$("$PYENV_VIRTUAL_ENV"/bin/python --version 2>&1)
+        local PYENV_VENV_VERSION=$(awk '{print $NF}' <<< "$VERSION_OUTPUT")
+        prompt_segment cyan white "[$PYENV_VERSION] $(basename "$PYENV_VENV_VERSION")"
+      else
+        prompt_segment cyan white "$PYENV_VERSION"
+      fi
+    fi
   fi
 }
 
@@ -534,6 +568,7 @@ function build_prompt {
   [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
   if [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} ]]; then
     prompt_virtualenv
+    prompt_pyenv
     prompt_condaenv
   fi
   prompt_dir
