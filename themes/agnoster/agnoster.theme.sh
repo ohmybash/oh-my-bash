@@ -284,7 +284,7 @@ function prompt_end {
 ### virtualenv prompt
 function prompt_virtualenv {
   # Exclude pyenv
-  if [[ -d $VIRTUAL_ENV ]] && [[ $PYENV_VIRTUALENV_INIT != 1 ]]; then
+  if [[ -d $VIRTUAL_ENV && $PYENV_VIRTUALENV_INIT != 1 ]]; then
     # Python could output the version information in both stdout and
     # stderr (e.g. if using pyenv, the output goes to stderr).
     local VERSION_OUTPUT=$("$VIRTUAL_ENV"/bin/python --version 2>&1)
@@ -299,7 +299,7 @@ function prompt_virtualenv {
 
 ### pyenv prompt
 function prompt_pyenv {
-  if [[ $PYENV_VIRTUALENV_INIT == 1 ]]; then
+  if [[ $PYENV_VIRTUALENV_INIT == 1 ]] && _omb_util_binary_exists pyenv; then
     # Priority is shell > local > global
     local PYENV_SHELL=$(pyenv shell 2>&1)
     local PYENV_LOCAL=$(pyenv local 2>&1)
