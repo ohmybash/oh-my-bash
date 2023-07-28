@@ -95,6 +95,7 @@ This plugin provides the set of aliases that can be used to control package mana
 - `cave` (Paludis Cave) ... `cave`, `cr`, `cui`, `cs`, `cli`
 - `apt` (Advanced Packaging Tool) ... `apt`, `aptfu`, `apti`, `apts`, `aptr`, `aptar`, `aptli`
 - `dpkg` (Debian Package) ... `dpkg`
+- `nala` (Nala APT Wrapper) ... `nala`, `nalaf`, `nalau`, `nalafu`, `nalai`, `nalar`, `nalaa`, `nalah`, `nalal`, `nalas`, `nalav`
 
 The command to use to call these package manager can be specified in the variable `OMB_ALIAS_PACKAGE_MANAGER_SUDO`.  By default, `sudo` is used when the current use is not root and the command `sudo` is available.
 
@@ -105,6 +106,22 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=sudo
 # Do not use sudo but directly run the package manager
 OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 ```
+
+### Nala Package Manager
+
+| Alias   | Command                   | Descrition                                                                                               |
+| ------- | ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `nala`  | `sudo nala`               | Nala is a prettier front-end for libapt-pkg, doubles as --help                                           |
+| `nalaf` | `sudo nala fetch`         | Fetch fast mirrors to improve download speed.                                                  |
+| `nalau` | `sudo nala update -y`     | Update the list of available packages.                                                           |
+| `nalafu`| `sudo nala upgrade -y`    | The equivalent of apt update && apt full-upgrade --auto-remove.                  |
+| `nalai` | `sudo nala install -y`    | Takes multiple packages as arguments and will install all of them.                                       |
+| `nalar` | `sudo nala remove -y`     | Remove or purge packages that are no longer needed                                                       |
+| `nalaa` | `sudo nala autoremove -y` | Automatically remove or purge any packages that are no longer needed.                                    |
+| `nalah` | `sudo nala history`       | Nala history with no subcommands will show a summary of all transactions made.                           |
+| `nalal` | `sudo nala list`          | List all packages or only packages based on the provided name, glob or regex. By default will only glob. |
+| `nalas` | `sudo nala search`        | Search package names and descriptions using a word, regex or glob                                        |
+| `nalav` | `sudo nala show`          | Show information about a package such as the name, version, dependencies etc.                            |
 
 ## alias:terraform
 
