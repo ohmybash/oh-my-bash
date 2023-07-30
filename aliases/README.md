@@ -156,7 +156,7 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 | ------- | ------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `nala`  | `sudo nala`               | Nala is a prettier front-end for libapt-pkg, doubles as --help.                                          |
 | `nalaf` | `sudo nala fetch`         | Fetch fast mirrors to improve download speed.                                                            |
-| `nalau` | `sudo nala update -y`     | Update the list of available packages.                                                                   |
+| `nalau` | `sudo nala update`        | Update the list of available packages.                                                                   |
 | `nalafu`| `sudo nala upgrade -y`    | The equivalent of apt update && apt full-upgrade --auto-remove.                                          |
 | `nalai` | `sudo nala install -y`    | Takes multiple packages as arguments and will install all of them.                                       |
 | `nalar` | `sudo nala remove -y`     | Remove or purge packages that are no longer needed.                                                      |
