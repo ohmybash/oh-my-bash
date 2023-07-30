@@ -47,6 +47,8 @@ To activate it, add `debian` to `plugins(...)` in your `.bashrc` file:
 | `upgrb` | `sudo update-grub`         |
 | `uirfs` | `sudo update-initramfs -u` |
 
+----
+
 ## alias:Docker
 
 |  Alias    |  Command                      |  Description                                                                             |
@@ -163,6 +165,8 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 | `nalal` | `sudo nala list`          | List all packages or only packages based on the provided name, glob or regex. By default will only glob. |
 | `nalas` | `sudo nala search`        | Search package names and descriptions using a word, regex or glob.                                       |
 | `nalav` | `sudo nala show`          | Show information about a package such as the name, version, dependencies etc.                            |
+
+----
 
 ## alias:terraform
 
