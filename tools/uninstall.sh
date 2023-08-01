@@ -3,6 +3,15 @@
 # Note: this file is intentionally written in POSIX sh so that oh-my-bash can
 # be uninstalled without bash.
 
+_omb_uninstall_confirmation() {
+  if [ "${BASH_VERSION-}" ]; then
+    read -r -p "$1 " _omb_uninstall_confirmation
+  else
+    printf '%s ' "$1"
+    read -r _omb_uninstall_confirmation
+  fi
+}
+
 _omb_uninstall_contains_omb() {
   command grep -qE '(source|\.)[[:space:]]+.*[/[:space:]]oh-my-bash\.sh' "$1" 2>/dev/null
 }
@@ -35,7 +44,7 @@ _omb_uninstall_find_bashrc_original() {
   fi
 }
 
-read -r ${BASH_VERSION:+-p} "Are you sure you want to remove Oh My Bash? [y/N] " _omb_uninstall_confirmation
+_omb_uninstall_confirmation "Are you sure you want to remove Oh My Bash? [y/N]"
 if [ "$_omb_uninstall_confirmation" != y ] && [ "$_omb_uninstall_confirmation" != Y ]; then
   printf '%s\n' "Uninstall cancelled"
   unset _omb_uninstall_confirmation
