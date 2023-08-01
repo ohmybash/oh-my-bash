@@ -51,6 +51,21 @@ if _omb_util_binary_exists dpkg; then
   alias dpkg="${_omb_tmp_sudo}dpkg"
 fi
 
+# Volian - Nala
+if _omb_util_binary_exists nala; then
+  alias nala="${_omb_tmp_sudo}nala" # A faster, prettier front-end for libapt->
+  alias nalaf="${_omb_tmp_sudo}nala fetch" # Nala Fastest Mirror
+  alias nalau="${_omb_tmp_sudo}nala update" # Nala Update
+  alias nalafu="${_omb_tmp_sudo}nala upgrade -y" # Nala Update & Full-Upgrade >
+  alias nalai="${_omb_tmp_sudo}nala install -y" # Nala Install
+  alias nalar="${_omb_tmp_sudo}nala remove -y" # Nala Remove
+  alias nalaa="${_omb_tmp_sudo}nala autoremove -y" # Nala Auto Remove
+  alias nalah="${_omb_tmp_sudo}nala history" # Nala History
+  alias nalal="${_omb_tmp_sudo}nala list" # Nala List
+  alias nalas="${_omb_tmp_sudo}nala search" # Nala Search
+  alias nalav="${_omb_tmp_sudo}nala show" # Nala View Package Info
+fi
+
 # # Zypper = Zen Yast Package Program (ZYPP?)
 # if _omb_util_binary_exists zypper; then
 #   # Yast = Yet Another Silly/Setup Thing/Thing
