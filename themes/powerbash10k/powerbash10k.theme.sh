@@ -82,7 +82,7 @@ function __pb10k_bottom_parse {
 }
 
 function __pb10k_top {
-    local seg segments info cursor_right cursor_adjust
+    local seg segments info terminal_width filler_character
     __TOP_LEFT=""
     __TOP_RIGHT=""
     __TOP_RIGHT_LEN=0
@@ -94,8 +94,11 @@ function __pb10k_top {
         [ "$info" != "" ] && __pb10k_top_left_parse "$info"
     done
 
-    cursor_right="\033[500C"
-    __TOP_LEFT+="$cursor_right"
+    terminal_width=$(tput cols)
+    filler_character="·"
+    __TOP_LEFT+="$_omb_prompt_black"
+    __TOP_LEFT+="$(for ((i=0; i<"$terminal_width"; i++)); do printf "%s" "$filler_character"; done)"
+    __TOP_LEFT+="\033[${terminal_width}G\033[1K\033[1A"
 
     IFS=" " read -ra segments <<< "$__PB10K_TOP_RIGHT"
     for seg in "${segments[@]}"; do
@@ -152,8 +155,10 @@ function __pb10k_prompt_scm {
     [ "$THEME_SHOW_SCM" != "true" ] && return
     color=$_omb_prompt_bold_green
     scm
-    box="$(if [ "$SCM" == "git" ]; then echo ""; else echo "$box"; fi) "
-    info="$(if [ "$SCM" != "NONE" ]; then echo " $(scm_prompt_info)"; fi) "
+    box=""
+    info="$(if [ "$SCM" == "git" ]; then echo " "; fi) "
+    info+="$(if [ "$SCM" != "NONE" ]; then echo " $(scm_prompt_info)"; fi)"
+    [ "$info" == "" ] && return
     printf "%s|%s|%s|%s" "$color" "$info" "$_omb_prompt_bold_green" "$box"
 }
 
@@ -245,7 +250,8 @@ function __pb10k_prompt_time_duration {
     info="$(if [ "$__pb10k_timer_show" -gt 0 ]; then
         printf " %s" "$(__pb10k_format_duration "$__pb10k_timer_show")"
     fi)"
-  printf "%s|%s|%s|%s" "$color" "$info" "$_omb_prompt_bold_white" "$box"
+    [ "$info" == "" ] && return
+    printf "%s|%s|%s|%s" "$color" "$info" "$_omb_prompt_bold_white" "$box"
 }
 
 # cli
