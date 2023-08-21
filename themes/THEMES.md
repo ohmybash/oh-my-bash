@@ -131,6 +131,10 @@
 
 [![](minimal/minimal-dark.png)](minimal/minimal-dark.png)
 
+## `minimal-gh`
+
+[![](minimal-gh/minimal-gh-dark.png)](minimal-gh/minimal-gh-dark.png)
+
 ## `modern`
 
 [![](modern/modern-dark.png)](modern/modern-dark.png)
