@@ -23,8 +23,9 @@ function _omb_theme_PROMPT_COMMAND() {
 		TITLEBAR= ;;
 	esac
 
+  local HORA=$(date +%I | sed 's/^0//')
 	local MERIDIANO
-	if [[ $(date +%H) -gt 12 ]]; then
+	if [[ HORA -gt 12 ]]; then
 		MERIDIANO="pm";
 	else
 		MERIDIANO="am";
