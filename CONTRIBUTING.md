@@ -66,7 +66,7 @@ You should be familiar with the basics of
 [contributing on GitHub](https://help.github.com/articles/using-pull-requests) and have a fork
 [properly set up](https://github.com/ohmybash/oh-my-bash/wiki/Contribution-Technical-Practices).
 
-You MUST always create PRs with _a dedicated branch_ based on the latest upstream tree.
+You MUST always create PRs with _a dedicated branch_ (i.e., a branch that is NOT `master`) based on the latest upstream tree.
 
 If you create your own PR, please make sure you do it right. Also be so kind as to reference
 any issue that would be solved in the PR description body,
@@ -98,6 +98,7 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 For any extensive change, _eg_ a new plugin, you will have to find testers to +1 your PR.
 
 When you add new themes, please also update [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
+The theme needs to have exactly one image of height ~290px and width 600--800px.
 After your new themes are merged, the list in [Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the Wiki also needs to be updated.
 
 ----
