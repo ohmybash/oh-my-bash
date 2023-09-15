@@ -5,6 +5,7 @@
 
 # Helpers
 function __pb10k_remove_empty_elements {
+    local origin_array new_array element trimmed
     IFS="|" read -ra origin_array <<< "$1"
     new_array=()
     for element in "${origin_array[@]}"; do
@@ -18,7 +19,7 @@ function __pb10k_remove_empty_elements {
 }
 
 function __pb10k_format_duration {
-    local duration seconds munites hours
+    local duration seconds minutes hours
     duration=$1
     seconds=$((duration % 60))
     minutes=$((duration / 60 % 60))
@@ -82,11 +83,11 @@ function __pb10k_bottom_parse {
 }
 
 function __pb10k_top {
-    local seg segments info terminal_width filler_character
-    __TOP_LEFT=""
-    __TOP_RIGHT=""
-    __TOP_RIGHT_LEN=0
-    __SEG_AT_RIGHT=0
+    local seg segments info terminal_width filler_character cursor_adjust
+    local __TOP_LEFT=""
+    local __TOP_RIGHT=""
+    local __TOP_RIGHT_LEN=0
+    local __SEG_AT_RIGHT=0
 
     IFS=" " read -ra segments <<< "$__PB10K_TOP_LEFT"
     for seg in "${segments[@]}"; do
@@ -115,7 +116,7 @@ function __pb10k_top {
 
 function __pb10k_bottom {
     local seg segments info
-    __BOTTOM=""
+    local __BOTTOM=""
     IFS=" " read -ra segments <<< "$__PB10K_BOTTOM"
     for seg in "${segments[@]}"; do
         info="$(__pb10k_prompt_"$seg")"
@@ -292,7 +293,7 @@ function __pb10k_completion {
 }
 
 function pb10k {
-    local action segments
+    local action segments seg
     action="${1:-}"
     shift
     segments="${*:-}"
@@ -358,7 +359,7 @@ function __pb10k_ps2 {
 }
 
 function _omb_theme_PROMPT_COMMAND {
-    exitcode="$?"
+    local exitcode="$?"
     PS1="$(__pb10k_ps1)"
     PS2="$(__pb10k_ps2)"
 }
