@@ -164,6 +164,10 @@
 
 [![](pete/pete-dark.png)](pete/pete-dark.png)
 
+## `powerbash10k`
+
+[![](powerbash10k/powerbash10k-dark.png)](powerbash10k/powerbash10k-dark.png)
+
 ## `powerline`
 
 [![](powerline/powerline-dark.png)](powerline/powerline-dark.png)
