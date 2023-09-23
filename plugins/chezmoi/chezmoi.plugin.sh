@@ -1,3 +1,5 @@
+#! bash oh-my-bash.module
+
 # any future aliases can be added here
 
 alias cz='chezmoi'
