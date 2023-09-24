@@ -1,29 +1,51 @@
 #! bash oh-my-bash.module
 # Common directories functions
 
+OMB_DIRECTORIES_CD_USE_PUSHD=false
+
+_omb_cd_dirstack=("$PWD")
+
 # A clone of the Zsh `cd' builtin command.  This supports the numbered option
 # `-1', `-2', etc.
 function _omb_directories_cd {
-  local oldpwd=$OLDPWD
   local -i index
   if [[ $# -eq 1 && $1 =~ ^-[1-9]+$ ]]; then
     index=${1#-}
-    if ((index >= ${#DIRSTACK[@]})); then
+    if ((index >= ${#_omb_cd_dirstack[@]})); then
       builtin echo "cd: no such entry in dir stack" >&2
       return 1
     fi
-    set -- "${DIRSTACK[index]}"
+    set -- "${_omb_cd_dirstack[index]}"
   fi
-  builtin pushd . >/dev/null &&
-    OLDPWD=$oldpwd builtin cd "$@" &&
-    oldpwd=$OLDPWD &&
+  if [[ ${OMB_DIRECTORIES_CD_USE_PUSHD-} == true ]]; then
+    local oldpwd=$OLDPWD
     builtin pushd . >/dev/null &&
-    for ((index = ${#DIRSTACK[@]} - 1; index >= 1; index--)); do
-      if [[ ${DIRSTACK[0]/#~/$HOME} == "${DIRSTACK[index]}" ]]; then
-        builtin popd "+$index" >/dev/null || return 1
+      OLDPWD=$oldpwd builtin cd "$@" &&
+      oldpwd=$OLDPWD &&
+      builtin pushd . >/dev/null &&
+      for ((index = ${#DIRSTACK[@]} - 1; index >= 1; index--)); do
+        if [[ ${DIRSTACK[0]/#~/$HOME} == "${DIRSTACK[index]}" ]]; then
+          builtin popd "+$index" >/dev/null || return 1
+        fi
+      done
+    local status=$?
+    _omb_cd_dirstack=("${DIRSTACK[@]/#~/$HOME}")
+    OLDPWD=$oldpwd
+  else
+    [[ ${_omb_cd_dirstack[0]} == "$PWD" ]] ||
+      _omb_cd_dirstack=("$PWD" "${_omb_cd_dirstack[@]}")
+    builtin cd "$@" &&
+      _omb_cd_dirstack=("$PWD" "${_omb_cd_dirstack[@]}")
+    local status=$?
+
+    for ((index = ${#_omb_cd_dirstack[@]} - 1; index >= 1; index--)); do
+      if [[ ${_omb_cd_dirstack[0]} == "${_omb_cd_dirstack[index]}" ]]; then
+        unset -v '_omb_cd_dirstack[index]'
       fi
     done
-  OLDPWD=$oldpwd
+    _omb_cd_dirstack=("${_omb_cd_dirstack[@]}")
+  fi
+  return "$status"
 }
 _omb_util_alias cd='_omb_directories_cd'
 
