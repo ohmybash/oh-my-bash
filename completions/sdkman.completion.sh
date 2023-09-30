@@ -1,5 +1,5 @@
 #! bash oh-my-bash.module
-_sdkman_complete()
+_omb_completion_sdkman()
 {
   local CANDIDATES
   local CANDIDATE_VERSIONS
@@ -29,7 +29,7 @@ _sdkman_complete()
   elif [ $COMP_CWORD -eq 3 ]; then
     case "${COMP_WORDS[COMP_CWORD-2]}" in
       "install" | "uninstall" | "rm" | "use" | "default" )
-        _sdkman_candidate_versions ${COMP_WORDS[COMP_CWORD-1]}
+        _omb_completion_sdkman__candidate_versions ${COMP_WORDS[COMP_CWORD-1]}
         COMPREPLY=( $(compgen -W "$CANDIDATE_VERSIONS" -- ${COMP_WORDS[COMP_CWORD]}) )
         ;;
       *)
@@ -40,9 +40,9 @@ _sdkman_complete()
   return 0
 }
 
-function _sdkman_candidate_versions {
+function _omb_completion_sdkman__candidate_versions {
 
-  CANDIDATE_LOCAL_VERSIONS=$(__sdkman_cleanup_local_versions $1)
+  CANDIDATE_LOCAL_VERSIONS=$(_omb_completion_sdkman__cleanup_local_versions $1)
   if [ "$SDKMAN_OFFLINE_MODE" = "true" ]; then
     CANDIDATE_VERSIONS=$CANDIDATE_LOCAL_VERSIONS
   else
@@ -52,11 +52,10 @@ function _sdkman_candidate_versions {
 
 }
 
-function __sdkman_cleanup_local_versions {
-
+function _omb_completion_sdkman__cleanup_local_versions {
   __sdkman_build_version_csv $1
   echo $CSV | tr ',' ' '
 
 }
 
-complete -F _sdkman_complete sdk
+complete -F _omb_completion_sdkman sdk

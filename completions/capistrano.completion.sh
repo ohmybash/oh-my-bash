@@ -3,7 +3,7 @@
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
 
-function _capcomplete {
+function _omb_completion_cap {
     if [ -f Capfile ]; then
         recent=`ls -t .cap_tasks~ Capfile **/*.cap 2> /dev/null | head -n 1`
         if [[ $recent != '.cap_tasks~' ]]; then
@@ -21,4 +21,4 @@ function _capcomplete {
     fi
 }
 
-complete -o default -o nospace -F _capcomplete cap
+complete -o default -o nospace -F _omb_completion_cap cap

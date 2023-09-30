@@ -4,7 +4,7 @@
 # The homebrew bash completion script was used as inspiration.
 # Originally from https://github.com/liborw/homesick-completion
 
-_homesick_complete()
+_omb_completion_homesick()
 {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     local options="--skip --force --pretend --quiet"
@@ -57,5 +57,5 @@ _homesick_complete()
     esac
 }
 
-complete -o bashdefault -o default -F _homesick_complete homesick
+complete -o bashdefault -o default -F _omb_completion_homesick homesick
 

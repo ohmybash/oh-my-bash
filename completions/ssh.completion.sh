@@ -3,7 +3,7 @@
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
 
-function _sshcomplete {
+function _omb_completion_ssh {
     local CURRENT_PROMPT="${COMP_WORDS[COMP_CWORD]}"
     if [[ ${CURRENT_PROMPT} == *@*  ]] ; then
       local OPTIONS="-P ${CURRENT_PROMPT/@*/}@ -- ${CURRENT_PROMPT/*@/}"
@@ -32,4 +32,4 @@ function _sshcomplete {
     return 0
 }
 
-complete -o default -o nospace -F _sshcomplete ssh scp
+complete -o default -o nospace -F _omb_completion_ssh ssh scp

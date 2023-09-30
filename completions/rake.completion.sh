@@ -3,7 +3,7 @@
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
 
-function _rakecomplete {
+function _omb_completion_rake {
     if [ -f Rakefile ]; then
         recent=`ls -t .rake_tasks~ Rakefile **/*.rake 2> /dev/null | head -n 1`
         if [[ $recent != '.rake_tasks~' ]]; then
@@ -14,4 +14,4 @@ function _rakecomplete {
     fi
 }
 
-complete -o default -o nospace -F _rakecomplete rake
+complete -o default -o nospace -F _omb_completion_rake rake
