@@ -1,4 +1,29 @@
 #! bash oh-my-bash.module
+
+if ! declare -F __sdkman_build_version_csv &>/dev/null; then
+  # @fn __sdkman_build_version_csv
+  #   Copyright 2021 Marco Vermeulen.
+  #   Licensed under the Apache License, Version 2.0 (the "License");
+  #
+  #   This function was taken from "main/bash/sdkman-list.sh @
+  #   sdkman/sdkman-cli".
+  #   https://github.com/sdkman/sdkman-cli/blob/19e5c081297d6a8d1ce8a8b54631bb3f8e8e861b/src/main/bash/sdkman-list.sh#L51
+  function __sdkman_build_version_csv() {
+    local candidate versions_csv
+    candidate="$1"
+    versions_csv=""
+    if [[ -d "${SDKMAN_CANDIDATES_DIR}/${candidate}" ]]; then
+      for version in $(find "${SDKMAN_CANDIDATES_DIR}/${candidate}" -maxdepth 1 -mindepth 1 \( -type l -o -type d \) -exec basename '{}' \; | sort -r); do
+        if [[ "$version" != 'current' ]]; then
+          versions_csv="${version},${versions_csv}"
+        fi
+      done
+      versions_csv=${versions_csv%?}
+    fi
+    echo "$versions_csv"
+  }
+fi
+
 _omb_completion_sdkman()
 {
   local CANDIDATES
