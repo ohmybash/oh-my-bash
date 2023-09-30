@@ -1,10 +1,12 @@
 #! bash oh-my-bash.module
 # Bash completion support for ssh.
 
-export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
+_omb_module_require lib:omb-completion
 
 function _omb_completion_ssh {
-  local cur=${COMP_WORDS[COMP_CWORD]}
+  local cur
+  _omb_completion_reassemble_breaks :
+
   if [[ $cur == *@*  ]] ; then
     local -a options=(-P "${cur%%@*}@" -- "${cur#*@}")
   else
@@ -28,7 +30,7 @@ function _omb_completion_ssh {
     COMPREPLY+=($(compgen -W "$( grep -v '^[[:space:]]*$' /etc/hosts | grep -v '^#' | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
   fi
 
-  return 0
+  _omb_completion_resolve_breaks
 }
 
 complete -o default -o nospace -F _omb_completion_ssh ssh scp
