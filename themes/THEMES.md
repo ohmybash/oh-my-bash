@@ -83,6 +83,10 @@
 
 [![](duru/duru-dark.png)](duru/duru-dark.png)
 
+## `edsonarios`
+
+[![](edsonarios/edsonarios-dark.png)](edsonarios/edsonarios-dark.png)
+
 ## `emperor`
 
 [![](emperor/emperor-dark.png)](emperor/emperor-dark.png)
