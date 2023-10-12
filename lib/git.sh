@@ -49,13 +49,13 @@ function git_remote_status() {
             git_remote_status="$OSH_THEME_GIT_PROMPT_EQUAL_REMOTE"
         elif [[ $ahead -gt 0 ]] && [[ $behind -eq 0 ]]; then
             git_remote_status="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE"
-            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$_omb_prompt_reset_color%}"
+            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))$_omb_prompt_reset_color"
         elif [[ $behind -gt 0 ]] && [[ $ahead -eq 0 ]]; then
             git_remote_status="$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE"
-            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$_omb_prompt_reset_color%}"
+            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))$_omb_prompt_reset_color"
         elif [[ $ahead -gt 0 ]] && [[ $behind -gt 0 ]]; then
             git_remote_status="$OSH_THEME_GIT_PROMPT_DIVERGED_REMOTE"
-            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$_omb_prompt_reset_color%}$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$_omb_prompt_reset_color%}"
+            git_remote_status_detailed="$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))$_omb_prompt_reset_color$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$OSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))$_omb_prompt_reset_color"
         fi
 
         if [[ -n $OSH_THEME_GIT_PROMPT_REMOTE_STATUS_DETAILED ]]; then
@@ -190,16 +190,17 @@ function git_prompt_status() {
 # greater than the input version, respectively.
 function git_compare_version() {
   local INPUT_GIT_VERSION INSTALLED_GIT_VERSION
-  INPUT_GIT_VERSION=(${(s/./)1})
-  INSTALLED_GIT_VERSION=($(_omb_prompt_git --version 2>/dev/null))
-  INSTALLED_GIT_VERSION=(${(s/./)INSTALLED_GIT_VERSION[3]})
+  _omb_util_split INPUT_GIT_VERSION "$1" '.'
+  _omb_util_split INSTALLED_GIT_VERSION "$(_omb_prompt_git --version 2>/dev/null)"
+  _omb_util_split INSTALLED_GIT_VERSION "${INSTALLED_GIT_VERSION[2]}" '.'
 
-  for i in {1..3}; do
-    if [[ $INSTALLED_GIT_VERSION[$i] -gt $INPUT_GIT_VERSION[$i] ]]; then
+  local i
+  for i in {0..2}; do
+    if ((INSTALLED_GIT_VERSION[i] > INPUT_GIT_VERSION[i])); then
       echo 1
       return 0
     fi
-    if [[ $INSTALLED_GIT_VERSION[$i] -lt $INPUT_GIT_VERSION[$i] ]]; then
+    if ((INSTALLED_GIT_VERSION[i] < INPUT_GIT_VERSION[i])); then
       echo -1
       return 0
     fi

@@ -263,7 +263,7 @@ function prompt_segment {
     debug "post prompt " $(ansi codes[@])
     PR="$PR$(ansi codes[@]) "
   else
-    debug "no current BG, codes is $codes[@]"
+    debug "no current BG, codes are (${codes[*]})"
     PR="$PR$(ansi codes[@]) "
   fi
   CURRENT_BG=$1
@@ -521,7 +521,7 @@ function prompt_right_segment {
   debug "post prompt " $(ansi_r codes[@])
   PRIGHT="$PRIGHT$(ansi_r codes[@]) "
   # else
-  #     debug "no current BG, codes is $codes[@]"
+  #     debug "no current BG, codes are (${codes[*]})"
   #     PRIGHT="$PRIGHT$(ansi codes[@]) "
   # fi
   CURRENT_RBG=$1
