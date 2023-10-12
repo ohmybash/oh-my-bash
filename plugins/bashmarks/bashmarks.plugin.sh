@@ -47,7 +47,7 @@
 
 # setup file to store bookmarks
 if [ ! -n "$SDIRS" ]; then
-    SDIRS=~/.sdirs
+  SDIRS=~/.sdirs
 fi
 touch "$SDIRS"
 
@@ -129,57 +129,57 @@ function _delete_bookmark {
 
 # jump to bookmark
 function _goto_bookmark {
-    source $SDIRS
-    target="$(eval $(echo echo $(echo \$DIR_$1)))"
-    if [ -d "$target" ]; then
-        cd "$target"
-    elif [ ! -n "$target" ]; then
-        printf '%s\n' "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
-    else
-        printf '%s\n' "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
-    fi
+  source $SDIRS
+  target="$(eval $(echo echo $(echo \$DIR_$1)))"
+  if [ -d "$target" ]; then
+    cd "$target"
+  elif [ ! -n "$target" ]; then
+    printf '%s\n' "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
+  else
+    printf '%s\n' "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
+  fi
 }
 
 # list bookmarks with dirname
 function _list_bookmark {
-    source $SDIRS
-    # if color output is not working for you, comment out the line below '\033[1;32m' == "red"
-    env | sort | awk '/DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
-    # uncomment this line if color output is not working with the line above
-    # env | grep "^DIR_" | cut -c5- | sort |grep "^.*="
+  source $SDIRS
+  # if color output is not working for you, comment out the line below '\033[1;32m' == "red"
+  env | sort | awk '/DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
+  # uncomment this line if color output is not working with the line above
+  # env | grep "^DIR_" | cut -c5- | sort |grep "^.*="
 }
 
 # print bookmark
 function _print_bookmark {
-    source $SDIRS
-    echo "$(eval $(echo echo $(echo \$DIR_$1)))"
+  source $SDIRS
+  echo "$(eval $(echo echo $(echo \$DIR_$1)))"
 }
 
 # list bookmarks without dirname
 function _l {
-    source $SDIRS
-    env | grep "^DIR_" | cut -c5- | sort | grep "^.*=" | cut -f1 -d "="
+  source $SDIRS
+  env | grep "^DIR_" | cut -c5- | sort | grep "^.*=" | cut -f1 -d "="
 }
 
 # validate bookmark name
 function _bookmark_name_valid {
-    exit_message=""
-    if [ -z $1 ]; then
-        exit_message="bookmark name required"
-        echo $exit_message
-    elif [ "$1" != "$(echo $1 | sed 's/[^A-Za-z0-9_]//g')" ]; then
-        exit_message="bookmark name is not valid"
-        echo $exit_message
-    fi
+  exit_message=""
+  if [ -z $1 ]; then
+    exit_message="bookmark name required"
+    echo $exit_message
+  elif [ "$1" != "$(echo $1 | sed 's/[^A-Za-z0-9_]//g')" ]; then
+    exit_message="bookmark name is not valid"
+    echo $exit_message
+  fi
 }
 
 # completion command
 function _comp {
-    local curw
-    COMPREPLY=()
-    curw=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=($(compgen -W '`_l`' -- $curw))
-    return 0
+  local curw
+  COMPREPLY=()
+  curw=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=($(compgen -W '`_l`' -- $curw))
+  return 0
 }
 
 # ZSH completion command
