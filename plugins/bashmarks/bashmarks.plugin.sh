@@ -6,7 +6,7 @@
 # This plugin is derived from the project https://github.com/huing/bashmarks.
 # This version is based on the following commit in the upstream project:
 #
-#   https://github.com/huyng/bashmarks/commit/003bc0702684cf59802d3400ba2485fa3d378e01
+#   https://github.com/huyng/bashmarks/commit/264952f2225691b5f99a498e4834e2c69bf4f5f5
 #
 # This plugin is licensed under the BSD-3 License.
 #------------------------------------------------------------------------------
@@ -144,7 +144,7 @@ function _goto_bookmark {
 function _list_bookmark {
   source $SDIRS
   # if color output is not working for you, comment out the line below '\033[1;32m' == "red"
-  env | sort | awk '/DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
+  env | sort | awk '/^DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
   # uncomment this line if color output is not working with the line above
   # env | grep "^DIR_" | cut -c5- | sort |grep "^.*="
 }
