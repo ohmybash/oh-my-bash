@@ -1,7 +1,9 @@
 # Bashmarks plugin
 
 The Bashmarks plugin allows you to create and use bookmarks for directories on
-your filesystems.
+your filesystems.  This plugin is derived from the project
+https://github.com/huing/bashmarks but contains improvements.  This plugin is
+licensed under the 3-Clause BSD license.
 
 ## Quickstart
 
@@ -40,6 +42,12 @@ $ bm -l
 - **`BASHMARKS_SDIR`**: This variable contains the path to the file that stores
   the information of bookmarks of directory names. The default path is
   `~/.sdirs`.  The old interface `SDIRS` is now deprecated.
+
+## Configuration
+
+- `BASHMARKS_SDIR`: This variable contains the path to the file that stores the
+  information of bookmarks of directory names. The default path is `~/.sdirs`.
+  The old interface `SDIRS` is now deprecated.
 
 ## Commands
 
