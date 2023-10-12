@@ -181,8 +181,10 @@ function _bookmark_name_valid {
 function _comp {
   local curw
   COMPREPLY=()
-  curw=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=($(compgen -W '`_l`' -- $curw))
+  if ((COMP_CWORD >= 2)) && [[ ${COMP_WORDS[1]} == -[gpd] ]]; then
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=($(compgen -W '$(_l)' -- "$cur"))
+  fi
   return 0
 }
 
@@ -218,9 +220,7 @@ if [[ ${ZSH_VERSION-} ]]; then
   compctl -K _compzsh d
 else
   shopt -s progcomp
-  complete -F _comp bm -g
-  complete -F _comp bm -p
-  complete -F _comp bm -d
+  complete -F _comp bm
   complete -F _comp g
   complete -F _comp p
   complete -F _comp d
