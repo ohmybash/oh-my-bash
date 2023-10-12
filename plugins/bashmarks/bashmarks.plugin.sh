@@ -46,15 +46,15 @@
 # bm -l - list all bookmarks
 
 # setup file to store bookmarks
-if [ ! -n "$SDIRS" ]; then
+if [[ ! $SDIRS ]]; then
   SDIRS=~/.sdirs
 fi
 touch "$SDIRS"
 
 # main function
 function bm {
-  option="${1}"
-  case ${option} in
+  local option=$1
+  case $option in
     # save current directory to bookmarks [ bm -a BOOKMARK_NAME ]
     -a)
       _save_bookmark "$2"
@@ -110,8 +110,9 @@ function _echo_usage {
 
 # save current directory to bookmarks
 function _save_bookmark {
+  local exit_message
   _bookmark_name_valid "$@"
-  if [ -z "$exit_message" ]; then
+  if [[ ! $exit_message ]]; then
     _purge_line "$SDIRS" "export DIR_$1="
     CURDIR=$(echo $PWD| sed "s#^$HOME#\$HOME#g")
     echo "export DIR_$1=\"$CURDIR\"" >> $SDIRS
@@ -120,8 +121,9 @@ function _save_bookmark {
 
 # delete bookmark
 function _delete_bookmark {
+  local exit_message
   _bookmark_name_valid "$@"
-  if [ -z "$exit_message" ]; then
+  if [[ ! $exit_message ]]; then
     _purge_line "$SDIRS" "export DIR_$1="
     unset "DIR_$1"
   fi
@@ -129,11 +131,12 @@ function _delete_bookmark {
 
 # jump to bookmark
 function _goto_bookmark {
-  source $SDIRS
-  target="$(eval $(echo echo $(echo \$DIR_$1)))"
-  if [ -d "$target" ]; then
+  source "$SDIRS"
+  local target_varname=DIR_$1
+  local target=${!target_varname-}
+  if [[ -d $target ]]; then
     cd "$target"
-  elif [ ! -n "$target" ]; then
+  elif [[ ! $target ]]; then
     printf '%s\n' "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
   else
     printf '%s\n' "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
@@ -142,7 +145,7 @@ function _goto_bookmark {
 
 # list bookmarks with dirname
 function _list_bookmark {
-  source $SDIRS
+  source "$SDIRS"
   # if color output is not working for you, comment out the line below '\033[1;32m' == "red"
   env | sort | awk '/^DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
   # uncomment this line if color output is not working with the line above
@@ -151,25 +154,26 @@ function _list_bookmark {
 
 # print bookmark
 function _print_bookmark {
-  source $SDIRS
+  source "$SDIRS"
   echo "$(eval $(echo echo $(echo \$DIR_$1)))"
 }
 
 # list bookmarks without dirname
 function _l {
-  source $SDIRS
+  source "$SDIRS"
   env | grep "^DIR_" | cut -c5- | sort | grep "^.*=" | cut -f1 -d "="
 }
 
 # validate bookmark name
+# @var[out] exit_message
 function _bookmark_name_valid {
   exit_message=""
-  if [ -z $1 ]; then
+  if [[ ! $1 ]]; then
     exit_message="bookmark name required"
-    echo $exit_message
-  elif [ "$1" != "$(echo $1 | sed 's/[^A-Za-z0-9_]//g')" ]; then
+    echo "$exit_message"
+  elif [[ $1 == *[!A-Za-z0-9_]* ]]; then
     exit_message="bookmark name is not valid"
-    echo $exit_message
+    echo "$exit_message"
   fi
 }
 
@@ -189,7 +193,7 @@ function _compzsh {
 
 # safe delete line from sdirs
 function _purge_line {
-  if [ -s "$1" ]; then
+  if [[ -s $1 ]]; then
     # safely create a temp file
     t=$(mktemp -t bashmarks.XXXXXX) || exit 1
     trap "/bin/rm -f -- '$t'" EXIT
@@ -205,7 +209,7 @@ function _purge_line {
 }
 
 # bind completion command for g,p,d to _comp
-if [ $ZSH_VERSION ]; then
+if [[ ${ZSH_VERSION-} ]]; then
   compctl -K _compzsh bm -g
   compctl -K _compzsh bm -p
   compctl -K _compzsh bm -d
