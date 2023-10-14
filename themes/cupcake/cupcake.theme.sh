@@ -44,7 +44,7 @@ icon_host=" 💻 "
 icon_directory=" |📁 "
 icon_branch="🌿"
 icon_end="└❯ "
-icon_end2=" ❯  "
+icon_end2=" ❯ "
 name_user=$USER
 
 # extra spaces ensure legiblity in prompt
