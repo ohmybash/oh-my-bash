@@ -51,14 +51,15 @@ fi
 _omb_module_loaded=
 function _omb_module_require {
   local status=0
-  local -a files=()
+  local -a files=() modules=()
   while (($#)); do
     local type=lib name=$1; shift
     [[ $name == *:* ]] && type=${name%%:*} name=${name#*:}
     name=${name%.bash}
     name=${name%.sh}
-    [[ ' '$_omb_module_loaded' ' == *" $type:$name "* ]] && continue
-    _omb_module_loaded="$_omb_module_loaded $type:$name"
+
+    local module=$type:$name
+    [[ ' '$_omb_module_loaded' ' == *" $module "* ]] && continue
 
     local -a locations=()
     case $type in
@@ -77,6 +78,7 @@ function _omb_module_require {
     for path in "${locations[@]}"; do
       if [[ -f $path ]]; then
         files+=("$path")
+        modules+=("$module")
         continue 2
       fi
     done
@@ -85,9 +87,12 @@ function _omb_module_require {
     status=127
   done
 
-  if ((status==0)); then
-    local path
-    for path in "${files[@]}"; do
+  if ((status == 0)); then
+    local i
+    for i in "${!files[@]}"; do
+      local path=${files[i]} module=${modules[i]}
+      [[ ' '$_omb_module_loaded' ' == *" $module "* ]] && continue
+      _omb_module_loaded="$_omb_module_loaded $module"
       source "$path" || status=$?
     done
   fi
@@ -112,11 +117,11 @@ _omb_module_require_lib "${_omb_init_files[@]}"
 unset -v _omb_init_files
 
 # Figure out the SHORT hostname
-if [[ "$OSTYPE" = darwin* ]]; then
+if [[ $OSTYPE = darwin* ]]; then
   # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
-  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}
+  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*}
 else
-  SHORT_HOST=${HOST/.*/}
+  SHORT_HOST=${HOST/.*}
 fi
 
 # Load all of the plugins that were defined in ~/.bashrc
@@ -153,13 +158,18 @@ elif [[ $OSH_THEME ]]; then
 fi
 
 if [[ $PROMPT ]]; then
-  export PS1="\["$PROMPT"\]"
+  export PS1='\['$PROMPT'\]'
 fi
 
-if ! _omb_util_command_exists '__git_ps1' ; then
+if ! _omb_util_command_exists '__git_ps1'; then
   source "$OSH/tools/git-prompt.sh"
 fi
 
 # Adding Support for other OSes
-[ -s /usr/bin/gloobus-preview ] && PREVIEW="gloobus-preview" ||
-[ -s /Applications/Preview.app ] && PREVIEW="/Applications/Preview.app" || PREVIEW="less"
+if [[ -s /usr/bin/gloobus-preview ]]; then
+  PREVIEW="gloobus-preview"
+elif [[ -s /Applications/Preview.app ]]; then
+  PREVIEW="/Applications/Preview.app"
+else
+  PREVIEW="less"
+fi

@@ -63,7 +63,7 @@ function winname {
 
 # Displays the current prompt
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="\n${icon_start}$(_omb_prompt_print_python_venv)${icon_user}${_omb_prompt_bold_brown}\u${_omb_prompt_normal}${icon_host}${_omb_prompt_bold_teal}\h${_omb_prompt_normal}${icon_directory}${_omb_prompt_bold_purple}\W${_omb_prompt_normal}\$([[ -n \$(command git branch 2> /dev/null) ]] && echo \" on ${icon_branch}  \")${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal}\n${icon_end}"
+  PS1="\n${icon_start}$(_omb_prompt_print_python_venv)${icon_user}${_omb_prompt_bold_brown}\u${_omb_prompt_normal}${icon_host}${_omb_prompt_bold_teal}\h${_omb_prompt_normal}${icon_directory}${_omb_prompt_bold_purple}\W${_omb_prompt_normal}\$([[ -n \$(_omb_prompt_git branch 2> /dev/null) ]] && echo \" on ${icon_branch}  \")${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal}\n${icon_end}"
   PS2="${icon_end}"
 }
 

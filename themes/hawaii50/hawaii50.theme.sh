@@ -118,15 +118,15 @@ function virtual_prompt_info() {
 
 # Parse git info
 function git_prompt_info() {
-    if [[ -n $(command git status -s 2> /dev/null |grep -v ^# |grep -v "working directory clean") ]]; then
+    if [[ -n $(_omb_prompt_git status -s 2> /dev/null |grep -v ^# |grep -v "working directory clean") ]]; then
         local state=${GIT_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
     else
         local state=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
     fi
     local prefix=${GIT_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     local suffix=${GIT_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    local ref=$(command git symbolic-ref HEAD 2> /dev/null) || return
-    local commit_id=$(command git rev-parse HEAD 2>/dev/null) || return
+    local ref=$(_omb_prompt_git symbolic-ref HEAD 2> /dev/null) || return
+    local commit_id=$(_omb_prompt_git rev-parse HEAD 2>/dev/null) || return
 
     echo -e "$prefix${REF_COLOR}${ref#refs/heads/}${DEFAULT_COLOR}:${commit_id:0:$MAX_GIT_HEX_LENGTH}$state$suffix"
 }
