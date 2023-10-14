@@ -51,14 +51,15 @@ fi
 _omb_module_loaded=
 function _omb_module_require {
   local status=0
-  local -a files=()
+  local -a files=() modules=()
   while (($#)); do
     local type=lib name=$1; shift
     [[ $name == *:* ]] && type=${name%%:*} name=${name#*:}
     name=${name%.bash}
     name=${name%.sh}
-    [[ ' '$_omb_module_loaded' ' == *" $type:$name "* ]] && continue
-    _omb_module_loaded="$_omb_module_loaded $type:$name"
+
+    local module=$type:$name
+    [[ ' '$_omb_module_loaded' ' == *" $module "* ]] && continue
 
     local -a locations=()
     case $type in
@@ -77,6 +78,7 @@ function _omb_module_require {
     for path in "${locations[@]}"; do
       if [[ -f $path ]]; then
         files+=("$path")
+        modules+=("$module")
         continue 2
       fi
     done
@@ -86,8 +88,11 @@ function _omb_module_require {
   done
 
   if ((status==0)); then
-    local path
-    for path in "${files[@]}"; do
+    local i
+    for i in "${!files[@]}"; do
+      local path=${files[i]} module=${modules[i]}
+      [[ ' '$_omb_module_loaded' ' == *" $module "* ]] && continue
+      _omb_module_loaded="$_omb_module_loaded $module"
       source "$path" || status=$?
     done
   fi
