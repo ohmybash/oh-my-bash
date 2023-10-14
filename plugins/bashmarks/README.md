@@ -43,12 +43,6 @@ $ bm -l
   the information of bookmarks of directory names. The default path is
   `~/.sdirs`.  The old interface `SDIRS` is now deprecated.
 
-## Configuration
-
-- `BASHMARKS_SDIR`: This variable contains the path to the file that stores the
-  information of bookmarks of directory names. The default path is `~/.sdirs`.
-  The old interface `SDIRS` is now deprecated.
-
 ## Commands
 
 **bm -h** Print short help text
