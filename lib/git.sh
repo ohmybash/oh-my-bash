@@ -3,6 +3,10 @@
 
 _omb_module_require lib:omb-prompt-colors
 _omb_module_require lib:omb-prompt-base
+_omb_module_require lib:omb-deprecate
+
+: "${_omb_git_post_1_7_2:=${POST_1_7_2_GIT:-}}"
+_omb_deprecate_declare 20000 POST_1_7_2_GIT _omb_git_post_1_7_2 sync
 
 # # Note: The same name of a functionis defined in omb-prompt-base.  We comment
 # # out this function for now.
@@ -20,7 +24,7 @@ function parse_git_dirty {
   local STATUS=
   local -a FLAGS=('--porcelain')
   if [[ $(_omb_prompt_git config --get oh-my-bash.hide-dirty) != 1 ]]; then
-    if ((POST_1_7_2_GIT > 0)); then
+    if ((${_omb_git_post_1_7_2:=$(git_compare_version "1.7.2")} > 0)); then
       FLAGS+=('--ignore-submodules=dirty')
     fi
     if [[ $DISABLE_UNTRACKED_FILES_DIRTY == "true" ]]; then
@@ -209,8 +213,3 @@ function git_current_user_name {
 function git_current_user_email {
   _omb_prompt_git config user.email 2>/dev/null
 }
-
-# This is unlikely to change so make it all statically assigned
-#POST_1_7_2_GIT=$(git_compare_version "1.7.2")
-# Clean up the namespace slightly by removing the checker function
-#unset -f git_compare_version
