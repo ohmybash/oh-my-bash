@@ -12,8 +12,8 @@ GIT_THEME_PROMPT_SUFFIX=" ${_omb_prompt_reset_color})"
 
 OMB_THEME_PURITY_STATUS_BAD="${_omb_prompt_bold_brown}❯${_omb_prompt_reset_color}${_omb_prompt_normal} "
 OMB_THEME_PURITY_STATUS_OK="${_omb_prompt_bold_green}❯${_omb_prompt_reset_color}${_omb_prompt_normal} "
-_omb_deprecate_declare 20000 STATUS_THEME_PROMPT_BAD OMB_THEME_PURITY_STATUS_BAD
-_omb_deprecate_declare 20000 STATUS_THEME_PROMPT_OK OMB_THEME_PURITY_STATUS_OK
+_omb_deprecate_declare 20000 STATUS_THEME_PROMPT_BAD OMB_THEME_PURITY_STATUS_BAD sync
+_omb_deprecate_declare 20000 STATUS_THEME_PROMPT_OK  OMB_THEME_PURITY_STATUS_OK  sync
 
 function _omb_theme_PROMPT_COMMAND {
   if (($? == 0)); then
