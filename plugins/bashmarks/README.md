@@ -45,17 +45,12 @@ $ bm -l
 
 ## Commands
 
-**bm -h** Print short help text
-
-**bm -a bookmarkname** Save the current directory as bookmarkname
-
-**bm [-g] bookmarkname** Go to the specified bookmark
-
-**bm -p bookmarkname** Print the bookmark
-
-**bm -d bookmarkname** Delete a bookmark
-
-**bm -l** List all bookmarks
+- **`bm -h`**: Print short help text
+- **`bm -a bookmarkname`**: Save the current directory as bookmarkname
+- **`bm [-g] bookmarkname`**: Go to the specified bookmark
+- **`bm -p bookmarkname`**: Print the bookmark
+- **`bm -d bookmarkname`**: Delete a bookmark
+- **`bm -l`**: List all bookmarks
 
 ## Valid bookmark names
 
