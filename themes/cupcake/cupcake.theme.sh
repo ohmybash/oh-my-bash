@@ -65,7 +65,7 @@ function winname {
 
 # Displays the current prompt
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="\n$(_omb_prompt_print_python_venv)${icon_user}${_omb_prompt_bold_brown}\${name_user^^f}${_omb_prompt_normal}${icon_host}${_omb_prompt_bold_teal}\h${_omb_prompt_normal}${icon_directory}${_omb_prompt_bold_purple}\W${_omb_prompt_normal}\$([[ -n \$(command git branch 2> /dev/null) ]] && echo \"  ${icon_branch} \")${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_yellow}${icon_end2}${_omb_prompt_normal}"
+  PS1="\n$(_omb_prompt_print_python_venv)${icon_user}${_omb_prompt_bold_yellow}\${name_user^^f}${_omb_prompt_normal}${icon_host}${_omb_prompt_bold_teal}\h${_omb_prompt_normal}${icon_directory}${_omb_prompt_bold_purple}\W${_omb_prompt_normal}\$([[ -n \$(command git branch 2> /dev/null) ]] && echo \"  ${icon_branch} \")${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_yellow}${icon_end2}${_omb_prompt_normal}"
   PS2="${icon_end}"
 }
 
