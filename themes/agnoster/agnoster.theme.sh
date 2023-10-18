@@ -263,7 +263,7 @@ function prompt_segment {
     debug "post prompt " $(ansi codes[@])
     PR="$PR$(ansi codes[@]) "
   else
-    debug "no current BG, codes is $codes[@]"
+    debug "no current BG, codes are (${codes[*]})"
     PR="$PR$(ansi codes[@]) "
   fi
   CURRENT_BG=$1
@@ -353,25 +353,25 @@ function prompt_histdt {
 
 
 function git_status_dirty {
-  dirty=$(command git status -s 2> /dev/null | tail -n 1)
+  dirty=$(_omb_prompt_git status -s 2> /dev/null | tail -n 1)
   [[ -n $dirty ]] && echo " ●"
 }
 
 function git_stash_dirty {
-  stash=$(command git stash list 2> /dev/null | tail -n 1)
+  stash=$(_omb_prompt_git stash list 2> /dev/null | tail -n 1)
   [[ -n $stash ]] && echo " ⚑"
 }
 
 # Git: branch/detached head, dirty status
 function prompt_git {
   local ref dirty
-  if command git rev-parse --is-inside-work-tree &>/dev/null; then
+  if _omb_prompt_git rev-parse --is-inside-work-tree &>/dev/null; then
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(git_status_dirty)
     stash=$(git_stash_dirty)
-    ref=$(command git symbolic-ref HEAD 2> /dev/null) ||
-      ref="➦ $(command git describe --exact-match --tags HEAD 2> /dev/null)" ||
-      ref="➦ $(command git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
+    ref=$(_omb_prompt_git symbolic-ref HEAD 2> /dev/null) ||
+      ref="➦ $(_omb_prompt_git describe --exact-match --tags HEAD 2> /dev/null)" ||
+      ref="➦ $(_omb_prompt_git show-ref --head -s --abbrev | head -n1 2> /dev/null)"
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
@@ -521,7 +521,7 @@ function prompt_right_segment {
   debug "post prompt " $(ansi_r codes[@])
   PRIGHT="$PRIGHT$(ansi_r codes[@]) "
   # else
-  #     debug "no current BG, codes is $codes[@]"
+  #     debug "no current BG, codes are (${codes[*]})"
   #     PRIGHT="$PRIGHT$(ansi codes[@]) "
   # fi
   CURRENT_RBG=$1

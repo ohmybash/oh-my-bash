@@ -400,6 +400,14 @@ function _omb_util_glob_expand {
   return 0
 }
 
+function _omb_util_split {
+  local __set=$- IFS=${3:-$' \t\n'}
+  set -f
+  eval -- "$1=(\$2)"
+  [[ $__set == *f* ]] || set +f
+  return 0
+}
+
 function _omb_util_alias {
   case ${OMB_DEFAULT_ALIASES:-enable} in
   (disable) return 0 ;;
