@@ -68,7 +68,7 @@ function _omb_deprecate_declare__init {
       fi >/dev/tty
     fi
     if [[ $__new && ! ${!__new+set} ]]; then
-      printf "$__new" '%s' "${!__old}"
+      printf -v "$__new" '%s' "${!__old}"
     fi
   fi
 }
@@ -124,7 +124,7 @@ else
       __notify=1
     fi
 
-    printf "$__old" %s "${!__new-}"
+    printf -v "$__old" %s "${!__new-}"
     if [[ :$__opts: == *:track:* ]]; then
       local __index=${#_omb_deprecate_declare[@]}
       _omb_deprecate_declare[__index]=track:$__old:$__new:$__msg
