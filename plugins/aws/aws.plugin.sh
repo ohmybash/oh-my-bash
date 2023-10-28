@@ -16,3 +16,12 @@ function asp {
 
   export AWS_PROFILE=$1
 }
+
+function _aws_profiles {
+  grep '\[profile' ~/.aws/config \
+    | grep -v '^[[:space:]]*#' \
+    | tr -d '\[\]' \
+    | awk '{print $2}'
+}
+
+complete -W "$(_aws_profiles)" asp
