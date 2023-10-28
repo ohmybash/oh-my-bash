@@ -7,8 +7,6 @@
 # command 'asp' sets the AWS profile to use (aws set profile)
 #
 
-export AWS_HOME=~/.aws
-
 function agp {
   echo $AWS_DEFAULT_PROFILE
 }
