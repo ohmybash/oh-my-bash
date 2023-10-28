@@ -12,8 +12,6 @@ function agp {
 }
 
 function asp {
-  local rprompt=${RPROMPT/<aws:$(agp)>/}
-
   export AWS_PROFILE=$1
 }
 
