@@ -196,10 +196,13 @@ function _bashmarks_is_valid_bookmark_name {
 # completion command
 function _bashmarks_comp_cmd_bm {
   COMPREPLY=()
-  if ((COMP_CWORD >= 2)) && [[ ${COMP_WORDS[1]} == -[gpd] ]]; then
+
+  # bm, g, p, d, bm -[gpd]
+  if ((COMP_CWORD == 1)) || { ((COMP_CWORD >= 2)) && [[ ${COMP_WORDS[1]} == -[gpd] ]]; }; then
     local cur=${COMP_WORDS[COMP_CWORD]}
     COMPREPLY=($(compgen -W '$(_bashmarks_list_names)' -- "$cur"))
   fi
+
   return 0
 }
 
@@ -235,8 +238,6 @@ if [[ ${ZSH_VERSION-} ]]; then
   compctl -K _bashmarks_compzsh_cmd_bm d
 else
   shopt -s progcomp
-  complete -F _bashmarks_comp_cmd_bm bm
-  complete -F _bashmarks_comp_cmd_bm bm
   complete -F _bashmarks_comp_cmd_bm bm
   complete -F _bashmarks_comp_cmd_bm g
   complete -F _bashmarks_comp_cmd_bm p
