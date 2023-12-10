@@ -36,7 +36,7 @@ export HISTFILESIZE=
 HISTCONTROL="erasedups:ignoreboth"
 
 # Don't record some commands
-export HISTIGNORE="exit:ls:bg:fg:history:clear"
+HISTIGNORE="exit:ls:bg:fg:history:clear"
 
 # Enable incremental history search with up/down arrows (also Readline goodness)
 # Learn more about this here: https://codeinthehole.com/tips/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
