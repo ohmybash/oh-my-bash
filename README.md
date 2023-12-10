@@ -109,6 +109,12 @@ If you're feeling feisty, you can let the computer select one randomly for you e
 OSH_THEME="random" # (...please let it be pie... please be some pie..)
 ```
 
+If there are themes you don't like, you can add them to an ignored list:
+
+```shell
+OMB_THEME_RANDOM_IGNORED=("powerbash10k" "wanelo")
+```
+
 The selected theme name can be checked by the following command:
 
 ```shell
