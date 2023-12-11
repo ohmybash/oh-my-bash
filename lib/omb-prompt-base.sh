@@ -53,6 +53,9 @@ SCM_SVN_CHAR='⑆'
 SCM_NONE='NONE'
 SCM_NONE_CHAR='○'
 
+DIRSTACK_EXPAND_TILDE=${DIRSTACK_EXPAND_TILDE:=false}
+DIRSTACK_LIMIT=${DIRSTACK_LIMIT:=0}
+
 THEME_SHOW_USER_HOST=${THEME_SHOW_USER_HOST:=false}
 USER_HOST_THEME_PROMPT_PREFIX=''
 USER_HOST_THEME_PROMPT_SUFFIX=''
@@ -602,6 +605,29 @@ function aws_profile {
   fi
 }
 
+function _omb_dirstack_limit {
+    if [[ "${DIRSTACK_EXPAND_TILDE}" = true ]]; then
+      dirargs="-l"
+    fi
+    if [[ "${BASH_VERSINFO[0]}" -lt 4 ]]; then
+      IFS=$'\n' read -r -d '' -a DIRS < <( dirs -p ${dirargs} && printf '\0' )
+    else
+      readarray -t DIRS < <(dirs -p ${dirargs})
+    fi
+    echo "${DIRS[@]:0:${DIRSTACK_LIMIT}}"
+}
+
+function dirs_prompt {
+  if [[ "${DIRSTACK_LIMIT}" -gt 0 ]]; then
+    _omb_dirstack_limit
+  else
+    if [[ "${DIRSTACK_EXPAND_TILDE}" = true ]]; then
+      dirs -l
+    else
+      dirs
+    fi
+  fi
+}
 
 # Returns true if $1 is a shell function.
 _omb_deprecate_function 20000 fn_exists _omb_util_function_exists
