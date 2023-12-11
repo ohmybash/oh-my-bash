@@ -25,10 +25,8 @@ shopt -s globstar 2> /dev/null
 # (used in case, [[]], word expansions and command completions)
 if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
    shopt -u nocaseglob
-   shopt -u nocasematch
 else
    shopt -s nocaseglob
-   shopt -s nocasematch
 fi
 
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
