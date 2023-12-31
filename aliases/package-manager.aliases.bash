@@ -21,7 +21,7 @@ if _omb_util_binary_exists emerge; then
   alias esync="${_omb_tmp_sudo}emerge --sync" # Enoch SYNC
   alias eb="${_omb_tmp_sudo}ebuild" # Enoch Build
   alias er="${_omb_tmp_sudo}emerge -c" # Enoch Remove
-  alias emfu="${_omb_tmp_sudo}emerge --sync && ${_omb_tmp_sudo}emerge -uDN @world"
+  alias emfu="${_omb_tmp_sudo}emerge --sync && ${_omb_tmp_sudo}emerge -uDN @world" # Enoch Upgrade System
   alias ec="${_omb_tmp_sudo}eclean-dist -d" # Enoch Clean Repository Source Files
   alias elip="${_omb_tmp_sudo}eix-installed -a" # Enoch List Installed Packages
 fi
