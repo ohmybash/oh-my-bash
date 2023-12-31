@@ -13,6 +13,7 @@ function __powerline_right_segment {
   local separator_char="${POWERLINE_RIGHT_SEPARATOR}"
   local padding=2
   local separator_color=""
+  local text_color=${params[2]:-"-"}
 
   if [[ "${SEGMENTS_AT_RIGHT}" -eq 0 ]]; then
     separator_color="$(set_color ${params[1]} -)"
@@ -20,7 +21,7 @@ function __powerline_right_segment {
     separator_color="$(set_color ${params[1]} ${LAST_SEGMENT_COLOR})"
     (( padding += 1 ))
   fi
-  RIGHT_PROMPT+="${separator_color}${separator_char}${_omb_prompt_normal}$(set_color - ${params[1]}) ${params[0]} ${_omb_prompt_normal}$(set_color - ${COLOR})${_omb_prompt_normal}"
+  RIGHT_PROMPT+="${separator_color}${separator_char}${_omb_prompt_normal}$(set_color ${text_color} ${params[1]}) ${params[0]} ${_omb_prompt_normal}$(set_color - ${COLOR})${_omb_prompt_normal}"
   RIGHT_PROMPT_LENGTH=$(( ${#params[0]} + RIGHT_PROMPT_LENGTH + padding ))
   LAST_SEGMENT_COLOR="${params[1]}"
   (( SEGMENTS_AT_RIGHT += 1 ))
