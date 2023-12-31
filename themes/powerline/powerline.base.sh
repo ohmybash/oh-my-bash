@@ -47,6 +47,7 @@ function set_color {
 function __powerline_user_info_prompt {
   local user_info=""
   local color=${USER_INFO_THEME_PROMPT_COLOR}
+  local secondary_color="${USER_INFO_THEME_PROMPT_SECONDARY_COLOR}"
 
   if [[ "${THEME_CHECK_SUDO}" = true ]]; then
     # check whether sudo is active for no-password executions
@@ -68,7 +69,7 @@ function __powerline_user_info_prompt {
       fi
       ;;
   esac
-  [[ -n "${user_info}" ]] && echo "${user_info}|${color}"
+  [[ -n "${user_info}" ]] && echo "${user_info}|${color}|${secondary_color}"
 }
 
 function __powerline_ruby_prompt {
@@ -158,11 +159,13 @@ function __powerline_left_segment {
   IFS="${OLD_IFS}"
   local separator_char="${POWERLINE_LEFT_SEPARATOR}"
   local separator=""
+  local text_color=${params[2]:-"-"}
 
   if [[ "${SEGMENTS_AT_LEFT}" -gt 0 ]]; then
     separator="$(set_color ${LAST_SEGMENT_COLOR} ${params[1]})${separator_char}${_omb_prompt_normal}"
   fi
-  LEFT_PROMPT+="${separator}$(set_color - ${params[1]}) ${params[0]} ${_omb_prompt_normal}"
+
+  LEFT_PROMPT+="${separator}$(set_color ${text_color} ${params[1]}) ${params[0]} ${_omb_prompt_normal}"
   LAST_SEGMENT_COLOR=${params[1]}
   (( SEGMENTS_AT_LEFT += 1 ))
 }
