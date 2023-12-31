@@ -3,15 +3,45 @@
 # Define this here so it can be used by all of the Powerline themes
 THEME_CHECK_SUDO=${THEME_CHECK_SUDO:=false}
 
+function _omb_theme_powerline_hex_to_rgb {
+    local hex_color="$1"
+    local r g b
+
+    r=$((16#${hex_color:1:2}))
+    g=$((16#${hex_color:3:2}))
+    b=$((16#${hex_color:5:2}))
+
+    REPLY="${r};${g};${b}"
+}
+
 function set_color {
+  local fg="" bg=""
+
   if [[ "${1}" != "-" ]]; then
-    fg="38;5;${1}"
+    if [[ ${1} =~ ^[0-9]+$ ]]; then
+      fg="38;5;${1}"  # ANSI 256-color code
+    elif [[ ${1} =~ ^[0-9]{1,3}(\;[0-9]{1,3}){2}$ ]]; then
+      fg="38;2;${1}"  # RGB color code
+    elif [[ ${1} =~ ^#[0-9A-Fa-f]{6}$ ]]; then
+      local REPLY
+      _omb_theme_powerline_hex_to_rgb "${1}"
+      fg="38;2;${REPLY}"  # Hex color code converted to RGB
+    fi
   fi
+
   if [[ "${2}" != "-" ]]; then
-    bg="48;5;${2}"
-    [[ -n "${fg}" ]] && bg=";${bg}"
+    if [[ ${2} =~ ^[0-9]+$ ]]; then
+      bg="48;5;${2}"  # ANSI 256-color code
+    elif [[ ${2} =~ ^[0-9]{1,3}(\;[0-9]{1,3}){2}$ ]]; then
+      bg="48;2;${2}"  # RGB color code
+    elif [[ ${2} =~ ^#[0-9A-Fa-f]{6}$ ]]; then
+      local REPLY
+      _omb_theme_powerline_hex_to_rgb "${2}"
+      bg="48;2;${REPLY}"  # Hex color code converted to RGB
+    fi
   fi
-  echo -e "\[\033[${fg}${bg}m\]"
+
+  echo -e "\[\033[${fg}${fg:+${bg:+;}}${bg}m\]"
 }
 
 function __powerline_user_info_prompt {
