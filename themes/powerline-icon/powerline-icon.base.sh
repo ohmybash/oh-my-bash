@@ -5,6 +5,7 @@ source "$OSH/themes/powerline/powerline.base.sh"
 function __powerline_user_info_prompt {
   local user_info=""
   local color=${USER_INFO_THEME_PROMPT_COLOR}
+  local secondary_color="${USER_INFO_THEME_PROMPT_SECONDARY_COLOR}"
 
   if [[ "${THEME_CHECK_SUDO}" = true ]]; then
     # check whether sudo is active for no-password executions
@@ -26,7 +27,7 @@ function __powerline_user_info_prompt {
       fi
       ;;
   esac
-  [[ -n "${user_info}" ]] && echo "🐧 ${user_info} `date +%X\ %D`|${color}"
+  [[ -n "${user_info}" ]] && echo "🐧 ${user_info} `date +%X\ %D`|${color}|${secondary_color}"
 }
 
 function __powerline_cwd_prompt {
