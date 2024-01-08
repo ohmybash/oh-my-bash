@@ -35,5 +35,9 @@ function __powerline_cwd_prompt {
 }
 
 function __powerline_last_status_prompt {
-  [[ "$1" -ne 0 ]] && echo "❌${1}|${LAST_STATUS_THEME_PROMPT_COLOR}" || echo "✅|${LAST_STATUS_THEME_PROMPT_COLOR_2}"
+  if [[ "$1" -ne 0 ]]; then
+    echo "❌${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
+  else
+    echo "✅|${LAST_STATUS_THEME_PROMPT_COLOR_SUCCESS}"
+  fi
 }
