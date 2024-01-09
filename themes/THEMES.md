@@ -176,6 +176,10 @@
 
 [![](powerline/powerline-dark.png)](powerline/powerline-dark.png)
 
+## `powerline-icon`
+
+[![](powerline-icon/powerline-icon-dark.png)](powerline-icon/powerline-icon-dark.png)
+
 ## `powerline-light`
 
 [![](powerline-light/powerline-light.png)](powerline-light/powerline-light.png)
