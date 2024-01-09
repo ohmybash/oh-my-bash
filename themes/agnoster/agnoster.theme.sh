@@ -459,7 +459,7 @@ function __command_rprompt {
   [ -z "$times" ] || printf "%${n}s$times\\r" ''
 }
 
-# this doens't wrap code in \[ \]
+# this doesn't wrap code in \[ \]
 function ansi_r {
   local seq
   local -a mycodes2=("${!1}")
