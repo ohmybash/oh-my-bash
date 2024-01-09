@@ -41,3 +41,32 @@ function __powerline_last_status_prompt {
     echo "✅|${LAST_STATUS_THEME_PROMPT_COLOR_SUCCESS}"
   fi
 }
+
+function __powerline_prompt_command {
+  local last_status="$?" ## always the first
+  local separator_char="${POWERLINE_PROMPT_CHAR}"
+
+  LEFT_PROMPT=""
+  SEGMENTS_AT_LEFT=0
+  LAST_SEGMENT_COLOR=""
+
+  # The IFS (internal field seperator) may have been changed outside to not contain
+  # the space character ' ' whence we need to make sure that the space separated list
+  # stored in POWERLINE_PROMPT is converted into an array correctly.
+  IFS=' ' read -r -a POWERLINE_PROMPT_ARRAY <<< "${POWERLINE_PROMPT}"
+
+  ## left prompt ##
+  for segment in ${POWERLINE_PROMPT_ARRAY[@]}; do
+    local info="$(__powerline_${segment}_prompt)"
+    [[ -n "${info}" ]] && __powerline_left_segment "${info}"
+  done
+  __powerline_left_segment $(__powerline_last_status_prompt ${last_status})
+  [[ -n "${LEFT_PROMPT}" ]] && LEFT_PROMPT+="$(set_color ${LAST_SEGMENT_COLOR} -)${separator_char}${_omb_prompt_normal}"
+
+  PS1="${LEFT_PROMPT} "
+
+  ## cleanup ##
+  unset LAST_SEGMENT_COLOR \
+        LEFT_PROMPT \
+        SEGMENTS_AT_LEFT
+}
