@@ -188,7 +188,7 @@ function __powerline_prompt_command {
   IFS=' ' read -r -a POWERLINE_PROMPT_ARRAY <<< "${POWERLINE_PROMPT}"
 
   ## left prompt ##
-  for segment in ${POWERLINE_PROMPT_ARRAY[@]};
+  for segment in ${POWERLINE_PROMPT_ARRAY[@]}; do
     local info="$(__powerline_${segment}_prompt)"
     [[ -n "${info}" ]] && __powerline_left_segment "${info}"
   done
