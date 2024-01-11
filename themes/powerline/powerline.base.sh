@@ -194,7 +194,7 @@ function __powerline_prompt_command {
   done
 
   ## info status prompt ##
-  info="$(__powerline_last_status_prompt ${last_status})"
+  local info="$(__powerline_last_status_prompt ${last_status})"
   [[ -n "${info}" ]] && __powerline_left_segment "${info}"
 
   [[ -n "${LEFT_PROMPT}" ]] && LEFT_PROMPT+="$(set_color ${LAST_SEGMENT_COLOR} -)${separator_char}${_omb_prompt_normal}"
