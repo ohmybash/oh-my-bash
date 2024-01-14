@@ -122,7 +122,7 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 | `ecd`   | `sudo eclean-dist -d`                            | Cleans repository source files                                                                                                                    |
 | `ecp`   | `sudo eclean-pkg -d`                             | Cleans binary packages                                                                                                                            |
 | `elip`  | `sudo eix-installed -a`                          | List all installed programs.                                                                                                                      |
-| `ers`   | `sudo emerge -c`                                 | Deprecated, retained for backwards compatibility. Cleans the system by removing packages that are not associated with explicitly merged packages. |
+| `ers`   | `sudo emerge -c`                                 | (Deprecated, retained for backward compatibility. Use `er` instead.)                                                                              |
 
 ### Paludis Package Manager (`cave`)
 
