@@ -2,7 +2,7 @@
 
 The Bashmarks plugin allows you to create and use bookmarks for directories on
 your filesystems.  This plugin is derived from the project
-https://github.com/huing/bashmarks but contains improvements.  This plugin is
+https://github.com/huyng/bashmarks but contains improvements.  This plugin is
 licensed under the 3-Clause BSD license.
 
 ## Quickstart
