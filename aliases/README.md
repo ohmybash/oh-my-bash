@@ -93,7 +93,7 @@ To activate it, add `debian` to `plugins(...)` in your `.bashrc` file:
 
 This plugin provides the set of aliases that can be used to control package managers.  Here is the list of the supported aliases for each package manager.  You can find the details of each alias in the source [`package-manager.aliases.bash`](package-manager.aliases.bash).
 
-- `emerge` (Portage Enoch Merge) ... `em`, `es`, `esync`, `eb`, `er`, `ers`, `emfu`, `elip`
+- `emerge` (Portage Enoch Merge) ... `em`, `es`, `esync`, `eb`, `er`, `emfu`, `ecd`, `ecp`, `elip`
 - `cave` (Paludis Cave) ... `cave`, `cr`, `cui`, `cs`, `cli`
 - `apt` (Advanced Packaging Tool) ... `apt`, `aptfu`, `apti`, `apts`, `aptr`, `aptar`, `aptli`
 - `dpkg` (Debian Package) ... `dpkg`
@@ -111,16 +111,18 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 
 ### Emerge Package Manager
 
-| Alias   | Command                                          | Description                                                                                                                       |
-| ------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `em`    | `sudo emerge`                                    | Emerge is the definitive command-line interface to the Portage system.                                                            |
-| `es`    | `sudo emerge --search`                           | Searches for matches of the supplied string in the ebuild repository.                                                             |
-| `esync` | `sudo emerge --sync`                             | Updates repositories, for which auto-sync, sync-type and sync-uri attributes are set in repos.conf.                               |
-| `eb`    | `sudo ebuild`                                    | An ebuild must be, at a minimum, a valid Portage package directory name without a version or category, such as portage or python. |
-| `er`    | `sudo emerge -c`                                 | Cleans the system by removing packages that are not associated with explicitly merged packages.                                   |
-| `ers`   | `sudo emerge -c`                                 | Cleans the system by removing packages that are not associated with explicitly merged packages.                                   |
-| `emfu`  | `sudo emerge --sync && sudo emerge -uDUj @world` | Emerge Update & Upgrade.                                                                                                          |
-| `elip`  | `sudo eix-installed -a`                          | List all installed programs.                                                                                                      |
+| Alias   | Command                                          | Description                                                                                                                                       |
+| ------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `em`    | `sudo emerge`                                    | Emerge is the definitive command-line interface to the Portage system.                                                                            |
+| `es`    | `sudo emerge --search`                           | Searches for matches of the supplied string in the ebuild repository.                                                                             |
+| `esync` | `sudo emerge --sync`                             | Updates repositories, for which auto-sync, sync-type and sync-uri attributes are set in repos.conf.                                               |
+| `eb`    | `sudo ebuild`                                    | An ebuild must be, at a minimum, a valid Portage package directory name without a version or category, such as portage or python.                 |
+| `er`    | `sudo emerge -c`                                 | Cleans the system by removing packages that are not associated with explicitly merged packages.                                                   |
+| `emfu`  | `sudo emerge --sync && sudo emerge -uDN @world`  | Emerge Update & Upgrade.                                                                                                                          |
+| `ecd`   | `sudo eclean-dist -d`                            | Cleans repository source files                                                                                                                    |
+| `ecp`   | `sudo eclean-pkg -d`                             | Cleans binary packages                                                                                                                            |
+| `elip`  | `sudo eix-installed -a`                          | List all installed programs.                                                                                                                      |
+| `ers`   | `sudo emerge -c`                                 | (Deprecated, retained for backward compatibility. Use `er` instead.)                                                                              |
 
 ### Paludis Package Manager (`cave`)
 
