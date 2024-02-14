@@ -43,6 +43,7 @@ SCM_GIT_BEHIND_CHAR="↓"
 SCM_GIT_UNTRACKED_CHAR="?:"
 SCM_GIT_UNSTAGED_CHAR="U:"
 SCM_GIT_STAGED_CHAR="S:"
+SCM_GIT_TIMEOUT="0.2"
 
 SCM_HG='hg'
 SCM_HG_CHAR='☿'
@@ -105,8 +106,26 @@ function _omb_prompt_format {
 }
 
 function _omb_prompt_git {
-  command git "$@"
+  _omb_prompt_timeout "$SCM_GIT_TIMEOUT" command git "$@"
 }
+
+## @fn _omb_prompt_timeout
+##   Runs the given command with the given timeout
+##   @param $1 Timeout in seconds
+##   @param $@ Command to be executed.
+if _omb_util_command_exists timeout; then
+  function _omb_prompt_timeout {
+    timeout "$@"
+  }
+elif _omb_util_command_exists gtimeout; then
+  function _omb_prompt_timeout {
+    gtimeout "$@"
+  }
+else
+  function _omb_prompt_timeout {
+    "${@:2}"
+  }
+fi
 
 function scm {
   if [[ "$SCM_CHECK" = false ]]; then SCM=$SCM_NONE
