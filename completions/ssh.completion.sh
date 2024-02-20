@@ -5,6 +5,7 @@ _omb_module_require lib:omb-completion
 
 function _omb_completion_ssh {
   local cur
+  local file_in_config_d
   _omb_completion_reassemble_breaks :
 
   if [[ $cur == *@*  ]] ; then
@@ -16,6 +17,13 @@ function _omb_completion_ssh {
   # parse all defined hosts from .ssh/config
   if [[ -r $HOME/.ssh/config ]]; then
     COMPREPLY=($(compgen -W "$(grep ^Host "$HOME/.ssh/config" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
+  fi
+
+  # parse all defined hosts from .ssh/config.d/*
+  if [[ -d $HOME/.ssh/config.d ]]; then
+    for file_in_config_d in "$HOME/.ssh/config.d/"* ;do
+      [[ -s "$file_in_config_d" ]] &&COMPREPLY+=($(compgen -W "$(grep ^Host "$file_in_config_d" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
+    done
   fi
 
   # parse all hosts found in .ssh/known_hosts
