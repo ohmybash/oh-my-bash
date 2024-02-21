@@ -247,7 +247,7 @@ function git_status_summary {
 function git_prompt_vars {
   local details=''
   local git_status_flags=''
-  [[ "$(command git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]] || return 1
+  [[ "$(_omb_prompt_git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]] || return 1
   SCM_STATE=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
   if _omb_prompt_git_status_enabled; then
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && git_status_flags='-uno'
