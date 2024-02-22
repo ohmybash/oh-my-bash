@@ -5,6 +5,7 @@ _omb_module_require lib:omb-completion
 
 function _omb_completion_ssh {
   local cur
+  local additional_include_option
   local additional_include_defined_file
   _omb_completion_reassemble_breaks :
 
@@ -20,9 +21,14 @@ function _omb_completion_ssh {
   fi
 
   # check if .ssh/config contains Include options
-  for additional_include_defined_file in $(awk -F' ' '/^Înclude/{print $2}' 2>/dev/null) ;do
-    # parse all defined hosts from that file
-    [[ -s "$additional_include_defined_file" ]] &&COMPREPLY+=($(compgen -W "$(grep ^Host "$additional_include_defined_file" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
+  for additional_include_option in $(awk -F' ' '/^Include/{print $2}' "$HOME/.ssh/config" 2>/dev/null) ;do
+    # relative or absolute path, if relative transforms to absolute
+    [[ "${additional_include_option:0:1}" == "/" ]] ||additional_include_option="$HOME/.ssh/$additional_include_option"
+    # for loop to interpret possible globbing
+    for additional_include_defined_file in $additional_include_option ;do
+      # parse all defined hosts from that file
+      [[ -s "$additional_include_defined_file" ]] &&COMPREPLY+=($(compgen -W "$(grep ^Host "$additional_include_defined_file" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
+    done
   done
 
   # parse all hosts found in .ssh/known_hosts
