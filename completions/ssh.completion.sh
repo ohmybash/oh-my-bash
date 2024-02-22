@@ -5,7 +5,7 @@ _omb_module_require lib:omb-completion
 
 function _omb_completion_ssh {
   local cur
-  local file_in_config_d
+  local additional_include_defined_file
   _omb_completion_reassemble_breaks :
 
   if [[ $cur == *@*  ]] ; then
@@ -19,12 +19,11 @@ function _omb_completion_ssh {
     COMPREPLY=($(compgen -W "$(grep ^Host "$HOME/.ssh/config" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
   fi
 
-  # parse all defined hosts from .ssh/config.d/*
-  if [[ -d $HOME/.ssh/config.d ]]; then
-    for file_in_config_d in "$HOME/.ssh/config.d/"* ;do
-      [[ -s "$file_in_config_d" ]] &&COMPREPLY+=($(compgen -W "$(grep ^Host "$file_in_config_d" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
-    done
-  fi
+  # check if .ssh/config contains Include options
+  for additional_include_defined_file in $(awk -F' ' '/^Înclude/{print $2}' 2>/dev/null) ;do
+    # parse all defined hosts from that file
+    [[ -s "$additional_include_defined_file" ]] &&COMPREPLY+=($(compgen -W "$(grep ^Host "$additional_include_defined_file" | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
+  done
 
   # parse all hosts found in .ssh/known_hosts
   if [[ -r $HOME/.ssh/known_hosts ]]; then
