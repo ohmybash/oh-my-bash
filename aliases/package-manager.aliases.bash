@@ -21,7 +21,11 @@ if _omb_util_binary_exists emerge; then
   alias esync="${_omb_tmp_sudo}emerge --sync" # Enoch SYNC
   alias eb="${_omb_tmp_sudo}ebuild" # Enoch Build
   alias er="${_omb_tmp_sudo}emerge -c" # Enoch Remove
-  alias emfu="${_omb_tmp_sudo}emerge --sync && ${_omb_tmp_sudo}emerge -uDN @world" # Enoch Upgrade System
+  alias emfu="${_omb_tmp_sudo}emerge --sync && ${_omb_tmp_sudo}emerge -uDN @world" # Enoch Update & Upgrade System
+  alias eu="${_omb_tmp_sudo}emerge -uDN @world" # Enoch Upgrade System
+  alias ei="${_omb_tmp_sudo}emerge --info" # Enoch Display Information
+  alias ep="${_omb_tmp_sudo}emerge -p" # Enoch Display What Would Have Been Installed
+  alias e1="${_omb_tmp_sudo}emerge -1" # Enoch Merge Without Adding the Packages to the World File
   # Deprecated, retained for backward compatibility. Use `er` instead.
   alias ers="${_omb_tmp_sudo}emerge -c"
 fi
@@ -31,6 +35,9 @@ if _omb_util_binary_exists eclean; then
 fi
 if _omb_util_binary_exists eix; then
   alias elip="${_omb_tmp_sudo}eix-installed -a" # Enoch List Installed Packages
+fi
+if _omb_util_binary_exists equery; then
+  alias eq="${_omb_tmp_sudo}equery" # Enoch Query
 fi
 
 # Paludis - Cave
