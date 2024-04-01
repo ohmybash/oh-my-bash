@@ -23,31 +23,28 @@ esac
 PS3=">> "
 
 function __my_rvm_ruby_version {
-  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-  [ "$gemset" != "" ] && gemset="@$gemset"
-  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-  local full="$version$gemset"
-  [ "$full" != "" ] && echo "[$full]"
+  local gemset=$(awk -F'@' '{print $2}' <<< "$GEM_HOME")
+  [[ $gemset ]] && gemset=@$gemset
+  local version=$(awk -F'-' '{print $2}' <<< "$MY_RUBY_HOME")
+  local full=$version$gemset
+  [[ $full ]] && echo "[$full]"
 }
 
 function __my_venv_prompt {
-  if [ ! -z "$VIRTUAL_ENV" ]
-  then
+  if [[ $VIRTUAL_ENV ]]; then
     echo "[${_omb_prompt_navy}@${_omb_prompt_normal}${VIRTUAL_ENV##*/}]"
   fi
 }
 
 function is_vim_shell {
-  if [ ! -z "$VIMRUNTIME" ]
-  then
+  if [[ $VIMRUNTIME ]]; then
     echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
 function modern_scm_prompt {
   CHAR=$(scm_char)
-  if [ $CHAR = $SCM_NONE_CHAR ]
-  then
+  if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
     echo "[$(scm_char)][$(scm_prompt_info)]"
@@ -69,7 +66,7 @@ function _omb_theme_PROMPT_COMMAND {
   my_ps_path="\[\033[01;36m\]\w\[\033[00m\]";
 
   # nice prompt
-  case "`id -u`" in
+  case $(id -u) in
   0) PS1="${TITLEBAR}[$my_ps_root][$my_ps_host]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${_omb_prompt_teal}\w${_omb_prompt_normal}]$(is_vim_shell)
 $ "
      ;;

@@ -56,24 +56,22 @@ esac
 PS3=">> "
 
 function __my_rvm_ruby_version {
-  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-  [ "$gemset" != "" ] && gemset="@$gemset"
-  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-  local full="$version$gemset"
-  [ "$full" != "" ] && echo "[$full]"
+  local gemset=$(awk -F'@' '{print $2}' <<< "$GEM_HOME")
+  [[ $gemset ]] && gemset=@$gemset
+  local version=$(awk -F'-' '{print $2}' <<< "$MY_RUBY_HOME")
+  local full=$version$gemset
+  [[ $full ]] && echo "[$full]"
 }
 
 function is_vim_shell {
-  if [ ! -z "$VIMRUNTIME" ]
-  then
+  if [[ $VIMRUNTIME ]]; then
     echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
 function modern_scm_prompt {
   CHAR=$(scm_char)
-  if [ $CHAR = $SCM_NONE_CHAR ]
-  then
+  if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
     echo "[$(scm_char)][$GREEN$(scm_prompt_info)]"
@@ -82,38 +80,35 @@ function modern_scm_prompt {
 
 # show chroot if exist
 function chroot {
-  if [ -n "$debian_chroot" ]
-  then
-    my_ps_chroot="${_omb_prompt_bold_teal}$debian_chroot${_omb_prompt_normal}";
-    echo "($my_ps_chroot)";
+  if [[ $debian_chroot ]]; then
+    my_ps_chroot=$_omb_prompt_bold_teal$debian_chroot$_omb_prompt_normal
+    echo "($my_ps_chroot)"
   fi
 }
 
 # show virtualenvwrapper
 function my_ve {
-  if [ -n "$VIRTUAL_ENV" ]
-  then
-    my_ps_ve="${_omb_prompt_bold_purple}$ve${_omb_prompt_normal}";
-    echo "($my_ps_ve)";
+  if [[ $VIRTUAL_ENV ]]; then
+    my_ps_ve=$_omb_prompt_bold_purple$ve$_omb_prompt_normal
+    echo "($my_ps_ve)"
   fi
-  echo "";
+  echo ""
 }
 
 function _omb_theme_PROMPT_COMMAND {
-  my_ps_host="$BOLD$ORANGE\h${_omb_prompt_normal}";
+  my_ps_host="$BOLD$ORANGE\h${_omb_prompt_normal}"
   # yes, these are the the same for now ...
-  my_ps_host_root="$ORANGE\h${_omb_prompt_normal}";
+  my_ps_host_root="$ORANGE\h${_omb_prompt_normal}"
 
   my_ps_user="$BOLD$GREEN\u${_omb_prompt_normal}"
-  my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}";
+  my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}"
 
-  if [ -n "$VIRTUAL_ENV" ]
-  then
-    ve=`basename "$VIRTUAL_ENV"`;
+  if [[ $VIRTUAL_ENV ]]; then
+    ve=$(basename "$VIRTUAL_ENV")
   fi
 
   # nice prompt
-  case "`id -u`" in
+  case $(id -u) in
   0) PS1="\n${TITLEBAR}${BRACKET_COLOR}┌─${_omb_prompt_normal}$(my_ve)$(chroot)[$my_ps_root][$my_ps_host_root]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${_omb_prompt_green}\w${_omb_prompt_normal}]$(is_vim_shell)${BRACKET_COLOR}
 └─▪ ${prompt_symbol} ${_omb_prompt_normal}"
      ;;
