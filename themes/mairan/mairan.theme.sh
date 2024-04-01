@@ -110,7 +110,7 @@ function _omb_theme_PROMPT_COMMAND {
 
     if [ -n "$VIRTUAL_ENV" ]
     then
-        ve=`basename $VIRTUAL_ENV`;
+        ve=`basename "$VIRTUAL_ENV"`;
     fi
 
     # nice prompt
