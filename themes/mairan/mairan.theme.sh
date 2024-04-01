@@ -70,7 +70,7 @@ function is_vim_shell {
 }
 
 function modern_scm_prompt {
-  CHAR=$(scm_char)
+  local CHAR=$(scm_char)
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
@@ -81,7 +81,7 @@ function modern_scm_prompt {
 # show chroot if exist
 function chroot {
   if [[ $debian_chroot ]]; then
-    my_ps_chroot=$_omb_prompt_bold_teal$debian_chroot$_omb_prompt_normal
+    local my_ps_chroot=$_omb_prompt_bold_teal$debian_chroot$_omb_prompt_normal
     echo "($my_ps_chroot)"
   fi
 }
@@ -89,22 +89,22 @@ function chroot {
 # show virtualenvwrapper
 function my_ve {
   if [[ $VIRTUAL_ENV ]]; then
-    my_ps_ve=$_omb_prompt_bold_purple$ve$_omb_prompt_normal
+    local my_ps_ve=$_omb_prompt_bold_purple$ve$_omb_prompt_normal
     echo "($my_ps_ve)"
   fi
   echo ""
 }
 
 function _omb_theme_PROMPT_COMMAND {
-  my_ps_host="$BOLD$ORANGE\h${_omb_prompt_normal}"
+  local my_ps_host="$BOLD$ORANGE\h${_omb_prompt_normal}"
   # yes, these are the the same for now ...
-  my_ps_host_root="$ORANGE\h${_omb_prompt_normal}"
+  local my_ps_host_root="$ORANGE\h${_omb_prompt_normal}"
 
-  my_ps_user="$BOLD$GREEN\u${_omb_prompt_normal}"
-  my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}"
+  local my_ps_user="$BOLD$GREEN\u${_omb_prompt_normal}"
+  local my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}"
 
   if [[ $VIRTUAL_ENV ]]; then
-    ve=$(basename "$VIRTUAL_ENV")
+    local ve=$(basename "$VIRTUAL_ENV")
   fi
 
   # nice prompt

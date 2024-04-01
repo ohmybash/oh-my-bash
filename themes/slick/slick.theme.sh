@@ -43,7 +43,7 @@ function is_vim_shell {
 }
 
 function modern_scm_prompt {
-  CHAR=$(scm_char)
+  local CHAR=$(scm_char)
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
@@ -52,6 +52,7 @@ function modern_scm_prompt {
 }
 
 function _omb_theme_PROMPT_COMMAND {
+  local my_ps_host
   case $HOSTNAME in
   "clappy"* ) my_ps_host="${_omb_prompt_green}\h${_omb_prompt_normal}";
               ;;
@@ -61,9 +62,9 @@ function _omb_theme_PROMPT_COMMAND {
       ;;
   esac
 
-  my_ps_user="\[\033[01;32m\]\u\[\033[00m\]";
-  my_ps_root="\[\033[01;31m\]\u\[\033[00m\]";
-  my_ps_path="\[\033[01;36m\]\w\[\033[00m\]";
+  local my_ps_user="\[\033[01;32m\]\u\[\033[00m\]";
+  local my_ps_root="\[\033[01;31m\]\u\[\033[00m\]";
+  local my_ps_path="\[\033[01;36m\]\w\[\033[00m\]";
 
   # nice prompt
   case $(id -u) in

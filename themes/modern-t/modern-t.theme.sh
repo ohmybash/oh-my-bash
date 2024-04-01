@@ -26,7 +26,7 @@ function is_vim_shell {
 }
 
 function modern_scm_prompt {
-  CHAR=$(scm_char)
+  local CHAR=$(scm_char)
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
