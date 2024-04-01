@@ -56,6 +56,7 @@ function chroot {
 # show virtualenvwrapper
 function my_ve {
   if [[ $VIRTUAL_ENV ]]; then
+    local ve=$(basename "$VIRTUAL_ENV")
     local my_ps_ve=$_omb_prompt_bold_purple$ve$_omb_prompt_normal
     echo "($my_ps_ve)"
   fi
@@ -69,10 +70,6 @@ function _omb_theme_PROMPT_COMMAND {
 
   local my_ps_user="${_omb_prompt_bold_green}\u${_omb_prompt_normal}"
   local my_ps_root="${_omb_prompt_bold_brown}\u${_omb_prompt_normal}"
-
-  if [[ $VIRTUAL_ENV ]]; then
-    local ve=$(basename "$VIRTUAL_ENV")
-  fi
 
   # nice prompt
   case $(id -u) in
