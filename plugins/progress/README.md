@@ -2,7 +2,7 @@
 
 #### Description
 
-This script provides a simple progress bar GUI for the terminal platform. It allows you to visualize the progress of a task being executed in your shell script.
+This script provides a simple progress bar TUI for the terminal platform. It allows you to visualize the progress of a task being executed in your shell script.
 
 #### Usage
 
