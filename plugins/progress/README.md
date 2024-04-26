@@ -11,5 +11,3 @@ This line might start to look like this its location is usually here: `.bashrc` 
 plugins = (git bundler osx rake ruby)
 ```
 _⚠️ if you want to only add the plugin(s) and not oh-my-bash you can copy it and paste it directly into .bashrc or .bash_profile. by doing this the plugins will not receive updates, the errors will have to be solved by you_
-
-
