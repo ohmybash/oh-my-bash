@@ -1,27 +1,26 @@
-### Using the Progress Bar Script
+# Using the Progress Bar Script
 
-#### Description
+## Description
 
 This script provides a simple progress bar TUI for the terminal platform. It allows you to visualize the progress of a task being executed in your shell script.
 
-#### Usage
+## Usage
 
-1. **Copy Functions:**
+You can use the function `progress` from the interactive settings with Oh My
+Bash.  The function handles printing of the progress bar.
 
-   - Copy the `delay` and `progress` functions directly into your shell script.
+1. **Enable plugin:**
+
+  - Add the plugin name `progress` in the `plugins` array in `~/.bashrc`.
+
+  ```shell
+  # bashrc
+
+  plugins=(... progress)
+  ```
 
 2. **Invoke `progress` Function:**
-   - Call the `progress` function within your script to display the progress bar.
-
-#### Steps
-
-1. **Copy Functions:**
-
-   - Copy the `delay` and `progress` functions from the script provided into your own shell script. These functions handle the delay and printing of the progress bar.
-
-2. **Invoke `progress` Function:**
-
-   - Within your script, call the `progress` function whenever you want to display the progress bar.
+   - Within a shell function, call the `progress` function whenever you want to display the progress bar.
    - Pass two parameters to the `progress` function:
      - `PARAM_PROGRESS`: The progress percentage (0-100) of the task.
      - `PARAM_STATUS`: Optional. A status message to display alongside the progress bar.
@@ -31,17 +30,26 @@ This script provides a simple progress bar TUI for the terminal platform. It all
    progress 25 "Processing data..."  # Displays a 25% progress bar with the status "Processing data..."
    ```
 
-#### Example
+_⚠️ if you want to add only the plugin and not Oh My Bash, you can copy the file
+`progress.plugin.sh` to a place you like and source it in `~/.basrhc` (for
+interactive uses) or in a shell script (for a standalone shell program).  You
+may instead copy and paste the functions directly into a script file, in which
+case the plugin will not receive updates and possible errors will have to be
+solved by you_
+
+
+## Example
 
 ```bash
-#!/bin/bash
+# bashrc
 
-# Copy the delay and progress functions here
-
-# Your script logic here
-# Invoke the progress function to display the progress bar as your script progresses
-# Example:
-progress 25 "Processing data..."  # Display a 25% progress bar with the status "Processing data..."
+function example {
+  # Example: Your code for the shell function here:  Invoke the progress
+  # function to display the progress bar as your function progresses.  This
+  # displays a 25% progress bar with the status "Processing data...":
+  progress 25 "Processing data..."
 ```
 
-This will visually represent the progress of your script's execution in the terminal. Adjust the `progress` function calls according to the progress of your task.
+This will visually represent the progress of your function's execution in the
+terminal. Adjust the `progress` function calls according to the progress of
+your task.
