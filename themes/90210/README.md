@@ -10,6 +10,5 @@
 - **Green (again)**: Denotes the user and host in the prompt.
 - **Olive**: Marks the separation between the username and hostname.
 - **Purple**: Indicates the current working directory in the prompt.
-- **Reset Color**: Ensures proper color reset after prompt elements.
 
 These colors help provide visual cues about the status of the source control repository and organize information effectively within the terminal prompt.
