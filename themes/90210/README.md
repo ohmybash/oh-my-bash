@@ -1,6 +1,6 @@
 # 90210 💜
 
-![alt text](90210-dark.png)
+![theme 90210](90210-dark.png)
 
 - **Brown**: Used to indicate a dirty state in source control management (SCM) and Git prompts.
 - **Bold Green**: Signifies a clean state in SCM and Git prompts.
@@ -12,4 +12,4 @@
 - **Purple**: Indicates the current working directory in the prompt.
 - **Reset Color**: Ensures proper color reset after prompt elements.
 
-_*These colors help provide visual cues about the status of the source control repository and organize information effectively within the terminal prompt.*_
+These colors help provide visual cues about the status of the source control repository and organize information effectively within the terminal prompt.
