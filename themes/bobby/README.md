@@ -23,4 +23,4 @@ This repository presents a custom Bash prompt configuration utilizing various st
 - **Clock Display**: Incorporates a clock function to show the current time in the prompt, with the option to display a clock character.
 - **Battery Status**: Includes a battery function to show battery status in the prompt.
 
-_Feel free to customize the color assignments and styles according to your preferences by modifying the relevant sections in the Bash prompt configuration file. Adjust the colors, prompt structure, and additional functions to suit your needs._
+Feel free to customize the color assignments and styles according to your preferences by modifying the relevant sections in the Bash prompt configuration file. Adjust the colors, prompt structure, and additional functions to suit your needs.
