@@ -1,6 +1,6 @@
 # Bobby-dark
 
-![alt text](bobby-dark.png)
+![theme Bobby-dark](bobby-dark.png)
 
 ### Styles and Colors
 
