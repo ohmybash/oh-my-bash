@@ -16,4 +16,3 @@
     - Bold green for clean state.
   - The prefix and suffix of the version control are in light gray to highlight this 
   information clearly in the prompt.
-    
