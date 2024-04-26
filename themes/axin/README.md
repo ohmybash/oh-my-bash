@@ -1,5 +1,5 @@
 # Axi-Dark
 
-![alt text](axin-dark.png)
+![Theme Axi-Dark](axin-dark.png)
 
-### _Axin Bash Prompt, inspired by theme "Sexy" and "Bobby"_
+Axin Bash Prompt, inspired by theme "Sexy" and "Bobby"
