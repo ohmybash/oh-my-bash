@@ -1,4 +1,4 @@
-### Xterm Plugin
+# Xterm Plugin
 
 ### Description
 
