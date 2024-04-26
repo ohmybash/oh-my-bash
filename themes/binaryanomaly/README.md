@@ -14,5 +14,4 @@
   - Git-related prompts display a dirty or clean state indicator:
     - Brown for dirty state.
     - Bold green for clean state.
-  - The prefix and suffix of the version control are in light gray to highlight this 
-  information clearly in the prompt.
+  - The prefix and suffix of the version control are in light gray to highlight this information clearly in the prompt.
