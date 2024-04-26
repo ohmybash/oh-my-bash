@@ -1,4 +1,4 @@
-# Binaryanomaly
+# Binary Anomaly
 
 ![Binaryanomaly Dark Theme](binaryanomaly-dark.png)
 - **Reboot Required Detection:**
