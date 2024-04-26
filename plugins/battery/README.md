@@ -23,30 +23,33 @@ This custom plugin for Oh My Bash enhances your terminal experience by providing
 ### 3. `battery_percentage`
 
 - **Description:** Retrieves and displays the current battery charge as a percentage of full (100%).
-- **Returns:**
+- **Standard Output:**
   - Battery percentage as an integer.
 
 ### 4. `battery_charge`
 
 - **Description:** Presents a graphical representation of the battery charge using ASCII characters.
-- **Returns:**
+- **Stanard Output:**
   - Graphical representation of the battery charge.
 
 ## Usage
 
-1. Ensure the plugin file is properly integrated into your `.bashrc` or `.bash_profile`.
-2. Utilize the provided functions to monitor battery status and information directly in your terminal.
+Add the plugin name `battery` in the `plugins` array in `~/.bashrc`.
 
-```bash
-# Check if AC adapter is connected
-ac_adapter_connected
+```shell
+# bashrc
 
-# Retrieve battery percentage
-battery_percentage
-
-# Visualize battery charge graphically
-battery_charge
+plugins=(... battery)
 ```
+
+You can use the functions from the interactive settings with Oh My Bash.
+
+_⚠️ if you want to add only the plugin and not Oh My Bash, you can copy the file
+`battery.plugin.sh` and `lib/utils.sh` to a place you like and source them in
+`~/.basrhc` (for interactive uses) or in a shell script (for a standalone shell
+program).  You may instead copy and paste the functions directly into a script
+file, in which case the plugin will not receive updates and possible errors
+will have to be solved by you_
 
 ## Dependencies
 
@@ -56,6 +59,6 @@ This plugin relies on several utilities for retrieving battery information:
 - `acpi`, `pmset`, `ioreg`, `WMIC`: Fallback options for battery information retrieval.
 - `/sys/class/power_supply/`: Fallback option for battery information retrieval.
 
-```
+This plugin file also depends on the following module in Oh My Bash:
 
-```
+- `lib/utils.sh`
