@@ -35,13 +35,17 @@ function modern_scm_prompt {
 }
 
 function _omb_theme_PROMPT_COMMAND {
-  if (($? != 0)); then
-    PS1="${TITLEBAR}${_omb_prompt_bold_brown}┌─${_omb_prompt_reset_color}$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}][$(battery_charge)]$(is_vim_shell)"
-    PS1=$PS1$'\n'"${_omb_prompt_bold_brown}└─▪${_omb_prompt_normal} "
+  local last_exit=$? border_color
+  if ((last_exit != 0)); then
+    border_color=$_omb_prompt_bold_brown
   else
-    PS1="${TITLEBAR}┌─$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}][$(battery_charge)]$(is_vim_shell)"
-    PS1=$PS1$'\n'"└─▪ "
+    border_color=$_omb_prompt_normal
   fi
+
+  PS1=$TITLEBAR
+  PS1=$PS1$border_color'┌─'$_omb_prompt_normal
+  PS1=$PS1$(modern_scm_prompt)[$_omb_prompt_teal'\W'$_omb_prompt_normal][$(battery_charge)]$(is_vim_shell)$'\n'
+  PS1=$PS1$border_color'└─▪'$_omb_prompt_normal' '
 }
 
 PS2="└─▪ "
