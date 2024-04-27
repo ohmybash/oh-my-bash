@@ -105,6 +105,8 @@ to keep the repository size small. The filename should be
 light background of the terminal used to make the image.
 After your new themes are merged, the list in [Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the Wiki also needs to be updated.
 
+When you add a new plugin, please also update [plugins/README.md](https://github.com/ohmybash/oh-my-bash/blob/master/plugins/README.md)
+
 ----
 
 ## Use the Search, Luke
