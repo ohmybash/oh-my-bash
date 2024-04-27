@@ -36,14 +36,11 @@ function modern_scm_prompt {
 
 function _omb_theme_PROMPT_COMMAND {
   if (($? != 0)); then
-    # Yes, the indenting on these is weird, but it has to be like
-    # this otherwise it won't display properly.
-
-    PS1="${TITLEBAR}${_omb_prompt_bold_brown}┌─${_omb_prompt_reset_color}$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}][$(battery_charge)]$(is_vim_shell)
-${_omb_prompt_bold_brown}└─▪${_omb_prompt_normal} "
+    PS1="${TITLEBAR}${_omb_prompt_bold_brown}┌─${_omb_prompt_reset_color}$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}][$(battery_charge)]$(is_vim_shell)"
+    PS1=$PS1$'\n'"${_omb_prompt_bold_brown}└─▪${_omb_prompt_normal} "
   else
-    PS1="${TITLEBAR}┌─$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}][$(battery_charge)]$(is_vim_shell)
-└─▪ "
+    PS1="${TITLEBAR}┌─$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}][$(battery_charge)]$(is_vim_shell)"
+    PS1=$PS1$'\n'"└─▪ "
   fi
 }
 
