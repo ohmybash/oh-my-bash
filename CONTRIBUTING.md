@@ -98,7 +98,11 @@ maintainers) by mentioning their GitHub handle (starting with `@`) in your messa
 For any extensive change, _eg_ a new plugin, you will have to find testers to +1 your PR.
 
 When you add new themes, please also update [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
-The theme needs to have exactly one image of height ~290px and width 600--800px.
+The theme needs to have exactly one image file.  The image size needs to be
+height ~290px and width 600..800px to make the theme gallery aligned and also
+to keep the repository size small. The filename should be
+`<theme name>-dark.png` or `<theme name>-light.png` depending on the dark or
+light background of the terminal used to make the image.
 After your new themes are merged, the list in [Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the Wiki also needs to be updated.
 
 ----
