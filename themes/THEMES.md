@@ -287,3 +287,7 @@
 ## `zork`
 
 [![](zork/zork-dark.png)](zork/zork-dark.png)
+
+## `lambda`
+
+![](lambda/lambda-dark.png)
