@@ -290,4 +290,4 @@
 
 ## `lambda`
 
-![](lambda/lambda-dark.png)
+[![](lambda/lambda-dark.png)](lambda/lambda-dark.png)
