@@ -14,8 +14,10 @@ you would make is not already covered.
   * [You have a suggestion](#you-have-a-suggestion)
 * [Pull Requests](#submitting-pull-requests)
   * [Getting started](#getting-started)
+  * [Copyright and responsibility](#copyright-and-responsibility)
   * [You have a solution](#you-have-a-solution)
-  * [You have an addition](#you-have-an-addition)
+  * [New Theme](#new-theme)
+  * [New Plugin](#new-plugin)
 * [Information sources (_aka_ search)](#use-the-search-luke)
 
 **BONUS:** [Volunteering](#you-have-spare-time-to-volunteer)
@@ -62,50 +64,129 @@ clearly targets specific tools or environment such as "GNU make" or "macOS".
 
 ### Getting started
 
+Before starting to work on it, please be so kind as to
+[search](#use-the-search-luke) for any open issues, and any
+pending/merged/rejected PRs covering or related to what you are going to
+change.
+
+- If you try to solve a [problem](#you-have-a-problem) and a solution to the
+  problem is already reported, try it out and +1 the pull request if the
+  solution works ok. On the other hand, if you think your solution is better,
+  post it with a reference to the other one so we can have both solutions to
+  compare.
+- If you find an existing PR that is related, try it out and work with the
+  author on a common solution.
+- If not, then go ahead and submit a PR. Please copy to anyone relevant
+  (e.g. plugin maintainers) by mentioning their GitHub handle (starting with
+  `@`) in your message.
+
 You should be familiar with the basics of
 [contributing on GitHub](https://help.github.com/articles/using-pull-requests) and have a fork
 [properly set up](https://github.com/ohmybash/oh-my-bash/wiki/Contribution-Technical-Practices).
 
 You MUST always create PRs with _a dedicated branch_ (i.e., a branch that is NOT `master`) based on the latest upstream tree.
 
-If you create your own PR, please make sure you do it right. Also be so kind as to reference
-any issue that would be solved in the PR description body,
-[for instance](https://help.github.com/articles/closing-issues-via-commit-messages/)
+The commit mesasge typically has the following form (with the first word in the
+verbal phrase being in the infinitive and capitalized):
+
+```
+<section>: <Verb phrase to describe the change>
+
+<detailed description if any>
+```
+
+The conventional commits are also accepted:
+
+```
+<type>(<section>): <verb phrase to describe the change>
+
+<detailed description if any>
+```
+
+When you open a new PR, please make sure you do it right. Also be so kind as to
+reference any issues that would be solved in the PR description body, [for
+instance](https://help.github.com/articles/closing-issues-via-commit-messages/)
 _"Fixes #XXXX"_ for issue number XXXX.
+
+### Copyright and responsibility
+
+If you submit codes derived from other's work, please confirm that the license
+is compatible with the MIT license.  Please clarify which part is your own work
+and which is not in the code and include **the copyright notice of the original
+authors**.  You may also include your own copyright notice, but we may omit
+them because we can track them in the Git history.
+
+You can provide codes under any licenses which are compatible with the MIT
+license.  When you submit and update a PR (*NOT when the PR is merged*), unless
+otherwise specified, **we assume that you provide the codes/texts under the MIT
+license**.  If you would like to provide the codes/texts with another license,
+please specify it in the codes/texts.  If you forgot to declare the license
+that is not MIT, you can later declare it for the part you contributed.
+
+Do not submit AI-generated codes/documentation unless you understand both the
+generated codes/documentation and the related **exiting codebase**.  You are
+required to be responsible for requests to the changes and reports of the
+issues for the submitted codes/documentation.  Also, please confirm that the
+generated codes/texts can be included in Oh My Bash **with your own copyright
+under the MIT license**.
 
 ### You have a solution
 
-Please be so kind as to [search](#use-the-search-luke) for any open issue already covering
-your [problem](#you-have-a-problem), and any pending/merged/rejected PR covering your solution.
+If you try to fix a problem or solve an issue in a specific
+plugin/theme/aliases, please also check the other modules if they have a
+similar issue or can be improved in a similar way.  In particular, @@@
 
-If the solution is already reported, try it out and +1 the pull request if the
-solution works ok. On the other hand, if you think your solution is better, post
-it with a reference to the other one so we can have both solutions to compare.
+### New Theme
 
-If not, then go ahead and submit a PR. Please copy to anyone relevant (e.g. plugin
-maintainers) by mentioning their GitHub handle (starting with `@`) in your message.
+A new theme is often created by modifying an existing theme.  In that case,
+please clarify from which theme the new theme is derived from.  If possible, it
+is recommented to source the original theme file
+`"$OSH"/themes/<original>/<original>.base.sh` or
+`"$OSH"/themes/<original>/<original>.theme.sh` in the new theme file
+`"$OSH"/themes/<new>/<new>.theme.sh` and include only the new parts in the new
+theme file.
 
-### You have an addition
-
-Please be so kind as to [search](#use-the-search-luke) for any pending, merged or rejected Pull Requests
-covering or related to what you want to add.
-
-If you find one, try it out and work with the author on a common solution.
-
-If not, then go ahead and submit a PR. Please copy to anyone relevant (_eg_ plugin
-maintainers) by mentioning their GitHub handle (starting with `@`) in your message.
-
-For any extensive change, _eg_ a new plugin, you will have to find testers to +1 your PR.
-
-When you add new themes, please also update [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
 The theme needs to have exactly one image file.  The image size needs to be
 height ~290px and width 600..800px to make the theme gallery aligned and also
-to keep the repository size small. The filename should be
-`<theme name>-dark.png` or `<theme name>-light.png` depending on the dark or
-light background of the terminal used to make the image.
-After your new themes are merged, the list in [Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the Wiki also needs to be updated.
+to keep the repository size small. The filename should be `<theme
+name>-dark.png` or `<theme name>-light.png` depending on the dark or light
+background of the terminal used to make the image.
 
-When you add a new plugin, please also update [plugins/README.md](https://github.com/ohmybash/oh-my-bash/blob/master/plugins/README.md)
+When you add a new theme, please also update
+[themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
+After your new theme is merged, the list in
+[Themes](https://github.com/ohmybash/oh-my-bash/wiki/Themes) in the wiki also
+needs to be updated.
+
+### New Plugin
+
+A new plugin is accepted when it is needed to implement features in themes or
+when it provides significantly useful tools for interactive uses.  To show that
+it is worth including in Oh My Bash, you will have to find testers to +1 your
+PR.
+
+When you add a new plugin, please also update
+[plugins/README.md](https://github.com/ohmybash/oh-my-bash/blob/master/plugins/README.md)
+
+### Improving PR
+
+After opening PRs, you will usually receive requests for changes.  It is rare
+for a PR to be merged without any modifications.  Please be so kind as to
+respond to the requests.  If you have any questions, please feel free to ask
+further.  If you become busy, please tell us that instead of ignoring our
+messages.  You are expected to notify when you will be available again, hand
+over the PR to others, or to notify that you would discard the PR.
+
+After the final version of the PR is settled, the fixup commits that fix
+problems introduced in earlier commits in the same PR will be squashed.  Also,
+the commits whose purposes heavily overlap will be squashed.
+
+For this reason, a weight of one commit is not equal for different types of
+contributions.  For the new theme/plugin/aliases, the PR is likely to be
+squashed into a single commit unless the changes are properly separated into
+commits for respective purposes.  On the other hand, PRs including several
+minor fixes to the exiting codebase will not be squashed because each commit
+gives a separate fix to the exiting code.
 
 ----
 
