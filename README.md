@@ -280,9 +280,18 @@ If you want to uninstall `oh-my-bash`, just run `uninstall_oh_my_bash` from the 
 
 ## Contributing
 
-I'm far from being a [Bash](https://www.gnu.org/software/bash/) expert and suspect there are many ways to improve – if you have ideas on how to make the configuration easier to maintain (and faster), don't hesitate to fork and send pull requests!
+Check out [`CONTRIBUTING.md`](Contributing.md) and also [Code of
+Conduct](`CODE_OF_CONDUCT.md`).
 
-We also need people to test out pull-requests. So take a look through [the open issues](https://github.com/ohmybash/oh-my-bash/issues) and help where you can.
+This project is initially ported from Oh My Zsh and Bash-it by `@nntoan` and
+has been developed in a community-driven way.  Most of the contributors are far
+from being a [Bash](https://www.gnu.org/software/bash/) expert, and there are
+many ways to improve the codebase.  If you have ideas on how to make the
+configuration easier to maintain (and faster), don't hesitate to fork and send
+pull requests!
+
+We also need people to test out pull-requests.  Take a look through [the open
+issues](https://github.com/ohmybash/oh-my-bash/issues) and help where you can.
 
 ## Contributors
 
@@ -292,5 +301,6 @@ Thank you so much!
 
 ## License
 
+See [`LICENSE.md`](License.md).
 Oh My Bash is derived from [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh).
 Oh My Bash is released under the [MIT license](LICENSE.md).
