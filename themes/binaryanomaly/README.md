@@ -1,6 +1,7 @@
 # Binary Anomaly
 
 ![Binaryanomaly Theme](binaryanomaly-dark.png)
+
 - **Reboot Required Detection:**
   - If a system reboot is required, a warning message will be displayed in bright yellow, indicating "Reboot required!".
 - **Color Assignment:**
