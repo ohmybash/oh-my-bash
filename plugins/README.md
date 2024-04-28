@@ -1,4 +1,4 @@
-# Oh My Bash: Enhancing Your Development Experience
+# Oh-My-Bash Plugins: Enhancing Your Development Experience
 
 "Oh My Bash won't make you a tenfold developer... but it might make you feel like one."
 
