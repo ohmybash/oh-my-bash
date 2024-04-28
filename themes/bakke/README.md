@@ -1,6 +1,6 @@
-# Bakke-Dark
+# Bakke
 
-![theme Bakke-Dark](bakke-dark.png)
+![theme Bakke](bakke-dark.png)
 
 - **Version Control State Indicators:** It uses brown to indicate a dirty state and bold green for a clean state in version control-related prompts such as Git.
 - **Prompt Prefix and Suffix:** It uses green as a prefix and suffix in version control-related prompts.
