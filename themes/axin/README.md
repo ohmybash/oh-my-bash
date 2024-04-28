@@ -1,4 +1,4 @@
-# Axi-Dark
+# Axin
 
 ![Theme Axin-Dark](axin-dark.png)
 
