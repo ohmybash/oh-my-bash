@@ -30,6 +30,13 @@ Bash.  The function handles printing of the progress bar.
    progress 25 "Processing data..."  # Displays a 25% progress bar with the status "Processing data..."
    ```
 
+To change the delay of the progress bar, please overwrite the `delay` function.
+
+```bash
+# Example: change the delay to 0.1 sec
+function delay { sleep 0.1; }
+```
+
 _⚠️ if you want to add only the plugin and not Oh My Bash, you can copy the file
 `progress.plugin.sh` to a place you like and source it in `~/.basrhc` (for
 interactive uses) or in a shell script (for a standalone shell program).  You
