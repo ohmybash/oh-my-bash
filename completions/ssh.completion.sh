@@ -16,12 +16,12 @@ function _omb_completion_ssh {
   local IFS=$'\n'
 
   # parse all defined hosts from .ssh/config
-  if [[ -r $HOME/.ssh/config ]]; then
-    local -a config_files=("$HOME/.ssh/config")
+  if [[ -r ~/.ssh/config ]]; then
+    local -a config_files=(~/.ssh/config)
 
     # check if .ssh/config contains Include options
     local -a include_patterns
-    _omb_util_split include_patterns "$(awk -F' ' '/^Include/{print $2}' "$HOME/.ssh/config" 2>/dev/null)" $'\n'
+    _omb_util_split include_patterns "$(awk -F' ' '/^Include/{print $2}' ~/.ssh/config 2>/dev/null)" $'\n'
     local i
     for i in "${!include_patterns[@]}"; do
       # relative or absolute path, if relative transforms to absolute
@@ -41,9 +41,9 @@ function _omb_completion_ssh {
   fi
 
   # parse all hosts found in .ssh/known_hosts
-  if [[ -r $HOME/.ssh/known_hosts ]]; then
-    if grep -v -q -e '^ ssh-rsa' "$HOME/.ssh/known_hosts" ; then
-      COMPREPLY+=($(compgen -W "$( awk '{print $1}' "$HOME/.ssh/known_hosts" | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
+  if [[ -r ~/.ssh/known_hosts ]]; then
+    if grep -v -q -e '^ ssh-rsa' ~/.ssh/known_hosts; then
+      COMPREPLY+=($(compgen -W "$( awk '{print $1}' ~/.ssh/known_hosts | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
     fi
   fi
 
