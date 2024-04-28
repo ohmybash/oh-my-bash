@@ -2,11 +2,11 @@
 
 ![theme Bobby](bobby-dark.png)
 
-### Styles and Colors
+## Styles and Colors
 
 This repository presents a custom Bash prompt configuration utilizing various styles and colors to enhance the visual appearance and usability of the terminal.
 
-### Color Assignments
+## Color Assignments
 
 - **Brown**: Used to indicate a dirty state in source control management (SCM) and Git prompts.
 - **Bold Green**: Signifies a clean state in SCM and Git prompts.
@@ -17,7 +17,7 @@ This repository presents a custom Bash prompt configuration utilizing various st
 - **Light Gray**: Forms the main structure of the prompt, displaying time, user, host, and current working directory.
 - **Bright Yellow**: Indicates a warning message, such as a required system reboot.
 
-### Styles and Functions
+## Styles and Functions
 
 - **SCM Themes**: Customized themes for source control management (SCM) prompts, displaying indicators for dirty and clean states.
 - **Clock Display**: Incorporates a clock function to show the current time in the prompt, with the option to display a clock character.
