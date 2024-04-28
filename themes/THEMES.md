@@ -119,6 +119,10 @@
 
 [![](kitsune/kitsune-dark.png)](kitsune/kitsune-dark.png)
 
+## `lambda`
+
+[![](lambda/lambda-dark.png)](lambda/lambda-dark.png)
+
 ## `luan`
 
 [![](luan/luan-dark.png)](luan/luan-dark.png)
