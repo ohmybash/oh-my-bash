@@ -7,10 +7,11 @@ function _omb_completion_ssh {
   local cur
   _omb_completion_reassemble_breaks :
 
+  local -a options
   if [[ $cur == *@*  ]] ; then
-    local -a options=(-P "${cur%%@*}@" -- "${cur#*@}")
+    options=(-P "${cur%%@*}@" -- "${cur#*@}")
   else
-    local -a options=(-- "$cur")
+    options=(-- "$cur")
   fi
 
   local IFS=$'\n'
@@ -34,7 +35,7 @@ function _omb_completion_ssh {
     local include_file
     for include_file in "${include_files[@]}";do
       # parse all defined hosts from that file
-      [[ -s "$include_file" ]] && config_files+=("$include_file")
+      [[ -s $include_file ]] && config_files+=("$include_file")
     done
 
     COMPREPLY+=($(compgen -W "$(awk '/^Host/ {for (i=2; i<=NF; i++) print $i}' "${config_files[@]}")" "${options[@]}"))
