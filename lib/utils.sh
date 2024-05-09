@@ -366,6 +366,13 @@ function _omb_util_add_prompt_command {
 }
 
 ## @fn _omb_util_split array str [sep]
+##   Split STR with SEP in a safe way and store the result in ARRAY.
+##   @param[out] array
+##     The name of an array variable to which the split result is stored.
+##   @param[in] str
+##     The string to split
+##   @param[in,opt]
+##     The set of separator characters.  The default is ' <tab><newline>'.
 function _omb_util_split {
   local __set=$- IFS=${3:-$' \t\n'}
   set -f
@@ -374,6 +381,13 @@ function _omb_util_split {
   return 0
 }
 
+## @fn _omb_util_glob_expand array glob
+##   Perform the pathname expansion of a glob pattern GLOB in a safe way and
+##   store the filenames in ARRAY.
+##   @param[out] array
+##     The name of an array variable to which the filenames are stored.
+##   @param[in] glob
+##     The glob pattern that is attempted to match filenames
 function _omb_util_glob_expand {
   local __set=$- __shopt __gignore=$GLOBIGNORE
   _omb_util_get_shopt failglob nullglob extglob
@@ -397,14 +411,6 @@ function _omb_util_glob_expand {
   [[ :$__shopt: != *:extglob:* ]] && shopt -u extglob
   [[ :$__shopt: != *:nullglob:* ]] && shopt -u nullglob
   [[ :$__shopt: == *:failglob:* ]] && shopt -s failglob
-  return 0
-}
-
-function _omb_util_split {
-  local __set=$- IFS=${3:-$' \t\n'}
-  set -f
-  eval -- "$1=(\$2)"
-  [[ $__set == *f* ]] || set +f
   return 0
 }
 
