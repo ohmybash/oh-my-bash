@@ -30,7 +30,7 @@ function _omb_completion_ssh {
       local i
       for i in "${!include_patterns[@]}"; do
         # relative or absolute path, if relative transforms to absolute
-        [[ ${include_patterns[i]} == /* ]] || include_patterns[i]=${basedir}/${include_patterns[i]}
+        [[ ${include_patterns[i]} == /* ]] || include_patterns[i]=$basedir/${include_patterns[i]}
       done
 
       # interpret possible globbing
@@ -49,15 +49,15 @@ function _omb_completion_ssh {
   local known_hosts_file
   for known_hosts_file in ~/.ssh/known_hosts /etc/ssh/ssh_known_hosts; do
     if [[ -r $known_hosts_file ]]; then
-      if grep -v -q -e '^ ssh-rsa' "${known_hosts_file}"; then
-        COMPREPLY+=($(compgen -W "$( awk '{print $1}' "${known_hosts_file}" | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
+      if grep -v -q -e '^ ssh-rsa' "$known_hosts_file"; then
+        COMPREPLY+=($(compgen -W "$(awk '{print $1}' "${known_hosts_file}" | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
       fi
     fi
   done
 
   # parse hosts defined in /etc/hosts
   if [[ -r /etc/hosts ]]; then
-    COMPREPLY+=($(compgen -W "$( grep -v '^[[:space:]]*$' /etc/hosts | grep -v '^#' | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
+    COMPREPLY+=($(compgen -W "$(grep -v '^[[:space:]]*$' /etc/hosts | grep -v '^#' | awk '{for (i=2; i<=NF; i++) print $i}' )" "${options[@]}"))
   fi
 
   _omb_completion_resolve_breaks
