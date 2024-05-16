@@ -16,16 +16,17 @@ function _omb_completion_ssh {
 
   local IFS=$'\n'
 
+  local base_config_file
   for base_config_file in ~/.ssh/config /etc/ssh/ssh_config; do
     # parse all defined hosts from config file
     if [[ -r $base_config_file ]]; then
       local basedir
-      basedir=$(dirname $base_config_file)
+      basedir=${base_config_file%/*}
       local -a config_files=("$base_config_file")
 
       # check if config file contains Include options
       local -a include_patterns
-      _omb_util_split include_patterns "$(awk -F' ' '/^Include/{print $2}' ${base_config_file} 2>/dev/null)" $'\n'
+      _omb_util_split include_patterns "$(awk -F' ' '/^Include/{print $2}' "$base_config_file" 2>/dev/null)" $'\n'
       local i
       for i in "${!include_patterns[@]}"; do
         # relative or absolute path, if relative transforms to absolute
@@ -45,6 +46,7 @@ function _omb_completion_ssh {
     fi
   done
 
+  local known_hosts_file
   for known_hosts_file in ~/.ssh/known_hosts /etc/ssh/ssh_known_hosts; do
     if [[ -r $known_hosts_file ]]; then
       if grep -v -q -e '^ ssh-rsa' "${known_hosts_file}"; then
