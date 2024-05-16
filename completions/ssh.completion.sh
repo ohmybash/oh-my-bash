@@ -16,13 +16,14 @@ function _omb_completion_ssh {
 
   local IFS=$'\n'
 
+  local -a config_files=()
   local base_config_file
   for base_config_file in ~/.ssh/config /etc/ssh/ssh_config; do
     # parse all defined hosts from config file
     if [[ -r $base_config_file ]]; then
       local basedir
       basedir=${base_config_file%/*}
-      local -a config_files=("$base_config_file")
+      config_files+=("$base_config_file")
 
       # check if config file contains Include options
       local -a include_patterns
@@ -41,19 +42,24 @@ function _omb_completion_ssh {
         # parse all defined hosts from that file
         [[ -s $include_file ]] && config_files+=("$include_file")
       done
-
-      COMPREPLY+=($(compgen -W "$(awk '/^Host/ {for (i=2; i<=NF; i++) print $i}' "${config_files[@]}")" "${options[@]}"))
     fi
   done
+  if ((${#config_files[@]} != 0)); then
+    COMPREPLY+=($(compgen -W "$(awk '/^Host/ {for (i=2; i<=NF; i++) print $i}' "${config_files[@]}")" "${options[@]}"))
+  fi
 
+  local -a known_hosts_files=()
   local known_hosts_file
   for known_hosts_file in ~/.ssh/known_hosts /etc/ssh/ssh_known_hosts; do
     if [[ -r $known_hosts_file ]]; then
       if grep -v -q -e '^ ssh-rsa' "$known_hosts_file"; then
-        COMPREPLY+=($(compgen -W "$(awk '{print $1}' "${known_hosts_file}" | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
+        known_hosts_files+=("$known_hosts_file")
       fi
     fi
   done
+  if ((${#known_hosts_files[@]} != 0)); then
+    COMPREPLY+=($(compgen -W "$(awk '{print $1}' "${known_hosts_files[@]}" | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
+  fi
 
   # parse hosts defined in /etc/hosts
   if [[ -r /etc/hosts ]]; then
