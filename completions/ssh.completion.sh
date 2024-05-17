@@ -52,13 +52,15 @@ function _omb_completion_ssh {
   local known_hosts_file
   for known_hosts_file in ~/.ssh/known_hosts /etc/ssh/ssh_known_hosts; do
     if [[ -r $known_hosts_file ]]; then
-      if grep -v -q -e '^ ssh-rsa' "$known_hosts_file"; then
-        known_hosts_files+=("$known_hosts_file")
-      fi
+      known_hosts_files+=("$known_hosts_file")
     fi
   done
   if ((${#known_hosts_files[@]} != 0)); then
-    COMPREPLY+=($(compgen -W "$(awk '{print $1}' "${known_hosts_files[@]}" | grep -v ^\| | cut -d, -f 1 | sed -e 's/\[//g' | sed -e 's/\]//g' | cut -d: -f1 | grep -v ssh-rsa)" "${options[@]}"))
+    COMPREPLY+=($(compgen -W "$(awk '
+      $1 !~ /^\|/ {
+        gsub(/[][]|[,:].*/, "", $1);
+        if ($1 !~ /ssh-rsa/) print $1;
+      }' "${known_hosts_files[@]}")" "${options[@]}"))
   fi
 
   # parse hosts defined in /etc/hosts
