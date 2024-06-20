@@ -287,16 +287,30 @@ function pushover {
 ## @fn _omb_util_get_shopt optnames...
 ##   @var[out] __shopt
 if ((_omb_bash_version >= 40100)); then
-  function _omb_util_get_shopt { __shopt=$BASHOPTS; }
+  function _omb_util_get_shopt() {
+    if [[ $1 == -v ]]; then
+      [[ $2 == __shopt ]] || local __shopt
+      _omb_util_get_shopt "${@:3}"
+      [[ $2 == __shopt ]] || printf -v "$2" '%s' "$__shopt"
+    else
+      __shopt=$BASHOPTS
+    fi
+  }
 else
   function _omb_util_get_shopt {
-    __shopt=
-    local opt
-    for opt; do
-      if shopt -q "$opt" &>/dev/null; then
-        __shopt=${__shopt:+$__shopt:}$opt
-      fi
-    done
+    if [[ $1 == -v ]]; then
+      [[ $2 == __shopt ]] || local __shopt
+      _omb_util_get_shopt "${@:3}"
+      [[ $2 == __shopt ]] || printf -v "$2" '%s' "$__shopt"
+    else
+      __shopt=
+      local opt
+      for opt; do
+        if shopt -q "$opt" &>/dev/null; then
+          __shopt=${__shopt:+$__shopt:}$opt
+        fi
+      done
+    fi
   }
 fi
 
@@ -412,6 +426,44 @@ function _omb_util_glob_expand {
   [[ :$__shopt: != *:nullglob:* ]] && shopt -u nullglob
   [[ :$__shopt: == *:failglob:* ]] && shopt -s failglob
   return 0
+}
+
+## @fn _omb_util_split_lines array_name string
+function _omb_util_split_lines {
+  local __set=$- IFS=$'\n'
+  set -f
+  eval "$1=(\$2)"
+  [[ $__set == *f* ]] || set +f
+  return 0
+}
+
+## @fn _omb_util_array_remove array_name value
+function _omb_util_array_contains {
+  [[ $1 == ret ]] ||
+    eval "local -a ret=(\"\${$2[@]}\")"
+  local value
+  for value in "${ret[@]}"; do
+    if [[ $value == "$2" ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+## @fn _omb_util_array_remove array_name values...
+function _omb_util_array_remove {
+  local __script='
+    local iA yA
+    for iA in ${!A[@]}; do
+      for yA in "${@:2}"; do
+        if [[ ${A[iA]} == "$yA" ]]; then
+          unset -v '\''A[iA]'\''
+          continue 2
+        fi
+      done
+    done
+    A=("${A[@]}") # compaction
+  '; eval -- "${__script//A/$1}"
 }
 
 function _omb_util_alias {
