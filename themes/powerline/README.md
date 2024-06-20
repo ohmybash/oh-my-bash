@@ -18,6 +18,7 @@ A colorful theme, where shows a lot information about your shell session.
 * SCM Repository status (e.g. Git, SVN)
 * The current Python environment (Virtualenv, venv, and Conda are supported) in use
 * The current Ruby environment (rvm and rbenv are supported) in use
+* The current Kubernetes context in use (need kubectl)
 * Last command exit code (only shown when the exit code is greater than 0)
 
 ## Configuration
@@ -52,6 +53,7 @@ The contents of the prompt can be "reordered", all the "segments" (every piece o
 * ruby
 * scm
 * user_info
+* k8s_info
 
 A variables can be defined to set the order of the prompt segments:
 
