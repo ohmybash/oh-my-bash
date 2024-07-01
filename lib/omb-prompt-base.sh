@@ -1,5 +1,6 @@
 #! bash oh-my-bash.module
 
+_omb_module_require lib:omb-util
 _omb_module_require lib:omb-deprecate
 _omb_module_require lib:omb-prompt-colors
 
@@ -101,7 +102,9 @@ function _omb_prompt_format {
     local __suffix=${3#*:}_SUFFIX; __suffix=${!__suffix-} # deprecate name
     __format=${__prefix//'%'/'%%'}%s${__suffix//'%'/'%%'}
   fi
-  printf -v "$1" "$__format" "$2"
+  local REPLY
+  _omb_string_escape_prompt "$2"
+  printf -v "$1" "$__format" "$REPLY"
 }
 
 function _omb_prompt_git {
