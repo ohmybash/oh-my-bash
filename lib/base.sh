@@ -229,9 +229,9 @@ function ii {
   echo -e "\\n${_omb_term_brown}Users logged on:$NC " ; w -h
   echo -e "\\n${_omb_term_brown}Current date :$NC " ; date
   echo -e "\\n${_omb_term_brown}Machine stats :$NC " ; uptime
-  [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_brown}Current network location :$NC " ; scselect
+  is_os darwin && echo -e "\\n${_omb_term_brown}Current network location :$NC " ; scselect
   echo -e "\\n${_omb_term_brown}Public facing IP Address :$NC " ;myip
-  [[ "$OSTYPE" == darwin* ]] && echo -e "\\n${_omb_term_brown}DNS Configuration:$NC " ; scutil --dns
+  is_os darwin && echo -e "\\n${_omb_term_brown}DNS Configuration:$NC " ; scutil --dns
   echo
 }
 
@@ -257,7 +257,7 @@ function batch_chmod {
 #   usage: disk usage per directory, in Mac OS X and Linux
 #   -------------------------------------------------------------------
 function usage {
-  if [ "$(uname)" = "Darwin" ]; then
+  if is_os darwin; then
     if [ -n "$1" ]; then
       du -hd 1 "$1"
     else

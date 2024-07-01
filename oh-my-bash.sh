@@ -117,7 +117,7 @@ _omb_module_require_lib "${_omb_init_files[@]}"
 unset -v _omb_init_files
 
 # Figure out the SHORT hostname
-if [[ $OSTYPE = darwin* ]]; then
+if is_os darwin; then
   # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
   SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*}
 else

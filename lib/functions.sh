@@ -31,7 +31,7 @@ function open_command() {
   esac
 
   # don't use nohup on OSX
-  if [[ "$OSTYPE" == darwin* ]]; then
+  if is_os darwin; then
     $open_cmd "$@" &>/dev/null
   else
     nohup $open_cmd "$@" &>/dev/null

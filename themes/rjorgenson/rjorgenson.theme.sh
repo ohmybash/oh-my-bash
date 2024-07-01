@@ -16,7 +16,7 @@ SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
 SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 PROMPT_CHAR="${OMB_THEME_BRACKET_COLOR}➞ ${_omb_prompt_normal}"
-if [[ $OSTYPE == *darwin* ]]; then
+if is_os darwin; then
   PROMPT_CHAR="${OMB_THEME_BRACKET_COLOR}➞  ${_omb_prompt_normal}"
 fi
 
