@@ -224,8 +224,8 @@ function brainy {
   esac
   local seg
   for seg in "${segs[@]}"; do
-    seg=$(printf "%s" "${seg}" | tr '[:lower:]' '[:upper:]')
-    "$func" "${seg}"
+    seg=$(printf "%s" "$seg" | tr '[:lower:]' '[:upper:]')
+    "$func" "$seg"
   done
 }
 
