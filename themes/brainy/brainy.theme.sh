@@ -43,17 +43,18 @@ function ____brainy_bottom_parse {
 }
 
 function ____brainy_top {
-  _TOP_LEFT=""
-  _TOP_RIGHT=""
-  __TOP_RIGHT_LEN=0
-  __SEG_AT_RIGHT=0
+  local _TOP_LEFT=""
+  local _TOP_RIGHT=""
+  local __TOP_RIGHT_LEN=0
+  local __SEG_AT_RIGHT=0
 
+  local seg info
   for seg in ${___BRAINY_TOP_LEFT}; do
     info="$(___brainy_prompt_"${seg}")"
     [ -n "${info}" ] && ____brainy_top_left_parse "${info}"
   done
 
-  ___cursor_right="\033[500C"
+  local ___cursor_right="\033[500C"
   _TOP_LEFT+="${___cursor_right}"
 
   for seg in ${___BRAINY_TOP_RIGHT}; do
@@ -62,16 +63,16 @@ function ____brainy_top {
   done
 
   [ $__TOP_RIGHT_LEN -gt 0 ] && __TOP_RIGHT_LEN=$(( __TOP_RIGHT_LEN - 1 ))
-  ___cursor_adjust="\033[${__TOP_RIGHT_LEN}D"
+  local ___cursor_adjust="\033[${__TOP_RIGHT_LEN}D"
   _TOP_LEFT+="${___cursor_adjust}"
 
   printf "%s%s" "${_TOP_LEFT}" "${_TOP_RIGHT}"
 }
 
 function ____brainy_bottom {
-  _BOTTOM=""
+  local _BOTTOM="" seg
   for seg in $___BRAINY_BOTTOM; do
-    info="$(___brainy_prompt_"${seg}")"
+    local info="$(___brainy_prompt_"${seg}")"
     [ -n "${info}" ] && ____brainy_bottom_parse "${info}"
   done
   printf "\n%s" "${_BOTTOM}"
@@ -82,14 +83,14 @@ function ____brainy_bottom {
 ##############
 
 function ___brainy_prompt_user_info {
-  color=$_omb_prompt_bold_navy
+  local color=$_omb_prompt_bold_navy
   if [ "${THEME_SHOW_SUDO}" == "true" ]; then
     if [ $(sudo -n id -u 2>&1 | grep 0) ]; then
       color=$_omb_prompt_bold_brown
     fi
   fi
-  box="[|]"
-  info="\u@\H"
+  local box="[|]"
+  local info="\u@\H"
   if [ -n "${SSH_CLIENT}" ]; then
     printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
   else
@@ -98,24 +99,24 @@ function ___brainy_prompt_user_info {
 }
 
 function ___brainy_prompt_dir {
-  color=$_omb_prompt_bold_olive
-  box="[|]"
-  info="\w"
+  local color=$_omb_prompt_bold_olive
+  local box="[|]"
+  local info="\w"
   printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
 }
 
 function ___brainy_prompt_scm {
   [ "${THEME_SHOW_SCM}" != "true" ] && return
-  color=$_omb_prompt_bold_green
-  box="$(scm_char) "
-  info="$(scm_prompt_info)"
+  local color=$_omb_prompt_bold_green
+  local box="$(scm_char) "
+  local info="$(scm_prompt_info)"
   printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
 }
 
 function ___brainy_prompt_python {
   [ "${THEME_SHOW_PYTHON}" != "true" ] && return
-  color=$_omb_prompt_bold_olive
-  box="[|]"
+  local color=$_omb_prompt_bold_olive
+  local box="[|]"
   local python_env
   _omb_prompt_get_python_env || return 0
   printf "%s|%s|%s|%s" "${color}" "${python_env}" "${_omb_prompt_bold_navy}" "${box}"
@@ -123,40 +124,40 @@ function ___brainy_prompt_python {
 
 function ___brainy_prompt_ruby {
   [ "${THEME_SHOW_RUBY}" != "true" ] && return
-  color=$_omb_prompt_bold_white
-  box="[|]"
-  info="rb-$(_omb_prompt_print_ruby_env)"
+  local color=$_omb_prompt_bold_white
+  local box="[|]"
+  local info="rb-$(_omb_prompt_print_ruby_env)"
   printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_brown}" "${box}"
 }
 
 function ___brainy_prompt_todo {
   [ "${THEME_SHOW_TODO}" != "true" ] && return
   _omb_util_binary_exists todo.sh || return
-  color=$_omb_prompt_bold_white
-  box="[|]"
-  info="t:$(todo.sh ls | command grep -E "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"
+  local color=$_omb_prompt_bold_white
+  local box="[|]"
+  local info="t:$(todo.sh ls | command grep -E "TODO: [0-9]+ of ([0-9]+)" | awk '{ print $4 }' )"
   printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_green}" "${box}"
 }
 
 function ___brainy_prompt_clock {
   [ "${THEME_SHOW_CLOCK}" != "true" ] && return
-  color=$THEME_CLOCK_COLOR
-  box="[|]"
-  info="$(date +"${THEME_CLOCK_FORMAT}")"
+  local color=$THEME_CLOCK_COLOR
+  local box="[|]"
+  local info="$(date +"${THEME_CLOCK_FORMAT}")"
   printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_purple}" "${box}"
 }
 
 function ___brainy_prompt_battery {
   [ ! -e "$OSH/plugins/battery/battery.plugin.sh" ] ||
   [ "${THEME_SHOW_BATTERY}" != "true" ] && return
-  info=$(battery_percentage)
-  color=$_omb_prompt_bold_green
+  local info=$(battery_percentage)
+  local color=$_omb_prompt_bold_green
   if [ "$info" -lt 50 ]; then
     color=$_omb_prompt_bold_olive
   elif [ "$info" -lt 25 ]; then
     color=$_omb_prompt_bold_brown
   fi
-  box="[|]"
+  local box="[|]"
   ac_adapter_connected && info+="+"
   [ "$info" == "100+" ] && info="AC"
   printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_white}" "${box}"
@@ -164,13 +165,13 @@ function ___brainy_prompt_battery {
 
 function ___brainy_prompt_exitcode {
   [ "${THEME_SHOW_EXITCODE}" != "true" ] && return
-  color=$_omb_prompt_bold_purple
+  local color=$_omb_prompt_bold_purple
   [ "$exitcode" -ne 0 ] && printf "%s|%s" "${color}" "${exitcode}"
 }
 
 function ___brainy_prompt_char {
-  color=$_omb_prompt_bold_white
-  prompt_char="${__BRAINY_PROMPT_CHAR_PS1}"
+  local color=$_omb_prompt_bold_white
+  local prompt_char="${__BRAINY_PROMPT_CHAR_PS1}"
   printf "%s|%s" "${color}" "${prompt_char}"
 }
 
@@ -179,15 +180,13 @@ function ___brainy_prompt_char {
 #########
 
 function __brainy_show {
-  typeset _seg=${1:-}
-  shift
-  export THEME_SHOW_${_seg}=true
+  local _seg=${1:-}
+  export "THEME_SHOW_${_seg}=true"
 }
 
 function __brainy_hide {
-  typeset _seg=${1:-}
-  shift
-  export THEME_SHOW_${_seg}=false
+  local _seg=${1:-}
+  export "THEME_SHOW_${_seg}=false"
 }
 
 function _brainy_completion {
@@ -213,20 +212,21 @@ function _brainy_completion {
 }
 
 function brainy {
-  typeset action=${1:-}
+  local action=${1:-}
   shift
-  typeset segs IFS=$' \t\n'
+  local segs IFS=$' \t\n'
   _omb_util_split segs "$*"
-  typeset func
+  local func
   case $action in
     show)
       func=__brainy_show;;
     hide)
       func=__brainy_hide;;
   esac
+  local seg
   for seg in "${segs[@]}"; do
     seg=$(printf "%s" "${seg}" | tr '[:lower:]' '[:upper:]')
-    $func "${seg}"
+    "$func" "${seg}"
   done
 }
 
@@ -277,13 +277,12 @@ function __brainy_ps1 {
 }
 
 function __brainy_ps2 {
-  color=$_omb_prompt_bold_white
+  local color=$_omb_prompt_bold_white
   printf "%s%s%s" "${color}" "${__BRAINY_PROMPT_CHAR_PS2}  " "${_omb_prompt_normal}"
 }
 
 function _omb_theme_PROMPT_COMMAND {
-  exitcode="$?"
-
+  local exitcode="$?" # used by segment "exitcode"
   PS1="$(__brainy_ps1)"
   PS2="$(__brainy_ps2)"
 }
