@@ -265,17 +265,11 @@ function __pb10k_completion {
   local actions='show hide'
   local segments='battery clock exitcode python ruby scm sudo todo'
   case $action in
-  show)
-    COMPREPLY=( "$(compgen -W "$segments" -- "$cur")" )
-    return 0
-    ;;
-  hide)
-    COMPREPLY=( "$(compgen -W "$segments" -- "$cur")" )
-    return 0
-    ;;
+  show | hide )
+    _omb_util_split COMPREPLY "$(compgen -W "$segments" -- "$cur")" $'\n' ;;
+  *)
+    _omb_util_split COMPREPLY "$(compgen -W "$actions" -- "$cur")" $'\n' ;;
   esac
-
-  COMPREPLY=( "$(compgen -W "$actions" -- "$cur")" )
   return 0
 }
 
