@@ -8,10 +8,8 @@
 #############
 
 function ____brainy_top_left_parse {
-  ifs_old="${IFS}"
-  IFS="|"
-  args=( $1 )
-  IFS="${ifs_old}"
+  local args
+  _omb_util_split args "$1" '|'
   if [ -n "${args[3]}" ]; then
     _TOP_LEFT+="${args[2]}${args[3]}"
   fi
@@ -23,10 +21,8 @@ function ____brainy_top_left_parse {
 }
 
 function ____brainy_top_right_parse {
-  ifs_old="${IFS}"
-  IFS="|"
-  args=( $1 )
-  IFS="${ifs_old}"
+  local args
+  _omb_util_split args "$1" '|'
   _TOP_RIGHT+=" "
   if [ -n "${args[3]}" ]; then
     _TOP_RIGHT+="${args[2]}${args[3]}"
@@ -40,10 +36,8 @@ function ____brainy_top_right_parse {
 }
 
 function ____brainy_bottom_parse {
-  ifs_old="${IFS}"
-  IFS="|"
-  args=( $1 )
-  IFS="${ifs_old}"
+  local args
+  _omb_util_split args "$1" '|'
   _BOTTOM+="${args[0]}${args[1]}"
   [ ${#args[1]} -gt 0 ] && _BOTTOM+=" "
 }
@@ -221,7 +215,8 @@ function _brainy_completion {
 function brainy {
   typeset action=${1:-}
   shift
-  typeset segs=${*:-}
+  typeset segs IFS=$' \t\n'
+  _omb_util_split segs "$*"
   typeset func
   case $action in
     show)
@@ -229,7 +224,7 @@ function brainy {
     hide)
       func=__brainy_hide;;
   esac
-  for seg in ${segs}; do
+  for seg in "${segs[@]}"; do
     seg=$(printf "%s" "${seg}" | tr '[:lower:]' '[:upper:]')
     $func "${seg}"
   done
