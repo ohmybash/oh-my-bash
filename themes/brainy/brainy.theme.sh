@@ -122,8 +122,9 @@ function ___brainy_prompt_python {
   [ "${THEME_SHOW_PYTHON}" != "true" ] && return
   color=$_omb_prompt_bold_olive
   box="[|]"
-  info="$(python_version_prompt)"
-  printf "%s|%s|%s|%s" "${color}" "${info}" "${_omb_prompt_bold_navy}" "${box}"
+  local python_env
+  _omb_prompt_get_python_env || return 0
+  printf "%s|%s|%s|%s" "${color}" "${python_env}" "${_omb_prompt_bold_navy}" "${box}"
 }
 
 function ___brainy_prompt_ruby {

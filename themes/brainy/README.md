@@ -67,7 +67,7 @@ Ruby environment version information:
 
 #### Python Environment
 
-Python environment version information:
+Python version and virtual environment information:
 
 `THEME_SHOW_PYTHON=false`
 
