@@ -285,6 +285,9 @@ function pb10k {
     func=__pb10k_show;;
   hide)
     func=__pb10k_hide;;
+  *)
+    printf 'pb10k: %s: unrecognized action\n' "$action" >&2
+    return 1
   esac
 
   local seg

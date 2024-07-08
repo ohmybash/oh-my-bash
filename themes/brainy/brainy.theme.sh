@@ -211,10 +211,13 @@ function brainy {
   _omb_util_split segs "$*"
   local func
   case $action in
-    show)
-      func=__brainy_show;;
-    hide)
-      func=__brainy_hide;;
+  show)
+    func=__brainy_show;;
+  hide)
+    func=__brainy_hide;;
+  *)
+    printf 'brainy: %s: unrecognized action\n' "$action" >&2
+    return 1 ;;
   esac
   local seg
   for seg in "${segs[@]}"; do
