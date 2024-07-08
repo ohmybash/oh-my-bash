@@ -85,7 +85,7 @@ function ____brainy_bottom {
 function ___brainy_prompt_user_info {
   local color=$_omb_prompt_bold_navy
   if [[ $THEME_SHOW_SUDO == true ]]; then
-    if sudo -n id -u 2>&1 | grep -q 0; then
+    if [[ $(sudo -n id -u 2>&1) == 0 ]]; then
       color=$_omb_prompt_bold_brown
     fi
   fi
