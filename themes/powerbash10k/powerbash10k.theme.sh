@@ -168,7 +168,7 @@ function __pb10k_prompt_python {
   [ "$THEME_SHOW_PYTHON" != "true" ] && return
   color=$_omb_prompt_bold_olive
   box=""
-  read -ra response_array <<< "$(__pb10k_remove_empty_elements "$(python_version_prompt)")"
+  read -ra response_array <<< "$(_omb_prompt_get_python_env; __pb10k_remove_empty_elements "$python_env")"
   info="${response_array[-1]}"
   if [ ${#response_array[@]} -gt 1 ]; then
     # Print all elements except the last one, separated by commas
