@@ -15,7 +15,7 @@ OMB_PROMPT_CONDAENV_FORMAT="${_omb_prompt_bold_purple}condaenv:(${_omb_prompt_re
 
 function _omb_theme_PROMPT_COMMAND() {
   local arrow="${_omb_prompt_bold_purple}➜${_omb_prompt_reset_color}"
-  local user_name="${_omb_prompt_white}\u${_omb_prompt_reset_color}"
+  local user_name="${_omb_prompt_normal}\u${_omb_prompt_reset_color}"
   local base_directory="${_omb_prompt_bold_blue}\W${_omb_prompt_reset_color}"
   local GIT_THEME_PROMPT_PREFIX="${_omb_prompt_bold_purple}git:(${_omb_prompt_reset_color}"
   local SVN_THEME_PROMPT_PREFIX="${_omb_prompt_bold_purple}svn:(${_omb_prompt_reset_color}"
