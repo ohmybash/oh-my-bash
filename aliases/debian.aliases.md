@@ -1,9 +1,11 @@
 # Aliases `debian`
 
 Shorted aliases for most used Debian specific commands.
-To activate it, add `debian` to `plugins(...)` in your `.bashrc` file:
+To activate it, add `debian` to `aliases=(...)` in your `.bashrc` file:
 
-`plugins=(... debian)`
+```bash
+aliases=(... debian)`
+```
 
 ## Basic Commands
 
