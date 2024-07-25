@@ -197,9 +197,9 @@ function _brainy_completion {
   local segments="battery clock exitcode python ruby scm sudo todo"
   case $_action in
   show | hide)
-    _omb_util_skip COMPREPLY "$(compgen -W "$segments" -- "$cur")" $'\n' ;;
+    _omb_util_split COMPREPLY "$(compgen -W "$segments" -- "$cur")" $'\n' ;;
   *)
-    _omb_util_skip COMPREPLY "$(compgen -W "$actions" -- "$cur")" $'\n' ;;
+    _omb_util_split COMPREPLY "$(compgen -W "$actions" -- "$cur")" $'\n' ;;
   esac
   return 0
 }
