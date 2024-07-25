@@ -85,7 +85,7 @@ function ____brainy_bottom {
 function ___brainy_prompt_user_info {
   local color=$_omb_prompt_bold_navy
   if [[ $THEME_SHOW_SUDO == true ]]; then
-    if sudo -n id -u 2>&1 | grep -q 0; then
+    if [[ $(sudo -n id -u 2>&1) == 0 ]]; then
       color=$_omb_prompt_bold_brown
     fi
   fi
@@ -195,18 +195,12 @@ function _brainy_completion {
   local _action=${COMP_WORDS[1]}
   local actions="show hide"
   local segments="battery clock exitcode python ruby scm sudo todo"
-  case "$_action" in
-    show)
-      COMPREPLY=( $(compgen -W "$segments" -- "$cur") )
-      return 0
-      ;;
-    hide)
-      COMPREPLY=( $(compgen -W "$segments" -- "$cur") )
-      return 0
-      ;;
+  case $_action in
+  show | hide)
+    _omb_util_skip COMPREPLY "$(compgen -W "$segments" -- "$cur")" $'\n' ;;
+  *)
+    _omb_util_skip COMPREPLY "$(compgen -W "$actions" -- "$cur")" $'\n' ;;
   esac
-
-  COMPREPLY=( $(compgen -W "$actions" -- "$cur") )
   return 0
 }
 
@@ -217,15 +211,18 @@ function brainy {
   _omb_util_split segs "$*"
   local func
   case $action in
-    show)
-      func=__brainy_show;;
-    hide)
-      func=__brainy_hide;;
+  show)
+    func=__brainy_show;;
+  hide)
+    func=__brainy_hide;;
+  *)
+    printf 'brainy: %s: unrecognized action\n' "$action" >&2
+    return 1 ;;
   esac
   local seg
   for seg in "${segs[@]}"; do
-    seg=$(printf "%s" "${seg}" | tr '[:lower:]' '[:upper:]')
-    "$func" "${seg}"
+    seg=$(printf "%s" "$seg" | tr '[:lower:]' '[:upper:]')
+    "$func" "$seg"
   done
 }
 
