@@ -1,5 +1,10 @@
 # Aliases `general`
 
+This plugin provides aliases originally introduced in a blog post by Nathaniel
+Landau (2013-07-02) [1] and later modified:
+
+- [1] Nathaniel Landau, ["My Mac OSX Bash Profile"](https://natelandau.com/my-mac-osx-bash_profile/), 2013-07-02.
+
 ## Basic Commands
 
 | Alias          | Command                                | Description                                                                        |
