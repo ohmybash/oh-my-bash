@@ -12,10 +12,12 @@ where `<ALIASES_NAME>` should be related by the name of the module to activate.
 
 ## List of aliases modules
 
+See the respective pages for details.
+
 - `chmod`
 - [`debian`](debian.aliases.md)
 - [`docker`](docker.aliases.md)
-- `general`
+- [`general`](general.aliases.md)
 - `ls`
 - `misc`
 - [`package-manager`](package-manager.aliases.md)
