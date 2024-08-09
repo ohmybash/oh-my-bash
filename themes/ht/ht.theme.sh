@@ -54,7 +54,7 @@ function _omb_theme_PROMPT_COMMAND() {
   PS1=""
 
   # Exit code indicator
-  PS1+="$(exit_color "$EXIT_CODE")●${_omb_prompt_reset_color}"
+  PS1+="$(_omb_theme_ht_exit_color "$EXIT_CODE")●${_omb_prompt_reset_color}"
 
   # Environment info
   PS1+=" ${_omb_prompt_red}$(_omb_prompt_get_ruby_env)${_omb_prompt_reset_color}"
