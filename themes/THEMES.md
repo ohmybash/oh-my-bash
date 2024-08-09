@@ -111,6 +111,10 @@
 
 [![](hawaii50/hawaii50-dark.png)](hawaii50/hawaii50-dark.png)
 
+## `ht`
+
+[![](ht/ht-dark.png)](ht/ht-dark.png)
+
 ## `iterate`
 
 [![](iterate/iterate-dark.png)](iterate/iterate-dark.png)
