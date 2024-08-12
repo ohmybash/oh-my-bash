@@ -13,7 +13,7 @@ function _omb_theme_sirup_rubygem {
   [[ $version == 1.9.2 ]] && version=
 
   local full=$version$gemset
-  [[ $full ]] && echo "$full"
+  [[ $full ]] && _omb_util_print "$full"
 }
 
 function _omb_theme_PROMPT_COMMAND {

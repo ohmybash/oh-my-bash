@@ -57,9 +57,9 @@ function __find_mvn_projects {
     local withoutPom=${LINE%/pom.xml}
     local module=${withoutPom#./}
     if [[ ! $module ]]; then
-      echo "."
+      _omb_util_print "."
     else
-      echo $module
+      _omb_util_print $module
     fi
   done
 }
@@ -89,7 +89,7 @@ function _realpath {
   }
 
   # reassemble realpath
-  echo "$tmppwd/${1##*/}"
+  _omb_util_print "$tmppwd/${1##*/}"
   return 1 #success
 }
 

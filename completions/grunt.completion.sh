@@ -28,7 +28,7 @@ function _grunt_gruntfile {
     local gruntfile
     for gruntfile in "$curpath"/{G,g}runtfile.{js,coffee}; do
       if [[ -e $gruntfile ]]; then
-        echo "$gruntfile"
+        _omb_util_print "$gruntfile"
         return 0
       fi
     done

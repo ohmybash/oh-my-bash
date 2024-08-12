@@ -13,7 +13,7 @@ function __tonka_date {
 function __tonka_clock {
   local LIGHT_BLUE="\[\033[1;34m\]"
   if [[ "${THEME_SHOW_CLOCK}" = "true" ]]; then
-    echo "$(__tonka_time)${LIGHT_BLUE}:$(__tonka_date)${LIGHT_BLUE}:"
+    _omb_util_print "$(__tonka_time)${LIGHT_BLUE}:$(__tonka_date)${LIGHT_BLUE}:"
   fi
 }
 

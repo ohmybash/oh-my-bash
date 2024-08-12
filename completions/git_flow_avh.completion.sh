@@ -547,7 +547,7 @@ __git_flow_prefix ()
 {
   case "$1" in
   feature|bugfix|release|hotfix|support)
-    _omb_prompt_git config "gitflow.prefix.$1" 2> /dev/null || echo "$1/"
+    _omb_prompt_git config "gitflow.prefix.$1" 2> /dev/null || _omb_util_print "$1/"
     return
     ;;
   esac
@@ -561,7 +561,7 @@ __git_flow_list_local_branches ()
       while read -r entry; do
         eval "$entry"
         ref="${ref#$prefix}"
-        echo "$ref"
+        _omb_util_print "$ref"
       done | sort
   else
     _omb_prompt_git for-each-ref --format="ref=%(refname:short)" refs/heads/ | sort
@@ -572,25 +572,25 @@ __git_flow_list_local_branches ()
 __git_flow_list_remote_branches ()
 {
   local prefix="$(__git_flow_prefix $1)"
-  local origin="$(_omb_prompt_git config gitflow.origin 2> /dev/null || echo "origin")"
+  local origin="$(_omb_prompt_git config gitflow.origin 2> /dev/null || _omb_util_print "origin")"
   _omb_prompt_git for-each-ref --shell --format='%(refname:short)' refs/remotes/$origin/$prefix | \
     while read -r entry; do
       eval "$entry"
       ref="${ref##$prefix}"
-      echo "$ref"
+      _omb_util_print "$ref"
     done | sort
 }
 
 __git_flow_list_branches ()
 {
-  local origin="$(_omb_prompt_git config gitflow.origin 2> /dev/null || echo "origin")"
+  local origin="$(_omb_prompt_git config gitflow.origin 2> /dev/null || _omb_util_print "origin")"
   if [ -n "$1" ]; then
     local prefix="$(__git_flow_prefix $1)"
     _omb_prompt_git for-each-ref --shell --format="ref=%(refname:short)" refs/heads/$prefix refs/remotes/$origin/$prefix | \
       while read -r entry; do
         eval "$entry"
         ref="${ref##$prefix}"
-        echo "$ref"
+        _omb_util_print "$ref"
       done | sort
   else
     _omb_prompt_git for-each-ref --format="%(refname:short)" refs/heads/ refs/remotes/$origin | sort

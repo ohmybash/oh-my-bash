@@ -13,7 +13,7 @@ function __pb10k_remove_empty_elements {
     trimmed=${trimmed%"${trimmed##*[![:space:]]}"}
     [[ $trimmed ]] && new_array+=("$element")
   done
-  echo "${new_array[@]}"
+  _omb_util_print "${new_array[*]}"
 }
 
 function __pb10k_format_duration {
@@ -23,11 +23,11 @@ function __pb10k_format_duration {
   local hours=$((duration / 3600))
 
   if ((hours > 0)); then
-    echo "${hours}h ${minutes}m ${seconds}s"
+    _omb_util_print "${hours}h ${minutes}m ${seconds}s"
   elif ((minutes > 0)); then
-    echo "${minutes}m ${seconds}s"
+    _omb_util_print "${minutes}m ${seconds}s"
   else
-    echo "${seconds}s"
+    _omb_util_print "${seconds}s"
   fi
 }
 
@@ -152,8 +152,8 @@ function __pb10k_prompt_scm {
   local color=$_omb_prompt_bold_green
   scm
   local box=""
-  local info="$(if [ "$SCM" == "git" ]; then echo "  "; fi)"
-  info+="$(if [ "$SCM" != "NONE" ]; then echo " $(scm_prompt_info)"; fi)"
+  local info="$(if [ "$SCM" == "git" ]; then _omb_util_print "  "; fi)"
+  info+="$(if [ "$SCM" != "NONE" ]; then _omb_util_print " $(scm_prompt_info)"; fi)"
   [[ $info ]] || return 0
   printf "%s|%s|%s|%s" "$color" "$info" "$_omb_prompt_bold_green" "$box"
 }
@@ -227,9 +227,9 @@ function __pb10k_prompt_exitcode {
 function __pb10k_prompt_char {
   local color=$(
     if ((exitcode != 0)); then
-      echo "$_omb_prompt_bold_red"
+      _omb_util_print "$_omb_prompt_bold_red"
     else
-      echo "$_omb_prompt_bold_green"
+      _omb_util_print "$_omb_prompt_bold_green"
     fi
   )
   printf "%s|%s" "$color" "$__PB10K_PROMPT_CHAR_PS1"

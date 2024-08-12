@@ -12,7 +12,7 @@ SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 function is_vim_shell {
   if [ ! -z "$VIMRUNTIME" ]
   then
-    echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
+    _omb_util_print "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
@@ -22,7 +22,7 @@ function scm_prompt {
   then
     return
   else
-    echo " $(scm_char) (${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal})"
+    _omb_util_print " $(scm_char) (${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal})"
   fi
 }
 

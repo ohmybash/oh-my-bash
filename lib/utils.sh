@@ -77,7 +77,7 @@ function _omb_util_setexit {
 }
 
 function _omb_util_defun_print {
-  builtin eval -- "function $1 { local $3; $2 \"\$@\" && printf '%s\n' \"\${$3}\"; }"
+  builtin eval -- "function $1 { local $3; $2 \"\$@\" && _omb_util_print \"\${$3}\"; }"
 }
 
 #

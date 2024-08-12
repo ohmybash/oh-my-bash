@@ -9,7 +9,7 @@ function venv {
   if [ -n "$VIRTUAL_ENV" ]
   then
     local env=$VIRTUAL_ENV
-    echo "${gray} in ${_omb_prompt_red}${env##*/} "
+    _omb_util_print "${gray} in ${_omb_prompt_red}${env##*/} "
   fi
 }
 

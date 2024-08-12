@@ -15,12 +15,12 @@ function current_repository() {
   if ! $_omb_git_git_cmd rev-parse --is-inside-work-tree &> /dev/null; then
     return
   fi
-  echo $($_omb_git_git_cmd remote -v | cut -d':' -f 2)
+  _omb_util_print $($_omb_git_git_cmd remote -v | cut -d':' -f 2)
 }
 # Warn if the current branch is a WIP
 function work_in_progress() {
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    echo "WIP!!"
+    _omb_util_print "WIP!!"
   fi
 }
 
@@ -30,11 +30,11 @@ function git_develop_branch() {
   local branch
   for branch in dev devel development; do
     if command git show-ref -q --verify refs/heads/"$branch"; then
-      echo "$branch"
+      _omb_util_print "$branch"
       return
     fi
   done
-  echo develop
+  _omb_util_print develop
 }
 
 # Check if main exists and use instead of master
@@ -43,11 +43,11 @@ function git_main_branch() {
   local ref
   for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default}; do
     if command git show-ref -q --verify "$ref"; then
-      echo "${ref##*/}"
+      _omb_util_print "${ref##*/}"
       return
     fi
   done
-  echo master
+  _omb_util_print master
 }
 
 #
@@ -306,7 +306,7 @@ alias grhh='command git reset --hard'
 alias grhk='command git reset --keep'
 alias grhs='command git reset --soft'
 alias groh='command git reset "origin/$(git_current_branch)" --hard'
-alias grt='cd $(command git rev-parse --show-toplevel || echo ".")'
+alias grt='cd $(command git rev-parse --show-toplevel || _omb_util_print ".")'
 alias gru='command git reset --'
 
 alias grs='command git restore'

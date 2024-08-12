@@ -1,4 +1,11 @@
 #! bash oh-my-bash.module
+#
+# Taken from https://github.com/iljaweis/vault-bash-completion
+#
+# * 2024-08-13 Confirmed that the current version is up-to-date with the
+#   archived version:
+#   https://github.com/iljaweis/vault-bash-completion/blob/c42047c5bd6aca9045b7945db1c41654080076e1/vault-bash-completion.sh
+#
 # ---------------------------------------------------------------------------
 # vault-bash-completion
 #
@@ -11,7 +18,7 @@ function _vault_mounts {
   (
     set -euo pipefail
     if ! vault mounts 2> /dev/null | awk 'NR > 1 {print $1}'; then
-      echo "secret"
+      _omb_util_print "secret"
     fi
   )
 }
@@ -31,7 +38,7 @@ function _vault {
   if [[ $prev =~ ^(policies|policy-write|policy-delete) ]]; then
     local policies=$(vault policies 2> /dev/null)
     COMPREPLY=($(compgen -W "$policies" -- $cur))
-  elif (($(echo "$line" | wc -w) <= 2)); then
+  elif (($(wc -w <<< "$line") <= 2)); then
     if [[ $line =~ ^vault\ (read|write|delete|list)\ $ ]]; then
       COMPREPLY=($(compgen -W "$(_vault_mounts)" -- ''))
     else

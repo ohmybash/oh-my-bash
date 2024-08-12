@@ -18,28 +18,28 @@ SCM_NONE_CHAR=""
 function _omb_theme_ht_exit_color {
   case $1 in
   0)
-    echo "$_omb_prompt_green"
+    _omb_util_print "$_omb_prompt_green"
     ;;
   1)
-    echo "$_omb_prompt_red"
+    _omb_util_print "$_omb_prompt_red"
     ;;
   2)
-    echo "$_omb_prompt_gray"
+    _omb_util_print "$_omb_prompt_gray"
     ;;
   126)
-    echo "$_omb_prompt_cyan"
+    _omb_util_print "$_omb_prompt_cyan"
     ;;
   127)
-    echo "$_omb_prompt_magenta"
+    _omb_util_print "$_omb_prompt_magenta"
     ;;
   130)
-    echo "$_omb_prompt_black"
+    _omb_util_print "$_omb_prompt_black"
     ;;
   148)
-    echo "$_omb_prompt_yellow"
+    _omb_util_print "$_omb_prompt_yellow"
     ;;
   *)
-    echo "$_omb_prompt_blue"
+    _omb_util_print "$_omb_prompt_blue"
     ;;
   esac
 }

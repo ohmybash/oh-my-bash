@@ -185,7 +185,7 @@ function git_clean_branch {
   local stripped_ref=${unsafe_ref##refs/heads/}
   local clean_ref=${stripped_ref//[\$\`\\]/-}
   clean_ref=${clean_ref//[^[:print:]]/-} # strip escape sequences, etc.
-  echo $clean_ref
+  _omb_util_print $clean_ref
 }
 
 function git_prompt_minimal_info {
@@ -360,7 +360,7 @@ function get_hg_root {
 
   while [ "$CURRENT_DIR" != "/" ]; do
     if [ -d "$CURRENT_DIR/.hg" ]; then
-      echo "$CURRENT_DIR/.hg"
+      _omb_util_print "$CURRENT_DIR/.hg"
       return
     fi
 
@@ -620,7 +620,7 @@ if ! _omb_util_command_exists 'battery_charge' ; then
   # if user has installed battery plugin, skip this...
   function battery_charge (){
     # no op
-    echo -n
+    _omb_util_put
   }
 fi
 
@@ -629,15 +629,15 @@ fi
 if ! _omb_util_command_exists 'battery_percentage' ; then
   function battery_char (){
     # no op
-    echo -n
+    _omb_util_put
   }
 fi
 
 function aws_profile {
   if [[ $AWS_DEFAULT_PROFILE ]]; then
-    echo -e "${AWS_DEFAULT_PROFILE}"
+    _omb_util_print "$AWS_DEFAULT_PROFILE"
   else
-    echo -e "default"
+    _omb_util_print "default"
   fi
 }
 

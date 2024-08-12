@@ -14,10 +14,10 @@ RVM_THEME_PROMPT_PREFIX="|"
 RVM_THEME_PROMPT_SUFFIX="|"
 
 function __bobby_clock {
-  printf "$(clock_prompt) "
+  _omb_util_put "$(clock_prompt) "
 
   if [ "${THEME_SHOW_CLOCK_CHAR}" == "true" ]; then
-    printf "$(clock_char) "
+    _omb_util_put "$(clock_char) "
   fi
 }
 

@@ -1,5 +1,18 @@
 #! bash oh-my-bash.module
 
+function _omb_util_put {
+  printf '%s' "$@"
+}
+
+function _omb_util_print {
+  local IFS=$' \t\n'
+  printf '%s\n' "$*"
+}
+
+function _omb_util_print_lines {
+  printf '%s\n' "$@"
+}
+
 function _omb_string_escape_prompt {
   REPLY=$1
   local specialchars='\`$'

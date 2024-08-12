@@ -27,12 +27,12 @@ function __my_rvm_ruby_version {
   [[ $gemset ]] && gemset=@$gemset
   local version=$(awk -F'-' '{print $2}' <<< "$MY_RUBY_HOME")
   local full=$version$gemset
-  [[ $full ]] && echo "[$full]"
+  [[ $full ]] && _omb_util_print "[$full]"
 }
 
 function is_vim_shell {
   if [[ $VIMRUNTIME ]]; then
-    echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
+    _omb_util_print "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
@@ -41,7 +41,7 @@ function modern_scm_prompt {
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
-    echo "[$(scm_char)][$(scm_prompt_info)]"
+    _omb_util_print "[$(scm_char)][$(scm_prompt_info)]"
   fi
 }
 
@@ -49,7 +49,7 @@ function modern_scm_prompt {
 function chroot {
   if [[ $debian_chroot ]]; then
     local my_ps_chroot=$_omb_prompt_bold_teal$debian_chroot$_omb_prompt_normal
-    echo "($my_ps_chroot)"
+    _omb_util_print "($my_ps_chroot)"
   fi
 }
 
@@ -58,9 +58,9 @@ function my_ve {
   if [[ $VIRTUAL_ENV ]]; then
     local ve=$(basename "$VIRTUAL_ENV")
     local my_ps_ve=$_omb_prompt_bold_purple$ve$_omb_prompt_normal
-    echo "($my_ps_ve)"
+    _omb_util_print "($my_ps_ve)"
   fi
-  echo ""
+  _omb_util_print ""
 }
 
 function _omb_theme_PROMPT_COMMAND {

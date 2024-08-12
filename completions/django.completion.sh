@@ -66,7 +66,7 @@ function _omb_completion_django_init {
       python=${python##*/}
       [[ $python ]] && pythons+=("$python")
     done
-    _omb_util_split pythons "$(printf '%s\n' "${pythons[@]}" | sort -u)" $'\n'
+    _omb_util_split pythons "$(_omb_util_print_lines "${pythons[@]}" | sort -u)" $'\n'
   fi
 
   complete -F _omb_completion_django_python -o default "${pythons[@]}"

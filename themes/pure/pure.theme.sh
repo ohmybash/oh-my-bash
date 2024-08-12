@@ -20,7 +20,7 @@ function scm_prompt {
         then
             return
         else
-            echo "[$(scm_char)$(scm_prompt_info)]"
+            _omb_util_print "[$(scm_char)$(scm_prompt_info)]"
     fi
 }
 

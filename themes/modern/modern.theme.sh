@@ -21,7 +21,7 @@ PS3=">> "
 
 function is_vim_shell {
   if [[ $VIMRUNTIME ]]; then
-    echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
+    _omb_util_print "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
@@ -30,7 +30,7 @@ function modern_scm_prompt {
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
-    echo "[$(scm_char)][$(scm_prompt_info)]"
+    _omb_util_print "[$(scm_char)][$(scm_prompt_info)]"
   fi
 }
 

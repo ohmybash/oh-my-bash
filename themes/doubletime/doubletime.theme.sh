@@ -33,9 +33,9 @@ function doubletime_scm_prompt {
   if [ $CHAR = $SCM_NONE_CHAR ]; then
     return
   elif [ $CHAR = $SCM_GIT_CHAR ]; then
-    echo "$(git_prompt_status)"
+    _omb_util_print "$(git_prompt_status)"
   else
-    echo "[$(scm_prompt_info)]"
+    _omb_util_print "[$(scm_prompt_info)]"
   fi
 }
 
@@ -56,17 +56,17 @@ _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 function git_prompt_status {
   local git_status_output
   git_status_output=$(_omb_prompt_git status 2> /dev/null )
-  if [ -n "$(echo $git_status_output | grep 'Changes not staged')" ]; then
+  if [ -n "$(grep 'Changes not staged' <<< "$git_status_output")" ]; then
     git_status="${_omb_prompt_bold_brown}$(scm_prompt_info) ✗"
-  elif [ -n "$(echo $git_status_output | grep 'Changes to be committed')" ]; then
+  elif [ -n "$(grep 'Changes to be committed' <<< "$git_status_output")" ]; then
      git_status="${_omb_prompt_bold_olive}$(scm_prompt_info) ^"
-  elif [ -n "$(echo $git_status_output | grep 'Untracked files')" ]; then
+  elif [ -n "$(grep 'Untracked files' <<< "$git_status_output")" ]; then
      git_status="${_omb_prompt_bold_teal}$(scm_prompt_info) +"
-  elif [ -n "$(echo $git_status_output | grep 'nothing to commit')" ]; then
+  elif [ -n "$(grep 'nothing to commit' <<< "$git_status_output")" ]; then
      git_status="${_omb_prompt_bold_green}$(scm_prompt_info) ${_omb_prompt_green}✓"
   else
     git_status="$(scm_prompt_info)"
   fi
-  echo "[$git_status${_omb_prompt_normal}]"
+  _omb_util_print "[$git_status${_omb_prompt_normal}]"
 
 }

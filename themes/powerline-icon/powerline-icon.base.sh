@@ -32,17 +32,17 @@ function __powerline_user_info_prompt {
       fi
       ;;
   esac
-  [[ -n "${user_info}" ]] && echo "$OMB_THEME_POWERLINE_ICON_USER ${user_info} `date +%X\ %D`|${color}|${secondary_color}"
+  [[ -n "${user_info}" ]] && _omb_util_print "$OMB_THEME_POWERLINE_ICON_USER ${user_info} `date +%X\ %D`|${color}|${secondary_color}"
 }
 
 function __powerline_cwd_prompt {
-  echo "$(pwd | sed "s|^${HOME}|$OMB_THEME_POWERLINE_ICON_HOME|")|${CWD_THEME_PROMPT_COLOR}"
+  _omb_util_print "$(pwd | sed "s|^${HOME}|$OMB_THEME_POWERLINE_ICON_HOME|")|${CWD_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_last_status_prompt {
   if [[ "$1" -ne 0 ]]; then
-    echo "$OMB_THEME_POWERLINE_ICON_EXIT_FAILURE${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
+    _omb_util_print "$OMB_THEME_POWERLINE_ICON_EXIT_FAILURE${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
   else
-    echo "$OMB_THEME_POWERLINE_ICON_EXIT_SUCCESS|${LAST_STATUS_THEME_PROMPT_COLOR_SUCCESS}"
+    _omb_util_print "$OMB_THEME_POWERLINE_ICON_EXIT_SUCCESS|${LAST_STATUS_THEME_PROMPT_COLOR_SUCCESS}"
   fi
 }

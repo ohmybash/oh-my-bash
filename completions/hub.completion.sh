@@ -300,7 +300,7 @@ EOF
   # HOST - Host to be looked-up in hub config. Default is "github.com"
   function __hub_github_user {
     if [ -n "$GITHUB_USER" ]; then
-      echo $GITHUB_USER
+      _omb_util_print $GITHUB_USER
       return
     fi
     local line h k v host=${1:-github.com} config=${HUB_CONFIG:-~/.config/hub}
@@ -321,7 +321,7 @@ EOF
         k=${k#* }
         v=${v#* }
         if [ "$h" = "$host" ] && [ "$k" = "user" ]; then
-          echo "$v"
+          _omb_util_print "$v"
           break
         fi
       done < "$config"
@@ -365,7 +365,7 @@ EOF
         repo=${i#*:}
         _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
           "refs/remotes/${remote}/" | while read branch; do
-          echo "${repo}:${branch#${remote}/}"
+          _omb_util_print "${repo}:${branch#${remote}/}"
         done
       done
     fi
@@ -379,7 +379,7 @@ EOF
     if [ -d "$dir" ]; then
       _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
         "refs/remotes/${remote}/" | while read i; do
-        echo "${i#${remote}/}"
+        _omb_util_print "${i#${remote}/}"
       done
       _omb_prompt_git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
         "refs/tags/"

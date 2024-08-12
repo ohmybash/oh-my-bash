@@ -11,7 +11,7 @@ function _omb_deprecate_warning {
   else
     func=
   fi
-  printf '%s\n' "$src$sep$line$func$sep$_omb_term_reset $msg"
+  _omb_util_print "$src$sep$line$func$sep$_omb_term_reset $msg"
 }
 
 function _omb_deprecate_function__notify {
@@ -62,9 +62,9 @@ function _omb_deprecate_declare__init {
     __opts=$__opts:notified
     if ((_omb_version >= __ver)); then
       if [[ $__new ]]; then
-        printf '%s\n' "oh-my-bash: The variable '$__old' is set but has been renamed to '$__new'.  Please use '$__new'."
+        _omb_util_print "oh-my-bash: The variable '$__old' is set but has been renamed to '$__new'.  Please use '$__new'."
       else
-        printf '%s\n' "oh-my-bash: The variable '$__old' is set but has been deprecated.${__msg+ $__msg}"
+        _omb_util_print "oh-my-bash: The variable '$__old' is set but has been deprecated.${__msg+ $__msg}"
       fi >/dev/tty
     fi
     if [[ $__new && ! ${!__new+set} ]]; then
@@ -104,7 +104,7 @@ if ((_omb_bash_version >= 40300)); then
         _omb_deprecate_warning 1 "The variable '$esc_old' has been deprecated.${__msg+ $__msg}"
       fi >/dev/tty
     fi
-    echo 1
+    _omb_util_print 1
   }
 else
   _omb_deprecate_declare=()
@@ -152,9 +152,9 @@ else
         local esc_old=$_omb_term_bold_brown$__old$_omb_term_reset
         local esc_new=$_omb_term_bold_navy$__new$_omb_term_reset
         if [[ $__new ]]; then
-          printf '%s\n' "oh-my-bash: The variable '$esc_old' is changed but has been renamed to '$esc_new'.  Please use '$esc_new'."
+          _omb_util_print "oh-my-bash: The variable '$esc_old' is changed but has been renamed to '$esc_new'.  Please use '$esc_new'."
         else
-          printf '%s\n' "oh-my-bash: The variable '$esc_old' is changed but has been deprecated.${__msg+ $__msg}"
+          _omb_util_print "oh-my-bash: The variable '$esc_old' is changed but has been deprecated.${__msg+ $__msg}"
         fi >/dev/tty
       fi
 
@@ -215,7 +215,7 @@ if ((_omb_bash_version >= 40300)); then
         _omb_deprecate_warning 1 "The variable '$esc_old' has been deprecated.${__msg+ $__msg}" >&2
       fi
     fi
-    echo 1
+    _omb_util_print 1
   }
   function _omb_deprecate_const__sync {
     local __index __old __curval __compaction=

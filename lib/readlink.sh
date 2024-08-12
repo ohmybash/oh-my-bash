@@ -8,6 +8,9 @@
 ##   print the real path of the filename which is possibly a symbolic link.
 ##
 
+# use _omb_util_print
+_omb_module_require lib:omb-util
+# use _omb_util_function_exists, _omb_util_binary_exists
 _omb_module_require lib:utils
 
 if ((_omb_bash_version >= 40000)); then
@@ -73,7 +76,7 @@ function _omb_util_readlink__resolve_loop {
     fi
     while [[ $path == ?*/ ]]; do path=${path%/}; done
   done
-  echo "$path"
+  _omb_util_print "$path"
 }
 
 function _omb_util_readlink__resolve {
@@ -105,6 +108,6 @@ function _omb_util_readlink {
   if [[ -h $1 ]]; then
     _omb_util_readlink__resolve "$1"
   else
-    echo "$1"
+    _omb_util_print "$1"
   fi
 }

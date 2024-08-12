@@ -58,7 +58,7 @@ function randomize_nwinkler {
   THEME_CLOCK_COLOR=$TIME_COLOR
   PATH_COLOR=${AVAILABLE_COLORS[$RANDOM % ${#AVAILABLE_COLORS[@]} ]}
 
-  echo "$USERNAME_COLOR,$HOSTNAME_COLOR,$TIME_COLOR,$PATH_COLOR," > $RANDOM_COLOR_FILE
+  _omb_util_print "$USERNAME_COLOR,$HOSTNAME_COLOR,$TIME_COLOR,$PATH_COLOR," > $RANDOM_COLOR_FILE
 }
 
 if [ -f $RANDOM_COLOR_FILE ];
@@ -74,13 +74,13 @@ else
   # No colors stored yet. Generate them!
   randomize_nwinkler
 
-  echo
-  echo "Looks like you are using the nwinkler_random_color bashit theme for the first time."
-  echo "Random colors have been generated to be used in your prompt."
-  echo "If you don't like them, run the command:"
-  echo "  randomize_nwinkler"
-  echo "until you get a combination that you like."
-  echo
+  _omb_util_print
+  _omb_util_print "Looks like you are using the nwinkler_random_color bashit theme for the first time."
+  _omb_util_print "Random colors have been generated to be used in your prompt."
+  _omb_util_print "If you don't like them, run the command:"
+  _omb_util_print "  randomize_nwinkler"
+  _omb_util_print "until you get a combination that you like."
+  _omb_util_print
 fi
 
 PROMPT_END_CLEAN="${_omb_prompt_green}→${_omb_prompt_reset_color}"

@@ -27,7 +27,7 @@
 #   1.  FILE AND FOLDER MANAGEMENT
 #   -------------------------------
 
-alias numFiles='echo $(ls -1 | wc -l)'       # numFiles:     Count of non-hidden files in current dir
+alias numFiles='_omb_util_print $(ls -1 | wc -l)'       # numFiles:     Count of non-hidden files in current dir
 alias make1mb='truncate -s 1m ./1MB.dat'     # make1mb:      Creates a file of 1mb size (all zeros)
 alias make5mb='truncate -s 5m ./5MB.dat'     # make5mb:      Creates a file of 5mb size (all zeros)
 alias make10mb='truncate -s 10m ./10MB.dat'  # make10mb:     Creates a file of 10mb size (all zeros)
@@ -95,7 +95,7 @@ alias mountReadWrite='mount -uw /'    # mountReadWrite:   For use when booted in
 alias bdate="date '+%a, %b %d %Y %T %Z'"
 alias cal3='cal -3'
 alias da='date "+%Y-%m-%d %A    %T %Z"'
-alias daysleft='echo "There are $(($(date +%j -d"Dec 31, $(date +%Y)")-$(date +%j))) left in year $(date +%Y)."'
+alias daysleft='_omb_util_print "There are $(($(date +%j -d"Dec 31, $(date +%Y)")-$(date +%j))) left in year $(date +%Y)."'
 alias epochtime='date +%s'
 alias mytime='date +%H:%M:%S'
 alias secconvert='date -d@1234567890'

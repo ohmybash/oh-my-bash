@@ -69,7 +69,7 @@ function _omb_module_require {
     completion) locations=({"$OSH_CUSTOM","$OSH"}/completions/"$name".completion.{bash,sh}) ;;
     theme)      locations=({"$OSH_CUSTOM"{,/themes},"$OSH"/themes}/"$name"/"$name".theme.{bash,sh}) ;;
     *)
-      echo "oh-my-bash (module_require): unknown module type '$type'." >&2
+      printf '%s\n' "oh-my-bash (module_require): unknown module type '$type'." >&2
       status=2
       continue ;;
     esac
@@ -83,7 +83,7 @@ function _omb_module_require {
       fi
     done
 
-    echo "oh-my-bash (module_require): module '$type:$name' not found." >&2
+    printf '%s\n' "oh-my-bash (module_require): module '$type:$name' not found." >&2
     status=127
   done
 
@@ -108,6 +108,7 @@ function _omb_module_require_theme      { _omb_module_require "${@/#/theme:}"; }
 
 # Load all of the config files in ~/.oh-my-bash/lib that end in .sh
 # TIP: Add files you don't want in git to .gitignore
+_omb_module_require_lib omb-util
 _omb_module_require_lib utils
 _omb_util_glob_expand _omb_init_files '{"$OSH","$OSH_CUSTOM"}/lib/*.{bash,sh}'
 _omb_init_files=("${_omb_init_files[@]##*/}")
@@ -162,7 +163,7 @@ if [[ $OSH_THEME == random ]]; then
     OMB_THEME_RANDOM_SELECTED=${_omb_init_file##*/}
     OMB_THEME_RANDOM_SELECTED=${OMB_THEME_RANDOM_SELECTED%.theme.bash}
     OMB_THEME_RANDOM_SELECTED=${OMB_THEME_RANDOM_SELECTED%.theme.sh}
-    echo "[oh-my-bash] Random theme '$OMB_THEME_RANDOM_SELECTED' ($_omb_init_file) loaded..."
+    printf '%s\n' "[oh-my-bash] Random theme '$OMB_THEME_RANDOM_SELECTED' ($_omb_init_file) loaded..."
   fi
   unset -v _omb_init_files _omb_init_file
 elif [[ $OSH_THEME ]]; then
