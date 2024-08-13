@@ -169,7 +169,8 @@ function _bashmarks_list {
 # print bookmark
 function _bashmarks_print {
   source "$BASHMARKS_SDIRS"
-  echo "$(eval $(echo echo $(echo \$DIR_$1)))"
+  local var=DIR_$1
+  _omb_util_print "${!var}"
 }
 
 # list bookmarks without dirname
