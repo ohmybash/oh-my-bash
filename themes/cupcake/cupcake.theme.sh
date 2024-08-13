@@ -51,12 +51,12 @@ icon_end="└❯ "
 
 # Rename tab
 function tabname {
-  printf "\e]1;$1\a"
+  printf '\e]1;%s\a' "$1"
 }
 
 # Rename window
 function winname {
-  printf "\e]2;$1\a"
+  printf '\e]2;%s\a' "$1"
 }
 
 # PROMPT OUTPUT ===============================================================
