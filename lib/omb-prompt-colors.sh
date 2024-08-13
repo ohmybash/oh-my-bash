@@ -72,13 +72,13 @@ function _omb_theme__construct_sgr {
 function _omb_theme_color_prompt {
   local out
   _omb_theme__construct_sgr "$@"
-  echo "\[\e[${out}m\]"
+  _omb_util_print "\[\e[${out}m\]"
 }
 
 function _omb_theme_color_echo {
   local out
   _omb_theme__construct_sgr "$@"
-  echo "\033[${out}m"
+  _omb_util_print "\033[${out}m"
 }
 
 function _omb_prompt_color_initialize {
