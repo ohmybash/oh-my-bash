@@ -1,8 +1,144 @@
 #! bash oh-my-bash.module
+#
+# This completion setting seems to originate from the following repository:
+# https://github.com/tfmalt/bash-completion-virtualbox
+#
+# The license is unspecified.  The upstream is not active for nine years (as of
+# 2024-08), so we would adjust the codes by ourselves.
+#
+# Change history
+#
+# * 2017-10-10 This file was added to Oh My Bash. This is probably taken from
+#   the following version:
+#   https://github.com/tfmalt/bash-completion-virtualbox/blob/fb9739cfe9d2a6d0076c5423dc25393bcf6a77dd/vboxmanage_completion.bash
+# * 2024-08-13 The file cotnent is update to the latest upstream version based on:
+#   https://github.com/tfmalt/bash-completion-virtualbox/blob/02df30e0b8e399b8011d95aa917caf0aafe01d27/vboxmanage_completion.bash
+#
+#------------------------------------------------------------------------------
+#!/usr/bin/env bash
+#
+# Attempt at autocompletion script for vboxmanage. This scripts assumes an
+# alias between VBoxManage and vboxmanaage.
+#
+# Copyright (c) 2012  Thomas Malt <thomas@malt.no>
+#
+
+#alias vboxmanage="VBoxManage"
+
+complete -F _vboxmanage vboxmanage
+
+# export VBOXMANAGE_NIC_TYPES
+
+function _vboxmanage {
+  local cur prev opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  # echo "cur: |$cur|"
+  # echo "prev: |$prev|"
+
+  case $prev in
+  -v|--version)
+    return 0
+    ;;
+
+  -l|--long)
+    opts=$(__vboxmanage_list "long")
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+    ;;
+  --nic[1-8])
+    # This is part of modifyvm subcommand
+    opts=$(__vboxmanage_nic_types)
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    ;;
+  startvm|list)
+    opts=$(__vboxmanage_$prev)
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+    ;;
+  --type)
+    COMPREPLY=($(compgen -W "gui headless" -- ${cur}))
+    return 0
+    ;;
+  gui|headless)
+    # Done. no more completion possible
+    return 0
+    ;;
+  vboxmanage)
+    # In case current is complete command we return emmideatly.
+    case $cur in
+    startvm|list|controlvm|showvminfo|modifyvm)
+      COMPREPLY=($(compgen -W "$cur "))
+      return 0
+      ;;
+    esac
+
+    # echo "Got vboxmanage"
+    opts=$(__vboxmanage_default)
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+    ;;
+  -q|--nologo)
+    opts=$(__vboxmanage_default)
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+    ;;
+  controlvm|showvminfo|modifyvm)
+    opts=$(__vboxmanage_list_vms)
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+    ;;
+  vrde|setlinkstate*)
+    # vrde is a complete subcommand of controlvm
+    opts="on off"
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+    ;;
+  esac
+
+  for VM in $(__vboxmanage_list_vms); do
+    if [ "$VM" == "$prev" ]; then
+      pprev=${COMP_WORDS[COMP_CWORD-2]}
+      # echo "previous: $pprev"
+      case $pprev in
+      startvm)
+        opts="--type"
+        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+        return 0
+        ;;
+      controlvm)
+        opts=$(__vboxmanage_controlvm $VM)
+        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+        return 0;
+        ;;
+      showvminfo)
+        opts="--details --machinereadable --log"
+        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+        return 0;
+        ;;
+      modifyvm)
+        opts=$(__vboxmanage_modifyvm)
+        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+        return 0
+        ;;
+      esac
+    fi
+  done
+
+  # echo "Got to end withoug completion"
+}
 
 function _vboxmanage_realopts {
-  echo $(vboxmanage|grep -i vboxmanage|cut -d' ' -f2|grep '\['|tr -s '[\[\|\]\n' ' ')
+  echo $(vboxmanage | grep -Eo "^\s{2}[a-z]+")
   echo " "
+}
+
+function __vboxmanage_nic_types {
+  echo $(vboxmanage |
+           grep ' nic<' |
+           sed 's/.*nic<1-N> \([a-z\|]*\).*/\1/' | tr '|' ' ')
 }
 
 function __vboxmanage_startvm {
@@ -81,7 +217,12 @@ function __vboxmanage_controlvm {
   echo "screenshotpng setcredentials teleport plugcpu unplugcpu"
   echo "cpuexecutioncap"
 
-# setlinkstate<1-N>
+  # setlinkstate<1-N>
+  activenics=$(__vboxmanage_showvminfo_active_nics $1)
+  for nic in $(echo "${activenics}" | tr -d 'nic'); do
+    echo "setlinkstate${nic}"
+  done
+
 # nic<1-N> null|nat|bridged|intnet|hostonly|generic
 #                                      [<devicename>] |
                           # nictrace<1-N> on|off
@@ -90,7 +231,23 @@ function __vboxmanage_controlvm {
                           #   natpf<1-N> [<rulename>],tcp|udp,[<hostip>],
                           #                 <hostport>,[<guestip>],<guestport>
                           #   natpf<1-N> delete <rulename>
+}
 
+function __vboxmanage_modifyvm {
+  options=$(vboxmanage modifyvm | grep '\[--' | grep -v '\[--nic<' |
+              sed 's/ *\[--\([a-z]*\).*/--\1/')
+  # Exceptions
+  for i in {1..8}; do
+    options="$options --nic${i}"
+  done
+  echo $options
+}
+
+function __vboxmanage_showvminfo_active_nics {
+  nics=$(vboxmanage showvminfo $1 --machinereadable |
+           awk '/^nic/ && ! /none/' |
+           awk '{ split($1, names, "="); print names[1] }')
+  echo $nics
 }
 
 function __vboxmanage_default {
@@ -143,80 +300,3 @@ function __vboxmanage_default {
   echo $pruned
   return 0
 }
-
-function _vboxmanage {
-  # vboxmanage | grep -i vboxmanage | cut -d' ' -f2 | sort | uniq
-  local cur p1 p2 p3 p4 opts
-  COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
-
-  # echo "cur: |$cur|"
-  # echo "prev: |$prev|"
-
-  # In case current is complete command
-  case $cur in
-  startvm|list|controlvm)
-    COMPREPLY=($(compgen -W "$cur "))
-    return 0
-    ;;
-  esac
-
-  case $prev in
-  -v|--version)
-    return 0
-    ;;
-
-  -l|--long)
-    opts=$(__vboxmanage_list "long")
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-    return 0
-    ;;
-  startvm|list)
-    opts=$(__vboxmanage_$prev)
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-    return 0
-    ;;
-  --type)
-    COMPREPLY=($(compgen -W "gui headless" -- ${cur}))
-    return 0
-    ;;
-  gui|headless)
-    # Done. no more completion possible
-    return 0
-    ;;
-  vboxmanage|-q|--nologo)
-    # echo "Got vboxmanage"
-    opts=$(__vboxmanage_default)
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-    return 0
-    ;;
-  controlvm)
-    opts=$(__vboxmanage_list_vms)
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-    return 0
-    ;;
-  esac
-
-  for VM in $(__vboxmanage_list_vms); do
-    if [ "$VM" == "$prev" ]; then
-      pprev=${COMP_WORDS[COMP_CWORD-2]}
-      # echo "previous: $pprev"
-      case $pprev in
-      startvm)
-        opts="--type"
-        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-        return 0
-        ;;
-      controlvm)
-        opts=$(__vboxmanage_controlvm)
-        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-        return 0;
-        ;;
-      esac
-    fi
-  done
-
-  # echo "Got to end withoug completion"
-}
-complete -F _vboxmanage vboxmanage
