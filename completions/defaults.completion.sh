@@ -49,8 +49,10 @@ function _defaults {
       COMPREPLY=( $(compgen -W "$cmds" -- "$cur") )
       return 0
     elif [[ $prev == "-host" ]]; then
+      if _omb_util_function_exists _known_hosts; then
+        _known_hosts -a
+      fi
       return 0
-      _known_hosts -a
     else
       _defaults_domains
       return 0
