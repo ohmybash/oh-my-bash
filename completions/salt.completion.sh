@@ -1,4 +1,8 @@
 #! bash oh-my-bash.module
+#
+# The current version corresponds to the following upstream version:
+# https://github.com/saltstack/salt/blob/18ca4fdfa9e9c16fb10006f1221254707bece308/pkg/common/salt.bash
+#------------------------------------------------------------------------------
 # written by David Pravec
 #   - feel free to /msg alekibango on IRC if you want to talk about this file
 
@@ -9,26 +13,65 @@
 # TODO: --compound[tab] -- how?
 # TODO: use history to extract some words, esp. if ${cur} is empty
 # TODO: TEST EVERYTHING a lot
-# TODO: cache results of some functions?  where? how long?
 # TODO: is it ok to use '--timeout 2' ?
 
 
 function _salt_get_grains {
   if [ "$1" = 'local' ] ; then
-    salt-call --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" |sed 's:\([a-z0-9]\) :\1\: :g'
+    salt-call --log-level=error --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" | sed 's:\([a-z0-9]\) :\1\: :g'
   else
-    salt '*' --timeout 2 --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" |sed 's:\([a-z0-9]\) :\1\: :g'
+    salt '*' --timeout 2 --hide-timeout --log-level=error --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" | sed 's:\([a-z0-9]\) :\1\: :g'
   fi
 }
 
 function _salt_get_grain_values {
   if [ "$1" = 'local' ] ; then
-    salt-call --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
+    salt-call --log-level=error --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
   else
-    salt '*' --timeout 2 --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
+    salt '*' --timeout 2 --hide-timeout --log-level=error --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
   fi
 }
 
+function _salt_get_keys {
+  for type in $*; do
+    # remove header from data:
+    salt-key --no-color -l $type | tail -n+2
+  done
+}
+
+function _salt_list_functions {
+  # salt-call: get all functions on this minion
+  # salt: get all functions on all minions
+  # sed: remove all array overhead and convert to newline separated list
+  # sort: chop out doubled entries, so overhead is minimal later during actual completion
+  if [ "$1" = 'local' ] ; then
+    salt-call --log-level=quiet --out=txt -- sys.list_functions |
+      sed "s/^.*\[//;s/[],']//g;s/ /\n/g" |
+      sort -u
+  else
+    salt '*' --timeout 2 --hide-timeout --log-level=quiet --out=txt -- sys.list_functions |
+      sed "s/^.*\[//;s/[],']//g;s/ /\n/g" |
+      sort -u
+  fi
+}
+
+function _salt_get_coms {
+  CACHE_DIR="$HOME/.cache/salt-${1}-comp-cache_functions"
+  local _salt_cache_functions=${SALT_COMP_CACHE_FUNCTIONS:=$CACHE_DIR}
+  local _salt_cache_timeout=${SALT_COMP_CACHE_TIMEOUT:='last hour'}
+
+  if [ ! -d "$(dirname ${_salt_cache_functions})" ]; then
+    mkdir -p "$(dirname ${_salt_cache_functions})"
+  fi
+
+  # Regenerate cache if timed out
+  if [[ "$(stat --format=%Z ${_salt_cache_functions} 2>/dev/null)" -lt "$(date --date="${_salt_cache_timeout}" +%s)" ]]; then
+    _salt_list_functions $1 > "${_salt_cache_functions}"
+  fi
+
+  # filter results, to only print the part to next dot (or end of function)
+  sed 's/^\('${cur}'\(\.\|[^.]*\)\)\?.*/\1/' "${_salt_cache_functions}" | sort -u
+}
 
 function _salt {
   local cur prev opts pprev ppprev
@@ -43,12 +86,12 @@ function _salt {
   fi
 
   opts="-h --help -d --doc --documentation --version --versions-report -c \
-        --config-dir= -v --verbose -t --timeout= -s --static -b --batch= \
-        --batch-size= -E --pcre -L --list -G --grain --grain-pcre -N \
-        --nodegroup -R --range -C --compound -I --pillar \
-        --return= -a --auth= --eauth= --extended-auth= -T --make-token -S \
-        --ipcidr --out=pprint --out=yaml --out=overstatestage --out=json \
-        --out=raw --out=highstate --out=key --out=txt --no-color --out-indent= "
+    --config-dir= -v --verbose -t --timeout= -s --static -b --batch= \
+    --batch-size= -E --pcre -L --list -G --grain --grain-pcre -N \
+    --nodegroup -R --range -C --compound -I --pillar \
+    --return= -a --auth= --eauth= --extended-auth= -T --make-token -S \
+    --ipcidr --out=pprint --out=yaml --out=overstatestage --out=json \
+    --out=raw --out=highstate --out=key --out=txt --no-color --out-indent= "
 
   if [[ "${cur}" == -* ]] ; then
     COMPREPLY=($(compgen -W '$opts' -- "$cur"))
@@ -86,11 +129,11 @@ function _salt {
     return 0
     ;;
   salt)
-    COMPREPLY=($(compgen -W "\'*\' \$opts \$(salt-key --no-color -l acc)" -- "$cur"))
+    COMPREPLY=($(compgen -W "\'*\' \$opts \$(_salt_get_keys acc)" -- "$cur"))
     return 0
     ;;
   -E|--pcre)
-    COMPREPLY=($(compgen -W '$(salt-key --no-color -l acc)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$(_salt_get_keys acc)' -- "$cur"))
     return 0
     ;;
   -G|--grain|--grain-pcre)
@@ -117,8 +160,12 @@ function _salt {
     ;;
   esac
 
-  local _salt_coms=$(salt '*' --timeout 2 --out=txt -- sys.list_functions | sed 's/^.*\[//' | tr -d ",']" )
-  local all="${opts} ${_salt_coms}"
+  local _salt_coms=$(_salt_get_coms remote)
+
+  # If there are still dots in the suggestion, do not append space
+  grep "^$cur.*\." "$_salt_coms" &>/dev/null && compopt -o nospace
+
+  local all="$opts $_salt_coms"
   COMPREPLY=($(compgen -W '$all' -- "$cur"))
 
   return 0
@@ -133,12 +180,12 @@ function _saltkey {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   opts="-c --config-dir= -h --help --version --versions-report -q --quiet \
-        -y --yes --gen-keys= --gen-keys-dir= --keysize= --key-logfile= \
-        -l --list= -L --list-all -a --accept= -A --accept-all \
-        -r --reject= -R --reject-all -p --print= -P --print-all \
-        -d --delete= -D --delete-all -f --finger= -F --finger-all \
-        --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
-        --out=highstate --out=key --out=txt --no-color --out-indent= "
+    -y --yes --gen-keys= --gen-keys-dir= --keysize= --key-logfile= \
+    -l --list= -L --list-all -a --accept= -A --accept-all \
+    -r --reject= -R --reject-all -p --print= -P --print-all \
+    -d --delete= -D --delete-all -f --finger= -F --finger-all \
+    --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
+    --out=highstate --out=key --out=txt --no-color --out-indent= "
   if [ ${COMP_CWORD} -gt 2 ]; then
     pprev="${COMP_WORDS[COMP_CWORD-2]}"
   fi
@@ -159,15 +206,15 @@ function _saltkey {
 
   case "${prev}" in
   -a|--accept)
-    COMPREPLY=($(compgen -W '$(salt-key -l un --no-color; salt-key -l rej --no-color)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$(_salt_get_keys un rej)' -- "$cur"))
     return 0
     ;;
   -r|--reject)
-    COMPREPLY=($(compgen -W '$(salt-key -l acc --no-color)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$(_salt_get_keys acc)' -- "$cur"))
     return 0
     ;;
   -d|--delete)
-    COMPREPLY=($(compgen -W '$(salt-key -l acc --no-color; salt-key -l un --no-color; salt-key -l rej --no-color)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$(_salt_get_keys acc un rej)' -- "$cur"))
     return 0
     ;;
   -c|--config)
@@ -186,7 +233,7 @@ function _saltkey {
     return 0
     ;;
   -p|--print)
-    COMPREPLY=($(compgen -W '$(salt-key -l acc --no-color; salt-key -l un --no-color; salt-key -l rej --no-color)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$(_salt_get_keys acc un rej)' -- "$cur"))
     return 0
     ;;
   -l|--list)
@@ -209,9 +256,9 @@ function _saltcall {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   opts="-h --help -d --doc --documentation --version --versions-report \
-        -m --module-dirs= -g --grains --return= --local -c --config-dir= -l --log-level= \
-        --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
-        --out=highstate --out=key --out=txt --no-color --out-indent= "
+    -m --module-dirs= -g --grains --return= --local -c --config-dir= -l --log-level= \
+    --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
+    --out=highstate --out=key --out=txt --no-color --out-indent= "
   if [ ${COMP_CWORD} -gt 2 ]; then
     pprev="${COMP_WORDS[COMP_CWORD-2]}"
   fi
@@ -248,7 +295,11 @@ function _saltcall {
     ;;
   esac
 
-  local _salt_coms=$(salt-call --out=txt -- sys.list_functions|sed 's/^.*\[//' | tr -d ",']")
+  local _salt_coms=$(_salt_get_coms local)
+
+  # If there are still dots in the suggestion, do not append space
+  grep "^$cur.*\." "$_salt_coms" &>/dev/null && compopt -o nospace
+
   COMPREPLY=($(compgen -W '$opts $_salt_coms' -- "$cur"))
   return 0
 }
@@ -262,11 +313,11 @@ function _saltcp {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   opts="-t --timeout= -s --static -b --batch= --batch-size= \
-        -h --help --version --versions-report -c --config-dir= \
-        -E --pcre -L --list -G --grain --grain-pcre -N --nodegroup \
-        -R --range -C --compound -I --pillar \
-        --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
-        --out=highstate --out=key --out=txt --no-color --out-indent= "
+    -h --help --version --versions-report -c --config-dir= \
+    -E --pcre -L --list -G --grain --grain-pcre -N --nodegroup \
+    -R --range -C --compound -I --pillar \
+    --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
+    --out=highstate --out=key --out=txt --no-color --out-indent= "
   if [[ "${cur}" == -* ]] ; then
     COMPREPLY=($(compgen -W '$opts' -- "$cur"))
     return 0
@@ -281,7 +332,7 @@ function _saltcp {
 
   case ${prev} in
   salt-cp)
-    COMPREPLY=($(compgen -W '$opts $(salt-key -l acc --no-color)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$opts $(_salt_get_keys acc)' -- "$cur"))
     return 0
     ;;
   -t|--timeout)
@@ -290,7 +341,7 @@ function _saltcp {
     return 0
     ;;
   -E|--pcre)
-    COMPREPLY=($(compgen -W '$(salt-key -l acc --no-color)' -- "$cur"))
+    COMPREPLY=($(compgen -W '$(_salt_get_keys acc)' -- "$cur"))
     return 0
     ;;
   -L|--list)
@@ -298,7 +349,7 @@ function _saltcp {
     prefpart="${cur%,*},"
     postpart=${cur##*,}
     filt="^\($(echo ${cur}| sed 's:,:\\|:g')\)$"
-    helper=($(salt-key -l acc --no-color | grep -v "${filt}" | sed "s/^/${prefpart}/"))
+    helper=($(_salt_get_keys acc | grep -v "$filt" | sed "s/^/$prefpart/"))
     COMPREPLY=($(compgen -W '"${helper[@]}"' -- "$cur"))
 
     return 0
