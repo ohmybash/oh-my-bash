@@ -169,6 +169,7 @@ theme_list=$(find "$OMB_WORKING_TREE/themes" -mindepth 1 -maxdepth 1 -type d -pr
 
 # prepare a variable to hold generated content, starting with with the "start" marker for next run...
 markdown_text="$OMB_WIKI_THEMES_START_MARKER\n\n"
+markdown_text="$markdown_text<!-- DO NOT EDIT THIS SECTION MANUALLY!\n     This section will be automatically overwritten. -->\n\n"
 
 # now we can loop through the list and find all images in each theme directory...
 for theme in $theme_list; do
