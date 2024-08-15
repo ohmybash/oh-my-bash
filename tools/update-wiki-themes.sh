@@ -187,7 +187,7 @@ for theme in $theme_list; do
       image_url=https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/themes/$theme/$image_filename
 
       # append image to theme example markdown block...
-      markdown_text="$markdown_text![]($image_url)\n"
+      markdown_text="$markdown_text![$theme]($image_url)\n"
     done
   else
     markdown_text="${markdown_text}WARNING: theme contains no example images.\n"
