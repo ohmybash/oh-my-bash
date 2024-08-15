@@ -81,12 +81,12 @@ We'll admit it. Early in the Oh My Bash world, we may have gotten a bit too them
 
 #### Selecting a Theme
 
-_Powerline's theme is the default one. It's not the fanciest one. It's not the simplest one. It's just the right one (for me)._
+_The font theme is the default one. It's not the fanciest one. It's not the simplest one. It's just the right one for the original maintainer of Oh My Bash._
 
 Once you find a theme that you want to use, you will need to edit the `~/.bashrc` file. You'll see an environment variable (all caps) in there that looks like:
 
 ```shell
-OSH_THEME="powerline"
+OSH_THEME="font"
 ```
 
 To use a different theme, simply change the value to match the name of your desired theme. For example:
@@ -99,7 +99,7 @@ OSH_THEME="agnoster" # (this is one of the fancy ones)
 
 Open up a new terminal window and your prompt should look something like this:
 
-![Agnoster theme](img/example_powerline.png)
+![Font theme](themes/font/font-dark.png)
 
 In case you did not find a suitable theme for your needs, please have a look at the wiki for [more of them](https://github.com/ohmybash/oh-my-bash/wiki/External-themes).
 
