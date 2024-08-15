@@ -32,32 +32,32 @@ _omb_completion_sdkman()
     COMPREPLY=( $(compgen -W "install uninstall rm list ls use current outdated version default selfupdate broadcast offline help flush" -- "$cur") )
   elif ((COMP_CWORD == 2)); then
     case ${COMP_WORDS[COMP_CWORD-1]} in
-      "install" | "uninstall" | "rm" | "list" | "ls" | "use" | "current" | "outdated" )
-        local candidates
-        candidates=$(echo "${SDKMAN_CANDIDATES_CSV}" | tr ',' ' ')
-        COMPREPLY=( $(compgen -W "$candidates" -- "$cur") )
-        ;;
-      "offline" )
-        COMPREPLY=( $(compgen -W "enable disable" -- "$cur") )
-        ;;
-      "selfupdate" )
-        COMPREPLY=( $(compgen -W "force" -P "[" -S "]" -- "$cur") )
-        ;;
-      "flush" )
-        COMPREPLY=( $(compgen -W "candidates broadcast archives temp" -- "$cur") )
-        ;;
-      *)
-        ;;
+    "install" | "uninstall" | "rm" | "list" | "ls" | "use" | "current" | "outdated" )
+      local candidates
+      candidates=$(echo "${SDKMAN_CANDIDATES_CSV}" | tr ',' ' ')
+      COMPREPLY=( $(compgen -W "$candidates" -- "$cur") )
+      ;;
+    "offline" )
+      COMPREPLY=( $(compgen -W "enable disable" -- "$cur") )
+      ;;
+    "selfupdate" )
+      COMPREPLY=( $(compgen -W "force" -P "[" -S "]" -- "$cur") )
+      ;;
+    "flush" )
+      COMPREPLY=( $(compgen -W "candidates broadcast archives temp" -- "$cur") )
+      ;;
+    *)
+      ;;
     esac
   elif ((COMP_CWORD == 3)); then
     case ${COMP_WORDS[COMP_CWORD-2]} in
-      "install" | "uninstall" | "rm" | "use" | "default" )
-        local candidate_versions
-        _omb_completion_sdkman__candidate_versions "${COMP_WORDS[COMP_CWORD-1]}"
-        COMPREPLY=( $(compgen -W "$candidate_versions" -- "$cur") )
-        ;;
-      *)
-        ;;
+    "install" | "uninstall" | "rm" | "use" | "default" )
+      local candidate_versions
+      _omb_completion_sdkman__candidate_versions "${COMP_WORDS[COMP_CWORD-1]}"
+      COMPREPLY=( $(compgen -W "$candidate_versions" -- "$cur") )
+      ;;
+    *)
+      ;;
     esac
   fi
 

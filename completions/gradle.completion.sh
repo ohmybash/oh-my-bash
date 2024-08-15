@@ -5,12 +5,12 @@ function __gradle {
   local cache_dir="$HOME/.gradle/completion_cache"
 
   case $OSTYPE in
-    darwin*)
-      local checksum_command="find . -name build.gradle -print0 | xargs -0 md5 -q | md5 -q"
-      ;;
-    *)
-      local checksum_command="find . -name build.gradle -print0 | xargs -0 md5sum | md5sum | cut -d ' ' -f 1"
-      ;;
+  darwin*)
+    local checksum_command="find . -name build.gradle -print0 | xargs -0 md5 -q | md5 -q"
+    ;;
+  *)
+    local checksum_command="find . -name build.gradle -print0 | xargs -0 md5sum | md5sum | cut -d ' ' -f 1"
+    ;;
   esac
   local parsing_command="gradle --console=plain --quiet tasks | grep -v Rules | sed -nE -e 's/^([a-zA-Z]+)($| - .+)/\1/p'"
 
