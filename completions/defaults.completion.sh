@@ -64,7 +64,7 @@ function _defaults {
 
   # Both a domain and command have been specified
 
-  if [[ ${COMP_WORDS[1]} == [${cmds// /|}] ]]; then
+  if [[ ${COMP_WORDS[1]} == @(${cmds// /|}) ]]; then
     cmd=${COMP_WORDS[1]}
     domain=${COMP_WORDS[2]}
     key_index=3
@@ -76,7 +76,7 @@ function _defaults {
       domain="-app ${COMP_WORDS[3]}"
       key_index=4
     fi
-  elif [[ ${COMP_WORDS[2]} == "-currentHost" && ${COMP_WORDS[2]} == [${cmds// /|}] ]]; then
+  elif [[ ${COMP_WORDS[2]} == "-currentHost" && ${COMP_WORDS[2]} == @(${cmds// /|}) ]]; then
     cmd=${COMP_WORDS[2]}
     domain=${COMP_WORDS[3]}
     key_index=4
@@ -88,7 +88,7 @@ function _defaults {
       domain="-app ${COMP_WORDS[4]}"
       key_index=5
     fi
-  elif [[ ${COMP_WORDS[3]} == "-host" && ${COMP_WORDS[3]} == [${cmds// /|}] ]]; then
+  elif [[ ${COMP_WORDS[3]} == "-host" && ${COMP_WORDS[3]} == @(${cmds// /|}) ]]; then
     cmd=${COMP_WORDS[3]}
     domain=${COMP_WORDS[4]}
     key_index=5
