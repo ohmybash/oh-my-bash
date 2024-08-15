@@ -178,6 +178,12 @@ markdown_text="$markdown_text<!-- DO NOT EDIT THIS SECTION MANUALLY!\n     This 
 # now we can loop through the list and find all images in each theme directory...
 for theme in $theme_list; do
   theme_dir=$OMB_WORKING_TREE/themes/$theme
+
+  # Note: We skip the theme directories that do not have the actual theme file.
+  # The directory of renamed/removed themes may remain in the working tree when
+  # there are untracked files.
+  [[ -s $theme_dir/$theme.theme.sh || -s $theme_dir/$theme.theme.bash ]] || continue
+
   image_list=$(find "$theme_dir" -type f -name "*.png" -o -name "*.jpg")
 
   # start preparing a theme example markdown block...
