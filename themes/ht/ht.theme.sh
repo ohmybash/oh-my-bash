@@ -57,8 +57,11 @@ function _omb_theme_PROMPT_COMMAND {
   PS1+="$(_omb_theme_ht_exit_color "$EXIT_CODE")●$_omb_prompt_reset_color"
 
   # Environment info
-  PS1+="$_omb_prompt_red$(_omb_prompt_get_ruby_env)$_omb_prompt_reset_color"
-  PS1+="$_omb_prompt_green$(_omb_prompt_get_python_env)$_omb_prompt_reset_color"
+  local rbenv virtualenv
+  _omb_prompt_get_rbenv &&
+    PS1+=$_omb_prompt_red$rbenv$_omb_prompt_reset_color
+  _omb_prompt_get_virtualenv &&
+    PS1+=$_omb_prompt_green$virtualenv$_omb_prompt_reset_color
 
   # User and host
   local user_host_prefix=" $_omb_prompt_reset_color["
