@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-# this script aims to simplify the process of updating the theme examples page in the GitHub Wiki.
+# this script aims to simplify the process of updating the theme examples page
+# in the GitHub Wiki.
 #
-# it is built with the assumption that the relevant wiki is cloned with Git alongside this repo, but with the understanding that this may not always be true.
+# it is built with the assumption that the relevant wiki is cloned with Git
+# alongside this repo, but with the understanding that this may not always be
+# true.
 #
-# it also assumes the associated `Themes.md` file exists at the root of the wiki, and contains the relevant "start" and "end" markers for a safe space to re-render the theme examples.
+# it also assumes the associated `Themes.md` file exists at the root of the
+# wiki, and contains the relevant "start" and "end" markers for a safe space to
+# re-render the theme examples.
 #
 # runtime overrides, where CLI args override env vars:
 #
@@ -32,35 +37,35 @@ SCRIPT_WIKI_THEMES_END_MARKER="${OMB_WIKI_THEMES_END_MARKER:-<!-- THEME_GEN_END_
 
 VALID_ARGS=$(getopt -o p:f:s:e: --long wiki-path:,themes-file:,start-marker:,end-marker: -- "$@")
 if [[ $? -ne 0 ]]; then
-    exit 1;
+  exit 1;
 fi
 
 eval set -- "$VALID_ARGS"
 while [ : ]; do
   case "$1" in
-    -p | --wiki-path)
-        # echo "Processing 'wiki-path' option. Input argument is '$2'"
-        SCRIPT_WIKI_PATH="$2"
-        shift 2
-        ;;
-    -f | --themes-file)
-        # echo "Processing 'themes-file' option. Input argument is '$2'"
-        SCRIPT_WIKI_THEMES_FILE="$2"
-        shift 2
-        ;;
-    -s | --start-marker)
-        # echo "Processing 'start-marker' option. Input argument is '$2'"
-        SCRIPT_WIKI_THEMES_START_MARKER="$2"
-        shift 2
-        ;;
-    -e | --end-marker)
-        # echo "Processing 'end-marker' option. Input argument is '$2'"
-        SCRIPT_WIKI_THEMES_END_MARKER="$2"
-        shift 2
-        ;;
-    --) shift;
-        break
-        ;;
+  -p | --wiki-path)
+    # echo "Processing 'wiki-path' option. Input argument is '$2'"
+    SCRIPT_WIKI_PATH="$2"
+    shift 2
+    ;;
+  -f | --themes-file)
+    # echo "Processing 'themes-file' option. Input argument is '$2'"
+    SCRIPT_WIKI_THEMES_FILE="$2"
+    shift 2
+    ;;
+  -s | --start-marker)
+    # echo "Processing 'start-marker' option. Input argument is '$2'"
+    SCRIPT_WIKI_THEMES_START_MARKER="$2"
+    shift 2
+    ;;
+  -e | --end-marker)
+    # echo "Processing 'end-marker' option. Input argument is '$2'"
+    SCRIPT_WIKI_THEMES_END_MARKER="$2"
+    shift 2
+    ;;
+  --) shift;
+      break
+      ;;
   esac
 done
 
