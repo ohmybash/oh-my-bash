@@ -286,8 +286,9 @@ Conduct](`CODE_OF_CONDUCT.md`).
 
 This project is initially ported from Oh My Zsh and Bash-it by `@nntoan` and
 has been developed in a community-driven way.  Most of the contributors are far
-from being a [Bash](https://www.gnu.org/software/bash/) expert, and there are
-many ways to improve the codebase.  If you have ideas on how to make the
+from being [Bash](https://www.gnu.org/software/bash/) experts, and there are
+many ways to improve the codebase.  We are looking for more people with
+expertise in Bash scripting.  If you have ideas on how to make the
 configuration easier to maintain (and faster), don't hesitate to fork and send
 pull requests!
 
