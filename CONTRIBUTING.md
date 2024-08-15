@@ -12,7 +12,7 @@ you would make is not already covered.
 * [Issues](#reporting-issues)
   * [You have a problem](#you-have-a-problem)
   * [You have a suggestion](#you-have-a-suggestion)
-* [Pull Requests](#submitting-pull-requests)
+* [Pull Requests](#pull-requests)
   * [Getting started](#getting-started)
   * [You have a solution](#you-have-a-solution)
   * [New Theme](#new-theme)
@@ -57,7 +57,7 @@ If you find one, comment on it so we can know there are more people supporting i
 If not, you can go ahead and create an issue. Please copy to anyone relevant (_eg_ plugin
 maintainers) by mentioning their GitHub handle (starting with `@`) in your message.
 
-## Submitting Pull Requests (PRs)
+## Pull Requests
 
 The code should work with Bash 3.2.  Make all the changes to be
 POSIX-compatible for external tools unless it is related to a plugin that
