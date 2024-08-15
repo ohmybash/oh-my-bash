@@ -1,4 +1,8 @@
 #! bash oh-my-bash.module
+#
+# The current version is based on the following upstream version:
+# https://github.com/owenthereal/gh/blob/04a7985fa9a1c1d4d63738f4edb7b07d228bdb12/etc/gh.bash_completion.sh
+#------------------------------------------------------------------------------
 # hub tab-completion script for bash.
 # This script complements the completion script that ships with git.
 
