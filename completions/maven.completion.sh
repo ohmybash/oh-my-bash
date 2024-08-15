@@ -1,8 +1,13 @@
 #! bash oh-my-bash.module
-# Bash completion support for maven
-# inspired from :
+#
+# Bash completion support for maven inspired from:
+#
 #  - https://github.com/juven/maven-bash-completion
 #  - https://github.com/parisjug/maven-bash-completion
+#
+# The current version is based on the following upstream version.
+# https://github.com/juven/maven-bash-completion/blob/216cd667b6119fe200c98b1ac2d030ac002be197/bash_completion.bash
+#------------------------------------------------------------------------------
 
 function_exists()
 {
@@ -88,6 +93,12 @@ _realpath ()
     return 1 # failure
   fi
 
+  # suppress shell session termination messages on macOS
+  shell_session_save()
+  {
+    false
+  }
+
   # reassemble realpath
   echo "$tmppwd"/"${1##*/}"
   return 1 #success
@@ -166,16 +177,11 @@ _mvn()
   local plugin_goals_javadoc="javadoc:javadoc|javadoc:jar|javadoc:aggregate"
   local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
   local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:undeploy-artifact|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
-  local plugin_goals_jetty="jetty:run|jetty:run-exploded|jetty:run-forked"
-  local plugin_goals_jetty="jetty:run|jetty:run-exploded|jetty:run-forked"
-  #mvn help:describe -Dplugin=com.google.cloud.tools:jib-maven-plugin:1.2.0
-  local plugin_goals_jib="jib:_skaffold-files|jib:_skaffold-files-v2|jib:_skaffold-package-goals|jib:build|jib:buildTar|jib:dockerBuild"
+  local plugin_goals_jetty="jetty:run|jetty:run-war|jetty:run-exploded|jetty:deploy-war|jetty:run-forked|jetty:start|jetty:stop|jetty:effective-web-xml"
   local plugin_goals_jxr="jxr:jxr"
   local plugin_goals_license="license:format|license:check"
   local plugin_goals_liquibase="liquibase:changelogSync|liquibase:changelogSyncSQL|liquibase:clearCheckSums|liquibase:dbDoc|liquibase:diff|liquibase:dropAll|liquibase:help|liquibase:migrate|liquibase:listLocks|liquibase:migrateSQL|liquibase:releaseLocks|liquibase:rollback|liquibase:rollbackSQL|liquibase:status|liquibase:tag|liquibase:update|liquibase:updateSQL|liquibase:updateTestingRollback"
   local plugin_goals_nexus_staging="nexus-staging:close|nexus-staging:deploy|nexus-staging:deploy-staged|nexus-staging:deploy-staged-repository|nexus-staging:drop|nexus-staging:help|nexus-staging:promote|nexus-staging:rc-close|nexus-staging:rc-drop|nexus-staging:rc-list|nexus-staging:rc-list-profiles|nexus-staging:rc-promote|nexus-staging:rc-release|nexus-staging:release"
-  #mvn help:describe -Dplugin=io.quarkus:quarkus-maven-plugin:0.15.0
-  local plugin_goals_quarkus="quarkus:add-extension|quarkus:add-extensions|quarkus:analyze-call-tree|quarkus:build|quarkus:create|quarkus:create-example-config|quarkus:dev|quarkus:help|quarkus:list-extensions|quarkus:native-image|quarkus:remote-dev"
   local plugin_goals_pmd="pmd:pmd|pmd:cpd|pmd:check|pmd:cpd-check"
   local plugin_goals_properties="properties:read-project-properties|properties:write-project-properties|properties:write-active-profile-properties|properties:set-system-properties"
   local plugin_goals_release="release:clean|release:prepare|release:rollback|release:perform|release:stage|release:branch|release:update-versions"
@@ -185,9 +191,10 @@ _mvn()
   local plugin_goals_site="site:site|site:deploy|site:run|site:stage|site:stage-deploy"
   local plugin_goals_sonar="sonar:sonar|sonar:help"
   local plugin_goals_source="source:aggregate|source:jar|source:jar-no-fork"
+  local plugin_goals_spotbugs="spotbugs:spotbugs|spotbugs:check|spotbugs:gui|spotbugs:help"
   local plugin_goals_surefire="surefire:test"
-  local plugin_goals_tomcat6="tomcat6:help|tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:undeploy"
-  local plugin_goals_tomcat7="tomcat7:help|tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
+  local plugin_goals_tomcat6="tomcat6:help|tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:redeploy|tomcat6:undeploy"
+  local plugin_goals_tomcat7="tomcat7:help|tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy|tomcat7:redeploy|tomcat7:undeploy"
   local plugin_goals_tomcat="tomcat:help|tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy"
   local plugin_goals_liberty="liberty:create-server|liberty:start-server|liberty:stop-server|liberty:run-server|liberty:deploy|liberty:undeploy|liberty:java-dump-server|liberty:dump-server|liberty:package-server"
   local plugin_goals_versions="versions:display-dependency-updates|versions:display-plugin-updates|versions:display-property-updates|versions:update-parent|versions:update-properties|versions:update-child-modules|versions:lock-snapshots|versions:unlock-snapshots|versions:resolve-ranges|versions:set|versions:use-releases|versions:use-next-releases|versions:use-latest-releases|versions:use-next-snapshots|versions:use-latest-snapshots|versions:use-next-versions|versions:use-latest-versions|versions:commit|versions:revert"
@@ -196,6 +203,7 @@ _mvn()
   local plugin_goals_spring_boot="spring-boot:run|spring-boot:repackage"
   local plugin_goals_jgitflow="jgitflow:feature-start|jgitflow:feature-finish|jgitflow:release-start|jgitflow:release-finish|jgitflow:hotfix-start|jgitflow:hotfix-finish|jgitflow:build-number"
   local plugin_goals_wildfly="wildfly:add-resource|wildfly:deploy|wildfly:deploy-only|wildfly:deploy-artifact|wildfly:redeploy|wildfly:redeploy-only|wildfly:undeploy|wildfly:undeploy-artifact|wildfly:run|wildfly:start|wildfly:shutdown|wildfly:execute-commands"
+  local plugin_goals_formatter="formatter:format|formatter:help|formatter:validate"
 
   ## some plugin (like jboss-as) has '-' which is not allowed in shell var name, to use '_' then replace
   local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '_' '-' | tr '\n' '|'`
@@ -262,3 +270,4 @@ _mvn()
 
 complete -o default -F _mvn -o nospace mvn
 complete -o default -F _mvn -o nospace mvnDebug
+complete -o default -F _mvn -o nospace mvnw
