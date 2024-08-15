@@ -9,6 +9,9 @@
 #
 # it also assumes the associated `Themes.md` file contains the relevant "start"
 # and "end" markers for a safe space to re-render the theme examples.
+#
+# Another assumption is that the OMB working tree contains the subdirectory
+# "themes", which contain the directories of themes.
 
 function print_usage {
   printf '%s\n' \
@@ -24,6 +27,11 @@ function print_help {
          '' \
          '    When both the CLI argument and the environment variable are specified, the' \
          '    CLI argument overrides the envrionment variable.' \
+         '' \
+         '    -p, --omb-working-tree DIRECTORY' \
+         '        Set the path to the OMB working tree.  This can also be specified' \
+         '        through the environment variable "OMB_WORKING_TREE".  The default is' \
+         '        determined based on the path of this script.' \
          '' \
          '    -f, --themes-file FILE' \
          '        Set OMB Wiki "themes" page path.  This can also be specified through' \
@@ -47,6 +55,26 @@ function print_help {
 
 # first process current env vars, with some sensible default fallback values...
 
+if [[ ! ${OMB_WORKING_TREE:-} ]]; then
+  # Determine the default location of the working tree of Oh My Bash based on
+  # ${BASH_SOURCE[0]}.
+  path=${BASH_SOURCE[0]-}
+  if [[ $path != */tools/* ]]; then
+    resolved_path=$(realpath "$path" 2>/dev/null || readlink -f "$path" 2>/dev/null) &&
+      [[ -e $resolved_path ]] &&
+      path=$resolved_path
+  fi
+  if [[ $path == */tools/* ]]; then
+    path=${path%/tools/*}
+  elif [[ $path == */* ]]; then
+    path=${path%/*}/..
+  else
+    path=..
+  fi
+  [[ -d $path ]] || path=.
+  OMB_WORKING_TREE=$path
+fi
+
 OMB_WIKI_THEMES_FILE=${OMB_WIKI_THEMES_FILE:-../oh-my-bash.wiki/Themes.md}
 OMB_WIKI_THEMES_START_MARKER=${OMB_WIKI_THEMES_START_MARKER:-'<!-- OMB_WIKI_THEMES_START_MARKER -->'}
 OMB_WIKI_THEMES_END_MARKER=${OMB_WIKI_THEMES_END_MARKER:-'<!-- OMB_WIKI_THEMES_END_MARKER -->'}
@@ -54,7 +82,7 @@ OMB_WIKI_FLAG_HELP=
 
 # then process any cli args, if provided...
 
-if ! VALID_ARGS=$(getopt -o f:s:e: --long help,themes-file:,start-marker:,end-marker: -- "$@"); then
+if ! VALID_ARGS=$(getopt -o p:f:s:e: --long help,omb-working-tree:themes-file:,start-marker:,end-marker: -- "$@"); then
   exit 2
 fi
 
@@ -64,6 +92,10 @@ while (($#)); do
   --help)
     OMB_WIKI_FLAG_HELP=set
     shift
+    ;;
+  -p | --omb-working-tree)
+    OMB_WORKING_TREE=$2
+    shift 2
     ;;
   -f | --themes-file)
     # echo "Processing 'themes-file' option. Input argument is '$2'"
@@ -102,9 +134,17 @@ if [[ $OMB_WIKI_FLAG_HELP ]]; then
 fi
 
 # debug: this will either be adapted for the final script, or removed entirely..
+printf '%s\n' "current OMB_WORKING_TREE: $OMB_WORKING_TREE"
 printf '%s\n' "current OMB_WIKI_THEMES_FILE: $OMB_WIKI_THEMES_FILE"
 printf '%s\n' "current OMB_WIKI_THEMES_START_MARKER: $OMB_WIKI_THEMES_START_MARKER"
 printf '%s\n' "current OMB_WIKI_THEMES_END_MARKER: $OMB_WIKI_THEMES_END_MARKER"
+
+# verify the existence of the OMB working tree (which contains "themes"
+# subdirectory).
+if [[ ! -d $OMB_WORKING_TREE ]]; then
+  printf '%s\n' "ERROR: The OMB working tree '$OMB_WORKING_TREE' is not found."
+  exit 1
+fi
 
 # verify that the themes file exists...
 if [[ ! -f $OMB_WIKI_THEMES_FILE ]]; then
@@ -125,14 +165,14 @@ fi
 # now we get onto the fun stuff, lets get a list of all current themes...
 
 # find all themes in the current themes directory...
-theme_list=$(find "./themes" -mindepth 1 -maxdepth 1 -type d -print | sort | xargs -n1 basename)
+theme_list=$(find "$OMB_WORKING_TREE/themes" -mindepth 1 -maxdepth 1 -type d -print | sort | xargs -n1 basename)
 
 # prepare a variable to hold generated content, starting with with the "start" marker for next run...
 markdown_text="$OMB_WIKI_THEMES_START_MARKER\n\n"
 
 # now we can loop through the list and find all images in each theme directory...
 for theme in $theme_list; do
-  theme_dir=./themes/$theme
+  theme_dir=$OMB_WORKING_TREE/themes/$theme
   image_list=$(find "$theme_dir" -type f -name "*.png" -o -name "*.jpg")
 
   # start preparing a theme example markdown block...
