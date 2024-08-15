@@ -202,6 +202,7 @@ for theme in $theme_list; do
     done
   else
     markdown_text="${markdown_text}WARNING: theme contains no example images.\n"
+    printf '\e[1;31m%s\e[m\n' "WARNING: theme '$theme' contains no example images." >&2
   fi
 
   # add one more newline before moving on...
