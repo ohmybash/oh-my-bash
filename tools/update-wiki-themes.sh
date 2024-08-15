@@ -201,5 +201,6 @@ done
 markdown_text=$markdown_text$OMB_WIKI_THEMES_END_MARKER
 
 # now we can update the OMB Wiki "Themes" page directly...
-sed -i "/$OMB_WIKI_THEMES_START_MARKER/,/$OMB_WIKI_THEMES_END_MARKER/c\\
-$markdown_text" "$OMB_WIKI_THEMES_FILE"
+sed "/$OMB_WIKI_THEMES_START_MARKER/,/$OMB_WIKI_THEMES_END_MARKER/c\\
+$markdown_text" "$OMB_WIKI_THEMES_FILE" > "$OMB_WIKI_THEMES_FILE.part" &&
+  mv -f "$OMB_WIKI_THEMES_FILE.part" "$OMB_WIKI_THEMES_FILE"
