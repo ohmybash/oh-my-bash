@@ -1,5 +1,8 @@
 #! bash oh-my-bash.module
 #
+# The current version is based on the following upstream version:
+# https://github.com/petervanderdoes/git-flow-completion/blob/db3c032411c2d6fd897b2bfc52d15a6fc4e3bfa3/git-flow-completion.bash
+#------------------------------------------------------------------------------
 # git-flow-completion
 # ===================
 #
@@ -8,8 +11,8 @@
 # The contained completion routines provide support for completing:
 #
 #  * git-flow init and version
-#  * feature, hotfix and release branches
-#  * remote feature, hotfix and release branch names
+#  * feature, bugfix, hotfix and release branches
+#  * remote feature, bugfix, hotfix and release branch names
 #
 #
 # Installation
@@ -55,7 +58,7 @@ __git_flow_config_file_options="
 
 _git_flow ()
 {
-  local subcommands="init feature release hotfix support help version config finish delete publish rebase"
+  local subcommands="init feature bugfix release hotfix support help version config finish delete publish rebase"
   local subcommand="$(__git_find_on_cmdline "$subcommands")"
   if [ -z "$subcommand" ]; then
     __gitcomp "$subcommands"
@@ -69,6 +72,10 @@ _git_flow ()
     ;;
   feature)
     __git_flow_feature
+    return
+    ;;
+  bugfix)
+    __git_flow_bugfix
     return
     ;;
   release)
@@ -115,7 +122,7 @@ __git_flow_init ()
 
 __git_flow_feature ()
 {
-  local subcommands="list start finish publish track diff rebase checkout pull help delete"
+  local subcommands="list start finish publish track diff rebase checkout pull help delete rename"
   local subcommand="$(__git_find_on_cmdline "$subcommands")"
 
   if [ -z "$subcommand" ]; then
@@ -196,6 +203,89 @@ __git_flow_feature ()
   esac
 }
 
+__git_flow_bugfix ()
+{
+  local subcommands="list start finish publish track diff rebase checkout pull help delete rename"
+  local subcommand="$(__git_find_on_cmdline "$subcommands")"
+
+  if [ -z "$subcommand" ]; then
+    __gitcomp "$subcommands"
+    return
+  fi
+
+  case "$subcommand" in
+  pull)
+    __gitcomp_nl "$(__git_remotes)"
+    return
+    ;;
+  checkout)
+    __gitcomp_nl "$(__git_flow_list_local_branches 'bugfix')"
+    return
+    ;;
+  delete)
+    case "$cur" in
+    --*)
+      __gitcomp "
+          --noforce --force
+          --noremote --remote
+        "
+      return
+      ;;
+    esac
+    __gitcomp_nl "$(__git_flow_list_local_branches 'bugfix')"
+    return
+    ;;
+  finish)
+    case "$cur" in
+    --*)
+      __gitcomp "
+          --nofetch --fetch
+          --norebase --rebase
+          --nopreserve-merges --preserve-merges
+          --nokeep --keep
+          --keepremote
+          --keeplocal
+          --noforce_delete --force_delete
+          --nosquash --squash
+          --no-ff
+        "
+      return
+      ;;
+    esac
+    __gitcomp_nl "$(__git_flow_list_local_branches 'bugfix')"
+    return
+    ;;
+  diff)
+    __gitcomp_nl "$(__git_flow_list_local_branches 'bugfix')"
+    return
+    ;;
+  rebase)
+    case "$cur" in
+    --*)
+      __gitcomp "
+          --nointeractive --interactive
+          --nopreserve-merges --preserve-merges
+        "
+      return
+      ;;
+    esac
+    __gitcomp_nl "$(__git_flow_list_local_branches 'bugfix')"
+    return
+    ;;
+  publish)
+    __gitcomp_nl "$(__git_flow_list_branches 'bugfix')"
+    return
+    ;;
+  track)
+    __gitcomp_nl "$(__git_flow_list_branches 'bugfix')"
+    return
+    ;;
+  *)
+    COMPREPLY=()
+    ;;
+  esac
+}
+
 __git_flow_release ()
 {
   local subcommands="list start finish track publish help delete"
@@ -223,6 +313,7 @@ __git_flow_release ()
           --notag --tag
           --nonobackmerge --nobackmerge
           --nosquash --squash
+          --squash-info
         "
       return
       ;;
@@ -284,7 +375,7 @@ __git_flow_release ()
 
 __git_flow_hotfix ()
 {
-  local subcommands="list start finish track publish help delete"
+  local subcommands="list start finish track publish help delete rename"
   local subcommand="$(__git_find_on_cmdline "$subcommands")"
   if [ -z "$subcommand" ]; then
     __gitcomp "$subcommands"
@@ -308,6 +399,8 @@ __git_flow_hotfix ()
           --noforce_delete --force_delete
           --notag --tag
           --nonobackmerge --nobackmerge
+          --nosquash --squash
+          --squash-info
         "
       return
       ;;
@@ -427,7 +520,7 @@ __git_flow_config ()
     esac
     __gitcomp "
         master develop
-        feature hotfix release support
+        feature bugfix hotfix release support
         versiontagprefix
       "
     return
@@ -453,7 +546,7 @@ __git_flow_config ()
 __git_flow_prefix ()
 {
   case "$1" in
-  feature|release|hotfix|support)
+  feature|bugfix|release|hotfix|support)
     _omb_prompt_git config "gitflow.prefix.$1" 2> /dev/null || echo "$1/"
     return
     ;;
