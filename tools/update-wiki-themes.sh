@@ -7,15 +7,11 @@
 # alongside this repo, but with the understanding that this may not always be
 # true.
 #
-# it also assumes the associated `Themes.md` file exists at the root of the
-# wiki, and contains the relevant "start" and "end" markers for a safe space to
-# re-render the theme examples.
+# it also assumes the associated `Themes.md` file contains the relevant "start"
+# and "end" markers for a safe space to re-render the theme examples.
 #
 # runtime overrides, where CLI args override env vars:
 #
-# - set OMB Wiki project folder path
-#   - `OMB_WIKI_PATH` variable
-#   - `-p | --wiki-path` argument
 # - set OMB Wiki "themes" page path
 #   - `OMB_WIKI_THEMES_FILE` variable
 #   - `-f | --themes-file` argument
@@ -28,25 +24,19 @@
 
 # first process current env vars, with some sensible default fallback values...
 
-OMB_WIKI_PATH=${OMB_WIKI_PATH:-../oh-my-bash.wiki}
-OMB_WIKI_THEMES_FILE=${OMB_WIKI_THEMES_FILE:-Themes.md}
+OMB_WIKI_THEMES_FILE=${OMB_WIKI_THEMES_FILE:-../oh-my-bash.wiki/Themes.md}
 OMB_WIKI_THEMES_START_MARKER=${OMB_WIKI_THEMES_START_MARKER:-'<!-- OMB_WIKI_THEMES_START_MARKER -->'}
 OMB_WIKI_THEMES_END_MARKER=${OMB_WIKI_THEMES_END_MARKER:-'<!-- OMB_WIKI_THEMES_END_MARKER -->'}
 
 # then process any cli args, if provided...
 
-if ! VALID_ARGS=$(getopt -o p:f:s:e: --long wiki-path:,themes-file:,start-marker:,end-marker: -- "$@"); then
+if ! VALID_ARGS=$(getopt -o f:s:e: --long themes-file:,start-marker:,end-marker: -- "$@"); then
   exit 2
 fi
 
 eval "set -- $VALID_ARGS"
 while (($#)); do
   case $1 in
-  -p | --wiki-path)
-    # echo "Processing 'wiki-path' option. Input argument is '$2'"
-    OMB_WIKI_PATH=$2
-    shift 2
-    ;;
   -f | --themes-file)
     # echo "Processing 'themes-file' option. Input argument is '$2'"
     OMB_WIKI_THEMES_FILE=$2
@@ -70,29 +60,22 @@ while (($#)); do
 done
 
 # debug: this will either be adapted for the final script, or removed entirely..
-printf '%s\n' "current OMB_WIKI_PATH: $OMB_WIKI_PATH"
 printf '%s\n' "current OMB_WIKI_THEMES_FILE: $OMB_WIKI_THEMES_FILE"
 printf '%s\n' "current OMB_WIKI_THEMES_START_MARKER: $OMB_WIKI_THEMES_START_MARKER"
 printf '%s\n' "current OMB_WIKI_THEMES_END_MARKER: $OMB_WIKI_THEMES_END_MARKER"
 
-# verify that the OMB Wiki project exists...
-if [[ ! -d $OMB_WIKI_PATH ]]; then
-  printf '%s\n' "ERROR: Wiki project path '$OMB_WIKI_PATH' does not exist."
-  exit 1
-fi
-
-# verify that the OMB Wiki contains the expected themes file...
-if [[ ! -f $OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE ]]; then
-  printf '%s\n' "ERROR: Wiki project has no themes file called '$OMB_WIKI_THEMES_FILE'."
+# verify that the themes file exists...
+if [[ ! -f $OMB_WIKI_THEMES_FILE ]]; then
+  printf '%s\n' "ERROR: The themes file called '$OMB_WIKI_THEMES_FILE' does not exist."
   exit 1
 fi
 
 # verify that the OMB Wiki contains the expected start and end markers...
-if ! grep -q "$OMB_WIKI_THEMES_START_MARKER" "$OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE"; then
+if ! grep -q "$OMB_WIKI_THEMES_START_MARKER" "$OMB_WIKI_THEMES_FILE"; then
   printf '%s\n' "ERROR: Wiki themes file does not contain start marker '$OMB_WIKI_THEMES_START_MARKER'."
   exit 1
 fi
-if ! grep -q "$OMB_WIKI_THEMES_END_MARKER" "$OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE"; then
+if ! grep -q "$OMB_WIKI_THEMES_END_MARKER" "$OMB_WIKI_THEMES_FILE"; then
   printf '%s\n' "ERROR: Wiki themes file does not contain end marker '$OMB_WIKI_THEMES_END_MARKER'."
   exit 1
 fi
@@ -136,4 +119,4 @@ markdown_text=$markdown_text$OMB_WIKI_THEMES_END_MARKER
 
 # now we can update the OMB Wiki "Themes" page directly...
 sed -i "/$OMB_WIKI_THEMES_START_MARKER/,/$OMB_WIKI_THEMES_END_MARKER/c\\
-$markdown_text" "$OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE"
+$markdown_text" "$OMB_WIKI_THEMES_FILE"
