@@ -101,7 +101,8 @@ Open up a new terminal window and your prompt should look something like this:
 
 ![Font theme](themes/font/font-dark.png)
 
-In case you did not find a suitable theme for your needs, please have a look at the wiki for [more of them](https://github.com/ohmybash/oh-my-bash/wiki/External-themes).
+In case you did not find a suitable theme for your needs, please have a look
+at the wiki for [more of them](https://github.com/ohmybash/oh-my-bash/wiki/Themes).
 
 If you're feeling feisty, you can let the computer select one randomly for you each time you open a new terminal window.
 
