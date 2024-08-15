@@ -9,34 +9,62 @@
 #
 # it also assumes the associated `Themes.md` file contains the relevant "start"
 # and "end" markers for a safe space to re-render the theme examples.
-#
-# runtime overrides, where CLI args override env vars:
-#
-# - set OMB Wiki "themes" page path
-#   - `OMB_WIKI_THEMES_FILE` variable
-#   - `-f | --themes-file` argument
-# - set OMB Wiki "themes" page "start" marker
-#   - `OMB_WIKI_THEMES_START_MARKER` variable
-#   - `-s | --start-marker` argument
-# - set OMB Wiki "themes" page "end" marker
-#   - `OMB_WIKI_THEMES_END_MARKER` variable
-#   - `-e | --end-marker` argument
+
+function print_usage {
+  printf '%s\n' \
+         'usage: tools/update-wiki-themes.sh [[-f|--themes-file] FILE |' \
+         '            [-s|--start-marker] START | [-e|--end-marker] END]' \
+         ''
+}
+
+function print_help {
+  print_usage
+  printf '%s\n' \
+         'OPTIONS' \
+         '' \
+         '    When both the CLI argument and the environment variable are specified, the' \
+         '    CLI argument overrides the envrionment variable.' \
+         '' \
+         '    -f, --themes-file FILE' \
+         '        Set OMB Wiki "themes" page path.  This can also be specified through' \
+         '        the environment variable "OMB_WIKI_THEMES_FILE".  The default is' \
+         '        "./wiki/Themes.md"' \
+         '' \
+         '    -s | --start-marker START' \
+         '        Set OMB Wiki "themes" page "start" marker.  This can also be specified' \
+         '        through the environment variable "OMB_WIKI_THEMES_START_MARKER".  The' \
+         '        default is "<!-- OMB_WIKI_THEMES_START_MARKER -->"' \
+         '' \
+         '    -e | --end-marker END' \
+         '        Set OMB Wiki "themes" page "end" marker.  This can also be specified' \
+         '        through the environment variable "OMB_WIKI_THEMES_END_MARKER".  The' \
+         '        default is "<!-- OMB_WIKI_THEMES_END_MARKER -->"' \
+         '' \
+         '    --help' \
+         '        Print this help.' \
+         ''
+}
 
 # first process current env vars, with some sensible default fallback values...
 
 OMB_WIKI_THEMES_FILE=${OMB_WIKI_THEMES_FILE:-../oh-my-bash.wiki/Themes.md}
 OMB_WIKI_THEMES_START_MARKER=${OMB_WIKI_THEMES_START_MARKER:-'<!-- OMB_WIKI_THEMES_START_MARKER -->'}
 OMB_WIKI_THEMES_END_MARKER=${OMB_WIKI_THEMES_END_MARKER:-'<!-- OMB_WIKI_THEMES_END_MARKER -->'}
+OMB_WIKI_FLAG_HELP=
 
 # then process any cli args, if provided...
 
-if ! VALID_ARGS=$(getopt -o f:s:e: --long themes-file:,start-marker:,end-marker: -- "$@"); then
+if ! VALID_ARGS=$(getopt -o f:s:e: --long help,themes-file:,start-marker:,end-marker: -- "$@"); then
   exit 2
 fi
 
 eval "set -- $VALID_ARGS"
 while (($#)); do
   case $1 in
+  --help)
+    OMB_WIKI_FLAG_HELP=set
+    shift
+    ;;
   -f | --themes-file)
     # echo "Processing 'themes-file' option. Input argument is '$2'"
     OMB_WIKI_THEMES_FILE=$2
@@ -56,8 +84,22 @@ while (($#)); do
     shift
     break
     ;;
+  *)
+    break
+    ;;
   esac
 done
+
+if (($#)); then
+  printf '%s\n' 'unrecognized arguments are specified.' >&2
+  print_usage >&2
+  exit 2
+fi
+
+if [[ $OMB_WIKI_FLAG_HELP ]]; then
+  print_help
+  exit 0
+fi
 
 # debug: this will either be adapted for the final script, or removed entirely..
 printf '%s\n' "current OMB_WIKI_THEMES_FILE: $OMB_WIKI_THEMES_FILE"
