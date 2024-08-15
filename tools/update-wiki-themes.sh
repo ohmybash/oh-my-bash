@@ -80,6 +80,10 @@ OMB_WIKI_THEMES_START_MARKER=${OMB_WIKI_THEMES_START_MARKER:-'<!-- OMB_WIKI_THEM
 OMB_WIKI_THEMES_END_MARKER=${OMB_WIKI_THEMES_END_MARKER:-'<!-- OMB_WIKI_THEMES_END_MARKER -->'}
 OMB_WIKI_FLAG_HELP=
 
+declare -A OMB_THEME_SUBTITLE=(
+  [font]='(default theme)'
+)
+
 # then process any cli args, if provided...
 
 if ! VALID_ARGS=$(getopt -o p:f:s:e: --long help,omb-working-tree:themes-file:,start-marker:,end-marker: -- "$@"); then
@@ -177,7 +181,8 @@ for theme in $theme_list; do
   image_list=$(find "$theme_dir" -type f -name "*.png" -o -name "*.jpg")
 
   # start preparing a theme example markdown block...
-  markdown_text="$markdown_text## \`$theme\`\n\n"
+  title="\`$theme\`${OMB_THEME_SUBTITLE[$theme]:+ ${OMB_THEME_SUBTITLE[$theme]}}"
+  markdown_text="$markdown_text## $title\n\n"
 
   # loop through the image list and add each image to the theme example entry...
   if [[ ! -z $image_list ]]; then
