@@ -28,10 +28,10 @@
 
 # first process current env vars, with some sensible default fallback values...
 
-SCRIPT_WIKI_PATH=${OMB_WIKI_PATH:-../oh-my-bash.wiki}
-SCRIPT_WIKI_THEMES_FILE=${OMB_WIKI_THEMES_FILE:-Themes.md}
-SCRIPT_WIKI_THEMES_START_MARKER=${OMB_WIKI_THEMES_START_MARKER:-'<!-- THEME_GEN_START_MARKER -->'}
-SCRIPT_WIKI_THEMES_END_MARKER=${OMB_WIKI_THEMES_END_MARKER:-'<!-- THEME_GEN_END_MARKER -->'}
+OMB_WIKI_PATH=${OMB_WIKI_PATH:-../oh-my-bash.wiki}
+OMB_WIKI_THEMES_FILE=${OMB_WIKI_THEMES_FILE:-Themes.md}
+OMB_WIKI_THEMES_START_MARKER=${OMB_WIKI_THEMES_START_MARKER:-'<!-- OMB_WIKI_THEMES_START_MARKER -->'}
+OMB_WIKI_THEMES_END_MARKER=${OMB_WIKI_THEMES_END_MARKER:-'<!-- OMB_WIKI_THEMES_END_MARKER -->'}
 
 # then process any cli args, if provided...
 
@@ -44,22 +44,22 @@ while (($#)); do
   case $1 in
   -p | --wiki-path)
     # echo "Processing 'wiki-path' option. Input argument is '$2'"
-    SCRIPT_WIKI_PATH=$2
+    OMB_WIKI_PATH=$2
     shift 2
     ;;
   -f | --themes-file)
     # echo "Processing 'themes-file' option. Input argument is '$2'"
-    SCRIPT_WIKI_THEMES_FILE=$2
+    OMB_WIKI_THEMES_FILE=$2
     shift 2
     ;;
   -s | --start-marker)
     # echo "Processing 'start-marker' option. Input argument is '$2'"
-    SCRIPT_WIKI_THEMES_START_MARKER=$2
+    OMB_WIKI_THEMES_START_MARKER=$2
     shift 2
     ;;
   -e | --end-marker)
     # echo "Processing 'end-marker' option. Input argument is '$2'"
-    SCRIPT_WIKI_THEMES_END_MARKER=$2
+    OMB_WIKI_THEMES_END_MARKER=$2
     shift 2
     ;;
   --)
@@ -70,30 +70,30 @@ while (($#)); do
 done
 
 # debug: this will either be adapted for the final script, or removed entirely..
-printf '%s\n' "current SCRIPT_WIKI_PATH: $SCRIPT_WIKI_PATH"
-printf '%s\n' "current SCRIPT_WIKI_THEMES_FILE: $SCRIPT_WIKI_THEMES_FILE"
-printf '%s\n' "current SCRIPT_WIKI_THEMES_START_MARKER: $SCRIPT_WIKI_THEMES_START_MARKER"
-printf '%s\n' "current SCRIPT_WIKI_THEMES_END_MARKER: $SCRIPT_WIKI_THEMES_END_MARKER"
+printf '%s\n' "current OMB_WIKI_PATH: $OMB_WIKI_PATH"
+printf '%s\n' "current OMB_WIKI_THEMES_FILE: $OMB_WIKI_THEMES_FILE"
+printf '%s\n' "current OMB_WIKI_THEMES_START_MARKER: $OMB_WIKI_THEMES_START_MARKER"
+printf '%s\n' "current OMB_WIKI_THEMES_END_MARKER: $OMB_WIKI_THEMES_END_MARKER"
 
 # verify that the OMB Wiki project exists...
-if [[ ! -d $SCRIPT_WIKI_PATH ]]; then
-  printf '%s\n' "ERROR: Wiki project path '$SCRIPT_WIKI_PATH' does not exist."
+if [[ ! -d $OMB_WIKI_PATH ]]; then
+  printf '%s\n' "ERROR: Wiki project path '$OMB_WIKI_PATH' does not exist."
   exit 1
 fi
 
 # verify that the OMB Wiki contains the expected themes file...
-if [[ ! -f $SCRIPT_WIKI_PATH/$SCRIPT_WIKI_THEMES_FILE ]]; then
-  printf '%s\n' "ERROR: Wiki project has no themes file called '$SCRIPT_WIKI_THEMES_FILE'."
+if [[ ! -f $OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE ]]; then
+  printf '%s\n' "ERROR: Wiki project has no themes file called '$OMB_WIKI_THEMES_FILE'."
   exit 1
 fi
 
 # verify that the OMB Wiki contains the expected start and end markers...
-if ! grep -q "$SCRIPT_WIKI_THEMES_START_MARKER" "$SCRIPT_WIKI_PATH/$SCRIPT_WIKI_THEMES_FILE"; then
-  printf '%s\n' "ERROR: Wiki themes file does not contain start marker '$SCRIPT_WIKI_THEMES_START_MARKER'."
+if ! grep -q "$OMB_WIKI_THEMES_START_MARKER" "$OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE"; then
+  printf '%s\n' "ERROR: Wiki themes file does not contain start marker '$OMB_WIKI_THEMES_START_MARKER'."
   exit 1
 fi
-if ! grep -q "$SCRIPT_WIKI_THEMES_END_MARKER" "$SCRIPT_WIKI_PATH/$SCRIPT_WIKI_THEMES_FILE"; then
-  printf '%s\n' "ERROR: Wiki themes file does not contain end marker '$SCRIPT_WIKI_THEMES_END_MARKER'."
+if ! grep -q "$OMB_WIKI_THEMES_END_MARKER" "$OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE"; then
+  printf '%s\n' "ERROR: Wiki themes file does not contain end marker '$OMB_WIKI_THEMES_END_MARKER'."
   exit 1
 fi
 
@@ -103,7 +103,7 @@ fi
 theme_list=$(find "./themes" -mindepth 1 -maxdepth 1 -type d -print | sort | xargs -n1 basename)
 
 # prepare a variable to hold generated content, starting with with the "start" marker for next run...
-markdown_text="$SCRIPT_WIKI_THEMES_START_MARKER\n\n"
+markdown_text="$OMB_WIKI_THEMES_START_MARKER\n\n"
 
 # now we can loop through the list and find all images in each theme directory...
 for theme in $theme_list; do
@@ -132,8 +132,8 @@ for theme in $theme_list; do
 done
 
 # inject the "end" marker for next run...
-markdown_text=$markdown_text$SCRIPT_WIKI_THEMES_END_MARKER
+markdown_text=$markdown_text$OMB_WIKI_THEMES_END_MARKER
 
 # now we can update the OMB Wiki "Themes" page directly...
-sed -i "/$SCRIPT_WIKI_THEMES_START_MARKER/,/$SCRIPT_WIKI_THEMES_END_MARKER/c\\
-$markdown_text" "$SCRIPT_WIKI_PATH/$SCRIPT_WIKI_THEMES_FILE"
+sed -i "/$OMB_WIKI_THEMES_START_MARKER/,/$OMB_WIKI_THEMES_END_MARKER/c\\
+$markdown_text" "$OMB_WIKI_PATH/$OMB_WIKI_THEMES_FILE"
