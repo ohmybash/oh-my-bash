@@ -17,7 +17,7 @@
 
 
 function _salt_get_grains {
-  if [ "$1" = 'local' ] ; then
+  if [[ $1 == 'local' ]]; then
     salt-call --log-level=error --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" | sed 's:\([a-z0-9]\) :\1\: :g'
   else
     salt '*' --timeout 2 --hide-timeout --log-level=error --out=txt -- grains.ls | sed  's/^.*\[//' | tr -d ",']" | sed 's:\([a-z0-9]\) :\1\: :g'
@@ -25,7 +25,7 @@ function _salt_get_grains {
 }
 
 function _salt_get_grain_values {
-  if [ "$1" = 'local' ] ; then
+  if [[ $1 == 'local' ]]; then
     salt-call --log-level=error --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
   else
     salt '*' --timeout 2 --hide-timeout --log-level=error --out=txt -- grains.item $1 |sed 's/^\S*:\s//' |grep -v '^\s*$'
@@ -33,9 +33,10 @@ function _salt_get_grain_values {
 }
 
 function _salt_get_keys {
+  local type
   for type in $*; do
     # remove header from data:
-    salt-key --no-color -l $type | tail -n+2
+    salt-key --no-color -l "$type" | tail -n+2
   done
 }
 
@@ -44,7 +45,7 @@ function _salt_list_functions {
   # salt: get all functions on all minions
   # sed: remove all array overhead and convert to newline separated list
   # sort: chop out doubled entries, so overhead is minimal later during actual completion
-  if [ "$1" = 'local' ] ; then
+  if [[ $1 == 'local' ]]; then
     salt-call --log-level=quiet --out=txt -- sys.list_functions |
       sed "s/^.*\[//;s/[],']//g;s/ /\n/g" |
       sort -u
@@ -56,33 +57,33 @@ function _salt_list_functions {
 }
 
 function _salt_get_coms {
-  CACHE_DIR="$HOME/.cache/salt-${1}-comp-cache_functions"
+  CACHE_DIR=$HOME/.cache/salt-$1-comp-cache_functions
   local _salt_cache_functions=${SALT_COMP_CACHE_FUNCTIONS:=$CACHE_DIR}
   local _salt_cache_timeout=${SALT_COMP_CACHE_TIMEOUT:='last hour'}
 
-  if [ ! -d "$(dirname ${_salt_cache_functions})" ]; then
-    mkdir -p "$(dirname ${_salt_cache_functions})"
+  if [[ ! -d $(dirname $_salt_cache_functions) ]]; then
+    mkdir -p "$(dirname $_salt_cache_functions)"
   fi
 
   # Regenerate cache if timed out
-  if [[ "$(stat --format=%Z ${_salt_cache_functions} 2>/dev/null)" -lt "$(date --date="${_salt_cache_timeout}" +%s)" ]]; then
-    _salt_list_functions $1 > "${_salt_cache_functions}"
+  if [[ $(stat --format=%Z $_salt_cache_functions 2>/dev/null) -lt $(date --date="$_salt_cache_timeout" +%s) ]]; then
+    _salt_list_functions $1 > "$_salt_cache_functions"
   fi
 
   # filter results, to only print the part to next dot (or end of function)
-  sed 's/^\('${cur}'\(\.\|[^.]*\)\)\?.*/\1/' "${_salt_cache_functions}" | sort -u
+  sed 's/^\('"$cur"'\(\.\|[^.]*\)\)\?.*/\1/' "$_salt_cache_functions" | sort -u
 }
 
 function _salt {
   local cur prev opts pprev ppprev
   COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
-  if [ ${COMP_CWORD} -gt 2 ]; then
-    pprev="${COMP_WORDS[COMP_CWORD-2]}"
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
+  if ((COMP_CWORD > 2)); then
+    pprev=${COMP_WORDS[COMP_CWORD-2]}
   fi
-  if [ ${COMP_CWORD} -gt 3 ]; then
-    ppprev="${COMP_WORDS[COMP_CWORD-3]}"
+  if ((COMP_CWORD > 3)); then
+    ppprev=${COMP_WORDS[COMP_CWORD-3]}
   fi
 
   opts="-h --help -d --doc --documentation --version --versions-report -c \
@@ -93,37 +94,37 @@ function _salt {
     --ipcidr --out=pprint --out=yaml --out=overstatestage --out=json \
     --out=raw --out=highstate --out=key --out=txt --no-color --out-indent= "
 
-  if [[ "${cur}" == -* ]] ; then
+  if [[ $cur == -* ]] ; then
     COMPREPLY=($(compgen -W '$opts' -- "$cur"))
     return 0
   fi
 
   # 2 special cases for filling up grain values
-  case "${pprev}" in
+  case $pprev in
   -G|--grain|--grain-pcre)
-    if [ "${cur}" = ":" ]; then
+    if [[ $cur == ":" ]]; then
       COMPREPLY=($(compgen -W '$(_salt_get_grain_values "$prev")'))
       return 0
     fi
     ;;
   esac
-  case "${ppprev}" in
+  case $ppprev in
   -G|--grain|--grain-pcre)
-    if [ "${prev}" = ":" ]; then
+    if [[ $prev == ":" ]]; then
       COMPREPLY=($(compgen -W '$(_salt_get_grain_values "$pprev")' -- "$cur"))
       return 0
     fi
     ;;
   esac
 
-  if [ "${cur}" = "=" ] && [[ "${prev}" == --* ]]; then
+  if [[ $cur == "=" && $prev == --* ]]; then
     cur=""
   fi
-  if [ "${prev}" = "=" ] && [[ "${pprev}" == --* ]]; then
-    prev="${pprev}"
+  if [[ $prev == "=" && $pprev == --* ]]; then
+    prev=$pprev
   fi
 
-  case "${prev}" in
+  case $prev in
   -c|--config)
     COMPREPLY=($(compgen -f -- "$cur"))
     return 0
@@ -177,8 +178,8 @@ complete -F _salt salt
 function _saltkey {
   local cur prev opts prev pprev
   COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
   opts="-c --config-dir= -h --help --version --versions-report -q --quiet \
     -y --yes --gen-keys= --gen-keys-dir= --keysize= --key-logfile= \
     -l --list= -L --list-all -a --accept= -A --accept-all \
@@ -186,25 +187,25 @@ function _saltkey {
     -d --delete= -D --delete-all -f --finger= -F --finger-all \
     --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
     --out=highstate --out=key --out=txt --no-color --out-indent= "
-  if [ ${COMP_CWORD} -gt 2 ]; then
-    pprev="${COMP_WORDS[COMP_CWORD-2]}"
+  if ((COMP_CWORD > 2)); then
+    pprev=${COMP_WORDS[COMP_CWORD-2]}
   fi
-  if [ ${COMP_CWORD} -gt 3 ]; then
-    ppprev="${COMP_WORDS[COMP_CWORD-3]}"
+  if ((COMP_CWORD > 3)); then
+    ppprev=${COMP_WORDS[COMP_CWORD-3]}
   fi
-  if [[ "${cur}" == -* ]] ; then
+  if [[ $cur == -* ]] ; then
     COMPREPLY=($(compgen -W '$opts' -- "$cur"))
     return 0
   fi
 
-  if [ "${cur}" = "=" ] && [[ "${prev}" == --* ]]; then
+  if [[ $cur == "=" && $prev == --* ]]; then
     cur=""
   fi
-  if [ "${prev}" = "=" ] && [[ "${pprev}" == --* ]]; then
-    prev="${pprev}"
+  if [[ $prev == "=" && $pprev == --* ]]; then
+    prev=$pprev
   fi
 
-  case "${prev}" in
+  case $prev in
   -a|--accept)
     COMPREPLY=($(compgen -W '$(_salt_get_keys un rej)' -- "$cur"))
     return 0
@@ -253,31 +254,31 @@ complete -F _saltkey salt-key
 function _saltcall {
   local cur prev opts pprev ppprev
   COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
   opts="-h --help -d --doc --documentation --version --versions-report \
     -m --module-dirs= -g --grains --return= --local -c --config-dir= -l --log-level= \
     --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
     --out=highstate --out=key --out=txt --no-color --out-indent= "
-  if [ ${COMP_CWORD} -gt 2 ]; then
-    pprev="${COMP_WORDS[COMP_CWORD-2]}"
+  if ((COMP_CWORD > 2)); then
+    pprev=${COMP_WORDS[COMP_CWORD-2]}
   fi
-  if [ ${COMP_CWORD} -gt 3 ]; then
-    ppprev="${COMP_WORDS[COMP_CWORD-3]}"
+  if ((COMP_CWORD > 3)); then
+    ppprev=${COMP_WORDS[COMP_CWORD-3]}
   fi
-  if [[ "${cur}" == -* ]] ; then
+  if [[ $cur == -* ]] ; then
     COMPREPLY=($(compgen -W '$opts' -- "$cur"))
     return 0
   fi
 
-  if [ "${cur}" = "=" ] && [[ ${prev} == --* ]]; then
+  if [[ $cur == "=" && $prev == --* ]]; then
     cur=""
   fi
-  if [ "${prev}" = "=" ] && [[ ${pprev} == --* ]]; then
-    prev="${pprev}"
+  if [[ $prev == "=" && $pprev == --* ]]; then
+    prev=$pprev
   fi
 
-  case ${prev} in
+  case $prev in
   -m|--module-dirs)
     COMPREPLY=($(compgen -d -- "$cur"))
     return 0
@@ -310,27 +311,27 @@ complete -F _saltcall salt-call
 function _saltcp {
   local cur prev opts target prefpart postpart helper filt pprev ppprev
   COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
   opts="-t --timeout= -s --static -b --batch= --batch-size= \
     -h --help --version --versions-report -c --config-dir= \
     -E --pcre -L --list -G --grain --grain-pcre -N --nodegroup \
     -R --range -C --compound -I --pillar \
     --out=pprint --out=yaml --out=overstatestage --out=json --out=raw \
     --out=highstate --out=key --out=txt --no-color --out-indent= "
-  if [[ "${cur}" == -* ]] ; then
+  if [[ $cur == -* ]] ; then
     COMPREPLY=($(compgen -W '$opts' -- "$cur"))
     return 0
   fi
 
-  if [ "${cur}" = "=" ] && [[ "${prev}" == --* ]]; then
+  if [[ $cur == "=" && $prev == --* ]]; then
     cur=""
   fi
-  if [ "${prev}" = "=" ] && [[ "${pprev}" == --* ]]; then
-    prev=${pprev}
+  if [[ $prev == "=" && $pprev == --* ]]; then
+    prev=$pprev
   fi
 
-  case ${prev} in
+  case $prev in
   salt-cp)
     COMPREPLY=($(compgen -W '$opts $(_salt_get_keys acc)' -- "$cur"))
     return 0
@@ -346,9 +347,9 @@ function _saltcp {
     ;;
   -L|--list)
     # IMPROVEMENTS ARE WELCOME
-    prefpart="${cur%,*},"
+    prefpart=${cur%,*},
     postpart=${cur##*,}
-    filt="^\($(echo ${cur}| sed 's:,:\\|:g')\)$"
+    filt="^\($(sed 's:,:\\|:g' <<< "$cur")\)$"
     helper=($(_salt_get_keys acc | grep -v "$filt" | sed "s/^/$prefpart/"))
     COMPREPLY=($(compgen -W '"${helper[@]}"' -- "$cur"))
 
