@@ -396,12 +396,18 @@ function hg_prompt_vars {
     fi
 }
 
+## @fn _omb_prompt_get_rbfu
+##   @var[out] rbfu
+##   @exit
 function _omb_prompt_get_rbfu {
   rbfu=$RBFU_RUBY_VERSION
   [[ $rbfu ]] || return 1
   _omb_prompt_format rbfu "$rbfu" OMB_PROMPT_RBFU:RBFU_THEME_PROMPT
 }
 
+## @fn _omb_prompt_get_rbenv
+##   @var[out] rbenv
+##   @exit
 function _omb_prompt_get_rbenv {
   rbenv=
   _omb_util_command_exists rbenv || return 1
@@ -415,6 +421,9 @@ function _omb_prompt_get_rbenv {
   _omb_prompt_format rbenv "$rbenv" OMB_PROMPT_RBENV:RBENV_THEME_PROMPT
 }
 
+## @fn _omb_prompt_get_rvm
+##   @var[out] rvm
+##   @exit
 function _omb_prompt_get_rvm {
   rvm=
   if _omb_util_command_exists rvm-prompt; then
@@ -430,6 +439,9 @@ function _omb_prompt_get_rvm {
   _omb_prompt_format rvm "$rvm" OMB_PROMPT_RVM:RVM_THEME_PROMPT
 }
 
+## @fn _omb_prompt_get_chruby
+##   @var[out] chruby
+##   @exit
 function _omb_prompt_get_chruby {
   chruby=
   _omb_util_function_exists chruby || return 1
@@ -444,6 +456,9 @@ function _omb_prompt_get_chruby {
   chruby+=$ruby_version
 }
 
+## @fn _omb_prompt_get_ruby_env
+##   @var[out] ruby_env
+##   @exit
 function _omb_prompt_get_ruby_env {
   local rbfu rbenv rvm chruby
   _omb_prompt_get_rbfu
@@ -466,12 +481,18 @@ _omb_deprecate_function 20000 rvm_version_prompt    _omb_prompt_print_rvm
 _omb_deprecate_function 20000 chruby_version_prompt _omb_prompt_print_chruby
 _omb_deprecate_function 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
 
+## @fn _omb_prompt_get_virtualenv
+##   @var[out] virtualenv
+##   @exit
 function _omb_prompt_get_virtualenv {
   virtualenv=
   [[ ${VIRTUAL_ENV-} ]] || return 1
   _omb_prompt_format virtualenv "$(basename "$VIRTUAL_ENV")" OMB_PROMPT_VIRTUALENV:VIRTUALENV_THEME_PROMPT
 }
 
+## @fn _omb_prompt_get_condaenv
+##   @var[out] condaenv
+##   @exit
 function _omb_prompt_get_condaenv {
   condaenv=
   [[ ${CONDA_DEFAULT_ENV-} && ${CONDA_SHLVL-} != 0 ]] || return 1
@@ -483,12 +504,18 @@ function _omb_prompt_get_condaenv {
   _omb_prompt_format condaenv "$condaenv" OMB_PROMPT_CONDAENV:CONDAENV_THEME_PROMPT
 }
 
+## @fn _omb_prompt_get_python_version
+##   @var[out] python_version
+##   @exit
 function _omb_prompt_get_python_version {
   python_version=$(python --version 2>&1 | command awk '{print "py-"$2;}')
   [[ $python_version ]] || return 1
   _omb_prompt_format python_version "$python_version" OMB_PROMPT_PYTHON_VERSION:PYTHON_THEME_PROMPT
 }
 
+## @fn _omb_prompt_get_python_venv
+##   @var[out] python_venv
+##   @exit
 function _omb_prompt_get_python_venv {
   python_venv=
   [[ ${OMB_PROMPT_SHOW_PYTHON_VENV-} == true ]] || return 1
@@ -498,6 +525,10 @@ function _omb_prompt_get_python_venv {
   python_venv=$virtualenv$condaenv
   [[ $python_venv ]]
 }
+
+## @fn _omb_prompt_get_python_env
+##   @var[out] python_env
+##   @exit
 function _omb_prompt_get_python_env {
   local virtualenv condaenv python_version
   _omb_prompt_get_virtualenv
