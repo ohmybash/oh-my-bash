@@ -29,8 +29,43 @@ _omb_util_add_prompt_command 'history -a'
 
 # Unlimited history size. Doesn't appear to slow things down, so why not?
 # Export these variables to apply them also to the child shell sessions.
-export HISTSIZE=
-export HISTFILESIZE=
+#
+# Note: There are multiple ways to realize the unlimited history size.
+#
+# 1) A documented way is HISTSIZE=-1.  However, this is only supported in bash
+#   >= 4.3 and it causes clearing the user's history in bash < 4.3.  Even if
+#   we use HISTSIZE=-1 only when the current Bash version is 4.3 or above, it
+#   clears the user's history file when a lower version of Bash is in the
+#   system and it is started without setting HISTSIZE (e.g. when the Bash is
+#   started with --norc or the specified init file is broken).  One could
+#   consider giving up making HISTSIZE and HISTFILESIZE environment variables,
+#   but then it truncates the user's history file when a new Bash is started
+#   without setting HISTSIZE.
+#
+# 2) Another well known trick is to set HISTSIZE and HISTFILESIZE to an empty
+#   string.  This works as unlimited history in all the Bash versions.
+#   However, an empty HISTSIZE environment variable causes a startup error in
+#   Mksh.  One could consider giving up making HISTSIZE environment variable,
+#   but again, this will truncate the user's history file with Bash without
+#   configuration.  One might consider defining a shell function or an alias to
+#   start mksh without the HISTSIZE environment variable, but the users
+#   wouldn't like it.  In addition, the truncated history problem persists with
+#   the child Bash started within persists.
+#
+# 3) We instead consider explicitly specifying to HISTSIZE a large number that
+#   is unlikely to be reached.  A typical value might be 10000 or 100000, but
+#   that can still be reached by heavy users.  We instead specify a number as
+#   large as possible.  The number shall not exceed INT_MAX, or otherwise
+#   HISTSIZE becomes negative and clears the user's history.  In case there is
+#   a system where `int' is a 16-bit signed integer, we choose 0x7FFF7FFF so
+#   that the lower word is 0x7FFF.  This still does not ensure that the 16-bit
+#   integer becomes 0x7FFF after overflow (since the overflow of the signed
+#   integer causes the undefined behavior in the C standard), but it is safer
+#   in typical implementations.
+#
+# See discussion on https://github.com/ohmybash/oh-my-bash/issues/586.
+export HISTSIZE=$((0x7FFF7FFF))
+export HISTFILESIZE=$((0x7FFF7FFF))
 
 # Avoid duplicate entries
 HISTCONTROL="erasedups:ignoreboth"
