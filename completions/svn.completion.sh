@@ -176,7 +176,7 @@ function _svn_complete_target() {
 			for c in $urls ; do
 				[[ $c == $prefix:* ]] && choices="$choices ${c#*:}"
 			done
-		
+
 			COMPREPLY=( $(compgen -W "$choices" -- $suffix ) )
 		fi
 		compopt -o nospace
