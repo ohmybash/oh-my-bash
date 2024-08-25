@@ -1,4 +1,8 @@
 #! bash oh-my-bash.module
+#
+# The current version is based on the following upstream version:
+# https://github.com/owenthereal/gh/blob/04a7985fa9a1c1d4d63738f4edb7b07d228bdb12/etc/gh.bash_completion.sh
+#------------------------------------------------------------------------------
 # hub tab-completion script for bash.
 # This script complements the completion script that ships with git.
 
@@ -38,17 +42,17 @@ EOF
     while [ $c -lt $cword ]; do
       i="${words[c]}"
       case "$i" in
-        -s)
-          unset s
-          ;;
-        *)
-          for sh in $shells; do
-            if [ "$sh" = "$i" ]; then
-              unset shells
-              break
-            fi
-          done
-          ;;
+      -s)
+        unset s
+        ;;
+      *)
+        for sh in $shells; do
+          if [ "$sh" = "$i" ]; then
+            unset shells
+            break
+          fi
+        done
+        ;;
       esac
       ((c++))
     done
@@ -65,16 +69,16 @@ EOF
     while [ $c -lt $cword ]; do
       i="${words[c]}"
       case "$i" in
-        -u)
-          unset u
-          ;;
-        *)
-          if [ -z "$repo" ]; then
-            repo=$i
-          else
-            subpage=$i
-          fi
-          ;;
+      -u)
+        unset u
+        ;;
+      *)
+        if [ -z "$repo" ]; then
+          repo=$i
+        else
+          subpage=$i
+        fi
+        ;;
       esac
       ((c++))
     done
@@ -82,14 +86,14 @@ EOF
       __gitcomp "$u -- $(__hub_github_repos '\p')"
     elif [ -z "$subpage" ]; then
       case "$cur" in
-        */*)
-          local pfx="${cur%/*}" cur_="${cur#*/}"
-          local subpages_var="subpages_$pfx"
-          __gitcomp "${!subpages_var}" "$pfx/" "$cur_"
-          ;;
-        *)
-          __gitcomp "$u ${subpages_}"
-          ;;
+      */*)
+        local pfx="${cur%/*}" cur_="${cur#*/}"
+        local subpages_var="subpages_$pfx"
+        __gitcomp "${!subpages_var}" "$pfx/" "$cur_"
+        ;;
+      *)
+        __gitcomp "$u ${subpages_}"
+        ;;
       esac
     else
       __gitcomp "$u"
@@ -102,26 +106,26 @@ EOF
     while [ $c -gt 1 ]; do
       i="${words[c]}"
       case "$i" in
-        -u)
-          unset u
-          ;;
-        *)
-          if [ -z "$rev" ]; then
-            # Even though the logic below is able to complete both user/repo
-            # and revision in the right place, when there is only one argument
-            # (other than -u) in the command, that argument will be taken as
-            # revision. For example:
-            # $ hub compare -u upstream
-            # > https://github.com/USER/REPO/compare/upstream
-            if __hub_github_repos '\p' | grep -Eqx "^$i(/[^/]+)?"; then
-              arg_repo=$i
-            else
-              rev=$i
-            fi
-          elif [ -z "$arg_repo" ]; then
+      -u)
+        unset u
+        ;;
+      *)
+        if [ -z "$rev" ]; then
+          # Even though the logic below is able to complete both user/repo
+          # and revision in the right place, when there is only one argument
+          # (other than -u) in the command, that argument will be taken as
+          # revision. For example:
+          # $ hub compare -u upstream
+          # > https://github.com/USER/REPO/compare/upstream
+          if __hub_github_repos '\p' | grep -Eqx "^$i(/[^/]+)?"; then
             arg_repo=$i
+          else
+            rev=$i
           fi
-          ;;
+        elif [ -z "$arg_repo" ]; then
+          arg_repo=$i
+        fi
+        ;;
       esac
       ((c--))
     done
@@ -163,20 +167,20 @@ EOF
 
     local pfx cur_="$cur"
     case "$cur_" in
-      *..*)
-        pfx="${cur_%%..*}..."
-        cur_="${cur_##*..}"
-        __gitcomp_nl "$(__hub_revlist $remote)" "$pfx" "$cur_"
-        ;;
-      *)
-        if [ -z "${arg_repo}${rev}" ]; then
-          __gitcomp "$u $(__hub_github_repos '\o\n\p') $(__hub_revlist $remote)"
-        elif [ -z "$rev" ]; then
-          __gitcomp "$u $(__hub_revlist $remote)"
-        else
-          __gitcomp "$u"
-        fi
-        ;;
+    *..*)
+      pfx="${cur_%%..*}..."
+      cur_="${cur_##*..}"
+      __gitcomp_nl "$(__hub_revlist $remote)" "$pfx" "$cur_"
+      ;;
+    *)
+      if [ -z "${arg_repo}${rev}" ]; then
+        __gitcomp "$u $(__hub_github_repos '\o\n\p') $(__hub_revlist $remote)"
+      elif [ -z "$rev" ]; then
+        __gitcomp "$u $(__hub_revlist $remote)"
+      else
+        __gitcomp "$u"
+      fi
+      ;;
     esac
   }
 
@@ -186,16 +190,16 @@ EOF
     while [ $c -lt $cword ]; do
       i="${words[c]}"
       case "$i" in
-        -d|-h)
-          ((c++))
-          flags=${flags/$i/}
-          ;;
-        -p)
-          flags=${flags/$i/}
-          ;;
-        *)
-          name=$i
-          ;;
+      -d|-h)
+        ((c++))
+        flags=${flags/$i/}
+        ;;
+      -p)
+        flags=${flags/$i/}
+        ;;
+      *)
+        name=$i
+        ;;
       esac
       ((c++))
     done
@@ -203,12 +207,12 @@ EOF
       repo=$(basename "$PWD")
     fi
     case "$prev" in
-      -d|-h)
-        COMPREPLY=()
-        ;;
-      -p|*)
-        __gitcomp "$repo $flags"
-        ;;
+    -d|-h)
+      COMPREPLY=()
+      ;;
+    -p|*)
+      __gitcomp "$repo $flags"
+      ;;
     esac
   }
 
@@ -218,9 +222,9 @@ EOF
     while [ $c -lt $cword ]; do
       i="${words[c]}"
       case "$i" in
-        --no-remote)
-          unset remote
-          ;;
+      --no-remote)
+        unset remote
+        ;;
       esac
       ((c++))
     done
@@ -235,33 +239,33 @@ EOF
     while [ $c -lt $cword ]; do
       i="${words[c]}"
       case "$i" in
-        -m|-F|-i|-b|-h)
-          ((c++))
-          flags=${flags/$i/}
-          ;;
-        -f)
-          flags=${flags/$i/}
-          ;;
+      -m|-F|-i|-b|-h)
+        ((c++))
+        flags=${flags/$i/}
+        ;;
+      -f)
+        flags=${flags/$i/}
+        ;;
       esac
       ((c++))
     done
     case "$prev" in
-      -i)
-        COMPREPLY=()
-        ;;
-      -b|-h)
-        # (Doesn't seem to need this...)
-        # Uncomment the following line when 'owner/repo:[TAB]' misbehaved
-        #_get_comp_words_by_ref -n : cur
-        __gitcomp_nl "$(__hub_heads)"
-        # __ltrim_colon_completions "$cur"
-        ;;
-      -F)
-        COMPREPLY=( "$cur"* )
-        ;;
-      -f|*)
-        __gitcomp "$flags"
-        ;;
+    -i)
+      COMPREPLY=()
+      ;;
+    -b|-h)
+      # (Doesn't seem to need this...)
+      # Uncomment the following line when 'owner/repo:[TAB]' misbehaved
+      #_get_comp_words_by_ref -n : cur
+      __gitcomp_nl "$(__hub_heads)"
+      # __ltrim_colon_completions "$cur"
+      ;;
+    -F)
+      COMPREPLY=( "$cur"* )
+      ;;
+    -f|*)
+      __gitcomp "$flags"
+      ;;
     esac
   }
 
@@ -364,4 +368,3 @@ EOF
   complete -o bashdefault -o default -o nospace -F _git gh 2>/dev/null \
     || complete -o default -o nospace -F _git gh
 fi
-

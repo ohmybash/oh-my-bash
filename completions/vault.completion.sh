@@ -7,7 +7,7 @@
 # see https://github.com/iljaweis/vault-bash-completion
 # ---------------------------------------------------------------------------
 
-function _vault_mounts() {
+function _vault_mounts {
   (
     set -euo pipefail
     if ! vault mounts 2> /dev/null | awk 'NR > 1 {print $1}'; then
@@ -16,13 +16,12 @@ function _vault_mounts() {
   )
 }
 
-function _vault() {
+function _vault {
   local VAULT_COMMANDS=$(vault 2>&1 | command grep -E '^ +' | awk '{print $1}')
 
-  local cur
-  local prev
+  local cur prev
 
-  if [ $COMP_CWORD -gt 0 ]; then
+  if ((COMP_CWORD > 0)); then
     cur=${COMP_WORDS[COMP_CWORD]}
     prev=${COMP_WORDS[COMP_CWORD-1]}
   fi
@@ -32,15 +31,15 @@ function _vault() {
   if [[ $prev =~ ^(policies|policy-write|policy-delete) ]]; then
     local policies=$(vault policies 2> /dev/null)
     COMPREPLY=($(compgen -W "$policies" -- $cur))
-  elif [ "$(echo "$line" | wc -w)" -le 2 ]; then
-    if [[ "$line" =~ ^vault\ (read|write|delete|list)\ $ ]]; then
+  elif (($(echo "$line" | wc -w) <= 2)); then
+    if [[ $line =~ ^vault\ (read|write|delete|list)\ $ ]]; then
       COMPREPLY=($(compgen -W "$(_vault_mounts)" -- ''))
     else
       COMPREPLY=($(compgen -W "$VAULT_COMMANDS" -- $cur))
     fi
-  elif [[ "$line" =~ ^vault\ (read|write|delete|list)\ (.*)$ ]]; then
+  elif [[ $line =~ ^vault\ (read|write|delete|list)\ (.*)$ ]]; then
     path=${BASH_REMATCH[2]}
-    if [[ "$path" =~ ^([^ ]+)/([^ /]*)$ ]]; then
+    if [[ $path =~ ^([^ ]+)/([^ /]*)$ ]]; then
       list=$(vault list -format=yaml ${BASH_REMATCH[1]} 2> /dev/null | awk '{ print $2 }')
       COMPREPLY=($(compgen -W "$list" -P "${BASH_REMATCH[1]}/" -- ${BASH_REMATCH[2]}))
     else
