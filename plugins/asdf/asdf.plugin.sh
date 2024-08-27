@@ -17,7 +17,7 @@ elif [[ -f "/opt/asdf-vm/asdf.sh" ]]; then
 
 # Homebrew
 elif _omb_util_command_exists brew; then
-  __ASDF_PREFIX="$(brew --prefix asdf)"
+  _omb_plugin_asdf__prefix="$(brew --prefix asdf)"
   if [[ -f "$__ASDF_PREFIX/libexec/asdf.sh" ]]; then
     ASDF_DIR="$__ASDF_PREFIX/libexec"
     . "$ASDF_DIR/asdf.sh"
