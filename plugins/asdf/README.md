@@ -19,7 +19,7 @@ Add [oh-my-bash](https://ohmybash.github.io) integration with [asdf](https://git
     completions=(asdf)
     ```
 
-### Usage
+## Usage
 
 See the [asdf usage documentation](https://github.com/asdf-vm/asdf#usage) for information on how to use asdf:
 
