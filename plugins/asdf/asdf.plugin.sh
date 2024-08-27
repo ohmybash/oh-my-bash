@@ -6,7 +6,7 @@
 # Fork of the oh-my-zsh asdf plugin
 
 # Custom ASDF_DIR location
-if [[ -v ${ASDF_DIR+set} ]]; then
+if [[ ${ASDF_DIR+set} ]]; then
   . "$ASDF_DIR/asdf.sh"
 
 # Standard install location
@@ -22,9 +22,9 @@ elif [[ -f "/opt/asdf-vm/asdf.sh" ]]; then
 # Homebrew
 elif _omb_util_command_exists brew; then
   _omb_plugin_asdf__prefix="$(brew --prefix asdf)"
-  if [[ -f "$__ASDF_PREFIX/libexec/asdf.sh" ]]; then
-    ASDF_DIR="$__ASDF_PREFIX/libexec"
+  if [[ -f "$_omb_plugin_asdf__prefix/libexec/asdf.sh" ]]; then
+    ASDF_DIR="$_omb_plugin_asdf__prefix/libexec"
     . "$ASDF_DIR/asdf.sh"
   fi
-  unset -v __ASDF_PREFIX
+  unset -v _omb_plugin_asdf__prefix
 fi
