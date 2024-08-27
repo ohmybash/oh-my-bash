@@ -22,5 +22,5 @@ elif _omb_util_command_exists brew; then
     ASDF_DIR="$__ASDF_PREFIX/libexec"
     . "$ASDF_DIR/asdf.sh"
   fi
-  unset __ASDF_PREFIX
+  unset -v __ASDF_PREFIX
 fi
