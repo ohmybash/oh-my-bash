@@ -9,9 +9,14 @@
 if [[ ${ASDF_DIR+set} ]]; then
   . "$ASDF_DIR/asdf.sh"
 
-# Standard install location
-elif [[ -f "${XDG_CONFIG_HOME:-$HOME}/.asdf/asdf.sh" ]]; then
-  ASDF_DIR="${XDG_CONFIG_HOME:-$HOME}/.asdf"
+# Home
+elif [[ -f "$HOME/.asdf/asdf.sh" ]]; then
+  ASDF_DIR="$HOME/.asdf"
+  . "${ASDF_DIR}/asdf.sh"
+
+# Config
+elif [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/asdf/asdf.sh" ]]; then
+  ASDF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/asdf"
   . "${ASDF_DIR}/asdf.sh"
 
 # Arch Linux / AUR Package
