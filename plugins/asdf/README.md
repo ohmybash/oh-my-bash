@@ -2,7 +2,7 @@
 
 Add [oh-my-bash](https://ohmybash.github.io) integration with [asdf](https://github.com/asdf-vm/asdf), the extendable version manager, with support for Ruby, Node.js, Elixir, Erlang and more.
 
-### Installation
+## Installation
 
 1. [Install asdf](https://github.com/asdf-vm/asdf#setup) by running the following:
     ``` bash
