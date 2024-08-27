@@ -1,5 +1,9 @@
 #! bash oh-my-bash.module
 # asdf.plugin.sh: asdf plugin for oh-my-bash.
+# Author: Rob Loach (https://robloach.net)
+# Author: prodrigues1912 (https://github.com/prodrigues1912)
+# Originally suggested in https://github.com/ohmybash/oh-my-bash/pull/310
+# Fork of the oh-my-zsh asdf plugin
 
 # Custom ASDF_DIR location
 if [[ -v ${ASDF_DIR+set} ]]; then
