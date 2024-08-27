@@ -2,7 +2,7 @@
 # asdf.plugin.sh: asdf plugin for oh-my-bash.
 
 # Custom ASDF_DIR location
-if [[ -v ASDF_DIR ]]; then
+if [[ -v ${ASDF_DIR+set} ]]; then
   . "$ASDF_DIR/asdf.sh"
 
 # Standard install location
