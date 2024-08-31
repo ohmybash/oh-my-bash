@@ -204,6 +204,10 @@
 
 [![](powerline-plain/powerline-plain-dark.png)](powerline-plain/powerline-plain-dark.png)
 
+## `powerline-wizard`
+
+[![](powerline-wizard/powerline-wizard-dark.png)](powerline-wizard/powerline-wizard-dark.png)
+
 ## `primer`
 
 [![](primer/primer-dark.png)](primer/primer-dark.png)
