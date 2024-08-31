@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 
-source "$OSH/themes/powerline-wizard/powerline-wizard.base.sh"
+source "$OSH/themes/powerline-icon/powerline-icon.base.sh"
 
 PROMPT_CHAR=${POWERLINE_PROMPT_CHAR:=""}
 POWERLINE_LEFT_SEPARATOR=${POWERLINE_LEFT_SEPARATOR:=""}
@@ -49,6 +49,11 @@ IN_VIM_THEME_PROMPT_COLOR=245
 IN_VIM_THEME_PROMPT_TEXT="vim"
 
 POWERLINE_PROMPT=${POWERLINE_PROMPT:="user_info scm python_venv ruby cwd"}
+
+OMB_THEME_POWERLINE_ICON_USER='🧙'
+OMB_THEME_POWERLINE_ICON_HOME='🔮'
+OMB_THEME_POWERLINE_ICON_EXIT_FAILURE='🔥'
+OMB_THEME_POWERLINE_ICON_EXIT_SUCCESS='🌀'
 
 function _omb_theme_PROMPT_COMMAND { __powerline_prompt_command "$@"; }
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

@@ -2,6 +2,11 @@
 
 source "$OSH/themes/powerline/powerline.base.sh"
 
+: "${OMB_THEME_POWERLINE_ICON_USER=🐧}"
+: "${OMB_THEME_POWERLINE_ICON_HOME=🏠}"
+: "${OMB_THEME_POWERLINE_ICON_EXIT_FAILURE=❌}"
+: "${OMB_THEME_POWERLINE_ICON_EXIT_SUCCESS=✅}"
+
 function __powerline_user_info_prompt {
   local user_info=""
   local color=${USER_INFO_THEME_PROMPT_COLOR}
@@ -27,17 +32,17 @@ function __powerline_user_info_prompt {
       fi
       ;;
   esac
-  [[ -n "${user_info}" ]] && echo "🐧 ${user_info} `date +%X\ %D`|${color}|${secondary_color}"
+  [[ -n "${user_info}" ]] && echo "$OMB_THEME_POWERLINE_ICON_USER ${user_info} `date +%X\ %D`|${color}|${secondary_color}"
 }
 
 function __powerline_cwd_prompt {
-  echo "$(pwd | sed "s|^${HOME}|🏠|")|${CWD_THEME_PROMPT_COLOR}"
+  echo "$(pwd | sed "s|^${HOME}|$OMB_THEME_POWERLINE_ICON_HOME|")|${CWD_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_last_status_prompt {
   if [[ "$1" -ne 0 ]]; then
-    echo "❌${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
+    echo "$OMB_THEME_POWERLINE_ICON_EXIT_FAILURE${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
   else
-    echo "✅|${LAST_STATUS_THEME_PROMPT_COLOR_SUCCESS}"
+    echo "$OMB_THEME_POWERLINE_ICON_EXIT_SUCCESS|${LAST_STATUS_THEME_PROMPT_COLOR_SUCCESS}"
   fi
 }
