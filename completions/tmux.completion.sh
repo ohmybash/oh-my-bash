@@ -66,7 +66,7 @@ function _tmux {
     # Search for the command
     local skip_next=0
     for ((i = 1; i <= COMP_CWORD; i++)); do
-      if ((skip_next == 1)) then
+      if ((skip_next == 1)); then
         #echo "Skipping"
         skip_next=0;
       elif [[ ${COMP_WORDS[i]} != -* ]]; then
