@@ -153,6 +153,19 @@ function __powerline_in_vim_prompt {
   fi
 }
 
+function __powerline_k8s_info_prompt {
+  if type_exists 'kubectl'; then
+    local k8s_cluster="$(kubectl config current-context 2>/dev/null)"
+    if [[ -z "$k8s_cluster" ]]; then
+      echo ""
+    else
+      local k8s_namespace="$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)"
+      k8s_namespace="${k8s_namespace:-default}"
+      echo "${k8s_cluster}:${k8s_namespace}|${K8S_INFO_THEME_PROMPT_COLOR}"
+    fi
+  fi
+}
+
 function __powerline_left_segment {
   local OLD_IFS="${IFS}"; IFS="|"
   local params=( $1 )
