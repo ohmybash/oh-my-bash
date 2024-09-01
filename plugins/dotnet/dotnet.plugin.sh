@@ -1,8 +1,7 @@
 #! bash oh-my-bash.module
 #
-# This scripts is copied from (MIT License):
-# https://raw.githubusercontent.com/dotnet/sdk/main/scripts/register-completions.zsh
-
+# This plugin is based on the following version of the Oh-My-Zsh plugin:
+# https://github.com/ohmyzsh/ohmyzsh/blame/c68ff8aeedc2b779ae42d745457ecd443e22e212/plugins/dotnet/dotnet.plugin.zsh
 # bash parameter completion for the dotnet CLI
 # source: https://raw.githubusercontent.com/dotnet/sdk/main/scripts/register-completions.bash
 _dotnet_bash_complete()
