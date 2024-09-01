@@ -7,15 +7,19 @@
 # command 'asp' sets the AWS profile to use (aws set profile)
 #
 
-export AWS_HOME=~/.aws
-
 function agp {
-  echo $AWS_DEFAULT_PROFILE
+  echo $AWS_PROFILE
 }
 
 function asp {
-  local rprompt=${RPROMPT/<aws:$(agp)>/}
-
-  export AWS_DEFAULT_PROFILE=$1
   export AWS_PROFILE=$1
 }
+
+function _aws_profiles {
+  grep '\[profile' ~/.aws/config \
+    | grep -v '^[[:space:]]*#' \
+    | tr -d '\[\]' \
+    | awk '{print $2}'
+}
+
+complete -W "$(_aws_profiles)" asp
