@@ -3,19 +3,6 @@
 # This scripts is copied from (MIT License):
 # https://raw.githubusercontent.com/dotnet/sdk/main/scripts/register-completions.zsh
 
-# Dotnet completions
-_dotnet_completion() {
-  local cur prev opts
-  COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
-  opts=$(dotnet complete "${COMP_WORDS[@]}")
-
-  COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-  return 0
-}
-
-complete -F _dotnet_completion dotnet
 
 # Aliases bellow are here for backwards compatibility
 # added by Shaun Tabone (https://github.com/xontab)
