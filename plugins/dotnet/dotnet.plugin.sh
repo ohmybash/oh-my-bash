@@ -1,3 +1,5 @@
+#! bash oh-my-bash.module
+#
 # This scripts is copied from (MIT License):
 # https://raw.githubusercontent.com/dotnet/sdk/main/scripts/register-completions.zsh
 
