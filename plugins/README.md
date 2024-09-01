@@ -26,6 +26,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | Plugin          | Description                                                                                                         |
 | --------------- | ------------------------------------------------------------------------------------------------------------------- |
 | ansible         | Configuration management tool used to automate the provisioning, configuration, and management of computer systems. |
+| [asdf](asdf)    | [asdf](https://asdf-vm.com) is a tool version manager to allow installing different versions of Node.js, Ruby, Golang, etc.
 | aws             | Tools for interacting with Amazon Web Services (AWS)                                                                |
 | bash-preexec    | Tool allowing execution of commands before they are executed in Bash.                                               |
 | bashmarks       | Utility facilitating directory navigation via bookmarks in Bash.                                                    |
