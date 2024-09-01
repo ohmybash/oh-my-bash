@@ -2,6 +2,7 @@
 #
 # This plugin is based on the following version of the Oh-My-Zsh plugin:
 # https://github.com/ohmyzsh/ohmyzsh/blame/c68ff8aeedc2b779ae42d745457ecd443e22e212/plugins/dotnet/dotnet.plugin.zsh
+
 # bash parameter completion for the dotnet CLI was taken from the following
 # source under the MIT license:
 # source: https://github.com/dotnet/sdk/blob/f271b05d65e8218d3c276f417d66021692108118/scripts/register-completions.bash
