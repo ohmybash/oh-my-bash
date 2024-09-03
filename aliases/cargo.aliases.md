@@ -1,8 +1,4 @@
-# Cargo plugin
-
-The cargo plugin defines a number of useful aliases for you to work with cargo. [Consult the complete list](./cargo.plugin.sh)
-
-## List of aliases
+# Aliases `cargo`
 
 | Alias | Command                 | Description                                    |
 |-------|-------------------------|------------------------------------------------|
