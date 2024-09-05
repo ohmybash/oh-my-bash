@@ -1,12 +1,12 @@
 # Kubectl plugin
 
-This plugin adds completion for the [Kubernetes cluster manager](https://kubernetes.io/docs/reference/kubectl/kubectl/),
+This adds completion for the [Kubernetes cluster manager](https://kubernetes.io/docs/reference/kubectl/kubectl/),
 as well as some aliases for common kubectl commands.
 
-To use it, add `kubectl` to the plugins array in your bashrc file:
+To use it, add `kubectl` to the aliases array in your bashrc file:
 
 ```bash
-plugins=(... kubectl)
+aliases=(... kubectl)
 ```
 
 ## Aliases
