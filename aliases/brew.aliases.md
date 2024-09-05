@@ -1,4 +1,4 @@
-# Aliases `brew`
+# Aliases: `brew`
 
 Several aliases for common [brew](https://brew.sh) commands.
 
