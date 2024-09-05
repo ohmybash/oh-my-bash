@@ -1,14 +1,6 @@
-# brew plugin
+# Aliases `brew`
 
-The adds several aliases for common [brew](https://brew.sh) commands.
-
-To use it, add `brew` to the aliases array of your bashrc file:
-
-```bash
-aliases=(... brew)
-```
-
-## Aliases
+Several aliases for common [brew](https://brew.sh) commands.
 
 | Alias  | Command              | Description   |
 |--------|----------------------|---------------|

@@ -1,14 +1,6 @@
-# Golang plugin
+# Aliases: `golang`
 
 This adds some aliases for common [Golang](https://golang.org/) commands.
-
-To use it, add `golang` to the aliases array of your bashrc file:
-
-```
-aliases=(... golang)
-```
-
-## Aliases
 
 | Alias   | Command                 | Description                                                   |
 | ------- | ----------------------- | ------------------------------------------------------------- |

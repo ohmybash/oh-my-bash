@@ -1,8 +1,6 @@
-# Chezmoi aliases
+# Aliases: `chezmoi`
 
 This adds a number of useful aliases for [chezmoi](https://www.chezmoi.io) usage. [Consult the complete list](./chezmoi.plugin.sh)
-
-## List of aliases
 
 | Alias | Command                | Description                                                                                                                                         |
 |-------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
