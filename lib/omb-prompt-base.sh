@@ -185,7 +185,7 @@ function git_clean_branch {
   local stripped_ref=${unsafe_ref##refs/heads/}
   local clean_ref=${stripped_ref//[\$\`\\]/-}
   clean_ref=${clean_ref//[^[:print:]]/-} # strip escape sequences, etc.
-  echo $clean_ref
+  _omb_util_print $clean_ref
 }
 
 function git_prompt_minimal_info {
@@ -356,44 +356,44 @@ function svn_prompt_vars {
 # - .hg is located in ~/Projects/Foo/.hg
 # - get_hg_root starts at ~/Projects/Foo/Bar and sees that there is no .hg directory, so then it goes into ~/Projects/Foo
 function get_hg_root {
-    local CURRENT_DIR=$PWD
+  local CURRENT_DIR=$PWD
 
-    while [ "$CURRENT_DIR" != "/" ]; do
-        if [ -d "$CURRENT_DIR/.hg" ]; then
-            echo "$CURRENT_DIR/.hg"
-            return
-        fi
+  while [ "$CURRENT_DIR" != "/" ]; do
+    if [ -d "$CURRENT_DIR/.hg" ]; then
+      _omb_util_print "$CURRENT_DIR/.hg"
+      return
+    fi
 
-        CURRENT_DIR=$(dirname "$CURRENT_DIR")
-    done
+    CURRENT_DIR=$(dirname "$CURRENT_DIR")
+  done
 }
 
 function hg_prompt_vars {
-    if [[ -n $(command hg status 2> /dev/null) ]]; then
-      SCM_DIRTY=1
-        SCM_STATE=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
-    else
-      SCM_DIRTY=0
-        SCM_STATE=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
-    fi
-    SCM_PREFIX=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
-    SCM_SUFFIX=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
+  if [[ -n $(command hg status 2> /dev/null) ]]; then
+    SCM_DIRTY=1
+    SCM_STATE=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
+  else
+    SCM_DIRTY=0
+    SCM_STATE=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
+  fi
+  SCM_PREFIX=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
+  SCM_SUFFIX=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
 
-    HG_ROOT=$(get_hg_root)
+  HG_ROOT=$(get_hg_root)
 
-    if [ -f "$HG_ROOT/branch" ]; then
-        # Mercurial holds it's current branch in .hg/branch file
-        SCM_BRANCH=$(cat "$HG_ROOT/branch")
-    else
-        SCM_BRANCH=$(command hg summary 2> /dev/null | grep branch: | awk '{print $2}')
-    fi
+  if [ -f "$HG_ROOT/branch" ]; then
+    # Mercurial holds it's current branch in .hg/branch file
+    SCM_BRANCH=$(cat "$HG_ROOT/branch")
+  else
+    SCM_BRANCH=$(command hg summary 2> /dev/null | grep branch: | awk '{print $2}')
+  fi
 
-    if [ -f "$HG_ROOT/dirstate" ]; then
-        # Mercurial holds various information about the working directory in .hg/dirstate file. More on http://mercurial.selenic.com/wiki/DirState
-        SCM_CHANGE=$(hexdump -n 10 -e '1/1 "%02x"' "$HG_ROOT/dirstate" | cut -c-12)
-    else
-        SCM_CHANGE=$(command hg summary 2> /dev/null | grep parent: | awk '{print $2}')
-    fi
+  if [ -f "$HG_ROOT/dirstate" ]; then
+    # Mercurial holds various information about the working directory in .hg/dirstate file. More on http://mercurial.selenic.com/wiki/DirState
+    SCM_CHANGE=$(hexdump -n 10 -e '1/1 "%02x"' "$HG_ROOT/dirstate" | cut -c-12)
+  else
+    SCM_CHANGE=$(command hg summary 2> /dev/null | grep parent: | awk '{print $2}')
+  fi
 }
 
 ## @fn _omb_prompt_get_rbfu
@@ -607,37 +607,37 @@ function scm_char {
 }
 
 function prompt_char {
-    scm_char
+  scm_char
 }
 
 function battery_char {
-    if [[ "${THEME_BATTERY_PERCENTAGE_CHECK}" = true ]]; then
-        echo -e "${_omb_prompt_bold_brown}$(battery_percentage)%"
-    fi
+  if [[ "${THEME_BATTERY_PERCENTAGE_CHECK}" = true ]]; then
+    echo -e "${_omb_prompt_bold_brown}$(battery_percentage)%"
+  fi
 }
 
 if ! _omb_util_command_exists 'battery_charge' ; then
-    # if user has installed battery plugin, skip this...
-    function battery_charge (){
-        # no op
-        echo -n
-    }
+  # if user has installed battery plugin, skip this...
+  function battery_charge (){
+    # no op
+    _omb_util_put
+  }
 fi
 
 # The battery_char function depends on the presence of the battery_percentage function.
 # If battery_percentage is not defined, then define battery_char as a no-op.
 if ! _omb_util_command_exists 'battery_percentage' ; then
-    function battery_char (){
-      # no op
-      echo -n
-    }
+  function battery_char (){
+    # no op
+    _omb_util_put
+  }
 fi
 
 function aws_profile {
   if [[ $AWS_DEFAULT_PROFILE ]]; then
-    echo -e "${AWS_DEFAULT_PROFILE}"
+    _omb_util_print "$AWS_DEFAULT_PROFILE"
   else
-    echo -e "default"
+    _omb_util_print "default"
   fi
 }
 

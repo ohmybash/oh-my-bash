@@ -14,7 +14,7 @@ GIT_SHA_PREFIX="${_omb_prompt_navy}"
 GIT_SHA_SUFFIX="${_omb_prompt_reset_color}"
 
 function git_short_sha() {
-  SHA=$(_omb_prompt_git rev-parse --short HEAD 2> /dev/null) && echo "$GIT_SHA_PREFIX$SHA$GIT_SHA_SUFFIX"
+  SHA=$(_omb_prompt_git rev-parse --short HEAD 2> /dev/null) && _omb_util_print "$GIT_SHA_PREFIX$SHA$GIT_SHA_SUFFIX"
 }
 
 function _omb_theme_PROMPT_COMMAND() {

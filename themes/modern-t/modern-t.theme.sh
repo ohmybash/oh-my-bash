@@ -21,7 +21,7 @@ PS3=">> "
 
 function is_vim_shell {
   if [[ $VIMRUNTIME ]]; then
-    echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
+    _omb_util_print "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
@@ -30,7 +30,7 @@ function modern_scm_prompt {
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
-    echo "[$(scm_char)][$(scm_prompt_info)]"
+    _omb_util_print "[$(scm_char)][$(scm_prompt_info)]"
   fi
 }
 
@@ -54,5 +54,5 @@ PS2="└─▪ "
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
 
 if [[ -t 2 ]] && ! _omb_util_binary_exists t; then
-  printf '%s\n' "${_omb_term_bold_navy}oh-my-bash (theme:modern-t)${_omb_term_normal}: command \"t\" not found. The theme \"Modern T\" depends on a todo-list manager \"t\" (${_omb_term_underline}https://github.com/sjl/t${_omb_term_normal})." >&2
+  _omb_util_print "${_omb_term_bold_navy}oh-my-bash (theme:modern-t)${_omb_term_normal}: command \"t\" not found. The theme \"Modern T\" depends on a todo-list manager \"t\" (${_omb_term_underline}https://github.com/sjl/t${_omb_term_normal})." >&2
 fi

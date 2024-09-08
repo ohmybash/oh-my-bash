@@ -10,20 +10,20 @@ SCM_SVN_CHAR="${_omb_prompt_bold_teal}⑆${_omb_prompt_normal}"
 SCM_HG_CHAR="${_omb_prompt_bold_brown}☿${_omb_prompt_normal}"
 
 function is_vim_shell {
-	if [ ! -z "$VIMRUNTIME" ]
-	then
-		echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
-	fi
+  if [ ! -z "$VIMRUNTIME" ]
+  then
+    _omb_util_print "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
+  fi
 }
 
 function scm_prompt {
-	CHAR=$(scm_char)
-	if [ $CHAR = $SCM_NONE_CHAR ]
-	then
-		return
-	else
-		echo " $(scm_char) (${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal})"
-	fi
+  CHAR=$(scm_char)
+  if [ $CHAR = $SCM_NONE_CHAR ]
+  then
+    return
+  else
+    _omb_util_print " $(scm_char) (${_omb_prompt_white}$(scm_prompt_info)${_omb_prompt_normal})"
+  fi
 }
 
 function _omb_theme_PROMPT_COMMAND {

@@ -35,8 +35,8 @@ function _vboxmanage {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-  # echo "cur: |$cur|"
-  # echo "prev: |$prev|"
+  # _omb_util_print "cur: |$cur|"
+  # _omb_util_print "prev: |$prev|"
 
   case $prev in
   -v|--version)
@@ -75,7 +75,7 @@ function _vboxmanage {
       ;;
     esac
 
-    # echo "Got vboxmanage"
+    # _omb_util_print "Got vboxmanage"
     opts=$(__vboxmanage_default)
     COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
     return 0
@@ -101,7 +101,7 @@ function _vboxmanage {
   for VM in $(__vboxmanage_list_vms); do
     if [ "$VM" == "$prev" ]; then
       pprev=${COMP_WORDS[COMP_CWORD-2]}
-      # echo "previous: $pprev"
+      # _omb_util_print "previous: $pprev"
       case $pprev in
       startvm)
         opts="--type"
@@ -127,16 +127,16 @@ function _vboxmanage {
     fi
   done
 
-  # echo "Got to end withoug completion"
+  # _omb_util_print "Got to end withoug completion"
 }
 
 function _vboxmanage_realopts {
-  echo $(vboxmanage | grep -Eo "^\s{2}[a-z]+")
-  echo " "
+  _omb_util_print $(vboxmanage | grep -Eo "^\s{2}[a-z]+")
+  _omb_util_print " "
 }
 
 function __vboxmanage_nic_types {
-  echo $(vboxmanage |
+  _omb_util_print $(vboxmanage |
            grep ' nic<' |
            sed 's/.*nic<1-N> \([a-z\|]*\).*/\1/' | tr '|' ' ')
 }
@@ -155,7 +155,7 @@ function __vboxmanage_startvm {
     done
     (( $MATCH == 0 )) && AVAILABLE="$AVAILABLE $VM "
   done
-  echo $AVAILABLE
+  _omb_util_print $AVAILABLE
 }
 
 function __vboxmanage_list {
@@ -173,7 +173,7 @@ function __vboxmanage_list {
     PRUNED=$INPUT
   fi
 
-  echo $PRUNED
+  _omb_util_print $PRUNED
 }
 
 
@@ -190,7 +190,7 @@ function __vboxmanage_list_vms {
     VMS="${VMS}${VM}"
   done
 
-  echo $VMS
+  _omb_util_print $VMS
 }
 
 function __vboxmanage_list_runningvms {
@@ -206,21 +206,21 @@ function __vboxmanage_list_runningvms {
     VMS="${VMS}${VM}"
   done
 
-  echo $VMS
+  _omb_util_print $VMS
 }
 
 function __vboxmanage_controlvm {
-  echo "pause resume reset poweroff savestate acpipowerbutton"
-  echo "acpisleepbutton keyboardputscancode guestmemoryballoon"
-  echo "gueststatisticsinterval usbattach usbdetach vrde vrdeport"
-  echo "vrdeproperty vrdevideochannelquality setvideomodehint"
-  echo "screenshotpng setcredentials teleport plugcpu unplugcpu"
-  echo "cpuexecutioncap"
+  _omb_util_print "pause resume reset poweroff savestate acpipowerbutton"
+  _omb_util_print "acpisleepbutton keyboardputscancode guestmemoryballoon"
+  _omb_util_print "gueststatisticsinterval usbattach usbdetach vrde vrdeport"
+  _omb_util_print "vrdeproperty vrdevideochannelquality setvideomodehint"
+  _omb_util_print "screenshotpng setcredentials teleport plugcpu unplugcpu"
+  _omb_util_print "cpuexecutioncap"
 
   # setlinkstate<1-N>
   activenics=$(__vboxmanage_showvminfo_active_nics $1)
-  for nic in $(echo "${activenics}" | tr -d 'nic'); do
-    echo "setlinkstate${nic}"
+  for nic in $(_omb_util_print "${activenics}" | tr -d 'nic'); do
+    _omb_util_print "setlinkstate${nic}"
   done
 
 # nic<1-N> null|nat|bridged|intnet|hostonly|generic
@@ -240,14 +240,14 @@ function __vboxmanage_modifyvm {
   for i in {1..8}; do
     options="$options --nic${i}"
   done
-  echo $options
+  _omb_util_print $options
 }
 
 function __vboxmanage_showvminfo_active_nics {
   nics=$(vboxmanage showvminfo $1 --machinereadable |
            awk '/^nic/ && ! /none/' |
            awk '{ split($1, names, "="); print names[1] }')
-  echo $nics
+  _omb_util_print $nics
 }
 
 function __vboxmanage_default {
@@ -255,12 +255,12 @@ function __vboxmanage_default {
   opts=$realopts$(vboxmanage | grep -i vboxmanage | cut -d' ' -f2 | grep -v '\[' | sort | uniq)
   pruned=""
 
-  # echo ""
-  # echo "DEBUG: cur: $cur, prev: $prev"
-  # echo "DEBUG: default: |$p1|$p2|$p3|$p4|"
+  # _omb_util_print ""
+  # _omb_util_print "DEBUG: cur: $cur, prev: $prev"
+  # _omb_util_print "DEBUG: default: |$p1|$p2|$p3|$p4|"
   case ${cur} in
   -*)
-    echo $opts
+    _omb_util_print $opts
     # COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
     return 0
     ;;
@@ -269,7 +269,7 @@ function __vboxmanage_default {
   for WORD in $opts; do
     MATCH=0
     for OPT in ${COMP_WORDS[@]}; do
-      # opts=$(echo ${opts} | grep -v $OPT);
+      # opts=$(_omb_util_print ${opts} | grep -v $OPT);
       if [ "$OPT" == "$WORD" ]; then
         MATCH=1
         break;
@@ -297,6 +297,6 @@ function __vboxmanage_default {
   done
 
   # COMPREPLY=($(compgen -W "${pruned}" -- ${cur}))
-  echo $pruned
+  _omb_util_print $pruned
   return 0
 }

@@ -10,7 +10,7 @@
 export AWS_HOME=~/.aws
 
 function agp {
-  echo $AWS_DEFAULT_PROFILE
+  _omb_util_print $AWS_DEFAULT_PROFILE
 }
 
 function asp {

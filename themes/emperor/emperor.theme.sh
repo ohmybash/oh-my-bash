@@ -25,7 +25,7 @@ function get_hour_color {
     else
         hour_color=$_omb_prompt_brown
     fi
-    echo "$hour_color"
+    _omb_util_print "$hour_color"
 }
 
 function __emperor_clock {

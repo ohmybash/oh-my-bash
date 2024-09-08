@@ -15,7 +15,7 @@ function _omb_plugin_xterm_short_dirname {
   if [[ ${OMB_PLUGIN_XTERM_SHORT_TERM_LINE-} == true ]] && ((${#dir_name} > 8)); then
     dir_name=${dir_name##*/}
   fi
-  echo "$dir_name"
+  _omb_util_print "$dir_name"
 }
 
 function _omb_plugin_xterm_short_command {
@@ -23,7 +23,7 @@ function _omb_plugin_xterm_short_command {
   if [[ ${OMB_PLUGIN_XTERM_SHORT_TERM_LINE-} == true ]] && ((${#input_command} > 8)); then
     input_command=${input_command%% *}
   fi
-  echo "$input_command"
+  _omb_util_print "$input_command"
 }
 
 function _omb_plugin_xterm_set_title {

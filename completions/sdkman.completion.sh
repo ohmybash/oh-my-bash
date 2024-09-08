@@ -22,7 +22,7 @@ if ! declare -F __sdkman_build_version_csv &>/dev/null; then
       done
       versions_csv=${versions_csv%?}
     fi
-    echo "$versions_csv"
+    _omb_util_print "$versions_csv"
   }
 fi
 

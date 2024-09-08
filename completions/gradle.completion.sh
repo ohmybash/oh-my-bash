@@ -25,18 +25,18 @@ function __gradle {
       newest_gradle_file=$(find . -type f -name build.gradle -newer "$cache_dir/$gradle_files_checksum")
       if [[ $newest_gradle_file ]]; then
         tasks=$(eval "$parsing_command")
-        [[ $tasks ]] && echo "$tasks" > "$cache_dir/$gradle_files_checksum"
+        [[ $tasks ]] && _omb_util_print "$tasks" > "$cache_dir/$gradle_files_checksum"
       else
         tasks=$(< "$cache_dir/$gradle_files_checksum")
         touch "$cache_dir/$gradle_files_checksum"
       fi
     else
       tasks=$(eval "$parsing_command")
-      [[ $tasks ]] && echo "$tasks" > "$cache_dir/$gradle_files_checksum"
+      [[ $tasks ]] && _omb_util_print "$tasks" > "$cache_dir/$gradle_files_checksum"
     fi
   else
     tasks=$(eval "$parsing_command")
-    [[ $tasks ]] && echo "$tasks" > "$cache_dir/$gradle_files_checksum"
+    [[ $tasks ]] && _omb_util_print "$tasks" > "$cache_dir/$gradle_files_checksum"
   fi
   COMPREPLY=($(compgen -W "$tasks" -- "$cur"))
 }

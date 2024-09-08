@@ -1,18 +1,18 @@
 #! bash oh-my-bash.module
 # Functions
 function ansible-version(){
-    ansible --version
+  ansible --version
 }
 
 function ansible-role-init(){
-    if ! [ -z $1] ; then
-        echo "Ansible Role : $1 Creating...."
-        ansible-galaxy init $1
-        tree $1
-    else
-        echo "Usage : ansible-role-init <role name>"
-        echo "Example : ansible-role-init role1"
-    fi
+  if ! [ -z $1] ; then
+    _omb_util_print "Ansible Role : $1 Creating...."
+    ansible-galaxy init $1
+    tree $1
+  else
+    _omb_util_print "Usage : ansible-role-init <role name>"
+    _omb_util_print "Example : ansible-role-init role1"
+  fi
 }
 
 # Aliases

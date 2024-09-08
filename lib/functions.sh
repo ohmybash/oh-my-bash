@@ -25,7 +25,7 @@ function open_command() {
     cygwin*)  open_cmd='cygstart' ;;
     linux*)   open_cmd='xdg-open' ;;
     msys*)    open_cmd='start ""' ;;
-    *)        echo "Platform $OSTYPE not supported"
+    *)        _omb_util_print "Platform $OSTYPE not supported"
               return 1
               ;;
   esac
@@ -51,12 +51,12 @@ function open_command() {
 #
 if ((_omb_bash_version >= 40000)); then
   function alias_value() {
-    [[ ${BASH_ALIASES[$1]+set} ]] && echo "${BASH_ALIASES[$1]}"
+    [[ ${BASH_ALIASES[$1]+set} ]] && _omb_util_print "${BASH_ALIASES[$1]}"
   }
 else
   function alias_value() {
     local value=
-    value=$(alias "$1" 2>/dev/null) && eval "value=${value#*=}" && echo "$value"
+    value=$(alias "$1" 2>/dev/null) && eval "value=${value#*=}" && _omb_util_print "$value"
   }
 fi
 
@@ -72,7 +72,7 @@ fi
 #    Always 0
 #
 function try_alias_value() {
-    alias_value "$1" || echo "$1"
+    alias_value "$1" || _omb_util_print "$1"
 }
 
 #

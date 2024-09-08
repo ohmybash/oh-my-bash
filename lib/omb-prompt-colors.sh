@@ -53,14 +53,14 @@ function _omb_theme__construct_sgr {
         else
           color="8;5;$(((r * 36  + b * 6 + g) / 51 + 16))"
         fi ;;
-      *) printf '%s\n' "_omb_theme_color: unknown color '$color'" >&2
+      *) _omb_util_print "_omb_theme_color: unknown color '$color'" >&2
          continue ;;
       esac
       out=${out:+$out;}$prefix$color ;;
     '')
       out="${out:+$out;}$*" ;;
     *)
-      printf '%s\n' "_omb_theme_color: unknown token '$next'" >&2 ;;
+      _omb_util_print "_omb_theme_color: unknown token '$next'" >&2 ;;
     esac
   done
 
@@ -72,13 +72,13 @@ function _omb_theme__construct_sgr {
 function _omb_theme_color_prompt {
   local out
   _omb_theme__construct_sgr "$@"
-  echo "\[\e[${out}m\]"
+  _omb_util_print "\[\e[${out}m\]"
 }
 
 function _omb_theme_color_echo {
   local out
   _omb_theme__construct_sgr "$@"
-  echo "\033[${out}m"
+  _omb_util_print "\033[${out}m"
 }
 
 function _omb_prompt_color_initialize {

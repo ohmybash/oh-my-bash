@@ -50,7 +50,7 @@ if _omb_util_command_exists nvm && [[ ${OMB_PLUGIN_NVM_AUTO_USE-} == true ]]; th
     while [[ $path && ! -e $path/$1 ]]; do
       path=${path%/*}
     done
-    echo "$path"
+    _omb_util_print "$path"
   }
 
   function _omb_plugin_nvm_cd {

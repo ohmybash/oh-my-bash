@@ -3,7 +3,7 @@
 source "$OSH/themes/powerline/powerline.base.sh"
 
 function __powerline_last_status_prompt {
-  [[ "$1" -ne 0 ]] && echo "$(set_color ${LAST_STATUS_THEME_PROMPT_COLOR} -) ${1} ${_omb_prompt_normal}"
+  [[ "$1" -ne 0 ]] && _omb_util_print "$(set_color ${LAST_STATUS_THEME_PROMPT_COLOR} -) ${1} ${_omb_prompt_normal}"
 }
 
 function __powerline_right_segment {

@@ -58,7 +58,7 @@ esac
 function is_vim_shell {
   if [ ! -z "$VIMRUNTIME" ];
   then
-    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}\
+    _omb_util_print "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}\
 vim shell${D_DEFAULT_COLOR} "
   fi
 }
@@ -67,7 +67,7 @@ function mitsuhikos_lastcommandfailed {
   code=$?
   if [ $code != 0 ];
   then
-    echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}\
+    _omb_util_print "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}\
 $code ${D_DEFAULT_COLOR}"
   fi
 }

@@ -11,7 +11,7 @@ fi
 function show_reboot_required() {
   if [ ! -z "$_bf_prompt_reboot_info" ]; then
     if [ -f /var/run/reboot-required ]; then
-      printf "Reboot required!"
+      _omb_util_put "Reboot required!"
     fi
   fi
 }
@@ -20,9 +20,9 @@ function show_reboot_required() {
 function set_host_color() {
   # Detect if connection is through SSH
   if [[ ! -z $SSH_CLIENT ]]; then
-    printf "${lime_yellow}"
+    _omb_util_put "${lime_yellow}"
   else
-    printf "${light_orange}"
+    _omb_util_put "${light_orange}"
   fi
 }
 
@@ -30,10 +30,10 @@ function set_host_color() {
 function set_user_color() {
   case $(id -u) in
     0)
-      printf "${_omb_prompt_brown}"
+      _omb_util_put "${_omb_prompt_brown}"
       ;;
     *)
-      printf "${_omb_prompt_teal}"
+      _omb_util_put "${_omb_prompt_teal}"
       ;;
   esac
 }
@@ -44,7 +44,7 @@ function scm_prompt {
     then
       return
     else
-      echo "[$(scm_char)$(scm_prompt_info)]"
+      _omb_util_print "[$(scm_char)$(scm_prompt_info)]"
   fi
 }
 
@@ -63,7 +63,7 @@ function set_custom_colors() {
 }
 
 function __ps_time {
-  echo "$(clock_prompt)${_omb_prompt_normal}\n"
+  _omb_util_print "$(clock_prompt)${_omb_prompt_normal}\n"
 }
 
 function _omb_theme_PROMPT_COMMAND() {

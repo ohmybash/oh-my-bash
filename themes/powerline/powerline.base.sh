@@ -69,7 +69,7 @@ function __powerline_user_info_prompt {
       fi
       ;;
   esac
-  [[ -n "${user_info}" ]] && echo "${user_info}|${color}|${secondary_color}"
+  [[ -n "${user_info}" ]] && _omb_util_print "${user_info}|${color}|${secondary_color}"
 }
 
 function __powerline_ruby_prompt {
@@ -81,7 +81,7 @@ function __powerline_ruby_prompt {
     ruby_version=$(rbenv_version_prompt)
   fi
 
-  [[ -n "${ruby_version}" ]] && echo "${RUBY_CHAR}${ruby_version}|${RUBY_THEME_PROMPT_COLOR}"
+  [[ -n "${ruby_version}" ]] && _omb_util_print "${RUBY_CHAR}${ruby_version}|${RUBY_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_python_venv_prompt {
@@ -94,7 +94,7 @@ function __powerline_python_venv_prompt {
     python_venv=$(basename "${VIRTUAL_ENV}")
   fi
 
-  [[ -n "${python_venv}" ]] && echo "${PYTHON_VENV_CHAR}${python_venv}|${PYTHON_VENV_THEME_PROMPT_COLOR}"
+  [[ -n "${python_venv}" ]] && _omb_util_print "${PYTHON_VENV_CHAR}${python_venv}|${PYTHON_VENV_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_scm_prompt {
@@ -116,16 +116,16 @@ function __powerline_scm_prompt {
     if [[ "${SCM_GIT_CHAR}" == "${SCM_CHAR}" ]]; then
       scm_prompt+="${SCM_CHAR}${SCM_BRANCH}${SCM_STATE}"
     fi
-    echo "${scm_prompt}${scm}|${color}"
+    _omb_util_print "${scm_prompt}${scm}|${color}"
   fi
 }
 
 function __powerline_cwd_prompt {
-  echo "$(pwd | sed "s|^${HOME}|~|")|${CWD_THEME_PROMPT_COLOR}"
+  _omb_util_print "$(pwd | sed "s|^${HOME}|~|")|${CWD_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_clock_prompt {
-  echo "$(date +"${THEME_CLOCK_FORMAT}")|${CLOCK_THEME_PROMPT_COLOR}"
+  _omb_util_print "$(date +"${THEME_CLOCK_FORMAT}")|${CLOCK_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_battery_prompt {
@@ -143,13 +143,13 @@ function __powerline_battery_prompt {
       color="${BATTERY_STATUS_THEME_PROMPT_GOOD_COLOR}"
     fi
     ac_adapter_connected && battery_status="${BATTERY_AC_CHAR}${battery_status}"
-    echo "${battery_status}%|${color}"
+    _omb_util_print "${battery_status}%|${color}"
   fi
 }
 
 function __powerline_in_vim_prompt {
   if [ -n "$VIMRUNTIME" ]; then
-    echo "${IN_VIM_THEME_PROMPT_TEXT}|${IN_VIM_THEME_PROMPT_COLOR}"
+    _omb_util_print "${IN_VIM_THEME_PROMPT_TEXT}|${IN_VIM_THEME_PROMPT_COLOR}"
   fi
 }
 
@@ -171,7 +171,7 @@ function __powerline_left_segment {
 }
 
 function __powerline_last_status_prompt {
-  [[ "$1" -ne 0 ]] && echo "${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
+  [[ "$1" -ne 0 ]] && _omb_util_print "${1}|${LAST_STATUS_THEME_PROMPT_COLOR}"
 }
 
 function __powerline_prompt_command {

@@ -100,7 +100,7 @@ function bm {
     *)
       if [[ $1 == -* ]]; then
         # unrecognized option. echo error message and usage [ bm -X ]
-        echo "Unknown option '$1'"
+        _omb_util_print "Unknown option '$1'"
         _bashmarks_usage
         kill -SIGINT $$
         exit 1
@@ -117,21 +117,21 @@ function bm {
 
 # print usage information
 function _bashmarks_usage {
-  echo 'USAGE:'
-  echo "bm -h                   - Prints this usage info"
-  echo 'bm -a <bookmark_name>   - Saves the current directory as "bookmark_name"'
-  echo 'bm [-g] <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
-  echo 'bm -p <bookmark_name>   - Prints the directory associated with "bookmark_name"'
-  echo 'bm -d <bookmark_name>   - Deletes the bookmark'
-  echo 'bm -l                   - Lists all available bookmarks'
+  _omb_util_print 'USAGE:'
+  _omb_util_print "bm -h                   - Prints this usage info"
+  _omb_util_print 'bm -a <bookmark_name>   - Saves the current directory as "bookmark_name"'
+  _omb_util_print 'bm [-g] <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
+  _omb_util_print 'bm -p <bookmark_name>   - Prints the directory associated with "bookmark_name"'
+  _omb_util_print 'bm -d <bookmark_name>   - Deletes the bookmark'
+  _omb_util_print 'bm -l                   - Lists all available bookmarks'
 }
 
 # save current directory to bookmarks
 function _bashmarks_save {
   if _bashmarks_is_valid_bookmark_name "$@"; then
     _bashmarks_purge_line "$BASHMARKS_SDIRS" "export DIR_$1="
-    CURDIR=$(echo $PWD| sed "s#^$HOME#\$HOME#g")
-    echo "export DIR_$1=\"$CURDIR\"" >> "$BASHMARKS_SDIRS"
+    CURDIR=$(sed "s#^$HOME#\$HOME#g" <<< "$PWD")
+    _omb_util_print "export DIR_$1=\"$CURDIR\"" >> "$BASHMARKS_SDIRS"
   fi
 }
 
@@ -151,9 +151,9 @@ function _bashmarks_goto {
   if [[ -d $target ]]; then
     cd "$target"
   elif [[ ! $target ]]; then
-    printf '%s\n' "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
+    _omb_util_print "${_omb_term_brown}WARNING: '${1}' bashmark does not exist${_omb_term_reset}"
   else
-    printf '%s\n' "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
+    _omb_util_print "${_omb_term_brown}WARNING: '${target}' does not exist${_omb_term_reset}"
   fi
 }
 
@@ -169,7 +169,8 @@ function _bashmarks_list {
 # print bookmark
 function _bashmarks_print {
   source "$BASHMARKS_SDIRS"
-  echo "$(eval $(echo echo $(echo \$DIR_$1)))"
+  local var=DIR_$1
+  _omb_util_print "${!var}"
 }
 
 # list bookmarks without dirname
@@ -184,11 +185,11 @@ function _bashmarks_is_valid_bookmark_name {
   local exit_message=""
   if [[ ! $1 ]]; then
     exit_message="bookmark name required"
-    echo "$exit_message" >&2
+    _omb_util_print "$exit_message" >&2
     return 1
   elif [[ $1 == *[!A-Za-z0-9_]* ]]; then
     exit_message="bookmark name is not valid"
-    echo "$exit_message" >&2
+    _omb_util_print "$exit_message" >&2
     return 1
   fi
 }

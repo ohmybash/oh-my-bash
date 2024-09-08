@@ -85,14 +85,14 @@ esac
 
 function is_vim_shell {
   if [[ ${VIMRUNTIME-} ]]; then
-    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
+    _omb_util_print "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
   fi
 }
 
 function mitsuhikos_lastcommandfailed {
   local status=$?
   if ((status != 0)); then
-    echo "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}$status ${D_DEFAULT_COLOR}"
+    _omb_util_print "${D_INTERMEDIATE_COLOR}exited ${D_CMDFAIL_COLOR}$status ${D_DEFAULT_COLOR}"
   fi
 }
 
@@ -152,7 +152,7 @@ function prompt_git {
     branchName=$(
       _omb_prompt_git symbolic-ref --quiet --short HEAD 2> /dev/null ||
         _omb_prompt_git rev-parse --short HEAD 2> /dev/null ||
-        echo '(unknown)')
+        _omb_util_print '(unknown)')
 
     [[ $s ]] && s=" [$s]"
 

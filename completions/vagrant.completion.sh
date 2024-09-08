@@ -33,19 +33,19 @@ function __pwdln {
     ((itr++))
     pwdmod="${pwdmod#*/}"
   done
-  echo -n $((itr-1))
+  _omb_util_put $((itr-1))
 }
 
 function __vagrantinvestigate {
   if [[ -f $PWD/.vagrant || -d $PWD/.vagrant ]]; then
-    echo "$PWD/.vagrant"
+    _omb_util_print "$PWD/.vagrant"
     return 0
   else
     pwdmod2=$PWD
     for ((i = 2; i <= $(__pwdln); i++)); do
       pwdmod2=${pwdmod2%/*}
       if [[ -f $pwdmod2/.vagrant || -d $pwdmod2/.vagrant ]]; then
-        echo "$pwdmod2/.vagrant"
+        _omb_util_print "$pwdmod2/.vagrant"
         return 0
       fi
     done

@@ -41,14 +41,14 @@ esac
 
 function is_vim_shell {
   if [[ ${VIMRUNTIME-} ]]; then
-    echo "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
+    _omb_util_print "${D_INTERMEDIATE_COLOR}on ${D_VIMSHELL_COLOR}vim shell${D_DEFAULT_COLOR} "
   fi
 }
 
 function mitsuhikos_lastcommandfailed {
   local status=$?
   if ((status != 0)); then
-    echo " ${D_DEFAULT_COLOR}C:${D_CMDFAIL_COLOR}$code ${D_DEFAULT_COLOR}"
+    _omb_util_print " ${D_DEFAULT_COLOR}C:${D_CMDFAIL_COLOR}$code ${D_DEFAULT_COLOR}"
   fi
 }
 
@@ -78,9 +78,9 @@ function prompt_git {
     branchName=$(
       _omb_prompt_git symbolic-ref --quiet --short HEAD 2> /dev/null ||
         _omb_prompt_git rev-parse --short HEAD 2> /dev/null ||
-        echo '(unknown)');
+        _omb_util_print '(unknown)');
 
-    echo "${D_GIT_DEFAULT_COLOR}on ${D_GIT_BRANCH_COLOR}${branchName} "
+    _omb_util_print "${D_GIT_DEFAULT_COLOR}on ${D_GIT_BRANCH_COLOR}${branchName} "
   else
     return
   fi
@@ -98,9 +98,9 @@ function limited_pwd {
   if ((offset > 0)); then
     local truncated_symbol='...'
     local TRUNCATED_PWD=${RELATIVE_PWD:offset:MAX_PWD_LENGTH}
-    echo -n "${truncated_symbol}/${TRUNCATED_PWD#*/}"
+    _omb_util_put "${truncated_symbol}/${TRUNCATED_PWD#*/}"
   else
-    echo -n "${RELATIVE_PWD}"
+    _omb_util_put "${RELATIVE_PWD}"
   fi
 }
 

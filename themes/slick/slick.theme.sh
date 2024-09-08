@@ -27,18 +27,18 @@ function __my_rvm_ruby_version {
   [[ $gemset ]] && gemset=@$gemset
   local version=$(awk -F'-' '{print $2}' <<< "$MY_RUBY_HOME")
   local full=$version$gemset
-  [[ $full ]] && echo "[$full]"
+  [[ $full ]] && _omb_util_print "[$full]"
 }
 
 function __my_venv_prompt {
   if [[ $VIRTUAL_ENV ]]; then
-    echo "[${_omb_prompt_navy}@${_omb_prompt_normal}${VIRTUAL_ENV##*/}]"
+    _omb_util_print "[${_omb_prompt_navy}@${_omb_prompt_normal}${VIRTUAL_ENV##*/}]"
   fi
 }
 
 function is_vim_shell {
   if [[ $VIMRUNTIME ]]; then
-    echo "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
+    _omb_util_print "[${_omb_prompt_teal}vim shell${_omb_prompt_normal}]"
   fi
 }
 
@@ -47,7 +47,7 @@ function modern_scm_prompt {
   if [[ $CHAR == "$SCM_NONE_CHAR" ]]; then
     return
   else
-    echo "[$(scm_char)][$(scm_prompt_info)]"
+    _omb_util_print "[$(scm_char)][$(scm_prompt_info)]"
   fi
 }
 
