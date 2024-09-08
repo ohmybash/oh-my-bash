@@ -197,11 +197,11 @@ function _comp_cmd_omb {
     esac
   fi
 
-  [[ :$shopt: == *:exptglob:* ]] || shopt -u extglob
+  [[ :$shopt: == *:extglob:* ]] || shopt -u extglob
   return 0
 }
 
 complete -F _comp_cmd_omb omb
 
-[[ :$_omb_lib_cli__init_shopt: == *:exptglob:* ]] || shopt -u extglob
+[[ :$_omb_lib_cli__init_shopt: == *:extglob:* ]] || shopt -u extglob
 unset -v _omb_lib_cli__init_shopt
