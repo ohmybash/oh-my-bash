@@ -40,7 +40,7 @@
 #   exit 1
 # fi
 
-# if is_os "darwin"; then
+# if is_os darwin; then
 #   e_success "You are on a mac"
 # else
 #   e_error "You are not on a mac"
@@ -255,7 +255,7 @@ function is_confirmed {
 #
 # Test which OS the user runs
 # $1 = OS to test
-# Usage: if is_os 'darwin'; then
+# Usage: if is_os darwin; then
 #
 function is_os {
   [[ $OSTYPE == $1* ]]
@@ -358,7 +358,7 @@ function _omb_util_add_prompt_command {
 
     # Set OS dependent exact match regular expression
     local prompt_re
-    if [[ $OSTYPE == darwin* ]]; then
+    if is_os darwin; then
       # macOS
       prompt_re='[[:<:]]'$hook'[[:>:]]'
     else
