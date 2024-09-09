@@ -1,30 +1,30 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 _omb_module_require lib:utils
 
 function _omb_cmd_help {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_changelog {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_plugin {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_pull {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_reload {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_theme {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_update {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 function _omb_cmd_version {
-  echo 'Not yet implemented'
+  _omb_util_print 'Not yet implemented'
 }
 
 function omb {

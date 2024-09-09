@@ -12,7 +12,7 @@ GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_green} )"
 
 function git_prompt_info {
   git_prompt_vars
-  echo -e "$SCM_PREFIX$SCM_BRANCH$SCM_STATE$SCM_SUFFIX"
+  _omb_util_print "$SCM_PREFIX$SCM_BRANCH$SCM_STATE$SCM_SUFFIX"
 }
 
 function _omb_theme_PROMPT_COMMAND() {

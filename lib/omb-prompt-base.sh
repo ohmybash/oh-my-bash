@@ -154,7 +154,7 @@ function scm_prompt_info {
 
 function scm_prompt_char_info {
   scm_prompt_char
-  echo -ne "${SCM_THEME_CHAR_PREFIX}${SCM_CHAR}${SCM_THEME_CHAR_SUFFIX}"
+  _omb_util_put "${SCM_THEME_CHAR_PREFIX}${SCM_CHAR}${SCM_THEME_CHAR_SUFFIX}"
   scm_prompt_info_common
 }
 
@@ -212,7 +212,7 @@ function git_prompt_minimal_info {
     # Output the git prompt
     SCM_PREFIX=${SCM_THEME_PROMPT_PREFIX}
     SCM_SUFFIX=${SCM_THEME_PROMPT_SUFFIX}
-    echo -e "${SCM_PREFIX}${SCM_BRANCH}${SCM_STATE}${SCM_SUFFIX}"
+    _omb_util_print "${SCM_PREFIX}${SCM_BRANCH}${SCM_STATE}${SCM_SUFFIX}"
   fi
 }
 
@@ -563,7 +563,7 @@ function clock_char {
   SHOW_CLOCK_CHAR=${THEME_SHOW_CLOCK_CHAR:-"true"}
 
   if [[ "${SHOW_CLOCK_CHAR}" = "true" ]]; then
-    echo -e "${CLOCK_CHAR_COLOR}${CLOCK_CHAR_THEME_PROMPT_PREFIX}${CLOCK_CHAR}${CLOCK_CHAR_THEME_PROMPT_SUFFIX}"
+    _omb_util_print "${CLOCK_CHAR_COLOR}${CLOCK_CHAR_THEME_PROMPT_PREFIX}${CLOCK_CHAR}${CLOCK_CHAR_THEME_PROMPT_SUFFIX}"
   fi
 }
 
@@ -575,35 +575,35 @@ function clock_prompt {
 
   if [[ "${SHOW_CLOCK}" = "true" ]]; then
     CLOCK_STRING=$(date +"${CLOCK_FORMAT}")
-    echo -e "${CLOCK_COLOR}${CLOCK_THEME_PROMPT_PREFIX}${CLOCK_STRING}${CLOCK_THEME_PROMPT_SUFFIX}"
+    _omb_util_print "${CLOCK_COLOR}${CLOCK_THEME_PROMPT_PREFIX}${CLOCK_STRING}${CLOCK_THEME_PROMPT_SUFFIX}"
   fi
 }
 
 function user_host_prompt {
   if [[ "${THEME_SHOW_USER_HOST}" = "true" ]]; then
-      echo -e "${USER_HOST_THEME_PROMPT_PREFIX}\u@\h${USER_HOST_THEME_PROMPT_SUFFIX}"
+      _omb_util_print "${USER_HOST_THEME_PROMPT_PREFIX}\u@\h${USER_HOST_THEME_PROMPT_SUFFIX}"
   fi
 }
 
 # backwards-compatibility
 function git_prompt_info {
   git_prompt_vars
-  echo -e "${SCM_PREFIX}${SCM_BRANCH}${SCM_STATE}${SCM_SUFFIX}"
+  _omb_util_print "${SCM_PREFIX}${SCM_BRANCH}${SCM_STATE}${SCM_SUFFIX}"
 }
 
 function svn_prompt_info {
   svn_prompt_vars
-  echo -e "${SCM_PREFIX}${SCM_BRANCH}${SCM_STATE}${SCM_SUFFIX}"
+  _omb_util_print "${SCM_PREFIX}${SCM_BRANCH}${SCM_STATE}${SCM_SUFFIX}"
 }
 
 function hg_prompt_info() {
   hg_prompt_vars
-  echo -e "${SCM_PREFIX}${SCM_BRANCH}:${SCM_CHANGE#*:}${SCM_STATE}${SCM_SUFFIX}"
+  _omb_util_print "${SCM_PREFIX}${SCM_BRANCH}:${SCM_CHANGE#*:}${SCM_STATE}${SCM_SUFFIX}"
 }
 
 function scm_char {
   scm_prompt_char
-  echo -e "${SCM_THEME_CHAR_PREFIX}${SCM_CHAR}${SCM_THEME_CHAR_SUFFIX}"
+  _omb_util_print "${SCM_THEME_CHAR_PREFIX}${SCM_CHAR}${SCM_THEME_CHAR_SUFFIX}"
 }
 
 function prompt_char {
@@ -612,7 +612,7 @@ function prompt_char {
 
 function battery_char {
   if [[ "${THEME_BATTERY_PERCENTAGE_CHECK}" = true ]]; then
-    echo -e "${_omb_prompt_bold_brown}$(battery_percentage)%"
+    _omb_util_print "${_omb_prompt_bold_brown}$(battery_percentage)%"
   fi
 }
 

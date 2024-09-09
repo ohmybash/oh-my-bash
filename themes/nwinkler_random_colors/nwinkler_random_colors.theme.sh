@@ -87,7 +87,7 @@ PROMPT_END_CLEAN="${_omb_prompt_green}→${_omb_prompt_reset_color}"
 PROMPT_END_DIRTY="${_omb_prompt_brown}→${_omb_prompt_reset_color}"
 
 function prompt_end() {
-  echo -e "$PROMPT_END"
+  _omb_util_print "$PROMPT_END"
 }
 
 function _omb_theme_PROMPT_COMMAND {

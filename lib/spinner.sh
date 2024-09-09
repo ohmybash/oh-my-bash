@@ -5,10 +5,10 @@
 #
 # Examples
 #
-# echo -ne "${_omb_term_brown}I am running..."
+# _omb_util_put "${_omb_term_brown}I am running..."
 # ( my_long_task_running ) &
 # spinner
-# echo -ne "...${_omb_term_reset} ${_omb_term_green}DONE${_omb_term_reset}"
+# _omb_util_put "...${_omb_term_reset} ${_omb_term_green}DONE${_omb_term_reset}"
 #
 
 # This spinner is used when there is a terminal.
@@ -34,7 +34,7 @@ function no_term_spinner {
     printf "."
     sleep 2
   done
-  echo " ✓ "
+  _omb_util_print " ✓ "
 }
 
 function spinner {

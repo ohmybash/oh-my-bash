@@ -16,11 +16,11 @@ DULCIE_COLOR=${DULCIE_COLOR:=1} # 0 = monochrome, 1 = colorful
 DULCIE_MULTILINE=${DULCIE_MULTILINE:=1} # 0 = Single line, 1 = SCM in separate line
 
 function dulcie_color {
-  echo -en "\[\e[38;5;${1}m\]"
+  _omb_util_put "\[\e[38;5;${1}m\]"
 }
 
 function dulcie_background {
-  echo -en "\[\e[48;5;${1}m\]"
+  _omb_util_put "\[\e[48;5;${1}m\]"
 }
 
 function _omb_theme_PROMPT_COMMAND {
@@ -74,7 +74,7 @@ function _omb_theme_PROMPT_COMMAND {
   fi
 
   # Change terminal title
-  printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+  _omb_util_put "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 
   # Open the new terminal in the same directory
   _omb_util_function_exists __vte_osc7 && __vte_osc7
