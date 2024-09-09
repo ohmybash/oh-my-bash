@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 # ------------------------------------------------------------------------------
 # FILE: autossh
 # DESCRIPTION: This is an SSH-D proxy with auto-reconnect on disconnect

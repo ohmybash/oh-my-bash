@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 function _omb_upgrade_current_epoch {
   local sec=${EPOCHSECONDS-}

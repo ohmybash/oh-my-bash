@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 # this script aims to simplify the process of updating the theme examples page
 # in the GitHub Wiki.
