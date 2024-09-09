@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # this script aims to simplify the process of updating the theme examples page
 # in the GitHub Wiki.
@@ -102,17 +102,17 @@ while (($#)); do
     shift 2
     ;;
   -f | --themes-file)
-    # echo "Processing 'themes-file' option. Input argument is '$2'"
+    # printf "%s\n" "Processing 'themes-file' option. Input argument is '$2'"
     OMB_WIKI_THEMES_FILE=$2
     shift 2
     ;;
   -s | --start-marker)
-    # echo "Processing 'start-marker' option. Input argument is '$2'"
+    # printf "%s\n" "Processing 'start-marker' option. Input argument is '$2'"
     OMB_WIKI_THEMES_START_MARKER=$2
     shift 2
     ;;
   -e | --end-marker)
-    # echo "Processing 'end-marker' option. Input argument is '$2'"
+    # printf "%s\n" "Processing 'end-marker' option. Input argument is '$2'"
     OMB_WIKI_THEMES_END_MARKER=$2
     shift 2
     ;;

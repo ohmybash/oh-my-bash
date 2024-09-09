@@ -85,13 +85,13 @@ IP_SEPARATOR=', '
 
 function get_ip_info {
     local myip=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
-    echo -e "$(ips | sed -e :a -e '$!N;s/\n/${IP_SEPARATOR}/;ta' | sed -e 's/127\.0\.0\.1\${IP_SEPARATOR}//g'), ${myip}"
+    _omb_util_print "$(ips | sed -e :a -e '$!N;s/\n/${IP_SEPARATOR}/;ta' | sed -e 's/127\.0\.0\.1\${IP_SEPARATOR}//g'), ${myip}"
 }
 
 # Displays ip prompt
 function ip_prompt_info() {
     if [[ $IP_ENABLED == 1 ]]; then
-        echo -e " ${DEFAULT_COLOR}(${IP_COLOR}$(get_ip_info)${DEFAULT_COLOR})"
+        _omb_util_print " ${DEFAULT_COLOR}(${IP_COLOR}$(get_ip_info)${DEFAULT_COLOR})"
     fi
 }
 
@@ -113,7 +113,7 @@ function virtual_prompt_info() {
     if [[ $ruby_env ]]; then
         virtual_prompt="${virtual_prompt:+$virtual_prompt, }rvm: ${RVM_COLOR}$ruby_env${DEFAULT_COLOR}"
     fi
-    echo -e "$prefix$virtual_prompt$suffix"
+    _omb_util_print "$prefix$virtual_prompt$suffix"
 }
 
 # Parse git info
@@ -128,7 +128,7 @@ function git_prompt_info() {
     local ref=$(_omb_prompt_git symbolic-ref HEAD 2> /dev/null) || return
     local commit_id=$(_omb_prompt_git rev-parse HEAD 2>/dev/null) || return
 
-    echo -e "$prefix${REF_COLOR}${ref#refs/heads/}${DEFAULT_COLOR}:${commit_id:0:$MAX_GIT_HEX_LENGTH}$state$suffix"
+    _omb_util_print "$prefix${REF_COLOR}${ref#refs/heads/}${DEFAULT_COLOR}:${commit_id:0:$MAX_GIT_HEX_LENGTH}$state$suffix"
 }
 
 # Parse hg info
@@ -143,7 +143,7 @@ function hg_prompt_info() {
     local branch=$(command hg summary 2> /dev/null | grep branch | awk '{print $2}')
     local changeset=$(command hg summary 2> /dev/null | grep parent | awk '{print $2}')
 
-    echo -e "$prefix${REF_COLOR}${branch}${DEFAULT_COLOR}:${changeset#*:}$state$suffix"
+    _omb_util_print "$prefix${REF_COLOR}${branch}${DEFAULT_COLOR}:${changeset#*:}$state$suffix"
 }
 
 # Parse svn info
@@ -160,7 +160,7 @@ function svn_prompt_info() {
 
     local revision=$(command svn info 2> /dev/null | sed -ne 's#^Revision: ##p' )
 
-    echo -e "$prefix${REF_COLOR}$ref${DEFAULT_COLOR}:$revision$state$suffix"
+    _omb_util_print "$prefix${REF_COLOR}$ref${DEFAULT_COLOR}:$revision$state$suffix"
 }
 
 # Displays last X characters of pwd
@@ -174,9 +174,9 @@ function limited_pwd() {
     if ((offset > 0)); then
         local truncated_symbol="..."
         local TRUNCATED_PWD=${RELATIVE_PWD:$offset:$MAX_PWD_LENGTH}
-        echo -e "${truncated_symbol}/${TRUNCATED_PWD#*/}"
+        _omb_util_print "${truncated_symbol}/${TRUNCATED_PWD#*/}"
     else
-        echo -e "${RELATIVE_PWD}"
+        _omb_util_print "${RELATIVE_PWD}"
     fi
 }
 

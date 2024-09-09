@@ -91,7 +91,7 @@ fi
 unset -v _omb_uninstall_bashrc_original
 unset -v _omb_uninstall_bashrc_uninstalled
 
-echo "Thanks for trying out Oh My Bash. It has been uninstalled."
+printf '%s\n' "Thanks for trying out Oh My Bash. It has been uninstalled."
 case $- in
 *i*)
   # shellcheck disable=SC3044,SC3046,SC1090

@@ -60,7 +60,7 @@ function _svn_read_hashfile()
     }
     read -r -n $len val ; read
     if [[ $key = $tkey ]] ; then
-      echo "$val"
+      _omb_util_print "$val"
       return
     fi
   done
@@ -77,7 +77,7 @@ function _svn_grcut()
     old_IFS="$IFS"
     IFS=$'\n'
     while read -r line ; do
-	[[ ! $re || $line == $re ]] && echo "${line/????????/}"
+	[[ ! $re || $line == $re ]] && _omb_util_print "${line/????????/}"
     done
     IFS="$old_IFS"
 }
@@ -89,7 +89,7 @@ function _svn_info()
   local what=$1 line=
   LANG=C LC_MESSAGES=C svn info --non-interactive 2> /dev/null | \
   while read line ; do
-    [[ $line == *"$what: "* ]] && echo ${line#*: }
+    [[ $line == *"$what: "* ]] && _omb_util_print ${line#*: }
   done
 }
 
@@ -104,14 +104,14 @@ function _svn_lls()
     for f in "$@" ; do
 	# could try to check in .svn/entries? hmmm...
 	if [[ $opt == @(dir|all) && -d "$f" ]] ; then
-	    echo "$f/"
+	    _omb_util_print "$f/"
 	elif [[ $opt == @(file|all) ]] ; then
 	    # split f in directory/file names
 	    local dn= fn="$f"
 	    [[ "$f" == */* ]] && dn=${f%\/*}/ fn=${f##*\/}
 	    # ??? this does not work for just added files, because they
 	    # do not have a content reference yet...
-	    [ -f "${dn}.svn/text-base/${fn}.svn-base" ] && echo "$f"
+	    [ -f "${dn}.svn/text-base/${fn}.svn-base" ] && _omb_util_print "$f"
 	fi
     done
 }
@@ -604,7 +604,7 @@ _svn()
 	    [[ $beep ]] &&
 	    {
 		# 'no known completion'. hummm.
-		echo -en "\a"
+	  _omb_util_put "\a"
 		COMPREPLY=( '' )
 	    }
 	    return 0
@@ -748,7 +748,7 @@ _svn()
 	then
 	    # some way to tell 'no completion at all'... is there a better one?
 	    # Do not say 'file completion' here.
-	    echo -en "\a"
+	    _omb_util_put "\a"
 	    COMPREPLY=( '' )
 	    return 0
 	fi
@@ -845,7 +845,7 @@ _svn()
 		    [[ "${COMPREPLY[*]}" ]] || COMPREPLY=( '' )
 		elif [[ ! $fallback ]] ; then
 		    # this suggests no completion...
-		    echo -en "\a"
+		    _omb_util_put "\a"
 		    COMPREPLY=( '' )
 		fi
 	    fi

@@ -19,7 +19,7 @@ Landau (2013-07-02) [1] and later modified:
 | `mkdir`        | `mkdir -pv`                            | Recursive `mkdir` if the target does not exist (option `-v` is added if supported) |
 | `mv`           | `mv -iv`                               | `mv` with confirmation on overwriting (option `-v` is added if supported)          |
 | `nano`         | `nano -W`                              | (option `-W` is added if supported)                                                |
-| `path`         | `echo -e ${PATH//:/\\n}`               | Echo all executable Paths                                                          |
+| `path`         | `printf -- ${PATH//:/\\n}`             | Echo all executable Paths                                                          |
 | `show_options` | `shopt`                                | display bash options settings                                                      |
 | `src`          | `source ~/.bashrc`                     | Reload `.bashrc` file                                                              |
 | `wget`         | `wget -c`                              | Preferred `wget` implementation (resume download)                                  |

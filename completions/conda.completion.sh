@@ -6,5 +6,5 @@ elif _omb_util_binary_exists register-python-argcomplete3; then
 elif _omb_util_binary_exists register-python-argcomplete2; then
   eval "$(register-python-argcomplete2 conda)"
 else
-  echo "Please install argcomplete to use conda completion" >&2
+  _omb_util_print "Please install argcomplete to use conda completion" >&2
 fi

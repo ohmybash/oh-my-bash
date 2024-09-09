@@ -210,7 +210,7 @@ function __docker_contexts {
 		esac
 	done
 	__docker_q context ls -q
-	echo "${add[@]}"
+	_omb_util_print "${add[@]}"
 }
 
 function __docker_complete_contexts {
@@ -387,7 +387,7 @@ function __docker_plugins_bundled {
 	for del in "${remove[@]}" ; do
 		plugins=(${plugins[@]/$del/})
 	done
-	echo "${plugins[@]}" "${add[@]}"
+	_omb_util_print "${plugins[@]} ${add[@]}"
 }
 
 # __docker_complete_plugins_bundled applies completion of plugins based on the current
@@ -535,7 +535,7 @@ function __docker_nodes {
 		esac
 	done
 
-	echo "$(__docker_q node ls --format "$format" "$@")" "${add[@]}"
+	_omb_util_print "$(__docker_q node ls --format "$format" "$@") ${add[@]}"
 }
 
 # __docker_complete_nodes applies completion of nodes based on the current
@@ -664,7 +664,7 @@ function __docker_pos_first_nonflag {
 		(( counter++ ))
 	done
 
-	echo "$counter"
+	_omb_util_print "$counter"
 }
 
 # __docker_map_key_of_current_option returns `key` if we are currently completing the
@@ -689,7 +689,7 @@ function __docker_map_key_of_current_option {
 
 	[ "${words[$glob_pos]}" = "=" ] && ((glob_pos--))  # --option=key=value syntax
 
-	[[ ${words[$glob_pos]} == @($glob) ]] && echo "$key"
+	[[ ${words[$glob_pos]} == @($glob) ]] && _omb_util_print "$key"
 }
 
 # __docker_value_of_option returns the value of the first option matching `option_glob`.
@@ -703,7 +703,7 @@ function __docker_value_of_option {
 	while [ "$counter" -lt "$cword" ]; do
 		case ${words[$counter]} in
 			$option_extglob )
-				echo "${words[$counter + 1]}"
+				_omb_util_print "${words[$counter + 1]}"
 				break
 				;;
 		esac
@@ -717,14 +717,14 @@ function __docker_value_of_option {
 function __docker_to_alternatives {
 	local parts=( $1 )
 	local IFS='|'
-	echo "${parts[*]}"
+	_omb_util_print "${parts[*]}"
 }
 
 # __docker_to_extglob transforms a multiline list of options into an extglob pattern
 # suitable for use in case statements.
 function __docker_to_extglob {
 	local extglob=$( __docker_to_alternatives "$1" )
-	echo "@($extglob)"
+	_omb_util_print "@($extglob)"
 }
 
 # __docker_subcommands processes subcommands
@@ -1103,7 +1103,7 @@ function __docker_complete_signals {
 		SIGUSR1
 		SIGUSR2
 	)
-	COMPREPLY=( $( compgen -W "${signals[*]} ${signals[*]#SIG}" -- "$( echo "$cur" | tr '[:lower:]' '[:upper:]')" ) )
+	COMPREPLY=( $( compgen -W "${signals[*]} ${signals[*]#SIG}" -- "$( _omb_util_print "$cur" | tr '[:lower:]' '[:upper:]')" ) )
 }
 
 function __docker_complete_ulimits {
@@ -1147,7 +1147,7 @@ function __docker_complete_user_group {
 
 function __docker_plugins_path {
 	local docker_plugins_path=$(docker info --format '{{range .ClientInfo.Plugins}}{{.Path}}:{{end}}')
-	echo "${docker_plugins_path//:/ }"
+	_omb_util_print "${docker_plugins_path//:/ }"
 }
 
 function __docker_complete_plugin {
@@ -2655,7 +2655,7 @@ function _docker_daemon {
 			return
 			;;
 		--storage-driver|-s)
-			COMPREPLY=( $( compgen -W "btrfs overlay2 vfs zfs" -- "$(echo "$cur" | tr '[:upper:]' '[:lower:]')" ) )
+			COMPREPLY=( $( compgen -W "btrfs overlay2 vfs zfs" -- "$(_omb_util_print "$cur" | tr '[:upper:]' '[:lower:]')" ) )
 			return
 			;;
 		--storage-opt)

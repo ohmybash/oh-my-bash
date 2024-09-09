@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 function _omb_upgrade {
   # Use colors, but only if connected to a terminal, and that terminal

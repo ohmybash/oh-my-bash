@@ -11,8 +11,8 @@ function _pj {
 
   compopt -o filenames
 
-  local -r mark_dirs=$(_rl_enabled mark-directories && echo y)
-  local -r mark_symdirs=$(_rl_enabled mark-symlinked-directories && echo y)
+  local -r mark_dirs=$(_rl_enabled mark-directories && _omb_util_print y)
+  local -r mark_symdirs=$(_rl_enabled mark-symlinked-directories && _omb_util_print y)
 
   for i in ${PROJECT_PATHS//:/$'\n'}; do
     # create an array of matched subdirs

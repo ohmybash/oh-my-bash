@@ -146,7 +146,7 @@ OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
 DEBUG=0
 function debug {
   if [[ ${DEBUG} -ne 0 ]]; then
-    >&2 echo -e "$@"
+    >&2 _omb_util_print "$@"
   fi
 }
 
@@ -163,9 +163,9 @@ RIGHT_SUBSEG=''
 
 function text_effect {
   case "$1" in
-  reset)      echo 0;;
-  bold)       echo 1;;
-  underline)  echo 4;;
+  reset)      _omb_util_print 0;;
+  bold)       _omb_util_print 1;;
+  underline)  _omb_util_print 4;;
   esac
 }
 
@@ -174,29 +174,29 @@ function text_effect {
 # under the "256 (8-bit) Colors" section, and follow the example for orange below
 function fg_color {
   case "$1" in
-  black)      echo 30;;
-  red)        echo 31;;
-  green)      echo 32;;
-  yellow)     echo 33;;
-  blue)       echo 34;;
-  magenta)    echo 35;;
-  cyan)       echo 36;;
-  white)      echo 37;;
-  orange)     echo 38\;5\;166;;
+  black)      _omb_util_print 30;;
+  red)        _omb_util_print 31;;
+  green)      _omb_util_print 32;;
+  yellow)     _omb_util_print 33;;
+  blue)       _omb_util_print 34;;
+  magenta)    _omb_util_print 35;;
+  cyan)       _omb_util_print 36;;
+  white)      _omb_util_print 37;;
+  orange)     _omb_util_print 38\;5\;166;;
   esac
 }
 
 function bg_color {
   case "$1" in
-  black)      echo 40;;
-  red)        echo 41;;
-  green)      echo 42;;
-  yellow)     echo 43;;
-  blue)       echo 44;;
-  magenta)    echo 45;;
-  cyan)       echo 46;;
-  white)      echo 47;;
-  orange)     echo 48\;5\;166;;
+  black)      _omb_util_print 40;;
+  red)        _omb_util_print 41;;
+  green)      _omb_util_print 42;;
+  yellow)     _omb_util_print 43;;
+  blue)       _omb_util_print 44;;
+  magenta)    _omb_util_print 45;;
+  cyan)       _omb_util_print 46;;
+  white)      _omb_util_print 47;;
+  orange)     _omb_util_print 48\;5\;166;;
   esac;
 }
 
@@ -218,12 +218,12 @@ function ansi {
     seq="${seq}${mycodes[$i]}"
   done
   debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  echo -ne '\[\033['${seq}'m\]'
+  _omb_util_put '\[\033['${seq}'m\]'
   # PR="$PR\[\033[${seq}m\]"
 }
 
 function ansi_single {
-  echo -ne '\[\033['$1'm\]'
+  _omb_util_put '\[\033['$1'm\]'
 }
 
 # Begin a segment
@@ -354,12 +354,12 @@ function prompt_histdt {
 
 function git_status_dirty {
   dirty=$(_omb_prompt_git status -s 2> /dev/null | tail -n 1)
-  [[ -n $dirty ]] && echo " ●"
+  [[ -n $dirty ]] && _omb_util_print " ●"
 }
 
 function git_stash_dirty {
   stash=$(_omb_prompt_git stash list 2> /dev/null | tail -n 1)
-  [[ -n $stash ]] && echo " ⚑"
+  [[ -n $stash ]] && _omb_util_print " ⚑"
 }
 
 # Git: branch/detached head, dirty status
@@ -475,7 +475,7 @@ function ansi_r {
     seq="${seq}${mycodes2[$i]}"
   done
   debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  echo -ne '\033['${seq}'m'
+  _omb_util_put '\033['${seq}'m'
   # PR="$PR\[\033[${seq}m\]"
 }
 

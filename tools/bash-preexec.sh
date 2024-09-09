@@ -79,7 +79,7 @@ function __bp_require_not_readonly {
   local var
   for var; do
     if ! ( unset "$var" 2> /dev/null ); then
-      echo "bash-preexec requires write access to ${var}" >&2
+      printf "%s\n" "bash-preexec requires write access to ${var}" >&2
       return 1
     fi
   done
