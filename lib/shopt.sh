@@ -18,6 +18,9 @@ PROMPT_DIRTRIM=${PROMPT_DIRTRIM:-2}
 # E.g. typing !!<space> will replace the !! with your last command
 bind Space:magic-space
 
+# Turn on extended glob patterns such as @(...), *(...), ?(...), and +(...)
+shopt -s extglob
+
 # Turn on recursive globbing (enables ** to recurse all directories)
 shopt -s globstar 2> /dev/null
 
