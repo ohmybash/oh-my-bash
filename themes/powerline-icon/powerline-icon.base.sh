@@ -32,7 +32,10 @@ function __powerline_user_info_prompt {
       fi
       ;;
   esac
-  [[ -n "${user_info}" ]] && _omb_util_print "$OMB_THEME_POWERLINE_ICON_USER ${user_info} `date +${THEME_CLOCK_FORMAT}`|${color}|${secondary_color}"
+  if [[ -n "${user_info}" ]]; then
+    local clock=$(date +"${OMB_THEME_POWERLINE_ICON_CLOCK-%X %D}")
+    _omb_util_print "$OMB_THEME_POWERLINE_ICON_USER ${user_info}${clock:+ $clock}|${color}|${secondary_color}"
+  fi
 }
 
 function __powerline_cwd_prompt {
