@@ -13,7 +13,7 @@ GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
 RVM_THEME_PROMPT_PREFIX="|"
 RVM_THEME_PROMPT_SUFFIX="|"
 
-function return_delimited {
+function _omb_theme_developer_return_delimited {
   # 1 = flag 2 = tag 3 = value
   if [[ $1 = "true" ]]; then
     printf "$2 $3---"
@@ -24,7 +24,7 @@ function return_delimited {
   fi
 }
 
-function extract_key {
+function _omb_theme_developer_extract_key {
   value=$(echo "$1" | grep -oP "(?<=$2)[^---]+")
   printf "$value"
 }
@@ -37,56 +37,56 @@ function __bobby_clock {
   fi
 }
 
-function node_version {
+function _omb_theme_developer_get_node_version {
   val_node=$(node --version)
   if command -v nvm &>/dev/null; then
-    return_delimited $1 "node" "nvm ${val_node}"
+    _omb_theme_developer_return_delimited $1 "node" "nvm ${val_node}"
   else
     # Si nvm no está instalado, utilizar "njs"
-    return_delimited $1 "node" "njs ${val_node}"
+    _omb_theme_developer_return_delimited $1 "node" "njs ${val_node}"
   fi
 }
 
-function go_version {
+function _omb_theme_developer_get_go_version {
   local val_go=$(go version | cut -d ' ' -f 3 | cut -d 'o' -f 2)
-  return_delimited $1 "go" "go ${val_go}"
+  _omb_theme_developer_return_delimited $1 "go" "go ${val_go}"
 }
 
-function ruby_version {
+function _omb_theme_developer_get_ruby_version {
   local val_rb=$(ruby --version | cut -d ' ' -f 2)
   if command -v rvm &>/dev/null; then
-    return_delimited $1 "ruby" "rvm ${val_rb}"
+    _omb_theme_developer_return_delimited $1 "ruby" "rvm ${val_rb}"
   else
     # Si nvm no está instalado, utilizar "njs"
-    return_delimited $1 "ruby" "rb ${val_rb}"
+    _omb_theme_developer_return_delimited $1 "ruby" "rb ${val_rb}"
   fi
 }
 
-function py_version {
+function _omb_theme_developer_get_py_version {
   local val_py=$(python --version | cut -d ' ' -f 2)
   if command -v conda &>/dev/null; then
     local condav=$(conda env list | grep '*' | awk '{print $1}')
-    return_delimited $1 "python" "conda<${condav}> ${val_py}"
+    _omb_theme_developer_return_delimited $1 "python" "conda<${condav}> ${val_py}"
   else
     # Si nvm no está instalado, utilizar "njs"
-    return_delimited $1 "python" "py ${val_py}"
+    _omb_theme_developer_return_delimited $1 "python" "py ${val_py}"
   fi
 }
 
-function OPi5p_Temp {
+function _omb_theme_developer_OPi5p_Temp {
   local temp_opi5p=$(cat /sys/class/thermal/thermal_zone4/temp &)
   local temp_in_c=$((temp_opi5p / 1000))
   printf "${temp_in_c}"
 }
 
-function genericLinuxTemp {
+function _omb_theme_developer_genericLinuxTemp {
   local temp_lnx=$(cat /sys/class/thermal/thermal_zone0/temp &)
   local temp_in_c=$((temp_lnx / 1000))
   printf "${temp_in_c}"
 }
 
 # if is a specific platfor use spacific configuration otherwise use default linux configuration.
-function currentPlatform {
+function _omb_theme_developer_currentPlatform {
   # 2 ways to detect the platform 1) use a env var 2) some scrapping from the current system info (this is bash so just linux is considered)
   # env var is $PROMPT_THEME_PLATFORM
   #TODO: this is a first basic implementation this could be better but for now is ok
@@ -104,7 +104,7 @@ function currentPlatform {
   fi
 }
 
-function cpu_load {
+function _omb_theme_developer_cpu_load {
   # Ejecutar el comando top en modo batch, filtrar por el nombre de usuario actual y almacenar la salida en la variable 'output'
   local output=$(top -b -n 1 -u $USER | grep "Cpu(s)" &)
 
@@ -115,8 +115,8 @@ function cpu_load {
   printf "${cpu_load}"
 }
 
-function getCpuLoad {
-  local current_cpu_load=$(cpu_load &)
+function _omb_theme_developer_getCpuLoad {
+  local current_cpu_load=$(_omb_theme_developer_cpu_load &)
 
   local color="${_omb_prompt_reset_color}"
   # Condicional para verificar los rangos
@@ -131,17 +131,17 @@ function getCpuLoad {
   elif ((current_cpu_load >= 76)); then
     color="${_omb_prompt_red}!"
   fi
-  return_delimited $1 "cpuload" "${color}${current_cpu_load}"
+  _omb_theme_developer_return_delimited $1 "cpuload" "${color}${current_cpu_load}"
 }
 
-function getCpuTemp {
+function _omb_theme_developer_getCpuTemp {
   local temp_in_c
-  local currentPlatform=$(currentPlatform)
+  local currentPlatform=$(_omb_theme_developer_currentPlatform)
 
   if ((currentPlatform == "linux")); then
-    temp_in_c=$(genericLinuxTemp)
+    temp_in_c=$(_omb_theme_developer_genericLinuxTemp)
   elif ((currentPlatform == "OPI5P")); then
-    temp_in_c=$(OPi5p_Temp)
+    temp_in_c=$(_omb_theme_developer_OPi5p_Temp)
   fi
 
   local color
@@ -157,54 +157,54 @@ function getCpuTemp {
   elif ((temp_in_c >= 76 && temp_in_c)); then
     color="${_omb_prompt_red}!"
   fi
-  return_delimited $1 "cputemp" "${color}${temp_in_c}°"
+  _omb_theme_developer_return_delimited $1 "cputemp" "${color}${temp_in_c}°"
 }
 
 # this should work on every "new" linux distro
-function getDefaultIp {
+function _omb_theme_developer_getDefaultIp {
   # Obtiene el nombre de la interfaz de red activa
   local interface=$(ip -o -4 route show to default | awk '{print $5}')
 
   # Obtiene la dirección IP de la interfaz de red activa
   local ip_address=$(ip -o -4 address show dev "$interface" | awk '{split($4, a, "/"); print a[1]}')
 
-  return_delimited $1 "ip" "${ip_address}"
+  _omb_theme_developer_return_delimited $1 "ip" "${ip_address}"
 }
 
 # prompt constructor
-function _omb_theme_PROMPT_COMMAND() {
+function _omb_theme_PROMPT_COMMAND {
   # start_time=$(($(date +%s%N) / 1000000))
 
-  #cputemp=$(getCpuTemp &)
+  #cputemp=$(_omb_theme_developer_getCpuTemp &)
 
-  #cpuload=$(getCpuLoad &)
+  #cpuload=$(_omb_theme_developer_getCpuLoad &)
 
-  #pyversion=$(py_version &)
-  #nodeversion=$(node_version &)
-  #goversion=$(go_version &)
+  #pyversion=$(_omb_theme_developer_get_py_version &)
+  #nodeversion=$(_omb_theme_developer_get_node_version &)
+  #goversion=$(_omb_theme_developer_get_go_version &)
 
-  #defaultip=$(getDefaultIp &)
+  #defaultip=$(_omb_theme_developer_getDefaultIp &)
 
   #wait
   # NEW way using paralellism
   # this throws all inside the $() as a new thread but awaits the execution end_time
   # so this takes the same time as the slower function
   values=$(
-    getCpuLoad true & # this is very slow
-    getCpuTemp true &
-    py_version true &
-    node_version true &
-    go_version true &
-    getDefaultIp true &
+    _omb_theme_developer_getCpuLoad true & # this is very slow
+    _omb_theme_developer_getCpuTemp true &
+    _omb_theme_developer_get_py_version true &
+    _omb_theme_developer_get_node_version true &
+    _omb_theme_developer_get_go_version true &
+    _omb_theme_developer_getDefaultIp true &
   )
 
-  cputemp=$(extract_key "$values" "cputemp")
-  cpuload=$(extract_key "$values" "cpuload")
-  nodeversion=$(extract_key "$values" "node")
-  pyversion=$(extract_key "$values" "python")
-  goversion=$(extract_key "$values" "go")
+  cputemp=$(_omb_theme_developer_extract_key "$values" "cputemp")
+  cpuload=$(_omb_theme_developer_extract_key "$values" "cpuload")
+  nodeversion=$(_omb_theme_developer_extract_key "$values" "node")
+  pyversion=$(_omb_theme_developer_extract_key "$values" "python")
+  goversion=$(_omb_theme_developer_extract_key "$values" "go")
 
-  defaultip=$(extract_key "$values" "ip")
+  defaultip=$(_omb_theme_developer_extract_key "$values" "ip")
 
   #
   # end_time=$(($(date +%s%N) / 1000000))
