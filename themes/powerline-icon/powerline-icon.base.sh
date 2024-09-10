@@ -19,18 +19,18 @@ function __powerline_user_info_prompt {
     fi
   fi
   case "${POWERLINE_PROMPT_USER_INFO_MODE}" in
-    "sudo")
-      if [[ "${color}" == "${USER_INFO_THEME_PROMPT_COLOR_SUDO}" ]]; then
-        user_info="!"
-      fi
-      ;;
-    *)
-      if [[ -n "${SSH_CLIENT}" ]]; then
-        user_info="${USER_INFO_SSH_CHAR}${USER}@${HOSTNAME}"
-      else
-        user_info="${USER}"
-      fi
-      ;;
+  "sudo")
+    if [[ "${color}" == "${USER_INFO_THEME_PROMPT_COLOR_SUDO}" ]]; then
+      user_info="!"
+    fi
+    ;;
+  *)
+    if [[ -n "${SSH_CLIENT}" ]]; then
+      user_info="${USER_INFO_SSH_CHAR}${USER}@${HOSTNAME}"
+    else
+      user_info="${USER}"
+    fi
+    ;;
   esac
   if [[ -n "${user_info}" ]]; then
     local clock=$(date +"${OMB_THEME_POWERLINE_ICON_CLOCK-%X %D}")
