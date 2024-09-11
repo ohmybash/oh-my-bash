@@ -135,9 +135,9 @@ function _omb_theme_developer_getCpuTemp {
   local temp_in_c
   local currentPlatform=$(_omb_theme_developer_currentPlatform)
 
-  if ((currentPlatform == "linux")); then
+  if [[ $currentPlatform == linux ]]; then
     temp_in_c=$(_omb_theme_developer_genericLinuxTemp)
-  elif ((currentPlatform == "OPI5P")); then
+  elif [[ $currentPlatform == OPI5P ]]; then
     temp_in_c=$(_omb_theme_developer_OPi5p_Temp)
   fi
 
