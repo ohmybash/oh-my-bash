@@ -31,9 +31,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | bash-preexec    | Tool allowing execution of commands before they are executed in Bash.                                               |
 | bashmarks       | Utility facilitating directory navigation via bookmarks in Bash.                                                    |
 | battery         | Plugin related to monitoring and managing battery on computer systems.                                              |
-| brew            | Package manager for macOS and Linux facilitating software installation and management.                              |
 | bu              | Insufficient information provided to give a precise description.                                                    |
-| chezmoi         | Dotfile management tool enabling management of user environment configuration.                                      |
 | dotnet          | This plugin provides completion and useful aliases for .NET Core CLI.                                               |
 | fasd            | Utility easing filesystem navigation through shortcuts and abbreviated commands.                                    |
 | gcloud          | Command-line tools for interacting with Google Cloud Platform (GCP).                                                |
