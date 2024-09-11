@@ -59,7 +59,7 @@ function _omb_theme_developer_get_ruby_version {
 function _omb_theme_developer_get_py_version {
   local val_py=$(python --version | cut -d ' ' -f 2)
   if _omb_util_command_exists conda; then
-    local condav=$(conda env list | grep '*' | awk '{print $1}')
+    local condav=$(conda env list | awk '$2 == "*" {print $1}')
     _omb_theme_developer_return_delimited "python" "conda<${condav}> ${val_py}"
   else
     # Si nvm no está instalado, utilizar "njs"
