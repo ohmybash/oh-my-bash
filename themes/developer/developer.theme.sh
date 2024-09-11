@@ -193,9 +193,12 @@ function _omb_theme_PROMPT_COMMAND {
   _omb_theme_developer__readDefaultIp
   local defaultip=$REPLY
 
-  local tech_versions="$_omb_prompt_reset_color$nodeversion$RVM_THEME_PROMPT_PREFIX$pyversion$RVM_THEME_PROMPT_PREFIX$goversion"
+  local tech_versions=$nodeversion
+  [[ $pyversion ]] && tech_versions+=${tech_versions:+$RVM_THEME_PROMPT_PREFIX}$pyversion
+  [[ $goversion ]] && tech_versions+=${tech_versions:+$RVM_THEME_PROMPT_PREFIX}$goversion
+  [[ $tech_versions ]] && tech_versions=$_omb_prompt_reset_color$tech_versions
 
-  local top_bar="\n$(battery_char)$(__bobby_clock)$tech_versions $cputemp $cpuload% $_omb_prompt_purple\h ($defaultip) ${_omb_prompt_reset_color}in $_omb_prompt_green\w\n"
+  local top_bar="\n$(battery_char)$(__bobby_clock)$tech_versions${cputemp:+ $cputemp}${cpuload:+ $cpuload%} $_omb_prompt_purple\h${defaultip:+ ($defaultip)} ${_omb_prompt_reset_color}in $_omb_prompt_green\w\n"
 
   local prompt_line="$_omb_prompt_bold_teal$(scm_prompt_char_info) $_omb_prompt_green→$_omb_prompt_reset_color "
 
