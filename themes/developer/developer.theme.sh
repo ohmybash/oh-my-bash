@@ -21,7 +21,8 @@ function __bobby_clock {
   fi
 }
 
-function _omb_theme_developer_get_node_version {
+## @var[out] REPLY
+function _omb_theme_developer__readNodeVersion {
   local val_node=$(node --version)
   if _omb_util_command_exists nvm; then
     val_node="nvm $val_node"
@@ -29,15 +30,17 @@ function _omb_theme_developer_get_node_version {
     # Si nvm no está instalado, utilizar "njs"
     val_node="njs $val_node"
   fi
-  _omb_util_print "$val_node"
+  REPLY=$val_node
 }
 
-function _omb_theme_developer_get_go_version {
+## @var[out] REPLY
+function _omb_theme_developer__readGoVersion {
   local val_go=$(go version | cut -d ' ' -f 3 | cut -d 'o' -f 2)
-  _omb_util_print "go $val_go"
+  REPLY="go $val_go"
 }
 
-function _omb_theme_developer_get_ruby_version {
+## @var[out] REPLY
+function _omb_theme_developer__read_ruby_version {
   local val_rb=$(ruby --version | cut -d ' ' -f 2)
   if _omb_util_command_exists rvm; then
     val_rb="rvm $val_rb"
@@ -45,10 +48,11 @@ function _omb_theme_developer_get_ruby_version {
     # Si nvm no está instalado, utilizar "njs"
     val_rb="rb $val_rb"
   fi
-  _omb_util_print "$val_rb"
+  REPLY=$val_rb
 }
 
-function _omb_theme_developer_get_py_version {
+## @var[out] REPLY
+function _omb_theme_developer__readPyVersion {
   local val_py=$(python --version | cut -d ' ' -f 2)
   if _omb_util_command_exists conda; then
     local condav=$(conda env list | awk '$2 == "*" {print $1}')
@@ -57,42 +61,11 @@ function _omb_theme_developer_get_py_version {
     # Si nvm no está instalado, utilizar "njs"
     val_py="py $val_py"
   fi
-  _omb_util_print "$val_py"
+  REPLY=$val_py
 }
 
-function _omb_theme_developer_OPi5p_Temp {
-  local temp_opi5p=$(< /sys/class/thermal/thermal_zone4/temp)
-  local temp_in_c=$((temp_opi5p / 1000))
-  _omb_util_put "$temp_in_c"
-}
-
-function _omb_theme_developer_genericLinuxTemp {
-  local temp_lnx=$(< /sys/class/thermal/thermal_zone0/temp)
-  local temp_in_c=$((temp_lnx / 1000))
-  _omb_util_put "$temp_in_c"
-}
-
-# if is a specific platfor use spacific configuration otherwise use default
-# linux configuration.
-function _omb_theme_developer_currentPlatform {
-  # 2 ways to detect the platform 1) use a env var 2) some scrapping from the
-  # current system info (this is bash so just linux is considered) env var is
-  # $PROMPT_THEME_PLATFORM
-  # TODO: this is a first basic implementation this could be better but for now
-  # is ok
-  local platform_according_env=$PROMPT_THEME_PLATFORM
-
-  # if opi5 -> search for rk3588 tag in kernel and ...
-  local opi5p_kernel_tag=$(uname --kernel-release | cut -d '-' -f 3)
-
-  if [[ $platform_according_env == OPI5P || $opi5p_kernel_tag == rk3588 ]]; then
-    _omb_util_put OPI5P
-  else
-    _omb_util_put linux
-  fi
-}
-
-function _omb_theme_developer_cpu_load {
+## @var[out] REPLY
+function _omb_theme_developer__readCpuLoad__cpuLoad {
   # Ejecutar el comando top en modo batch, filtrar por el nombre de usuario
   # actual y almacenar la salida en la variable 'output'
   local output=$(top -b -n 1 -u "$USER" | grep "Cpu(s)")
@@ -101,12 +74,14 @@ function _omb_theme_developer_cpu_load {
   # awk
   local cpu_load=$(echo "$output" | awk -F ',' '{gsub(/[^.0-9]/,"",$4);print 100.0 - $4}' | cut -d '.' -f 1)
 
-  # Imprimir la carga de la CPU
-  _omb_util_put "$cpu_load"
+  # Almacenar la carga de la CPU en la variable 'REPLY'
+  REPLY=$cpu_load
 }
 
-function _omb_theme_developer_getCpuLoad {
-  local current_cpu_load=$(_omb_theme_developer_cpu_load)
+## @var[out] REPLY
+function _omb_theme_developer__readCpuLoad {
+  _omb_theme_developer__readCpuLoad__cpuLoad
+  local current_cpu_load=$REPLY
 
   local color=$_omb_prompt_reset_color
   # Condicional para verificar los rangos
@@ -121,18 +96,55 @@ function _omb_theme_developer_getCpuLoad {
   elif ((current_cpu_load >= 76)); then
     color=$_omb_prompt_red'!'
   fi
-  _omb_util_print "$color$current_cpu_load"
+  REPLY=$color$current_cpu_load
 }
 
-function _omb_theme_developer_getCpuTemp {
-  local temp_in_c
-  local currentPlatform=$(_omb_theme_developer_currentPlatform)
+## @var[out] REPLY
+function _omb_theme_developer__readCpuTemp_OPi5pTemp {
+  local temp_opi5p=$(< /sys/class/thermal/thermal_zone4/temp)
+  local temp_in_c=$((temp_opi5p / 1000))
+  REPLY=$temp_in_c
+}
+
+## @var[out] REPLY
+function _omb_theme_developer__readCpuTemp_genericLinuxTemp {
+  local temp_lnx=$(< /sys/class/thermal/thermal_zone0/temp)
+  local temp_in_c=$((temp_lnx / 1000))
+  REPLY=$temp_in_c
+}
+
+# if is a specific platfor use spacific configuration otherwise use default
+# linux configuration.
+## @var[out] REPLY
+function _omb_theme_developer__readCpuTemp_currentPlatform {
+  # 2 ways to detect the platform 1) use a env var 2) some scrapping from the
+  # current system info (this is bash so just linux is considered) env var is
+  # $PROMPT_THEME_PLATFORM
+  # TODO: this is a first basic implementation this could be better but for now
+  # is ok
+  local platform_according_env=$PROMPT_THEME_PLATFORM
+
+  # if opi5 -> search for rk3588 tag in kernel and ...
+  local opi5p_kernel_tag=$(uname --kernel-release | cut -d '-' -f 3)
+
+  if [[ $platform_according_env == OPI5P || $opi5p_kernel_tag == rk3588 ]]; then
+    REPLY=OPI5P
+  else
+    REPLY=linux
+  fi
+}
+
+## @var[out] REPLY
+function _omb_theme_developer__readCpuTemp {
+  _omb_theme_developer__readCpuTemp_currentPlatform
+  local currentPlatform=$REPLY
 
   if [[ $currentPlatform == linux ]]; then
-    temp_in_c=$(_omb_theme_developer_genericLinuxTemp)
+    _omb_theme_developer__readCpuTemp_genericLinuxTemp
   elif [[ $currentPlatform == OPI5P ]]; then
-    temp_in_c=$(_omb_theme_developer_OPi5p_Temp)
+    _omb_theme_developer__readCpuTemp_OPi5pTemp
   fi
+  local temp_in_c=$REPLY
 
   local color
   # Condicional para verificar los rangos
@@ -147,28 +159,37 @@ function _omb_theme_developer_getCpuTemp {
   elif ((temp_in_c >= 76 && temp_in_c)); then
     color=$_omb_prompt_red!
   fi
-  _omb_util_print "$color${temp_in_c}°"
+  REPLY="$color${temp_in_c}°"
 }
 
-# this should work on every "new" linux distro
-function _omb_theme_developer_getDefaultIp {
+## @var[out] REPLY
+function _omb_theme_developer__readDefaultIp {
+  # this should work on every "new" linux distro
+
   # Obtiene el nombre de la interfaz de red activa
   local interface=$(ip -o -4 route show to default | awk '{print $5}')
 
   # Obtiene la dirección IP de la interfaz de red activa
   local ip_address=$(ip -o -4 address show dev "$interface" | awk '{split($4, a, "/"); print a[1]}')
 
-  _omb_util_print "$ip_address"
+  REPLY=$ip_address
 }
 
 # prompt constructor
 function _omb_theme_PROMPT_COMMAND {
-  local cputemp=$(_omb_theme_developer_getCpuTemp)
-  local cpuload=$(_omb_theme_developer_getCpuLoad) # this is very slow
-  local pyversion=$(_omb_theme_developer_get_py_version)
-  local nodeversion=$(_omb_theme_developer_get_node_version)
-  local goversion=$(_omb_theme_developer_get_go_version)
-  local defaultip=$(_omb_theme_developer_getDefaultIp)
+  local REPLY
+  _omb_theme_developer__readCpuTemp
+  local cputemp=$REPLY
+  _omb_theme_developer__readCpuLoad # this is very slow
+  local cpuload=$REPLY
+  _omb_theme_developer__readPyVersion
+  local pyversion=$REPLY
+  _omb_theme_developer__readNodeVersion
+  local nodeversion=$REPLY
+  _omb_theme_developer__readGoVersion
+  local goversion=$REPLY
+  _omb_theme_developer__readDefaultIp
+  local defaultip=$REPLY
 
   local tech_versions="$_omb_prompt_reset_color$nodeversion$RVM_THEME_PROMPT_PREFIX$pyversion$RVM_THEME_PROMPT_PREFIX$goversion"
 
