@@ -23,7 +23,7 @@ function __bobby_clock {
 
 ## @var[out] REPLY
 function _omb_theme_developer__readNodeVersion {
-  local val_node=$(node --version)
+  local val_node=$(node --version 2>/dev/null)
   if _omb_util_command_exists nvm; then
     val_node="nvm $val_node"
   else
@@ -35,13 +35,13 @@ function _omb_theme_developer__readNodeVersion {
 
 ## @var[out] REPLY
 function _omb_theme_developer__readGoVersion {
-  local val_go=$(go version | cut -d ' ' -f 3 | cut -d 'o' -f 2)
+  local val_go=$(go version 2>/dev/null | cut -d ' ' -f 3 | cut -d 'o' -f 2)
   REPLY="go $val_go"
 }
 
 ## @var[out] REPLY
 function _omb_theme_developer__read_ruby_version {
-  local val_rb=$(ruby --version | cut -d ' ' -f 2)
+  local val_rb=$(ruby --version 2>/dev/null | cut -d ' ' -f 2)
   if _omb_util_command_exists rvm; then
     val_rb="rvm $val_rb"
   else
@@ -53,7 +53,7 @@ function _omb_theme_developer__read_ruby_version {
 
 ## @var[out] REPLY
 function _omb_theme_developer__readPyVersion {
-  local val_py=$(python --version | cut -d ' ' -f 2)
+  local val_py=$(python --version 2>/dev/null | cut -d ' ' -f 2)
   if _omb_util_command_exists conda; then
     local condav=$(conda env list | awk '$2 == "*" {print $1}')
     val_py="conda<$condav> $val_py"
@@ -97,17 +97,21 @@ function _omb_theme_developer__readCpuLoad {
 }
 
 ## @var[out] REPLY
-function _omb_theme_developer__readCpuTemp_OPi5pTemp {
-  local temp_opi5p=$(< /sys/class/thermal/thermal_zone4/temp)
-  local temp_in_c=$((temp_opi5p / 1000))
+function _omb_theme_developer__readCpuTemp_genericLinuxTemp {
+  local file=${1:-/sys/class/thermal/thermal_zone0/temp}
+  if [[ ! -e $file ]]; then
+    REPLY=
+    return 1
+  fi
+
+  local temp_linux=$(< "$file")
+  local temp_in_c=$((temp_linux / 1000))
   REPLY=$temp_in_c
 }
 
 ## @var[out] REPLY
-function _omb_theme_developer__readCpuTemp_genericLinuxTemp {
-  local temp_lnx=$(< /sys/class/thermal/thermal_zone0/temp)
-  local temp_in_c=$((temp_lnx / 1000))
-  REPLY=$temp_in_c
+function _omb_theme_developer__readCpuTemp_OPi5pTemp {
+  _omb_theme_developer__readCpuTemp_genericLinuxTemp /sys/class/thermal/thermal_zone4/temp
 }
 
 # if is a specific platfor use spacific configuration otherwise use default
@@ -122,7 +126,7 @@ function _omb_theme_developer__readCpuTemp_currentPlatform {
   local platform_according_env=$PROMPT_THEME_PLATFORM
 
   # if opi5 -> search for rk3588 tag in kernel and ...
-  local opi5p_kernel_tag=$(uname --kernel-release | cut -d '-' -f 3)
+  local opi5p_kernel_tag=$(uname --kernel-release 2>/dev/null | cut -d '-' -f 3)
 
   if [[ $platform_according_env == OPI5P || $opi5p_kernel_tag == rk3588 ]]; then
     REPLY=OPI5P
@@ -142,6 +146,7 @@ function _omb_theme_developer__readCpuTemp {
     _omb_theme_developer__readCpuTemp_OPi5pTemp
   fi
   local temp_in_c=$REPLY
+  [[ $REPLY ]] || return 0
 
   local color
   # Condicional para verificar los rangos
@@ -164,10 +169,10 @@ function _omb_theme_developer__readDefaultIp {
   # this should work on every "new" linux distro
 
   # Obtiene el nombre de la interfaz de red activa
-  local interface=$(ip -o -4 route show to default | awk '{print $5}')
+  local interface=$(ip -o -4 route show to default 2>/dev/null | awk '{print $5}')
 
   # Obtiene la dirección IP de la interfaz de red activa
-  local ip_address=$(ip -o -4 address show dev "$interface" | awk '{split($4, a, "/"); print a[1]}')
+  local ip_address=$(ip -o -4 address show dev "$interface" 2>/dev/null | awk '{split($4, a, "/"); print a[1]}')
 
   REPLY=$ip_address
 }
