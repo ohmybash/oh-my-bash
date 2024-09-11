@@ -34,11 +34,12 @@ function __bobby_clock {
 function _omb_theme_developer_get_node_version {
   local val_node=$(node --version)
   if _omb_util_command_exists nvm; then
-    _omb_theme_developer_return_delimited "node" "nvm $val_node"
+    val_node="nvm $val_node"
   else
     # Si nvm no está instalado, utilizar "njs"
-    _omb_theme_developer_return_delimited "node" "njs $val_node"
+    val_node="njs $val_node"
   fi
+  _omb_theme_developer_return_delimited "node" "$val_node"
 }
 
 function _omb_theme_developer_get_go_version {
@@ -49,22 +50,24 @@ function _omb_theme_developer_get_go_version {
 function _omb_theme_developer_get_ruby_version {
   local val_rb=$(ruby --version | cut -d ' ' -f 2)
   if _omb_util_command_exists rvm; then
-    _omb_theme_developer_return_delimited "ruby" "rvm $val_rb"
+    val_rb="rvm $val_rb"
   else
     # Si nvm no está instalado, utilizar "njs"
-    _omb_theme_developer_return_delimited "ruby" "rb $val_rb"
+    val_rb="rb $val_rb"
   fi
+  _omb_theme_developer_return_delimited "ruby" "$val_rb"
 }
 
 function _omb_theme_developer_get_py_version {
   local val_py=$(python --version | cut -d ' ' -f 2)
   if _omb_util_command_exists conda; then
     local condav=$(conda env list | awk '$2 == "*" {print $1}')
-    _omb_theme_developer_return_delimited "python" "conda<$condav> $val_py"
+    val_py="conda<$condav> $val_py"
   else
     # Si nvm no está instalado, utilizar "njs"
-    _omb_theme_developer_return_delimited "python" "py $val_py"
+    val_py="py $val_py"
   fi
+  _omb_theme_developer_return_delimited "python" "$val_py"
 }
 
 function _omb_theme_developer_OPi5p_Temp {
