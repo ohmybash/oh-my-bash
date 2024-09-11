@@ -13,16 +13,6 @@ GIT_THEME_PROMPT_SUFFIX="$_omb_prompt_green|"
 RVM_THEME_PROMPT_PREFIX='|'
 RVM_THEME_PROMPT_SUFFIX='|'
 
-function _omb_theme_developer_return_delimited {
-  # $1 = tag, $2 = value
-  _omb_util_print "$1 $2"
-}
-
-function _omb_theme_developer_extract_key {
-  local value=$(sed -n "s/^$2 //p" <<< "$1")
-  _omb_util_put "$value"
-}
-
 function __bobby_clock {
   _omb_util_put "$(clock_prompt) "
 
@@ -39,12 +29,12 @@ function _omb_theme_developer_get_node_version {
     # Si nvm no está instalado, utilizar "njs"
     val_node="njs $val_node"
   fi
-  _omb_theme_developer_return_delimited "node" "$val_node"
+  _omb_util_print "$val_node"
 }
 
 function _omb_theme_developer_get_go_version {
   local val_go=$(go version | cut -d ' ' -f 3 | cut -d 'o' -f 2)
-  _omb_theme_developer_return_delimited "go" "go $val_go"
+  _omb_util_print "go $val_go"
 }
 
 function _omb_theme_developer_get_ruby_version {
@@ -55,7 +45,7 @@ function _omb_theme_developer_get_ruby_version {
     # Si nvm no está instalado, utilizar "njs"
     val_rb="rb $val_rb"
   fi
-  _omb_theme_developer_return_delimited "ruby" "$val_rb"
+  _omb_util_print "$val_rb"
 }
 
 function _omb_theme_developer_get_py_version {
@@ -67,7 +57,7 @@ function _omb_theme_developer_get_py_version {
     # Si nvm no está instalado, utilizar "njs"
     val_py="py $val_py"
   fi
-  _omb_theme_developer_return_delimited "python" "$val_py"
+  _omb_util_print "$val_py"
 }
 
 function _omb_theme_developer_OPi5p_Temp {
@@ -131,7 +121,7 @@ function _omb_theme_developer_getCpuLoad {
   elif ((current_cpu_load >= 76)); then
     color=$_omb_prompt_red'!'
   fi
-  _omb_theme_developer_return_delimited "cpuload" "$color$current_cpu_load"
+  _omb_util_print "$color$current_cpu_load"
 }
 
 function _omb_theme_developer_getCpuTemp {
@@ -157,7 +147,7 @@ function _omb_theme_developer_getCpuTemp {
   elif ((temp_in_c >= 76 && temp_in_c)); then
     color=$_omb_prompt_red!
   fi
-  _omb_theme_developer_return_delimited "cputemp" "$color${temp_in_c}°"
+  _omb_util_print "$color${temp_in_c}°"
 }
 
 # this should work on every "new" linux distro
@@ -168,35 +158,17 @@ function _omb_theme_developer_getDefaultIp {
   # Obtiene la dirección IP de la interfaz de red activa
   local ip_address=$(ip -o -4 address show dev "$interface" | awk '{split($4, a, "/"); print a[1]}')
 
-  _omb_theme_developer_return_delimited "ip" "$ip_address"
+  _omb_util_print "$ip_address"
 }
 
 # prompt constructor
 function _omb_theme_PROMPT_COMMAND {
-  #local cputemp=$(_omb_theme_developer_getCpuTemp)
-  #local cpuload=$(_omb_theme_developer_getCpuLoad)
-  #local pyversion=$(_omb_theme_developer_get_py_version)
-  #local nodeversion=$(_omb_theme_developer_get_node_version)
-  #local goversion=$(_omb_theme_developer_get_go_version)
-  #local defaultip=$(_omb_theme_developer_getDefaultIp)
-
-  # NEW way using paralellism
-  # this throws all inside the $() as a new thread but awaits the execution end_time
-  # so this takes the same time as the slower function
-  local values=$(
-    _omb_theme_developer_getCpuLoad & # this is very slow
-    _omb_theme_developer_getCpuTemp &
-    _omb_theme_developer_get_py_version &
-    _omb_theme_developer_get_node_version &
-    _omb_theme_developer_get_go_version &
-    _omb_theme_developer_getDefaultIp &
-  )
-  local cputemp=$(_omb_theme_developer_extract_key "$values" "cputemp")
-  local cpuload=$(_omb_theme_developer_extract_key "$values" "cpuload")
-  local nodeversion=$(_omb_theme_developer_extract_key "$values" "node")
-  local pyversion=$(_omb_theme_developer_extract_key "$values" "python")
-  local goversion=$(_omb_theme_developer_extract_key "$values" "go")
-  local defaultip=$(_omb_theme_developer_extract_key "$values" "ip")
+  local cputemp=$(_omb_theme_developer_getCpuTemp)
+  local cpuload=$(_omb_theme_developer_getCpuLoad) # this is very slow
+  local pyversion=$(_omb_theme_developer_get_py_version)
+  local nodeversion=$(_omb_theme_developer_get_node_version)
+  local goversion=$(_omb_theme_developer_get_go_version)
+  local defaultip=$(_omb_theme_developer_getDefaultIp)
 
   local tech_versions="$_omb_prompt_reset_color$nodeversion$RVM_THEME_PROMPT_PREFIX$pyversion$RVM_THEME_PROMPT_PREFIX$goversion"
 
