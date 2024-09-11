@@ -19,7 +19,7 @@ function _omb_theme_developer_return_delimited {
 }
 
 function _omb_theme_developer_extract_key {
-  value=$(sed -n "s/^$2 //p" <<< "$1")
+  local value=$(sed -n "s/^$2 //p" <<< "$1")
   _omb_util_put "$value"
 }
 
@@ -32,7 +32,7 @@ function __bobby_clock {
 }
 
 function _omb_theme_developer_get_node_version {
-  val_node=$(node --version)
+  local val_node=$(node --version)
   if _omb_util_command_exists nvm; then
     _omb_theme_developer_return_delimited "node" "nvm $val_node"
   else
@@ -170,17 +170,17 @@ function _omb_theme_developer_getDefaultIp {
 
 # prompt constructor
 function _omb_theme_PROMPT_COMMAND {
-  #cputemp=$(_omb_theme_developer_getCpuTemp)
-  #cpuload=$(_omb_theme_developer_getCpuLoad)
-  #pyversion=$(_omb_theme_developer_get_py_version)
-  #nodeversion=$(_omb_theme_developer_get_node_version)
-  #goversion=$(_omb_theme_developer_get_go_version)
-  #defaultip=$(_omb_theme_developer_getDefaultIp)
+  #local cputemp=$(_omb_theme_developer_getCpuTemp)
+  #local cpuload=$(_omb_theme_developer_getCpuLoad)
+  #local pyversion=$(_omb_theme_developer_get_py_version)
+  #local nodeversion=$(_omb_theme_developer_get_node_version)
+  #local goversion=$(_omb_theme_developer_get_go_version)
+  #local defaultip=$(_omb_theme_developer_getDefaultIp)
 
   # NEW way using paralellism
   # this throws all inside the $() as a new thread but awaits the execution end_time
   # so this takes the same time as the slower function
-  values=$(
+  local values=$(
     _omb_theme_developer_getCpuLoad & # this is very slow
     _omb_theme_developer_getCpuTemp &
     _omb_theme_developer_get_py_version &
@@ -188,19 +188,18 @@ function _omb_theme_PROMPT_COMMAND {
     _omb_theme_developer_get_go_version &
     _omb_theme_developer_getDefaultIp &
   )
+  local cputemp=$(_omb_theme_developer_extract_key "$values" "cputemp")
+  local cpuload=$(_omb_theme_developer_extract_key "$values" "cpuload")
+  local nodeversion=$(_omb_theme_developer_extract_key "$values" "node")
+  local pyversion=$(_omb_theme_developer_extract_key "$values" "python")
+  local goversion=$(_omb_theme_developer_extract_key "$values" "go")
+  local defaultip=$(_omb_theme_developer_extract_key "$values" "ip")
 
-  cputemp=$(_omb_theme_developer_extract_key "$values" "cputemp")
-  cpuload=$(_omb_theme_developer_extract_key "$values" "cpuload")
-  nodeversion=$(_omb_theme_developer_extract_key "$values" "node")
-  pyversion=$(_omb_theme_developer_extract_key "$values" "python")
-  goversion=$(_omb_theme_developer_extract_key "$values" "go")
-  defaultip=$(_omb_theme_developer_extract_key "$values" "ip")
+  local tech_versions="$_omb_prompt_reset_color$nodeversion$RVM_THEME_PROMPT_PREFIX$pyversion$RVM_THEME_PROMPT_PREFIX$goversion"
 
-  tech_versions="$_omb_prompt_reset_color$nodeversion$RVM_THEME_PROMPT_PREFIX$pyversion$RVM_THEME_PROMPT_PREFIX$goversion"
+  local top_bar="\n$(battery_char)$(__bobby_clock)$tech_versions $cputemp $cpuload% $_omb_prompt_purple\h ($defaultip) ${_omb_prompt_reset_color}in $_omb_prompt_green\w\n"
 
-  top_bar="\n$(battery_char)$(__bobby_clock)$tech_versions $cputemp $cpuload% $_omb_prompt_purple\h ($defaultip) ${_omb_prompt_reset_color}in $_omb_prompt_green\w\n"
-
-  prompt_line="$_omb_prompt_bold_teal$(scm_prompt_char_info) $_omb_prompt_green→$_omb_prompt_reset_color "
+  local prompt_line="$_omb_prompt_bold_teal$(scm_prompt_char_info) $_omb_prompt_green→$_omb_prompt_reset_color "
 
   # defining the final prompt
   PS1="$top_bar$prompt_line"
