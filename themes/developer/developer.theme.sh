@@ -67,12 +67,9 @@ function _omb_theme_developer__readPyVersion {
 ## @var[out] REPLY
 function _omb_theme_developer__readCpuLoad__cpuLoad {
   # Ejecutar el comando top en modo batch, filtrar por el nombre de usuario
-  # actual y almacenar la salida en la variable 'output'
-  local output=$(top -b -n 1 -u "$USER" | grep "Cpu(s)")
-
-  # Extraer el porcentaje de carga de la CPU excluyendo el estado "idle" usando
-  # awk
-  local cpu_load=$(echo "$output" | awk -F ',' '{gsub(/[^.0-9]/,"",$4);print 100.0 - $4}' | cut -d '.' -f 1)
+  # actual.  Extraer el porcentaje de carga de la CPU excluyendo el estado
+  # "idle" usando awk
+  local cpu_load=$(top -b -n 1 -u "$USER" | awk -F ',' '/Cpu\(s\)/ {gsub(/[^.0-9]/,"",$4);printf("%d", 100.0 - $4)}')
 
   # Almacenar la carga de la CPU en la variable 'REPLY'
   REPLY=$cpu_load
