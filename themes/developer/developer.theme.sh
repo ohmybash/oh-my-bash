@@ -88,11 +88,9 @@ function _omb_theme_developer_currentPlatform {
   # TODO: this is a first basic implementation this could be better but for now
   # is ok
   local platform_according_env=$PROMPT_THEME_PLATFORM
-  #echo $platform_according_env
 
   # if opi5 -> search for rk3588 tag in kernel and ...
   local opi5p_kernel_tag=$(uname --kernel-release | cut -d '-' -f 3)
-  #echo $opi5p_kernel_tag
 
   if [[ $platform_according_env == OPI5P || $opi5p_kernel_tag == rk3588 ]]; then
     _omb_util_put OPI5P
@@ -172,8 +170,6 @@ function _omb_theme_developer_getDefaultIp {
 
 # prompt constructor
 function _omb_theme_PROMPT_COMMAND {
-  # start_time=$(($(date +%s%N) / 1000000))
-
   #cputemp=$(_omb_theme_developer_getCpuTemp)
   #cpuload=$(_omb_theme_developer_getCpuLoad)
   #pyversion=$(_omb_theme_developer_get_py_version)
@@ -198,13 +194,7 @@ function _omb_theme_PROMPT_COMMAND {
   nodeversion=$(_omb_theme_developer_extract_key "$values" "node")
   pyversion=$(_omb_theme_developer_extract_key "$values" "python")
   goversion=$(_omb_theme_developer_extract_key "$values" "go")
-
   defaultip=$(_omb_theme_developer_extract_key "$values" "ip")
-
-  #
-  # end_time=$(($(date +%s%N) / 1000000))
-  # elapsed_time=$((end_time - start_time))
-  # echo "Tiempo total de ejecución: $elapsed_time milisegundos"
 
   tech_versions="$_omb_prompt_reset_color$nodeversion$RVM_THEME_PROMPT_PREFIX$pyversion$RVM_THEME_PROMPT_PREFIX$goversion"
 
