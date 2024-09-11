@@ -68,13 +68,13 @@ function _omb_theme_developer_get_py_version {
 }
 
 function _omb_theme_developer_OPi5p_Temp {
-  local temp_opi5p=$(cat /sys/class/thermal/thermal_zone4/temp &)
+  local temp_opi5p=$(< /sys/class/thermal/thermal_zone4/temp)
   local temp_in_c=$((temp_opi5p / 1000))
   printf "${temp_in_c}"
 }
 
 function _omb_theme_developer_genericLinuxTemp {
-  local temp_lnx=$(cat /sys/class/thermal/thermal_zone0/temp &)
+  local temp_lnx=$(< /sys/class/thermal/thermal_zone0/temp)
   local temp_in_c=$((temp_lnx / 1000))
   printf "${temp_in_c}"
 }
@@ -84,11 +84,11 @@ function _omb_theme_developer_currentPlatform {
   # 2 ways to detect the platform 1) use a env var 2) some scrapping from the current system info (this is bash so just linux is considered)
   # env var is $PROMPT_THEME_PLATFORM
   #TODO: this is a first basic implementation this could be better but for now is ok
-  local platform_according_env=$(echo $PROMPT_THEME_PLATFORM &)
+  local platform_according_env=$PROMPT_THEME_PLATFORM
   #echo $platform_according_env
 
   # if opi5 -> search for rk3588 tag in kernel and ...
-  local opi5p_kernel_tag=$(uname --kernel-release | cut -d '-' -f 3 &)
+  local opi5p_kernel_tag=$(uname --kernel-release | cut -d '-' -f 3)
   #echo $opi5p_kernel_tag
 
   if [[ $platform_according_env == "OPI5P" || $opi5p_kernel_tag == "rk3588" ]]; then
@@ -100,17 +100,17 @@ function _omb_theme_developer_currentPlatform {
 
 function _omb_theme_developer_cpu_load {
   # Ejecutar el comando top en modo batch, filtrar por el nombre de usuario actual y almacenar la salida en la variable 'output'
-  local output=$(top -b -n 1 -u $USER | grep "Cpu(s)" &)
+  local output=$(top -b -n 1 -u $USER | grep "Cpu(s)")
 
   # Extraer el porcentaje de carga de la CPU excluyendo el estado "idle" usando awk
-  local cpu_load=$(echo "$output" | awk '{print 100.0-$8}' | cut -d '.' -f 1 &)
+  local cpu_load=$(echo "$output" | awk '{print 100.0-$8}' | cut -d '.' -f 1)
 
   # Imprimir la carga de la CPU
   printf "${cpu_load}"
 }
 
 function _omb_theme_developer_getCpuLoad {
-  local current_cpu_load=$(_omb_theme_developer_cpu_load &)
+  local current_cpu_load=$(_omb_theme_developer_cpu_load)
 
   local color="${_omb_prompt_reset_color}"
   # Condicional para verificar los rangos
@@ -169,17 +169,13 @@ function _omb_theme_developer_getDefaultIp {
 function _omb_theme_PROMPT_COMMAND {
   # start_time=$(($(date +%s%N) / 1000000))
 
-  #cputemp=$(_omb_theme_developer_getCpuTemp &)
+  #cputemp=$(_omb_theme_developer_getCpuTemp)
+  #cpuload=$(_omb_theme_developer_getCpuLoad)
+  #pyversion=$(_omb_theme_developer_get_py_version)
+  #nodeversion=$(_omb_theme_developer_get_node_version)
+  #goversion=$(_omb_theme_developer_get_go_version)
+  #defaultip=$(_omb_theme_developer_getDefaultIp)
 
-  #cpuload=$(_omb_theme_developer_getCpuLoad &)
-
-  #pyversion=$(_omb_theme_developer_get_py_version &)
-  #nodeversion=$(_omb_theme_developer_get_node_version &)
-  #goversion=$(_omb_theme_developer_get_go_version &)
-
-  #defaultip=$(_omb_theme_developer_getDefaultIp &)
-
-  #wait
   # NEW way using paralellism
   # this throws all inside the $() as a new thread but awaits the execution end_time
   # so this takes the same time as the slower function
