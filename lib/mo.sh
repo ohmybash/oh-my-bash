@@ -81,7 +81,7 @@ function mo {
                             # shellcheck disable=SC1090
                             . "$f2source"
                         else
-                            echo "No such file: $f2source" >&2
+                            _omb_util_print "No such file: $f2source" >&2
                             exit 1
                         fi
                         ;;
@@ -495,7 +495,7 @@ function _moLoadFile {
     # a dot to the content to preserve all newlines.
     # TODO: remove cat and replace with read loop?
 
-    content=$(cat -- "$2"; echo '.')
+    content=$(cat -- "$2"; _omb_util_print '.')
     len=$((${#content} - 1))
     content=${content:0:$len}  # Remove last dot
 
@@ -651,7 +651,7 @@ function _moParse {
         _moSplit moContent "$moContent" '{{' '}}'
     done
 
-    echo -n "${moContent[0]}"
+    _omb_util_put "${moContent[0]}"
 }
 
 
@@ -675,12 +675,12 @@ function _moPartial {
 
     if _moIsStandalone moStandalone "$2" "$4" "$5"; then
         moStandalone=( $moStandalone )
-        echo -n "${2:0:${moStandalone[0]}}"
+        _omb_util_put "${2:0:${moStandalone[0]}}"
         moIndent=${2:${moStandalone[0]}}
         moContent=${4:${moStandalone[1]}}
     else
         moIndent=""
-        echo -n "$2"
+        _omb_util_put "$2"
         moContent=$4
     fi
 
@@ -695,7 +695,7 @@ function _moPartial {
 
             # Fix bash handling of subshells
             # The extra dot is removed in _moIndentLines
-            echo -n "${moPartial}."
+            _omb_util_put "${moPartial}."
         )"
         _moParse "$moPartial" "$6" true
     )

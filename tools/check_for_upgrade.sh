@@ -3,11 +3,11 @@
 function _omb_upgrade_current_epoch {
   local sec=${EPOCHSECONDS-}
   [[ $sec ]] || printf -v sec '%(%s)T' -1 2>/dev/null || sec=$(command date +%s)
-  echo $((sec / 60 / 60 / 24))
+  printf "%s\n" $((sec / 60 / 60 / 24))
 }
 
 function _omb_upgrade_update_timestamp {
-  echo "LAST_EPOCH=$(_omb_upgrade_current_epoch)" >| ~/.osh-update
+  printf "%s\n" "LAST_EPOCH=$(_omb_upgrade_current_epoch)" >| ~/.osh-update
 }
 
 function _omb_upgrade_check {

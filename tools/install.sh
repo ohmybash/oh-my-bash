@@ -214,7 +214,7 @@ function _omb_install_main {
   # supports them.
   local ncolors=
   if type -P tput &>/dev/null; then
-    ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || echo -1)
+    ncolors=$(tput colors 2>/dev/null || tput Co 2>/dev/null || printf "%d\n" -1)
   fi
 
   local RED GREEN YELLOW BLUE BOLD NORMAL
@@ -292,19 +292,19 @@ function _omb_install_main {
 
   printf '%s\n' "${BLUE}Cloning Oh My Bash...${NORMAL}"
   type -P git &>/dev/null || {
-    echo "Error: git is not installed"
+    printf "%s\n" "Error: git is not installed"
     return 1
   }
   # The Windows (MSYS) Git is not compatible with normal use on cygwin
   if [[ $OSTYPE == cygwin ]]; then
     if command git --version | command grep msysgit > /dev/null; then
-      echo "Error: Windows/MSYS Git is not supported on Cygwin"
-      echo "Error: Make sure the Cygwin git package is installed and is first on the path"
+      printf "%s\n" "Error: Windows/MSYS Git is not supported on Cygwin"
+      printf "%s\n" "Error: Make sure the Cygwin git package is installed and is first on the path"
       return 1
     fi
   fi
   _omb_install_run git clone --depth=1 "$OSH_REPOSITORY" "$OSH" || {
-    printf "Error: git clone of oh-my-bash repo failed\n"
+    printf "%s\n" "Error: git clone of oh-my-bash repo failed"
     return 1
   }
 

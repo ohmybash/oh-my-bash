@@ -40,7 +40,7 @@ start_progress()
 {
   while true
   do
-    echo -ne "#"
+    printf -- "#"
     sleep 1
   done
 }
@@ -49,7 +49,7 @@ quick_progress()
 {
   while true
   do
-    echo -ne "#"
+    printf -- "#"
     sleep .033
   done
 }
@@ -58,7 +58,7 @@ long_progress()
 {
   while true
   do
-    echo -ne "#"
+    printf -- "#"
     sleep 3
   done
 }
@@ -77,7 +77,7 @@ stop_progress()
 {
   kill $1
   wait $1 2>/dev/null
-  echo -en "\n"
+  printf -- "\n"
 }
 
 # Case-insensitive for regex matching
@@ -99,9 +99,9 @@ get_input()
 echo_b()
 {
   if [ "$1" = "-e" ]; then
-    echo -e "${BOLD}$2${NORMAL}"
+    printf "%s\n" "${BOLD}$2${NORMAL}"
   else
-    echo "${BOLD}$1${NORMAL}"
+    printf "%s\n" "${BOLD}$1${NORMAL}"
   fi
 }
 
@@ -109,11 +109,11 @@ echo_b()
 echo_c()
 {
   case "$1" in
-    red | r | -red | -r | --red | --r ) echo "${RED}$2${NORMAL}" ;;
-    green | g | -green | -g | --green | --g ) echo "${GREEN}$2${NORMAL}" ;;
-    blue | b | -blue | -b | --blue | --b ) echo "${BLUE}$2${NORMAL}" ;;
-    yellow | y | -yellow | -y | --yellow | --y ) echo "${YELLOW}$2${NORMAL}" ;;
-    * ) echo "$(BOLD)$2$(RESET)" ;;
+    red | r | -red | -r | --red | --r ) printf "%s\n" "${RED}$2${NORMAL}" ;;
+    green | g | -green | -g | --green | --g ) printf "%s\n" "${GREEN}$2${NORMAL}" ;;
+    blue | b | -blue | -b | --blue | --b ) printf "%s\n" "${BLUE}$2${NORMAL}" ;;
+    yellow | y | -yellow | -y | --yellow | --y ) printf "%s\n" "${YELLOW}$2${NORMAL}" ;;
+    * ) printf "%s\n" "$(BOLD)$2$(RESET)" ;;
   esac
 }
 

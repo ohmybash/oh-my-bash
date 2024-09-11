@@ -156,7 +156,7 @@ function prompt_git {
 
     [[ $s ]] && s=" [$s]"
 
-    echo -e "${1}${branchName}${_omb_prompt_teal}$s"
+    _omb_util_print "${1}${branchName}${_omb_prompt_teal}$s"
   else
     return
   fi

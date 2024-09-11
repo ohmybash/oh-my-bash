@@ -37,14 +37,14 @@ function __docker_compose_q {
 function __docker_compose_to_alternatives {
 	local parts=( $1 )
 	local IFS='|'
-	echo "${parts[*]}"
+	_omb_util_print "${parts[*]}"
 }
 
 # Transforms a multiline list of options into an extglob pattern
 # suitable for use in case statements.
 function __docker_compose_to_extglob {
 	local extglob=$( __docker_compose_to_alternatives "$1" )
-	echo "@($extglob)"
+	_omb_util_print "@($extglob)"
 }
 
 # Determines whether the option passed as the first argument exist on
@@ -81,7 +81,7 @@ function __docker_compose_map_key_of_current_option {
 
         [ "${words[$glob_pos]}" = "=" ] && ((glob_pos--))  # --option=key=value syntax
 
-        [[ ${words[$glob_pos]} == @($glob) ]] && echo "$key"
+        [[ ${words[$glob_pos]} == @($glob) ]] && _omb_util_print "$key"
 }
 
 # suppress trailing whitespace
@@ -282,7 +282,7 @@ function _docker_compose_images {
 function _docker_compose_kill {
 	case "$prev" in
 		-s)
-			COMPREPLY=( $( compgen -W "SIGHUP SIGINT SIGKILL SIGUSR1 SIGUSR2" -- "$(echo $cur | tr '[:lower:]' '[:upper:]')" ) )
+			COMPREPLY=( $( compgen -W "SIGHUP SIGINT SIGKILL SIGUSR1 SIGUSR2" -- "$(_omb_util_print $cur | tr '[:lower:]' '[:upper:]')" ) )
 			return
 			;;
 	esac

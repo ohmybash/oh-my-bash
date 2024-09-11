@@ -41,7 +41,7 @@ function set_color {
     fi
   fi
 
-  echo -e "\[\033[${fg}${fg:+${bg:+;}}${bg}m\]"
+  _omb_util_print "\[\033[${fg}${fg:+${bg:+;}}${bg}m\]"
 }
 
 function __powerline_user_info_prompt {

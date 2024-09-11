@@ -117,7 +117,7 @@ __git_flow_list_remote_features ()
 
 __git_flow_feature_prefix ()
 {
-	_omb_prompt_git config gitflow.prefix.feature 2> /dev/null || echo "feature/"
+	_omb_prompt_git config gitflow.prefix.feature 2> /dev/null || _omb_util_print "feature/"
 }
 
 __git_flow_release ()
