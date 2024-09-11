@@ -33,7 +33,7 @@ function __bobby_clock {
 
 function _omb_theme_developer_get_node_version {
   val_node=$(node --version)
-  if command -v nvm &>/dev/null; then
+  if _omb_util_command_exists nvm; then
     _omb_theme_developer_return_delimited "node" "nvm ${val_node}"
   else
     # Si nvm no está instalado, utilizar "njs"
@@ -48,7 +48,7 @@ function _omb_theme_developer_get_go_version {
 
 function _omb_theme_developer_get_ruby_version {
   local val_rb=$(ruby --version | cut -d ' ' -f 2)
-  if command -v rvm &>/dev/null; then
+  if _omb_util_command_exists rvm; then
     _omb_theme_developer_return_delimited "ruby" "rvm ${val_rb}"
   else
     # Si nvm no está instalado, utilizar "njs"
@@ -58,7 +58,7 @@ function _omb_theme_developer_get_ruby_version {
 
 function _omb_theme_developer_get_py_version {
   local val_py=$(python --version | cut -d ' ' -f 2)
-  if command -v conda &>/dev/null; then
+  if _omb_util_command_exists conda; then
     local condav=$(conda env list | grep '*' | awk '{print $1}')
     _omb_theme_developer_return_delimited "python" "conda<${condav}> ${val_py}"
   else
