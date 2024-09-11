@@ -15,19 +15,19 @@ RVM_THEME_PROMPT_SUFFIX="|"
 
 function _omb_theme_developer_return_delimited {
   # $1 = tag, $2 = value
-  printf "$1 $2\n"
+  _omb_util_print "$1 $2"
 }
 
 function _omb_theme_developer_extract_key {
   value=$(sed -n "s/^$2 //p" <<< "$1")
-  printf "$value"
+  _omb_util_put "$value"
 }
 
 function __bobby_clock {
-  printf "$(clock_prompt) "
+  _omb_util_put "$(clock_prompt) "
 
   if [ "${THEME_SHOW_CLOCK_CHAR}" == "true" ]; then
-    printf "$(clock_char) "
+    _omb_util_put "$(clock_char) "
   fi
 }
 
@@ -70,13 +70,13 @@ function _omb_theme_developer_get_py_version {
 function _omb_theme_developer_OPi5p_Temp {
   local temp_opi5p=$(< /sys/class/thermal/thermal_zone4/temp)
   local temp_in_c=$((temp_opi5p / 1000))
-  printf "${temp_in_c}"
+  _omb_util_put "${temp_in_c}"
 }
 
 function _omb_theme_developer_genericLinuxTemp {
   local temp_lnx=$(< /sys/class/thermal/thermal_zone0/temp)
   local temp_in_c=$((temp_lnx / 1000))
-  printf "${temp_in_c}"
+  _omb_util_put "${temp_in_c}"
 }
 
 # if is a specific platfor use spacific configuration otherwise use default linux configuration.
@@ -92,9 +92,9 @@ function _omb_theme_developer_currentPlatform {
   #echo $opi5p_kernel_tag
 
   if [[ $platform_according_env == "OPI5P" || $opi5p_kernel_tag == "rk3588" ]]; then
-    printf "OPI5P"
+    _omb_util_put "OPI5P"
   else
-    printf "linux"
+    _omb_util_put "linux"
   fi
 }
 
@@ -106,7 +106,7 @@ function _omb_theme_developer_cpu_load {
   local cpu_load=$(echo "$output" | awk '{print 100.0-$8}' | cut -d '.' -f 1)
 
   # Imprimir la carga de la CPU
-  printf "${cpu_load}"
+  _omb_util_put "${cpu_load}"
 }
 
 function _omb_theme_developer_getCpuLoad {
