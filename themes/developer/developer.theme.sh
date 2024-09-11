@@ -14,18 +14,12 @@ RVM_THEME_PROMPT_PREFIX="|"
 RVM_THEME_PROMPT_SUFFIX="|"
 
 function _omb_theme_developer_return_delimited {
-  # 1 = flag 2 = tag 3 = value
-  if [[ $1 = "true" ]]; then
-    printf "$2 $3---"
-  elif [[ $1 = "false" ]]; then
-    printf "$2 $3"
-  else
-    printf "$1 $2"
-  fi
+  # $1 = tag, $2 = value
+  printf "$1 $2\n"
 }
 
 function _omb_theme_developer_extract_key {
-  value=$(echo "$1" | grep -oP "(?<=$2)[^---]+")
+  value=$(sed -n "s/^$2 //p" <<< "$1")
   printf "$value"
 }
 
@@ -40,25 +34,25 @@ function __bobby_clock {
 function _omb_theme_developer_get_node_version {
   val_node=$(node --version)
   if command -v nvm &>/dev/null; then
-    _omb_theme_developer_return_delimited $1 "node" "nvm ${val_node}"
+    _omb_theme_developer_return_delimited "node" "nvm ${val_node}"
   else
     # Si nvm no está instalado, utilizar "njs"
-    _omb_theme_developer_return_delimited $1 "node" "njs ${val_node}"
+    _omb_theme_developer_return_delimited "node" "njs ${val_node}"
   fi
 }
 
 function _omb_theme_developer_get_go_version {
   local val_go=$(go version | cut -d ' ' -f 3 | cut -d 'o' -f 2)
-  _omb_theme_developer_return_delimited $1 "go" "go ${val_go}"
+  _omb_theme_developer_return_delimited "go" "go ${val_go}"
 }
 
 function _omb_theme_developer_get_ruby_version {
   local val_rb=$(ruby --version | cut -d ' ' -f 2)
   if command -v rvm &>/dev/null; then
-    _omb_theme_developer_return_delimited $1 "ruby" "rvm ${val_rb}"
+    _omb_theme_developer_return_delimited "ruby" "rvm ${val_rb}"
   else
     # Si nvm no está instalado, utilizar "njs"
-    _omb_theme_developer_return_delimited $1 "ruby" "rb ${val_rb}"
+    _omb_theme_developer_return_delimited "ruby" "rb ${val_rb}"
   fi
 }
 
@@ -66,10 +60,10 @@ function _omb_theme_developer_get_py_version {
   local val_py=$(python --version | cut -d ' ' -f 2)
   if command -v conda &>/dev/null; then
     local condav=$(conda env list | grep '*' | awk '{print $1}')
-    _omb_theme_developer_return_delimited $1 "python" "conda<${condav}> ${val_py}"
+    _omb_theme_developer_return_delimited "python" "conda<${condav}> ${val_py}"
   else
     # Si nvm no está instalado, utilizar "njs"
-    _omb_theme_developer_return_delimited $1 "python" "py ${val_py}"
+    _omb_theme_developer_return_delimited "python" "py ${val_py}"
   fi
 }
 
@@ -131,7 +125,7 @@ function _omb_theme_developer_getCpuLoad {
   elif ((current_cpu_load >= 76)); then
     color="${_omb_prompt_red}!"
   fi
-  _omb_theme_developer_return_delimited $1 "cpuload" "${color}${current_cpu_load}"
+  _omb_theme_developer_return_delimited "cpuload" "${color}${current_cpu_load}"
 }
 
 function _omb_theme_developer_getCpuTemp {
@@ -157,7 +151,7 @@ function _omb_theme_developer_getCpuTemp {
   elif ((temp_in_c >= 76 && temp_in_c)); then
     color="${_omb_prompt_red}!"
   fi
-  _omb_theme_developer_return_delimited $1 "cputemp" "${color}${temp_in_c}°"
+  _omb_theme_developer_return_delimited "cputemp" "${color}${temp_in_c}°"
 }
 
 # this should work on every "new" linux distro
@@ -168,7 +162,7 @@ function _omb_theme_developer_getDefaultIp {
   # Obtiene la dirección IP de la interfaz de red activa
   local ip_address=$(ip -o -4 address show dev "$interface" | awk '{split($4, a, "/"); print a[1]}')
 
-  _omb_theme_developer_return_delimited $1 "ip" "${ip_address}"
+  _omb_theme_developer_return_delimited "ip" "${ip_address}"
 }
 
 # prompt constructor
@@ -190,12 +184,12 @@ function _omb_theme_PROMPT_COMMAND {
   # this throws all inside the $() as a new thread but awaits the execution end_time
   # so this takes the same time as the slower function
   values=$(
-    _omb_theme_developer_getCpuLoad true & # this is very slow
-    _omb_theme_developer_getCpuTemp true &
-    _omb_theme_developer_get_py_version true &
-    _omb_theme_developer_get_node_version true &
-    _omb_theme_developer_get_go_version true &
-    _omb_theme_developer_getDefaultIp true &
+    _omb_theme_developer_getCpuLoad & # this is very slow
+    _omb_theme_developer_getCpuTemp &
+    _omb_theme_developer_get_py_version &
+    _omb_theme_developer_get_node_version &
+    _omb_theme_developer_get_go_version &
+    _omb_theme_developer_getDefaultIp &
   )
 
   cputemp=$(_omb_theme_developer_extract_key "$values" "cputemp")
