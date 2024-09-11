@@ -109,7 +109,7 @@ function _omb_theme_developer_cpu_load {
 
   # Extraer el porcentaje de carga de la CPU excluyendo el estado "idle" usando
   # awk
-  local cpu_load=$(echo "$output" | awk '{print 100.0-$8}' | cut -d '.' -f 1)
+  local cpu_load=$(echo "$output" | awk -F ',' '{gsub(/[^.0-9]/,"",$4);print 100.0 - $4}' | cut -d '.' -f 1)
 
   # Imprimir la carga de la CPU
   _omb_util_put "$cpu_load"
