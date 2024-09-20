@@ -108,7 +108,7 @@ function _omb_prompt_format {
 }
 
 function _omb_prompt_git {
-  command git "$@"
+  command git -c core.fsmonitor= "$@"
 }
 
 function _omb_prompt_git_status_enabled {
