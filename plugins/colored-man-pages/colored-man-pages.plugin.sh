@@ -2,7 +2,7 @@
 
 # Bold and Blinking
 export LESS_TERMCAP_mb=$_omb_term_green
-export LESS_TERMCAP_md=$_omb_term_bold$_omb_term_green
+export LESS_TERMCAP_md=$_omb_term_bold_green
 export LESS_TERMCAP_me=$_omb_term_reset
 
 # Standout Mode
