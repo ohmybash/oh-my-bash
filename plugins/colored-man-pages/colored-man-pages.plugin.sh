@@ -34,7 +34,7 @@ function man {
 # Wrapper for dman to colorize the output.
 _omb_util_binary_exists dman &&
 function dman {
-  colored dman "$@"
+  colored "$FUNCNAME" "$@"
 }
 
 # Wrapper for debman to colorize the output.
