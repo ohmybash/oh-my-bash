@@ -25,7 +25,7 @@ function _omb_cmd_update {
 }
 function _omb_cmd_version {
   if ! _omb_util_command_exists git; then
-    echo "git not available to determine version"
+    _omb_util_print 'git not available to determine version'
     return 1
   fi
 
