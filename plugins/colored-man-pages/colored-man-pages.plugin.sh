@@ -17,7 +17,7 @@ function colored() {
 
   # Prefer `less` whenever available, since we specifically configured
   # environment for it.
-  local -x PAGER="${commands[less]:-$PAGER}"
+  local -x PAGER=$(type -P less || _omb_util_print "$PAGER")
   local -x GROFF_NO_SGR=1
 
   command "$@"
