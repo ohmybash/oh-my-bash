@@ -14,7 +14,7 @@ function colored() {
   environment+=( LESS_TERMCAP_me=${_omb_term_reset} )
   environment+=( LESS_TERMCAP_so=${_omb_term_bold_yellow} )
   environment+=( LESS_TERMCAP_se=${_omb_term_reset} )
-  environment+=( LESS_TERMCAP_us=${_omb_term_bold_green} )
+  environment+=( LESS_TERMCAP_us=${_omb_term_green} )
   environment+=( LESS_TERMCAP_ue=${_omb_term_reset} )
 
   # Prefer `less` whenever available, since we specifically configured
