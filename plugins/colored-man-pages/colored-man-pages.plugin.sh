@@ -7,17 +7,17 @@
 
 # Adds the LESS_TERMCAP_* variables to color the man pages.
 function colored() {
-  local -x LESS_TERMCAP_mb=${_omb_term_green}
-  local -x LESS_TERMCAP_md=${_omb_term_bold_green}
+  local -x LESS_TERMCAP_mb=${_omb_term_red}
+  local -x LESS_TERMCAP_md=${_omb_term_bold_red}
   local -x LESS_TERMCAP_me=${_omb_term_reset}
   local -x LESS_TERMCAP_so=${_omb_term_bold_yellow}
   local -x LESS_TERMCAP_se=${_omb_term_reset}
-  local -x LESS_TERMCAP_us=${_omb_term_purple}
+  local -x LESS_TERMCAP_us=${_omb_term_green}
   local -x LESS_TERMCAP_ue=${_omb_term_reset}
 
   # Prefer `less` whenever available, since we specifically configured
   # environment for it.
-  local -x PAGER="${commands[less]:-$PAGER}"
+  local -x PAGER=$(type -P less || _omb_util_print "$PAGER")
   local -x GROFF_NO_SGR=1
 
   command "$@"
