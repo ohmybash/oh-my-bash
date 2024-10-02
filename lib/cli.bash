@@ -18,7 +18,43 @@ function _omb_cmd_reload {
   echo 'Not yet implemented'
 }
 function _omb_cmd_theme {
-  echo 'Not yet implemented'
+  case "$1" in
+  list)
+      local -a available_themes
+      _comp_cmd_omb__get_available_themes
+      for theme in "${available_themes[@]}"; do
+        echo "$theme"
+      done
+    ;;
+  use)
+    local theme=$2
+    if [[ -z "$theme" ]]; then
+      echo 'Usage: omb theme use <theme>'
+      return 2
+    fi
+    local -a available_themes
+    _comp_cmd_omb__get_available_themes
+    for i in "${available_themes[@]}"; do
+      if [ "$i" == "$theme" ]; then
+        _omb_module_require_theme "$theme"
+        return 0
+      fi
+    done
+    echo "Theme '$theme' not found"
+    ;;
+  set)
+    echo 'Not yet implemented'
+    ;;
+  *)
+    echo 'Usage: omb theme <command>'
+    echo ''
+    echo 'Available commands:'
+    echo '  list          List all available themes'
+    echo '  set <theme>   Set the given theme in your .bashrc file'
+    echo '  use <theme>   Load the given theme'
+    return 2
+    ;;
+  esac
 }
 function _omb_cmd_update {
   echo 'Not yet implemented'
@@ -161,7 +197,7 @@ function _comp_cmd_omb {
     theme)
       local -a subcmds=(
         'list:List themes'
-        'set:Set a theme in your .zshrc file'
+        'set:Set a theme in your .bashrc file'
         'use:Load a theme'
       )
       _comp_cmd_omb__describe 'command' subcmds ;;
