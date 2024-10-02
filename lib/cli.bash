@@ -24,7 +24,26 @@ function _omb_cmd_update {
   echo 'Not yet implemented'
 }
 function _omb_cmd_version {
-  echo 'Not yet implemented'
+  if ! _omb_util_command_exists git; then
+    _omb_util_print 'git not available to determine version'
+    return 1
+  fi
+
+  # Get the version name:
+  # 1) try tag-like version
+  # 2) try branch name
+  # 3) try name-rev (tag~<rev> or branch~<rev>)
+  local version
+  version=$(command git -C "$OSH" describe --tags HEAD 2>/dev/null) \
+  || version=$(command git -C "$OSH" symbolic-ref --quiet --short HEAD 2>/dev/null) \
+  || version=$(command git -C "$OSH" name-rev --no-undefined --name-only --exclude="remotes/*" HEAD 2>/dev/null) \
+  || version="<detached>"
+
+  # Get short hash for the current HEAD
+  local commit=$(command git -C "$OSH" rev-parse --short HEAD 2>/dev/null)
+
+  # Show version and commit hash
+  printf "%s (%s)\n" "$version" "$commit"
 }
 
 function omb {
