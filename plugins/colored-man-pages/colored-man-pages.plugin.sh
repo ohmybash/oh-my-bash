@@ -26,16 +26,19 @@ function colored() {
 }
 
 # Wrapper for man to colorize the output.
+_omb_util_binary_exists man &&
 function man {
-  colored man "$@"
+  colored "$FUNCNAME" "$@"
 }
 
 # Wrapper for dman to colorize the output.
+_omb_util_binary_exists dman &&
 function dman {
   colored dman "$@"
 }
 
 # Wrapper for debman to colorize the output.
+_omb_util_binary_exists debman &&
 function debman {
   colored debman "$@"
 }
