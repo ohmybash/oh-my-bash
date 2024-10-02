@@ -18,16 +18,14 @@ function _omb_cmd_reload {
   echo 'Not yet implemented'
 }
 function _omb_cmd_theme {
-  case "$1" in
+  case "${1-}" in
   list)
       local -a available_themes
       _comp_cmd_omb__get_available_themes
-      for theme in "${available_themes[@]}"; do
-        echo "$theme"
-      done
+      _omb_util_print_lines "${available_themes[@]}"
     ;;
   use)
-    local theme=$2
+    local theme=${2-}
     if [[ -z "$theme" ]]; then
       _omb_util_print 'Usage: omb theme use <theme>' >&2
       return 2
@@ -40,18 +38,19 @@ function _omb_cmd_theme {
         return 0
       fi
     done
-    echo "Theme '$theme' not found"
+    _omb_util_print "Theme '$theme' not found"
     ;;
   set)
     echo 'Not yet implemented'
     ;;
   *)
-    echo 'Usage: omb theme <command>'
-    echo ''
-    echo 'Available commands:'
-    echo '  list          List all available themes'
-    echo '  set <theme>   Set the given theme in your .bashrc file'
-    echo '  use <theme>   Load the given theme'
+    _omb_util_print_lines \
+      'Usage: omb theme <command>' \
+      '' \
+      'Available commands:' \
+      '  list          List all available themes' \
+      '  set <theme>   Set the given theme in your .bashrc file' \
+      '  use <theme>   Load the given theme'
     return 2
     ;;
   esac
