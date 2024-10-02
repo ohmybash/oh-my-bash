@@ -29,7 +29,7 @@ function _omb_cmd_theme {
   use)
     local theme=$2
     if [[ -z "$theme" ]]; then
-      echo 'Usage: omb theme use <theme>'
+      _omb_util_print 'Usage: omb theme use <theme>' >&2
       return 2
     fi
     local -a available_themes
