@@ -2,7 +2,6 @@
 
 Initializes [starship](https://github.com/starship/starship), the minimal, blazing-fast, and infinitely customizable prompt for any shell!
 
-![Tutorial](https://starship.rs/demo.webm)
 To use it, add `starship` to the plugins array in your `.bashrc` file:
 
 ```bash
