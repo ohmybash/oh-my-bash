@@ -2,7 +2,7 @@
 
 # is x grep argument available?
 function _omb_grep_flag_available {
-  : | grep "$1" "" >/dev/null 2>&1
+  echo | grep "$1" "" >/dev/null 2>&1
 }
 
 _omb_grep_options=()
