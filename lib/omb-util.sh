@@ -10,7 +10,9 @@ function _omb_util_print {
 }
 
 function _omb_util_print_lines {
-  printf '%s\n' "$@"
+  if (($#)); then
+    printf '%s\n' "$@"
+  fi
 }
 
 function _omb_string_escape_prompt {
