@@ -9,3 +9,5 @@ plugins=(... starship)
 ```
 
 **Note:** you have to [install starship](https://github.com/starship/starship?tab=readme-ov-file#step-1-install-starship) first.
+
+## ⚠️ ENABLING THIS PLUGIN WILL UNSET YOUR OSH_THEME VARIABLE
