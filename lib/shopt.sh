@@ -1,5 +1,12 @@
 #! bash oh-my-bash.module
 
+# This file originally came from bash-sensible [1].  Some of the settings
+# related to history is separated into "lib/history.sh".  The current version
+# is based on commit eb82f9e8.
+#
+# [1] https://github.com/mrzool/bash-sensible
+#     Copyright (c) 2015 Mattia Tezzele, provided under the MIT license.
+
 # Various shell options collected in single file
 # taken from bash-sensible and other sources
 ## GENERAL OPTIONS ##
@@ -24,13 +31,21 @@ shopt -s extglob
 # Turn on recursive globbing (enables ** to recurse all directories)
 shopt -s globstar 2> /dev/null
 
-# Case-sensitive globbing (used in pathname expansion) and matching
-# (used in case, [[]], word expansions and command completions)
-if [[ ${OMB_CASE_SENSITIVE:-${CASE_SENSITIVE:-}} == true ]]; then
-   shopt -u nocaseglob
-else
-   shopt -s nocaseglob
-fi
+# Case-sensitive globbing (used in pathname expansion)
+#
+# Note: We do not turn on "nocaseglob" by default.  We have been turning on the
+# nocaseglob option for a long time, but this conflicts with users'
+# expectations that the pathname expansions is case-sensitive.  This might
+# causes unexpected destructive results e.g. with "rm <glob-pattern>".  We
+# decided to turn it off.  Also, the option OMB_CASE_SENSITIVE is originally
+# for the case-(in)sensitive completion and should not be mixed with the option
+# for the pathname expansion.  See discussion in Ref. [2].  A consistent change
+# was also applied to the upstream bash-sensible [3].
+#
+# [2] https://github.com/ohmybash/oh-my-bash/issues/623
+# [3] https://github.com/mrzool/bash-sensible/commit/eb82f9e87728ea10423a2a2b039a4b491d10c733
+#
+#shopt -s nocaseglob
 
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
 

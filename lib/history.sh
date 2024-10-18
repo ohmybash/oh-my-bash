@@ -1,5 +1,11 @@
 #! bash oh-my-bash.module
 
+# A part of this file came from bash-sensible [1].  The current version is
+# based on commit eb82f9e8.
+#
+# [1] https://github.com/mrzool/bash-sensible
+#     Copyright (c) 2015 Mattia Tezzele, provided under the MIT license.
+
 ## Command history configuration
 if [ -z "$HISTFILE" ]; then
   HISTFILE=$HOME/.bash_history
