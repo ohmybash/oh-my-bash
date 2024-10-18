@@ -1,5 +1,12 @@
 #! bash oh-my-bash.module
 
+# This file originally came from bash-sensible [1].  Some of the settings
+# related to history is separated into "lib/history.sh".  The current version
+# is based on commit eb82f9e8.
+#
+# [1] https://github.com/mrzool/bash-sensible
+#     Copyright (c) 2015 Mattia Tezzele, provided under the MIT license.
+
 # Various shell options collected in single file
 # taken from bash-sensible and other sources
 ## GENERAL OPTIONS ##
