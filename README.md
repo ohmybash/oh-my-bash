@@ -281,8 +281,8 @@ If you want to uninstall `oh-my-bash`, just run `uninstall_oh_my_bash` from the 
 
 ## Contributing
 
-Check out [`CONTRIBUTING.md`](Contributing.md) and also [Code of
-Conduct](`CODE_OF_CONDUCT.md`).
+Check out [`CONTRIBUTING.md`](CONTRIBUTING.md) and also [Code of
+Conduct](CODE_OF_CONDUCT.md).
 
 This project is initially ported from Oh My Zsh and Bash-it by `@nntoan` and
 has been developed in a community-driven way.  Most of the contributors are far
