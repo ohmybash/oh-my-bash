@@ -44,7 +44,15 @@ _omb_uninstall_find_bashrc_original() {
   fi
 }
 
-_omb_uninstall_confirmation "Are you sure you want to remove Oh My Bash? [y/N]"
+_omb_uninstall_base_directory=${OSH:-$HOME/.oh-my-bash}
+if [ ! -d "$_omb_uninstall_base_directory" ]; then
+  printf '%s\n' "Uninstall target '$_omb_uninstall_base_directory' not found."
+  unset -v _omb_uninstall_base_directory
+  # shellcheck disable=SC2317
+  return 0 2>/dev/null || exit 0
+fi
+
+_omb_uninstall_confirmation "Are you sure you want to remove Oh My Bash ($_omb_uninstall_base_directory)? [y/N]"
 if [ "$_omb_uninstall_confirmation" != y ] && [ "$_omb_uninstall_confirmation" != Y ]; then
   printf '%s\n' "Uninstall cancelled"
   unset -v _omb_uninstall_confirmation
@@ -53,10 +61,9 @@ if [ "$_omb_uninstall_confirmation" != y ] && [ "$_omb_uninstall_confirmation" !
 fi
 unset -v _omb_uninstall_confirmation
 
-if [ -d ~/.oh-my-bash ]; then
-  printf '%s\n' "Removing ~/.oh-my-bash"
-  command rm -rf ~/.oh-my-bash
-fi
+printf 'Removing %s\n' "$_omb_uninstall_base_directory"
+command rm -rf "$_omb_uninstall_base_directory"
+unset -v _omb_uninstall_base_directory
 
 _omb_uninstall_bashrc_original=
 _omb_uninstall_find_bashrc_original
