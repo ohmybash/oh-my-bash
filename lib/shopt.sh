@@ -33,14 +33,14 @@ shopt -s globstar 2> /dev/null
 
 # Case-sensitive globbing (used in pathname expansion)
 #
-# Note: We do not turn on "nocaseglob" by default.  We have been turning on the
+# Note: We do not turn "nocaseglob" on by default.  We have been turning on the
 # nocaseglob option for a long time, but this conflicts with users'
-# expectations that the pathname expansions is case-sensitive.  This might
-# causes unexpected destructive results e.g. with "rm <glob-pattern>".  We
-# decided to turn it off.  Also, the option OMB_CASE_SENSITIVE is originally
-# for the case-(in)sensitive completion and should not be mixed with the option
-# for the pathname expansion.  See discussion in Ref. [2].  A consistent change
-# was also applied to the upstream bash-sensible [3].
+# expectations that the pathname expansions are case-sensitive.  This might
+# cause an unexpected destructive result e.g. with "rm <glob-pattern>".  Also,
+# the option OMB_CASE_SENSITIVE is originally for the case-(in)sensitive
+# completion and should not be mixed with the option for the pathname
+# expansion.  See a discussion in Ref. [2].  A consistent change was also
+# applied to the upstream bash-sensible [3].
 #
 # [2] https://github.com/ohmybash/oh-my-bash/issues/623
 # [3] https://github.com/mrzool/bash-sensible/commit/eb82f9e87728ea10423a2a2b039a4b491d10c733
