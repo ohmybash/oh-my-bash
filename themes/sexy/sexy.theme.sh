@@ -3,7 +3,7 @@
 # Screenshot: http://cloud.gf3.ca/M5rG
 # A big thanks to \amethyst on Freenode
 
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color &>/dev/null; then
+if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color &>/dev/null; then
   export TERM=gnome-256color
 elif [[ $TERM != dumb ]] && infocmp xterm-256color &>/dev/null; then
   export TERM=xterm-256color
@@ -36,9 +36,11 @@ function parse_git_branch {
 function _omb_theme_PROMPT_COMMAND() {
   local python_venv
   _omb_prompt_get_python_venv
-  local git_prefix
-  git_prefix=$([[ -n $(_omb_prompt_git branch 2> /dev/null) ]] && _omb_util_print ' on ')
-  PS1="$python_venv${MAGENTA}\u ${WHITE}at ${ORANGE}\h ${WHITE}in ${GREEN}\w${WHITE}$git_prefix${PURPLE}\$(parse_git_branch)${WHITE}\n\$ ${RESET}"
+  local git_prefix=
+  [[ $(_omb_prompt_git branch 2> /dev/null) ]] && git_prefix=' on '
+  PS1=$python_venv$MAGENTA'\u '$WHITE'at '$ORANGE'\h'
+  PS1+=' '$WHITE'in '$GREEN'\w'$WHITE
+  PS1+=$git_prefix$PURPLE'$(parse_git_branch)'$WHITE'\n\$ '$RESET
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
