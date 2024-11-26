@@ -2,6 +2,11 @@
 
 Simple colorful terminal prompt theme (inspired by powerlevel10k zsh theme, based on Brainy theme).
 
+## Prerequisites
+
+- **Nerd Fonts** ... This theme uses symbols from Nerd Fonts.  You need to
+  install a Nerd Font and then configure your terminal to use the Nerd Font.
+
 ## Features
 
 ### Prompt Segments
