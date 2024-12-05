@@ -22,8 +22,8 @@ Bash.  The function handles printing of the progress bar.
 2. **Invoke `progress` Function:**
    - Within a shell function, call the `progress` function whenever you want to display the progress bar.
    - Pass two parameters to the `progress` function:
-     - `PARAM_PROGRESS`: The progress percentage (0-100) of the task.
-     - `PARAM_STATUS`: Optional. A status message to display alongside the progress bar.
+     - `value`: The progress percentage (0-100) of the task. Passing 0 will reset the progress bar status.
+     - `message`: Optional. A status message to display alongside the progress bar.
 
    ```bash
    # Example usage:
