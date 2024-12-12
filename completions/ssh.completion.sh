@@ -45,7 +45,7 @@ function _omb_completion_ssh {
     fi
   done
   if ((${#config_files[@]} != 0)); then
-    COMPREPLY+=( $(compgen -W "$(awk '/^[ \t]*[Hh][Oo][Ss][Tt][ \t=]+/ {current=""; n=split($0, fields, /[ \t=]+/); for (i=2; i<=n; i++) if (fields[i] && !(fields[i] in hosts)) hosts[fields[i]]=1;} /^[ \t]*[Hh][Oo][Ss][Tt][Nn][Aa][Mm][Ee][ \t=]+/ {n=split($0, fields, /[ \t=]+/); for (i=2; i<=n; i++) if (fields[i] && !(fields[i] in hosts)) hosts[fields[i]]=1;} /^[ \t]*$/ {current="";} END {for (host in hosts) print host;}' "${config_files[@]}")" "${options[@]}") )
+    COMPREPLY+=( $(compgen -W "$(awk '/^[ \t]*[Hh][Oo][Ss][Tt][ \t=]+/ {gsub(/^[ \t]+|[ \t]+$/, ""); n=split($0, fields, /[ \t=]+/); for (i=2; i<=n; i++) if (fields[i] && !(fields[i] in hosts)) hosts[fields[i]]=1;} /^[ \t]*[Hh][Oo][Ss][Tt][Nn][Aa][Mm][Ee][ \t=]+/ {gsub(/^[ \t]+|[ \t]+$/, ""); n=split($0, fields, /[ \t=]+/); for (i=2; i<=n; i++) if (fields[i] && !(fields[i] in hosts)) hosts[fields[i]]=1;} /^[ \t]*$/ {current="";} END {for (host in hosts) print host;}' "${config_files[@]}")" "${options[@]}") )
   fi
 
   local -a known_hosts_files=()
