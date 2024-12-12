@@ -45,7 +45,7 @@ function _omb_completion_ssh {
     fi
   done
   if ((${#config_files[@]} != 0)); then
-    COMPREPLY+=($(compgen -W "$(awk '/^[Hh][Oo][Ss][Tt] /{for (i=2; i<=NF; i++) print $i}' "${config_files[@]}")" "${options[@]}"))
+    COMPREPLY+=( $(compgen -W "$(awk 'BEGIN {IGNORECASE=1}/^[Hh][Oo][Ss][Tt] / {current_host=""; for (i=2; i<=NF; i++) hosts[current_host=$i]=""}/^[Hh][Oo][Ss][Tt][Nn][Aa][Mm][Ee] / && current_host {hosts[current_host]=$2} END {for (host in hosts) print hosts[host] ? hosts[host] : host}' "${config_files[@]}")" "${options[@]}") )
   fi
 
   local -a known_hosts_files=()
