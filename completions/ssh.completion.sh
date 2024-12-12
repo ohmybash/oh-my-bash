@@ -47,7 +47,7 @@ function _omb_completion_ssh {
   if ((${#config_files[@]} != 0)); then
     COMPREPLY+=($(compgen -W "$(awk '
       sub(/^[ \t]*[Hh][Oo][Ss][Tt]([Nn][Aa][Mm][Ee])?[ \t=]+/, "") {
-        n = split($0, fields, /[ \t]+/);
+        n = split($0, fields, /[ \t=]+/);
         for (i = 1; i <= n; i++) if (fields[i] && !visited[fields[i]]++) print fields[i];
       }' "${config_files[@]}")" "${options[@]}") )
   fi
