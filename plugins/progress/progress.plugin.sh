@@ -20,6 +20,8 @@
 # Global variable to store progress value
 _omb_plugin_progress_value=0
 
+_omb_plugin_progress_clear_line=
+
 #
 # Description : delay executing script
 #
@@ -56,10 +58,13 @@ function progress {
   fi
 
   # Get a clear line escape sequence
-  local clear_line
-  clear_line=$(tput el 2>/dev/null || tput ce 2>/dev/null)
+  local clear_line=$_omb_plugin_progress_clear_line
   if [[ ! $clear_line ]]; then
-    clear_line=$'\e[K'
+    clear_line=$(tput el 2>/dev/null || tput ce 2>/dev/null)
+    if [[ ! $clear_line ]]; then
+      clear_line=$'\e[K'
+    fi
+    _omb_plugin_progress_clear_line=$clear_line
   fi
 
   if ((_omb_plugin_progress_value <=   0 && value >=   0)); then printf "%s[............................] (0%%)  %s\r" "$clear_line" "$message"; delay; fi
