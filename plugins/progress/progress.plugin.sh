@@ -70,7 +70,6 @@ function progress()
   if [ $_omb_plugin_progress_value -le 25 -a $value -ge 25 ]; then printf "%s[#####.......................] (25%%) %s\r" "$clear_line" "$message" ; delay; fi;
   if [ $_omb_plugin_progress_value -le 30 -a $value -ge 30 ]; then printf "%s[######......................] (30%%) %s\r" "$clear_line" "$message" ; delay; fi;
   if [ $_omb_plugin_progress_value -le 35 -a $value -ge 35 ]; then printf "%s[#######.....................] (35%%) %s\r" "$clear_line" "$message" ; delay; fi;
-
   if [ $_omb_plugin_progress_value -le 40 -a $value -ge 40 ]; then printf "%s[########....................] (40%%) %s\r" "$clear_line" "$message" ; delay; fi;
   if [ $_omb_plugin_progress_value -le 45 -a $value -ge 45 ]; then printf "%s[#########...................] (45%%) %s\r" "$clear_line" "$message" ; delay; fi;
   if [ $_omb_plugin_progress_value -le 50 -a $value -ge 50 ]; then printf "%s[##########..................] (50%%) %s\r" "$clear_line" "$message" ; delay; fi;
