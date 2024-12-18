@@ -4,7 +4,7 @@
 # Summary       : Show a progress bar GUI on terminal platform                 #
 # Support       : destro.nnt@gmail.com                                         #
 # Created date  : Aug 12,2014                                                  #
-# Latest Modified date : Aug 13,2014                                           #
+# Latest Modified date : Dec 19,2024                                           #
 #                                                                              #
 ################################################################################
 
