@@ -87,7 +87,7 @@ function progress()
       # Display the finished progress bar, and then clear with a new line.
       printf "%s[####################] (100%%) %s\r" "$clear_line" "$message"
       delay
-      printf "%s\n" "$clear_line"
+      printf 'Done!%s\n' "$clear_line"
       value=0
     fi;
 
