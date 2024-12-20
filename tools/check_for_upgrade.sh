@@ -54,7 +54,7 @@ if command mkdir "$OSH/log/update.lock" 2>/dev/null; then
   command rmdir "$OSH"/log/update.lock
 else
   printf '%s\n' \
-    'oh-my-bash/check_for_updgrade: Failed to get a lock.  Please make sure that no' \
+    'oh-my-bash/check_for_upgrade: Failed to get a lock.  Please make sure that no' \
     'other process is trying to update Oh My Bash and remove' \
     '"'"$OSH"'/log/update.lock"' >&2
 fi
