@@ -172,7 +172,7 @@ function ___brainy_prompt_exitcode {
 function ___brainy_prompt_char {
   local color=$_omb_prompt_bold_white
   local prompt_char="${__BRAINY_PROMPT_CHAR_PS1}"
-  printf "%s|%s" "$color" "${prompt_char}"
+  printf "%s|${prompt_char}" "$color" 
 }
 
 #########
