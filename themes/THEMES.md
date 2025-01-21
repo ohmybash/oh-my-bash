@@ -167,6 +167,8 @@
 
 [![](morris/morris-dark.png)](morris/morris-dark.png)
 
+## `nekonight`
+
 [![](nekonight/nekonight-oh-my-bash.jpg)](nekonight/nekonight-oh-my-bash.jpg)
 
 ## `n0qorg`
