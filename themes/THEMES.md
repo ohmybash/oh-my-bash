@@ -171,6 +171,10 @@
 
 [![](n0qorg/n0qorg-dark.png)](n0qorg/n0qorg-dark.png)
 
+## `nekonight`
+
+[![](nekonight/nekonight-dark.jpg)](nekonight/nekonight-dark.jpg)
+
 ## `nwinkler`
 
 [![](nwinkler/nwinkler-dark.png)](nwinkler/nwinkler-dark.png)
