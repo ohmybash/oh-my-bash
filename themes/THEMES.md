@@ -169,7 +169,7 @@
 
 ## `nekonight`
 
-[![](nekonight/nekonight-oh-my-bash.jpg)](nekonight/nekonight-oh-my-bash.jpg)
+[![](nekonight/nekonight-dark.jpg)](nekonight/nekonight-dark.jpg)
 
 ## `n0qorg`
 
