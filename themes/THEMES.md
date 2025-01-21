@@ -175,6 +175,10 @@
 
 [![](nekonight/nekonight-dark.jpg)](nekonight/nekonight-dark.jpg)
 
+## `nekonight moon`
+
+[![](nekonight_moon/nekonight-moon-dark.jpg)](nekonight_moon/nekonight-moon-dark.jpg)
+
 ## `nwinkler`
 
 [![](nwinkler/nwinkler-dark.png)](nwinkler/nwinkler-dark.png)
