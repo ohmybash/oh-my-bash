@@ -1,6 +1,6 @@
 function _omb_theme_nekonight_git_prompt_info() {
   local branch_name
-  branch_name=$(git symbolic-ref --short HEAD 2>&-)
+  branch_name=$(_omb_prompt_git symbolic-ref --short HEAD 2>&-)
   local git_status=""
 
   local icon_emoji="${_omb_theme_nekonight_icon_emoji:-🐱}"
