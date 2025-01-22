@@ -11,9 +11,9 @@ source "$OSH/themes/nekonight/nekonight-base.sh"
 
 _omb_theme_nekonight_icon_emoji="🐱"
 icon_start="╭─"
-icon_user=" 🐱 ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
-icon_host=" at 🐱 ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
-icon_directory=" in 🐱 ${_omb_prompt_bold_magenta}\w${_omb_prompt_normal}"
+icon_user=" ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
+icon_host=" at ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
+icon_directory=" in ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_magenta}\w${_omb_prompt_normal}"
 icon_end="╰─${_omb_prompt_bold_white}λ${_omb_prompt_normal}"
 
 function _omb_theme_PROMPT_COMMAND() {
