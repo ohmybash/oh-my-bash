@@ -7,11 +7,9 @@
 # ╭─🌙 virtualenv 🌙user at 🌙host in 🌙directory on (🌙branch {1} ↑1 ↓1 +1 •1 ⌀1 ✗)
 # ╰λ cd ~/path/to/your-directory
 
-if [ -z "${NEKONIGHT_BASE_LOADED}" ]; then
-  source "$OSH/themes/nekonight/nekonight-base.sh"
-  export NEKONIGHT_BASE_LOADED=true
-fi
+source "$OSH/themes/nekonight/nekonight-base.sh"
 
+_omb_theme_nekonight_icon_emoji="🌙"
 icon_start="╭─"
 icon_user=" 🌙 ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
 icon_host=" at 🌙 ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
@@ -24,5 +22,3 @@ function _omb_theme_PROMPT_COMMAND() {
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
-
-

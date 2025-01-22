@@ -3,8 +3,10 @@ function _omb_theme_nekonight_git_prompt_info() {
   branch_name=$(git symbolic-ref --short HEAD 2>&-)
   local git_status=""
 
+  local icon_emoji="${_omb_theme_nekonight_icon_emoji:-🐱}"
+
   if [[ -n $branch_name ]]; then
-    git_status="${_omb_prompt_bold_white}(🐱 $branch_name $(_omb_theme_nekonight_scm_git_status))${_omb_prompt_normal}"
+    git_status="${_omb_prompt_bold_white} (${icon_emoji} $branch_name $(_omb_theme_nekonight_scm_git_status))${_omb_prompt_normal}"
   fi
 
   echo -n "$git_status"
