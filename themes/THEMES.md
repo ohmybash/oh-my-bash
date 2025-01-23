@@ -175,7 +175,7 @@
 
 [![](nekonight/nekonight-dark.jpg)](nekonight/nekonight-dark.jpg)
 
-## `nekonight moon`
+## `nekonight_moon`
 
 [![](nekonight_moon/nekonight-moon-dark.jpg)](nekonight_moon/nekonight-moon-dark.jpg)
 
