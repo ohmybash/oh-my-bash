@@ -177,7 +177,7 @@
 
 ## `nekonight_moon`
 
-[![](nekonight_moon/nekonight-moon-dark.jpg)](nekonight_moon/nekonight-moon-dark.jpg)
+[![](nekonight_moon/nekonight_moon-dark.jpg)](nekonight_moon/nekonight_moon-dark.jpg)
 
 ## `nwinkler`
 
