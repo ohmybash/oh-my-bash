@@ -13,7 +13,6 @@ _omb_theme_nekonight_icon_emoji="🌙"
 source "$OSH/themes/nekonight/nekonight.base.sh"
 
 function _omb_theme_PROMPT_COMMAND() {
-  local git_info=$(_omb_theme_nekonight_git_prompt_info)
   PS1="${icon_start}${icon_user}${icon_host}${icon_directory} in $(_omb_theme_nekonight_git_prompt_info)\n${icon_end} "
 }
 
