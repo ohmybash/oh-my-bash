@@ -1,3 +1,10 @@
+#! bash oh-my-bash.module
+icon_start="╭─"
+icon_user=" ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
+icon_host=" at ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
+icon_directory=" in ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_magenta}\w${_omb_prompt_normal}"
+icon_end="╰─${_omb_prompt_bold_white}λ${_omb_prompt_normal}"
+
 function _omb_theme_nekonight_git_prompt_info() {
   local branch_name
   branch_name=$(_omb_prompt_git symbolic-ref --short HEAD 2>&-)

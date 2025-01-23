@@ -1,3 +1,4 @@
+#! bash oh-my-bash.module
 # nekonight Bash prompt with source control management
 # Author: Bruno Ciccarino <brunociccarinoo@gmail.com>
 #
@@ -7,14 +8,9 @@
 # ╭─🐱 virtualenv 🐱user at 🐱host in 🐱directory on (🐱branch {1} ↑1 ↓1 +1 •1 ⌀1 ✗)
 # ╰λ cd ~/path/to/your-directory
 
-source "$OSH/themes/nekonight/nekonight-base.sh"
-
 _omb_theme_nekonight_icon_emoji="🐱"
-icon_start="╭─"
-icon_user=" ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
-icon_host=" at ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
-icon_directory=" in ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_magenta}\w${_omb_prompt_normal}"
-icon_end="╰─${_omb_prompt_bold_white}λ${_omb_prompt_normal}"
+
+source "$OSH/themes/nekonight/nekonight.base.sh"
 
 function _omb_theme_PROMPT_COMMAND() {
   local git_info=$(_omb_theme_nekonight_git_prompt_info)
