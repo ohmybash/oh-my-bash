@@ -15,5 +15,4 @@ source "$OSH/themes/nekonight/nekonight.base.sh"
 function _omb_theme_PROMPT_COMMAND() {
   PS1="${icon_start}${icon_user}${icon_host}${icon_directory} in $(_omb_theme_nekonight_git_prompt_info)\n${icon_end} "
 }
-
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
