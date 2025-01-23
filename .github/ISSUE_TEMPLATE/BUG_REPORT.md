@@ -24,7 +24,6 @@ Example: steps to reproduce the behavior:
 3. Run '...'
 4. See error...
 -->
-
 ### Logs
 
 ### Anything else:
