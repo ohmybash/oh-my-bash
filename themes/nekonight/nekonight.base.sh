@@ -1,4 +1,13 @@
 #! bash oh-my-bash.module
+# nekonight Bash prompt with source control management
+# Author: Bruno Ciccarino <brunociccarinoo@gmail.com>
+#
+# Theme inspired by:
+#  - Bash_it cupcake theme
+# Demo:
+# ╭─🐱 virtualenv 🐱user at 🐱host in 🐱directory on (🐱branch {1} ↑1 ↓1 +1 •1 ⌀1 ✗)
+# ╰λ cd ~/path/to/your-directory
+
 icon_start="╭─"
 icon_user=" ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
 icon_host=" at ${_omb_theme_nekonight_icon_emoji} ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
