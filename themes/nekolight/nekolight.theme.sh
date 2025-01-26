@@ -17,8 +17,8 @@ function _omb_theme_nekolight_git_info() {
 }
 
 function _omb_theme_PROMPT_COMMAND() {
-  local _omb_prompt_nekolight_dir="${_omb_prompt_bold_blue}\w${_omb_prompt_normal}"
-  local _omb_prompt_nekolight_git_status=$(_omb_theme_nekolight_git_info)
+  local display_dir="${_omb_prompt_bold_blue}\w${_omb_prompt_normal}"
+  local git_status=$(_omb_theme_nekolight_git_info)
 
   PS1="${_omb_prompt_nekolight_dir} ${_omb_prompt_nekolight_git_status}\n❯ "
 
