@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 
-export _omb_prompt_nekolight_version='1.0.0'
+_omb_theme_nekolight_version='1.0.0'
 
 _omb_theme_nekolight_symbol=""
 
