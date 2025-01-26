@@ -2,14 +2,16 @@
 
 export _omb_prompt_nekolight_version='1.0.0'
 
+symbol=""
+
 function _omb_theme_nekolight_git_info() {
     if _omb_prompt_git rev-parse --is-inside-work-tree &>/dev/null; then
         local _omb_prompt_nekolight_branch=$(_omb_prompt_git branch --show-current 2>/dev/null)
 
         if _omb_prompt_git diff --quiet 2>/dev/null && _omb_prompt_git diff --cached --quiet 2>/dev/null; then
-            echo -e "${_omb_prompt_bold_green}(${_omb_prompt_nekolight_branch})${_omb_prompt_normal}"  # Green for clean
+            echo -e "${_omb_prompt_bold_green}${_omb_prompt_nekolight_branch} ${symbol}${_omb_prompt_normal}"  # Green for clean
         else
-            echo -e "${_omb_prompt_bold_red}(${_omb_prompt_nekolight_branch})${_omb_prompt_normal}"  # Red for dirty
+            echo -e "${_omb_prompt_bold_red}${_omb_prompt_nekolight_branch} ${symbol}${_omb_prompt_normal}"  # Red for dirty
         fi
     fi
 }
