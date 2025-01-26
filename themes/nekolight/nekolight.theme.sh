@@ -1,7 +1,5 @@
 #! bash oh-my-bash.module
 
-#! bash oh-my-bash.module
-
 _omb_theme_nekolight_version='1.0.0'
 _omb_theme_nekolight_symbol=""
 
