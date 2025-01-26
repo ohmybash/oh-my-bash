@@ -173,7 +173,7 @@
 
 ## `nekolight`
 
-[![](nekolight/nekolight-light.jpg)](nekolight/nekolight-light.jpg)
+[![](nekolight/nekolight-dark.jpg)](nekolight/nekolight-dark.jpg)
 
 ## `nekonight`
 

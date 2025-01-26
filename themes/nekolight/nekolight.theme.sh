@@ -12,8 +12,8 @@ function _omb_theme_nekolight_git_info() {
       _omb_util_print "on ${_omb_prompt_bold_green}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
     else
       _omb_util_print "on ${_omb_prompt_bold_red}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
-      fi
     fi
+  fi
 }
 
 function _omb_theme_PROMPT_COMMAND() {
