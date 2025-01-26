@@ -10,12 +10,10 @@ function _omb_theme_nekolight_git_info() {
     local branch=$(_omb_prompt_git symbolic-ref --short HEAD 2>/dev/null || _omb_prompt_git rev-parse --short HEAD 2>/dev/null)
 
     if _omb_prompt_git diff --quiet 2>/dev/null && _omb_prompt_git diff --cached --quiet 2>/dev/null; then
-      echo "${_omb_prompt_bold_green}${branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
+      _omb_util_print "${_omb_prompt_bold_green}${branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
     else
-      echo "${_omb_prompt_bold_red}${branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
+      _omb_util_print "${_omb_prompt_bold_red}${branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
     fi
-  else
-    echo ""
   fi
 }
 
