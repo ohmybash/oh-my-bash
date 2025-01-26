@@ -5,7 +5,7 @@ Nekolight is a starship-based oh my bash prompt theme designed to be simple and 
 ## 🚀 Installation
 
 Prerequisites
-- A Nerd Font installed and enabled in your terminal (for example, try the FiraCode Nerd Font).
+- A Nerd Font or Powerline Font installed and enabled in your terminal (for example, try the FiraCode Nerd Font).
 
 After installing the Nerd Fonts font, just modify the following line in your ~/.bashrc
 
