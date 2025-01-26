@@ -1,3 +1,5 @@
+#! bash oh-my-bash.module
+
 export _omb_prompt_nekolight_version='1.0.0'
 
 function _omb_theme_nekolight_git_info() {
