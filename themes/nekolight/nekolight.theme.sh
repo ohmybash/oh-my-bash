@@ -27,4 +27,3 @@ function _omb_theme_PROMPT_COMMAND() {
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
-
