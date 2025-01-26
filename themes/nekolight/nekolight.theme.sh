@@ -9,9 +9,9 @@ function _omb_theme_nekolight_git_info() {
     local _omb_prompt_nekolight_branch=$(_omb_prompt_git branch --show-current 2>/dev/null)
 
     if _omb_prompt_git diff --quiet 2>/dev/null && _omb_prompt_git diff --cached --quiet 2>/dev/null; then
-      _omb_util_print "${_omb_prompt_bold_green}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
+      _omb_util_print "on ${_omb_prompt_bold_green}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
     else
-      _omb_util_print "${_omb_prompt_bold_red}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
+      _omb_util_print "on ${_omb_prompt_bold_red}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
       fi
     fi
 }
