@@ -1,3 +1,4 @@
+#! bash oh-my-bash.module
 # nekonight-moon Bash prompt with source control management
 # Author: Bruno Ciccarino <brunociccarinoo@gmail.com>
 #
@@ -7,6 +8,8 @@
 # ╭─🌙 virtualenv 🌙user at 🌙host in 🌙directory on (🌙branch {1} ↑1 ↓1 +1 •1 ⌀1 ✗)
 # ╰λ cd ~/path/to/your-directory
 
+_omb_theme_nekonight_icon_emoji="🌙"
+source "$OSH/themes/nekonight/nekonight.base.sh"
 icon_start="╭─"
 icon_user=" 🌙 ${_omb_prompt_bold_olive}\u${_omb_prompt_normal}"
 icon_host=" at 🌙 ${_omb_prompt_bold_cyan}\h${_omb_prompt_normal}"
@@ -46,6 +49,7 @@ function _omb_theme_nekonight_scm_git_status() {
 
   echo -n "$git_status"
 }
+
 
 function _omb_theme_PROMPT_COMMAND() {
   PS1="${icon_start}${icon_user}${icon_host}${icon_directory} in $(_omb_theme_nekonight_git_prompt_info)\n${icon_end} "
