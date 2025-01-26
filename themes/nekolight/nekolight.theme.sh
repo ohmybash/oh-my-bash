@@ -6,7 +6,7 @@ _omb_theme_nekolight_symbol=""
 
 function _omb_theme_nekolight_git_info() {
   if _omb_prompt_git rev-parse --is-inside-work-tree &>/dev/null; then
-    local _omb_prompt_nekolight_branch=$(_omb_prompt_git branch --show-current 2>/dev/null)
+    local branch=$(_omb_prompt_git branch --show-current 2>/dev/null)
 
     if _omb_prompt_git diff --quiet 2>/dev/null && _omb_prompt_git diff --cached --quiet 2>/dev/null; then
       _omb_util_print "on ${_omb_prompt_bold_green}${_omb_prompt_nekolight_branch} ${_omb_theme_nekolight_symbol}${_omb_prompt_normal}"
