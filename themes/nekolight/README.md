@@ -2,6 +2,8 @@
 
 Nekolight is an Oh-My-Bash prompt theme inspired by Starship and designed to be simple and lightweight.
 
+![Nekolight theme](nekolight/nekolight-dark.jpg)
+
 ## 🚀 Installation
 
 Prerequisites
