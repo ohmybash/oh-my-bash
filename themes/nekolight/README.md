@@ -1,6 +1,6 @@
 # NekoLight prompt theme
 
-Nekolight is a starship-based oh my bash prompt theme designed to be simple and lightweight.
+Nekolight is an Oh-My-Bash prompt theme inspired by Starship and designed to be simple and lightweight.
 
 ## 🚀 Installation
 
