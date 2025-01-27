@@ -13,7 +13,7 @@ function gradle-or-gradlew() {
   done
 
   # if gradlew found, run it instead of gradle
-  if [[ -f "$project_root/gradlew" ]]; then
+  if [[ -x "$project_root/gradlew" ]]; then
     echo "executing gradlew instead of gradle" >&2
     "$project_root/gradlew" "$@"
   else
