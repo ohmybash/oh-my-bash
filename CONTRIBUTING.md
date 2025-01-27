@@ -130,7 +130,10 @@ The theme needs to have exactly one image file.  The image size needs to be
 height ~290px and width 600..800px to make the theme gallery aligned and also
 to keep the repository size small. The filename should be `<theme
 name>-dark.png` or `<theme name>-light.png` depending on the dark or light
-background of the terminal used to make the image.
+background of the terminal used to make the image.  The image should be
+unscaled screen shot of a terminal.  If the terminal size is larger than the
+expecte image size, the image should be clipped instead of being resized and
+downscaled.
 
 When you add a new theme, please also update
 [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
