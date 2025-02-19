@@ -2,6 +2,7 @@
 #
 # Functions
 #
+_omb_module_require completion:git
 
 # The name of the current branch
 # Back-compatibility wrapper for when this function was defined here in
