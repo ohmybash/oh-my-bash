@@ -58,7 +58,6 @@ function git_main_branch() {
 # https://github.com/ohmyzsh/ohmyzsh/blob/f36c6db0eac17b022eee87411e6996a5f5fc8457/plugins/git/git.plugin.zsh
 #
 
-# Git aliases
 alias g='command git'
 __git_complete g _git
 
