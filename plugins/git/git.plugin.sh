@@ -1,5 +1,6 @@
 #! bash oh-my-bash.module
 _omb_module_require completion:git
+
 #
 # Functions
 #
