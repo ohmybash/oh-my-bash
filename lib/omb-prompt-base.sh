@@ -488,7 +488,8 @@ _omb_deprecate_function 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
 function _omb_prompt_get_virtualenv {
   virtualenv=
   [[ ${VIRTUAL_ENV-} ]] || return 1
-  _omb_prompt_format virtualenv "$(basename "$VIRTUAL_ENV")" OMB_PROMPT_VIRTUALENV:VIRTUALENV_THEME_PROMPT
+  virtualenv=${VIRTUAL_ENV_PROMPT:-$(basename "$VIRTUAL_ENV")}
+  _omb_prompt_format virtualenv "$virtualenv" OMB_PROMPT_VIRTUALENV:VIRTUALENV_THEME_PROMPT
 }
 
 ## @fn _omb_prompt_get_condaenv
