@@ -33,7 +33,7 @@ fi
 # Initializes Oh My Bash
 
 # Set OSH_CUSTOM to the path where your custom config files
-# and plugins exists, or else we will use the default custom/
+# and plugins exist, or else we will use the default custom/
 if [[ ! ${OSH_CUSTOM-} ]]; then
   OSH_CUSTOM=$OSH/custom
   [[ -d $OSH_CUSTOM && -O $OSH_CUSTOM ]] ||
