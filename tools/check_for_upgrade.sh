@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ $_omb_upgrade_reload_bashrc ]]; then
+  # We skip the upgrade check if it is attempted while reloading .bashrc after
+  # upgrading OMB.
+  return 0
+fi
+
 function _omb_upgrade_current_epoch {
   local sec=${EPOCHSECONDS-}
   [[ $sec ]] || printf -v sec '%(%s)T' -1 2>/dev/null || sec=$(command date +%s)
