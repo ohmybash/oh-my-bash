@@ -440,7 +440,7 @@ function _omb_util_split_lines {
 ## @fn _omb_util_array_remove array_name value
 function _omb_util_array_contains {
   [[ $1 == ret ]] ||
-    eval "local -a ret=(\"\${$2[@]}\")"
+    eval "local -a ret=(\"\${$1[@]}\")"
   local value
   for value in "${ret[@]}"; do
     if [[ $value == "$2" ]]; then
