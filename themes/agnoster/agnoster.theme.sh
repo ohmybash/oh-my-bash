@@ -295,7 +295,7 @@ function prompt_virtualenv {
     # corresponds to the version number.
     local VENV_VERSION=$(awk '{print $NF}' <<< "$VERSION_OUTPUT")
 
-    prompt_segment cyan white "[v] $(basename "$VENV_VERSION")"
+    prompt_segment cyan white "[v] ${VIRTUAL_ENV_PROMPT:+$VIRTUAL_ENV_PROMPT }$(basename "$VENV_VERSION")"
   fi
 }
 
