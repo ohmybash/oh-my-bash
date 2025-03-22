@@ -91,8 +91,10 @@ function _omb_module_require {
     local i
     for i in "${!files[@]}"; do
       local path=${files[i]} module=${modules[i]}
-      [[ ' '$_omb_module_loaded' ' == *" $module "* ]] && continue
-      _omb_module_loaded="$_omb_module_loaded $module"
+      if [[ $module != theme:* ]]; then
+        [[ ' '$_omb_module_loaded' ' == *" $module "* ]] && continue
+        _omb_module_loaded="$_omb_module_loaded $module"
+      fi
       source "$path" || status=$?
     done
   fi
