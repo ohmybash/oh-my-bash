@@ -209,9 +209,15 @@ If you have any hiccups installing, here are a few common fixes.
 
 If you want to override any of the default behaviors, just add a new file (ending in `.sh`) in the `custom/` directory.
 
-If you have many functions that go well together, you can put them as a `XYZ.plugin.sh` file in the `custom/plugins/` directory and then enable this plugin.
+If you have many functions that go well together, you can put them as a
+`XYZ.plugin.sh` file in the `custom/plugins/XYZ` directory and then enable this
+plugin by adding the name to the `plugins` array in `~/.bashrc`.
 
-If you would like to modify an existing module (theme/plugin/aliases/completion) bundled with Oh My Bash, first copy the original module to `custom/` directory and modify it.  It will be loaded instead of the original one.
+If you would like to modify an existing module
+(theme/plugin/aliases/completion) bundled with Oh My Bash, first copy the
+original module to `custom/` directory and modify it.  It will be loaded
+instead of the original one when it is enabled through
+`OSH_THEME`/`plugins`/`aliases`/`completions` in `~/.bashrc`.
 
 ```bash
 $ mkdir -p "$OSH_CUSTOM/themes"
@@ -219,9 +225,14 @@ $ cp -r {"$OSH","$OSH_CUSTOM"}/themes/agnoster
 $ EDIT "$OSH_CUSTOM/themes/agnoster/agnoster.theme.sh"
 ```
 
-If you would like to track the upstream changes for your customized version of modules, you can optionally directly edit the original files and commit them.  In this case, you need to handle possible conflicts with the upstream in upgrading.
+If you would like to track the upstream changes for your customized version of
+modules, you can optionally directly edit the original files and commit them.
+In this case, you need to handle possible conflicts with the upstream
+(`github.com/ohmybash/oh-my-bash`) in upgrading.
 
-If you would like to replace an existing module (theme/plugin/aliases/complet) bundled with Oh My Bash, create a module of the same name in the `custom/` directory so that it will be loaded instead of the original one.
+If you want to replace an existing module (theme/plugin/aliases/complet)
+bundled with Oh My Bash, create a module of the same name in the `custom/`
+directory so that it will be loaded instead of the original one.
 
 ### Configuration
 
