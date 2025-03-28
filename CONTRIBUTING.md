@@ -132,7 +132,7 @@ to keep the repository size small. The filename should be `<theme
 name>-dark.png` or `<theme name>-light.png` depending on the dark or light
 background of the terminal used to make the image.  The image should be
 unscaled screen shot of a terminal.  If the terminal size is larger than the
-expecte image size, the image should be clipped instead of being resized and
+expected image size, the image should be clipped instead of being resized and
 downscaled.
 
 When you add a new theme, please also update
