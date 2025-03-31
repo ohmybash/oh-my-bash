@@ -7,6 +7,7 @@
 # Check if the directory exists
 if [[ -d $CARGO_HOME ]]; then
   if [[ -f $CARGO_HOME/env && -r $CARGO_HOME/env ]]; then
+    # Note: Rustup sets PATH in $CARGO/env
     source "$CARGO_HOME/env"
   else
     # Add $CARGO_HOME/bin to PATH if it's not already included
