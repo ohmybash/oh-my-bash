@@ -33,6 +33,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | battery           | Plugin related to monitoring and managing battery on computer systems.                                                      |
 | brew              | Package manager for macOS and Linux facilitating software installation and management.                                      |
 | bu                | Insufficient information provided to give a precise description.                                                            |
+| cargo             | Plugin to initialize CARGO_HOME and PATH for cargo                                                                          |
 | colored-man-pages | Adds a few colors to `man` pages.                                                                                           |
 | chezmoi           | Dotfile management tool enabling management of user environment configuration.                                              |
 | dotnet            | This plugin provides completion and useful aliases for .NET Core CLI.                                                       |
