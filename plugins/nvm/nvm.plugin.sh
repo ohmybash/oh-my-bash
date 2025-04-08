@@ -84,7 +84,7 @@ if _omb_util_command_exists nvm && [[ ${OMB_PLUGIN_NVM_AUTO_USE-} == true ]]; th
       # multiple matching versions, take the latest one.  Remove the `->` and
       # `*` characters and spaces.  `locally_resolved_nvm_version` will be
       # `N/A` if no local versions are found.
-      locally_resolved_nvm_version=$(nvm ls --no-colors $(<"./.nvmrc") | sed -n '${s/->//g;s/[*[:space:]]//g;p;}')
+      locally_resolved_nvm_version=$(nvm ls --no-colors "$nvm_version" | sed -n '${s/->//g;s/[*[:space:]]//g;p;}')
 
       # If it is not already installed, install it
       if [[ $locally_resolved_nvm_version == N/A ]]; then
