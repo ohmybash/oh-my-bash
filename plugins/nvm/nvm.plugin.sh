@@ -16,8 +16,12 @@ fi
 #------------------------------------------------------------------------------
 # Optional .nvmrc autoload
 #
-# This part is originally from the official nvm documentation
-# (README.md).  Here is the license of the original project:
+# This part is originally from the official nvm documentation (README.md).  The
+# current version is based on the following lines:
+#
+#   https://github.com/nvm-sh/nvm/blob/99352a64d25ce27d49ff6a449663ce3d7c12e5b5/README.md?plain=1#L686-L726
+#
+# Here is the license of the original project:
 #
 # The MIT License (MIT)
 #
