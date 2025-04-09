@@ -54,7 +54,7 @@ if _omb_util_command_exists nvm && [[ ${OMB_PLUGIN_NVM_AUTO_USE-} == true ]]; th
   }
 
   function _omb_plugin_nvm_cd {
-    cd "$@" || return "$?"
+    command cd "$@" || return "$?"
     local nvm_path=$(_omb_plugin_nvm_find_up .nvmrc)
 
     # If there are no .nvmrc file, use the default nvm version
@@ -84,7 +84,7 @@ if _omb_util_command_exists nvm && [[ ${OMB_PLUGIN_NVM_AUTO_USE-} == true ]]; th
       # multiple matching versions, take the latest one.  Remove the `->` and
       # `*` characters and spaces.  `locally_resolved_nvm_version` will be
       # `N/A` if no local versions are found.
-      locally_resolved_nvm_version=$(nvm ls --no-colors "$nvm_version" | sed -n '${s/->//g;s/[*[:space:]]//g;p;}')
+      locally_resolved_nvm_version=$(nvm ls --no-colors "$nvm_version" | command sed -n '${s/->//g;s/[*[:space:]]//g;p;}')
 
       # If it is not already installed, install it
       if [[ $locally_resolved_nvm_version == N/A ]]; then
