@@ -54,12 +54,24 @@ function _omb_theme_developer__read_ruby_version {
 ## @var[out] REPLY
 function _omb_theme_developer__readPyVersion {
   local val_py=$(python --version 2>/dev/null | cut -d ' ' -f 2)
+  local val_uv=$(uv --version 2>/dev/null | cut -d ' ' -f 2)
+  local val_venv=""
+
+  ## according some docs this env var just exist when a venv/uv venv is active
+  if [[ -n "$VIRTUAL_ENV" ]]; then 
+    val_venv=" ($(echo "$VIRTUAL_ENV" | awk -F/ '{print $(NF-1)"/"$NF}'))"
+  fi
+
   if _omb_util_command_exists conda; then
     local condav=$(conda env list | awk '$2 == "*" {print $1}')
     val_py="conda<$condav> $val_py"
   else
-    # Si nvm no está instalado, utilizar "njs"
-    val_py="py $val_py"
+    if _omb_util_command_exists uv; then
+      val_py="uv($val_uv) $val_py$val_venv"
+    else
+      # if conda and uv is not installed use "py"
+      val_py="py $val_py"
+    fi
   fi
   REPLY=$val_py
 }
