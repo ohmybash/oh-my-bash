@@ -57,7 +57,7 @@ type -P git &>/dev/null || return 0
 
 if command mkdir -p "$OSH/log/update.lock" 2>/dev/null; then
   _omb_upgrade_check
-  command rmdir "$OSH"/log/update.lock
+  command rmdir "$OSH"/log/update.lock || :
 else
   printf '%s\n' \
     'oh-my-bash/check_for_upgrade: Failed to get a lock.  Please make sure that no' \
