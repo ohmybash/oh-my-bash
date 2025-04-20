@@ -4,6 +4,13 @@
 
 ## @var[out] _omb_init_themes
 function _omb_theme_random__list_available_themes {
+  # When OMB_THEME_RANDOM_CANDIDATES is set, we use it as the theme list
+  # available for the random theme.
+  if [[ ${OMB_THEME_RANDOM_CANDIDATES[@]+set} ]]; then
+    _omb_init_themes=("${OMB_THEME_RANDOM_CANDIDATES[@]}")
+    return 0
+  fi
+
   _omb_init_themes=()
 
   local theme_files

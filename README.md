@@ -110,6 +110,13 @@ If you're feeling feisty, you can let the computer select one randomly for you e
 OSH_THEME="random" # (...please let it be pie... please be some pie..)
 ```
 
+If you want to randomly select a theme from a specified list, you can set the
+list in the following array:
+
+```shell
+OMB_THEME_RANDOM_CANDIDATES=("font" "powerline-light" "minimal")
+```
+
 If there are themes you don't like, you can add them to an ignored list:
 
 ```shell
