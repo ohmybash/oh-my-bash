@@ -10,26 +10,27 @@ function _omb_theme_random__list_available_themes {
   _omb_util_glob_expand theme_files '"$OSH"/themes/*/*.theme.sh'
   ((${#theme_files[@]})) || return 1
 
+  local -a exclude_themes=(random)
+  if ((${#OMB_THEME_RANDOM_IGNORED[@]})); then
+    exclude_themes+=("${OMB_THEME_RANDOM_IGNORED[@]}")
+  fi
+
   local -a themes=() index theme
   for index in "${!theme_files[@]}"; do
     theme=${theme_files[index]##*/}
     theme=${theme%.theme.sh}
     [[ ${theme_files[index]} == */"$theme"/"$theme".theme.sh ]] || continue
 
-    _omb_util_array_contains themes "$theme" ||
-      themes+=("$theme")
+    # Exclude ignored themes from the list
+    _omb_util_array_contains exclude_themes "$theme" && continue
+
+    # Remove duplicates
+    _omb_util_array_contains themes "$theme" && continue
+
+    themes+=("$theme")
   done
   ((${#themes[@]})) || return 1
 
-  # Remove ignored themes from the list
-  local theme index
-  for theme in random "${OMB_THEME_RANDOM_IGNORED[@]}"; do
-    for index in "${!themes[@]}"; do
-      [[ ${themes[index]} == "$theme" ]] &&
-        unset -v 'themes[index]'
-    done
-  done
-  ((${#themes[@]})) || return 1
   _omb_init_themes=("${themes[@]}")
 }
 _omb_theme_random__list_available_themes
