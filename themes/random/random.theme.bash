@@ -41,7 +41,7 @@ _omb_theme_random__list_available_themes
 
 if ((${#_omb_init_themes[@]})); then
   OMB_THEME_RANDOM_SELECTED=${_omb_init_themes[RANDOM%${#_omb_init_themes[@]}]}
-  _omb_module_require_theme "$OMB_THEME_RANDOM_SELECTED"
-  printf '%s\n' "[oh-my-bash] Random theme '$OMB_THEME_RANDOM_SELECTED' loaded..."
+  _omb_module_require_theme "$OMB_THEME_RANDOM_SELECTED" &&
+    printf '%s\n' "[oh-my-bash] Random theme '$OMB_THEME_RANDOM_SELECTED' loaded..."
 fi
 unset -v _omb_init_themes
