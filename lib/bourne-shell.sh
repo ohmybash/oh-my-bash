@@ -96,7 +96,7 @@ if _omb_util_binary_exists notify-send; then
     fi
 
     # get the command
-    command=$(history | command tail -n 1 | command sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')
+    command=$(history | command tail -n 1 | command sed -e 's/^[[:space:]]*[0-9]\{1,\}[[:space:]]*//;s/[;&|][[:space:]]*alert$//')
 
     notify-send --urgency=low -i "$type" "$command"
 
