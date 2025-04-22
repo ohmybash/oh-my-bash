@@ -99,6 +99,8 @@ if _omb_util_binary_exists notify-send; then
     command=$(history | tail -n 1 | sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')
 
     notify-send --urgency=low -i "$type" "$command"
+
+    return "$status"
   }
   _omb_util_alias alert='_omb_alias_alert "$@"'
 fi
