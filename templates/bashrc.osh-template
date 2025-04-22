@@ -119,6 +119,13 @@ plugins=(
 #      plugins+=(tmux-autoattach)
 #  fi
 
+# If you want to reduce the initialization cost of the "tput" command to
+# initialize color escape sequences, you can uncomment the following setting.
+# This disables the use of the "tput" command, and the escape sequences are
+# initialized to be the ANSI version:
+#
+#OMB_TERM_USE_TPUT=no
+
 source "$OSH"/oh-my-bash.sh
 
 # User configuration

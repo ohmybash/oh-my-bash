@@ -147,7 +147,7 @@ function _omb_term_color_initialize {
     return 0
   fi
 
-  if _omb_util_binary_exists tput; then
+  if [[ ${OMB_TERM_USE_TPUT-} != no ]] && _omb_util_binary_exists tput; then
     _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
     _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
     _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
