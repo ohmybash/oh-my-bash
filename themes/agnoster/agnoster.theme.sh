@@ -161,49 +161,53 @@ RIGHT_SEPARATOR=''
 LEFT_SUBSEG=''
 RIGHT_SUBSEG=''
 
-function text_effect {
-  case "$1" in
-  reset)      echo 0;;
-  bold)       echo 1;;
-  underline)  echo 4;;
+function _omb_theme_agnoster_text_effect {
+  REPLY=
+  case $1 in
+  reset)     REPLY=0 ;;
+  bold)      REPLY=1 ;;
+  underline) REPLY=4 ;;
   esac
 }
 
 # to add colors, see
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 # under the "256 (8-bit) Colors" section, and follow the example for orange below
-function fg_color {
-  case "$1" in
-  black)      echo 30;;
-  red)        echo 31;;
-  green)      echo 32;;
-  yellow)     echo 33;;
-  blue)       echo 34;;
-  magenta)    echo 35;;
-  cyan)       echo 36;;
-  white)      echo 37;;
-  orange)     echo 38\;5\;166;;
+function _omb_theme_agnoster_fg_color {
+  REPLY=
+  case $1 in
+  black)   REPLY=30 ;;
+  red)     REPLY=31 ;;
+  green)   REPLY=32 ;;
+  yellow)  REPLY=33 ;;
+  blue)    REPLY=34 ;;
+  magenta) REPLY=35 ;;
+  cyan)    REPLY=36 ;;
+  white)   REPLY=37 ;;
+  orange)  REPLY='38;5;166' ;;
   esac
 }
 
-function bg_color {
-  case "$1" in
-  black)      echo 40;;
-  red)        echo 41;;
-  green)      echo 42;;
-  yellow)     echo 43;;
-  blue)       echo 44;;
-  magenta)    echo 45;;
-  cyan)       echo 46;;
-  white)      echo 47;;
-  orange)     echo 48\;5\;166;;
-  esac;
+function _omb_theme_agnoster_bg_color {
+  REPLY=
+  case $1 in
+  black)   REPLY=40 ;;
+  red)     REPLY=41 ;;
+  green)   REPLY=42 ;;
+  yellow)  REPLY=43 ;;
+  blue)    REPLY=44 ;;
+  magenta) REPLY=45 ;;
+  cyan)    REPLY=46 ;;
+  white)   REPLY=47 ;;
+  orange)  REPLY='48;5;166' ;;
+  esac
 }
 
 # TIL: declare is global not local, so best use a different name
 # for codes (mycodes) as otherwise it'll clobber the original.
 # this changes from BASH v3 to BASH v4.
-function ansi {
+function _omb_theme_agnoster_ansi_r {
+  # this doesn't wrap code in \[ \]
   local seq
   local -a mycodes=("${!1}")
 
@@ -212,72 +216,106 @@ function ansi {
   seq=""
   local i
   for ((i = 0; i < ${#mycodes[@]}; i++)); do
-    if [[ -n $seq ]]; then
-      seq="${seq};"
+    if [[ $seq ]]; then
+      seq=$seq';'
     fi
-    seq="${seq}${mycodes[$i]}"
+    seq=$seq${mycodes[i]}
   done
-  debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  echo -ne '\[\033['${seq}'m\]'
-  # PR="$PR\[\033[${seq}m\]"
+  debug 'ansi debug: \\[\\033['"$seq"'m\\]'
+  REPLY='\e['$seq'm'
 }
 
-function ansi_single {
-  echo -ne '\[\033['$1'm\]'
+function _omb_theme_agnoster_ansi {
+  _omb_theme_agnoster_ansi_r "$@"
+  REPLY='\['$REPLY'\]'
+  # PR=$PR'\['$REPLY'\]'
 }
+
+function _omb_theme_agnoster_ansi_single {
+  REPLY='\[\e['$1'm\]'
+}
+
+_omb_deprecate_defun_print 20000 text_effect _omb_theme_agnoster_text_effect
+_omb_deprecate_defun_print 20000 fg_color _omb_theme_agnoster_fg_color
+_omb_deprecate_defun_print 20000 bg_color _omb_theme_agnoster_bg_color
+_omb_deprecate_defun_put 20000 ansi _omb_theme_agnoster_ansi
+_omb_deprecate_defun_put 20000 ansi_r _omb_theme_agnoster_ansi_r
+_omb_deprecate_defun_put 20000 ansi_single _omb_theme_agnoster_ansi_single
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
 # rendering default background/foreground.
 function prompt_segment {
-  local bg fg
+  local REPLY
   local -a codes
 
   debug "Prompting $1 $2 $3"
 
-  # if commented out from kruton's original... I'm not clear
-  # if it did anything, but it messed up things like
-  # prompt_status - Erik 1/14/17
-
-  #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-  codes=("${codes[@]}" $(text_effect reset))
-  #    fi
-  if [[ -n $1 ]]; then
-    bg=$(bg_color $1)
-    codes=("${codes[@]}" $bg)
-    debug "Added $bg as background to codes"
+  # > if commented out from kruton's original... I'm not clear if it did
+  # > anything, but it messed up things like prompt_status - Erik 1/14/17
+  #
+  # I think ( -z $2 && $2 != default ) has been a mistake of ( $2 && $2 !=
+  # default ) because ( -z $2 && $2 != default ) is equivalent to ( -z $2 ).  I
+  # fixed it, so we may turn this on again, but I keep it inside the comment
+  # because I'm not sure if there is any other side effect - Koichi 4/27/25
+  #
+  # See also the same code in the function "prompt_right_segment".
+  #
+  # if [[ ! $1 || ( $2 && $2 != default ) ]]; then
+  _omb_theme_agnoster_text_effect reset
+  [[ $REPLY ]] && codes+=("$REPLY")
+  # fi
+  if [[ $1 ]]; then
+    _omb_theme_agnoster_bg_color "$1"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as background to codes"
   fi
-  if [[ -n $2 ]]; then
-    fg=$(fg_color $2)
-    codes=("${codes[@]}" $fg)
-    debug "Added $fg as foreground to codes"
+  if [[ $2 ]]; then
+    _omb_theme_agnoster_fg_color "$2"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as foreground to codes"
   fi
 
   debug "Codes: "
   # local -p codes
 
   if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-    local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
-    debug "pre prompt " $(ansi intermediate[@])
-    PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
-    debug "post prompt " $(ansi codes[@])
-    PR="$PR$(ansi codes[@]) "
+    local -a intermediate=()
+    _omb_theme_agnoster_fg_color "$CURRENT_BG"
+    [[ $REPLY ]] && intermediate+=("$REPLY")
+    _omb_theme_agnoster_bg_color "$1"
+    [[ $REPLY ]] && intermediate+=("$REPLY")
+    _omb_theme_agnoster_ansi 'intermediate[@]'
+    debug "pre prompt $REPLY"
+    PR="$PR $REPLY$SEGMENT_SEPARATOR"
+    _omb_theme_agnoster_ansi 'codes[@]'
+    debug "post prompt $REPLY"
+    PR="$PR$REPLY "
   else
     debug "no current BG, codes are (${codes[*]})"
-    PR="$PR$(ansi codes[@]) "
+    _omb_theme_agnoster_ansi 'codes[@]'
+    PR="$PR$REPLY "
   fi
   CURRENT_BG=$1
-  [[ -n $3 ]] && PR="$PR$3"
+  [[ $3 ]] && PR=$PR$3
 }
 
 # End the prompt, closing any open segments
 function prompt_end {
-  if [[ -n $CURRENT_BG ]]; then
-    local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
-    PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
+  local REPLY
+  if [[ $CURRENT_BG ]]; then
+    local -a codes=()
+    _omb_theme_agnoster_text_effect reset
+    [[ $REPLY ]] && codes+=("$REPLY")
+    _omb_theme_agnoster_fg_color "$CURRENT_BG"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    _omb_theme_agnoster_ansi 'codes[@]'
+    PR="$PR $REPLY$SEGMENT_SEPARATOR"
   fi
-  local -a reset=($(text_effect reset))
-  PR="$PR $(ansi reset[@])"
+  _omb_theme_agnoster_text_effect reset
+  local -a reset=(${REPLY:+"$REPLY"})
+  _omb_theme_agnoster_ansi 'reset[@]'
+  PR="$PR $REPLY"
   CURRENT_BG=''
 }
 
@@ -354,12 +392,12 @@ function prompt_histdt {
 
 function git_status_dirty {
   dirty=$(_omb_prompt_git status -s 2> /dev/null | tail -n 1)
-  [[ -n $dirty ]] && echo " ●"
+  [[ $dirty ]] && _omb_util_print " ●"
 }
 
 function git_stash_dirty {
   stash=$(_omb_prompt_git stash list 2> /dev/null | tail -n 1)
-  [[ -n $stash ]] && echo " ⚑"
+  [[ $stash ]] && _omb_util_print " ⚑"
 }
 
 # Git: branch/detached head, dirty status
@@ -427,13 +465,25 @@ function prompt_dir {
 # - am I root
 # - are there background jobs?
 function prompt_status {
-  local symbols
+  local symbols REPLY
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="$(ansi_single $(fg_color red))✘"
-  [[ $UID -eq 0 ]] && symbols+="$(ansi_single $(fg_color yellow))⚡"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="$(ansi_single $(fg_color cyan))⚙"
+  if ((RETVAL != 0)); then
+    _omb_theme_agnoster_fg_color red
+    _omb_theme_agnoster_ansi_single "$REPLY"
+    symbols+=$REPLY'✘'
+  fi
+  if ((UID == 0)); then
+    _omb_theme_agnoster_fg_color yellow
+    _omb_theme_agnoster_ansi_single "$REPLY"
+    symbols+=$REPLY'⚡'
+  fi
+  if compgen -j &>/dev/null; then
+    _omb_theme_agnoster_fg_color cyan
+    _omb_theme_agnoster_ansi_single "$REPLY"
+    symbols+=$REPLY'⚙'
+  fi
 
-  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  [[ $symbols ]] && prompt_segment black default "$symbols"
 }
 
 ######################################################################
@@ -451,60 +501,37 @@ function __command_rprompt {
   local times= n=$COLUMNS tz
   for tz in ZRH:Europe/Zurich PIT:US/Eastern \
                               MTV:US/Pacific TOK:Asia/Tokyo; do
-    [ $n -gt 40 ] || break
+    ((n > 40)) || break
     times="$times ${tz%%:*}\e[30;1m:\e[0;36;1m"
     times="$times$(TZ=${tz#*:} date +%H:%M)\e[0m"
-    n=$(( $n - 10 ))
+    n=$((n - 10))
   done
-  [ -z "$times" ] || printf "%${n}s$times\\r" ''
-}
-
-# this doesn't wrap code in \[ \]
-function ansi_r {
-  local seq
-  local -a mycodes2=("${!1}")
-
-  debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
-
-  seq=""
-  local i
-  for ((i = 0; i < ${#mycodes2[@]}; i++)); do
-    if [[ -n $seq ]]; then
-      seq="${seq};"
-    fi
-    seq="${seq}${mycodes2[$i]}"
-  done
-  debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  echo -ne '\033['${seq}'m'
-  # PR="$PR\[\033[${seq}m\]"
+  [[ ! $times ]] || printf '%*s%s\r' "$n" '' "$times"
 }
 
 # Begin a segment on the right
 # Takes two arguments, background and foreground. Both can be omitted,
 # rendering default background/foreground.
 function prompt_right_segment {
-  local bg fg
+  local REPLY
   local -a codes
 
   debug "Prompt right"
   debug "Prompting $1 $2 $3"
 
-  # if commented out from kruton's original... I'm not clear
-  # if it did anything, but it messed up things like
-  # prompt_status - Erik 1/14/17
-
-  #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-  codes=("${codes[@]}" $(text_effect reset))
-  #    fi
-  if [[ -n $1 ]]; then
-    bg=$(bg_color $1)
-    codes=("${codes[@]}" $bg)
-    debug "Added $bg as background to codes"
+  # if [[ ! $1 || ( $2 && $2 != default ) ]]; then
+  _omb_theme_agnoster_text_effect reset
+  [[ $REPLY ]] && codes+=("$REPLY")
+  # fi
+  if [[ $1 ]]; then
+    _omb_theme_agnoster_bg_color "$1"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as background to codes"
   fi
-  if [[ -n $2 ]]; then
-    fg=$(fg_color $2)
-    codes=("${codes[@]}" $fg)
-    debug "Added $fg as foreground to codes"
+  if [[ $2 ]]; then
+    _omb_theme_agnoster_fg_color "$2"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as foreground to codes"
   fi
 
   debug "Right Codes: "
@@ -514,18 +541,25 @@ function prompt_right_segment {
   # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
   #     $CURRENT_RBG=
   # fi
-  local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
+  local -a intermediate2=()
+  _omb_theme_agnoster_fg_color "$1"
+  [[ $REPLY ]] && intermediate2+=("$REPLY")
+  _omb_theme_agnoster_bg_color "$CURRENT_RBG"
+  [[ $REPLY ]] && intermediate2+=("$REPLY")
   # PRIGHT="$PRIGHT---"
-  debug "pre prompt " $(ansi_r intermediate2[@])
-  PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
-  debug "post prompt " $(ansi_r codes[@])
-  PRIGHT="$PRIGHT$(ansi_r codes[@]) "
+  _omb_theme_agnoster_ansi_r 'intermediate2[@]'
+  debug "pre prompt $REPLY"
+  PRIGHT="$PRIGHT$REPLY$RIGHT_SEPARATOR"
+  _omb_theme_agnoster_ansi_r 'codes[@]'
+  debug "post prompt $REPLY"
+  PRIGHT="$PRIGHT$REPLY "
   # else
   #     debug "no current BG, codes are (${codes[*]})"
-  #     PRIGHT="$PRIGHT$(ansi codes[@]) "
+  #     _omb_theme_agnoster_ansi 'codes[@]'
+  #     PRIGHT="$PRIGHT$REPLY "
   # fi
   CURRENT_RBG=$1
-  [[ -n $3 ]] && PRIGHT="$PRIGHT$3"
+  [[ $3 ]] && PRIGHT=$PRIGHT$3
 }
 
 ######################################################################
@@ -578,7 +612,10 @@ function _omb_theme_PROMPT_COMMAND {
   local RETVAL=$?
   local PRIGHT=""
   local CURRENT_BG=NONE
-  local PR="$(ansi_single $(text_effect reset))"
+  local REPLY
+  _omb_theme_agnoster_text_effect reset
+  _omb_theme_agnoster_ansi_single "$REPLY"
+  local PR=$REPLY
   build_prompt
 
   # uncomment below to use right prompt

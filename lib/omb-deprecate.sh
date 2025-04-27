@@ -25,10 +25,27 @@ function _omb_deprecate_function__notify {
 }
 
 function _omb_deprecate_function {
+  local version=$1 old=$2 new=$3
   local warning=
-  ((_omb_version >= $1)) &&
-    warning="_omb_deprecate_function__notify '$2' '$3'; "
-  builtin eval -- "function $2 { $warning$3 \"\$@\"; }"
+  ((_omb_version >= version)) &&
+    warning="_omb_deprecate_function__notify '$old' '$new'; "
+  builtin eval -- "function $old { $warning$new \"\$@\"; }"
+}
+
+function _omb_deprecate_defun_print {
+  local version=$1 old=$2 new=$3 var=${4:-REPLY}
+  local warning=
+  ((_omb_version >= version)) &&
+    warning="_omb_deprecate_function__notify '$old' '$new'; "
+  builtin eval -- "function $old { ${warning}local $var; $new \"\$@\"; _omb_util_print \"\$$var\"; }"
+}
+
+function _omb_deprecate_defun_put {
+  local version=$1 old=$2 new=$3 var=${4:-REPLY}
+  local warning=
+  ((_omb_version >= version)) &&
+    warning="_omb_deprecate_function__notify '$old' '$new'; "
+  builtin eval -- "function $old { ${warning}local $var; $new \"\$@\"; _omb_util_put \"\$$var\"; }"
 }
 
 ## @fn _omb_deprecate_declare version old_name new_name opts arg
