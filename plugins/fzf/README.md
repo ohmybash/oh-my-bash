@@ -1,4 +1,4 @@
-## fzf plugin
+# fzf plugin
 
 The fzf plugin enables fzf keybindings and completions on bash.
 
