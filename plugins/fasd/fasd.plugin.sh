@@ -14,7 +14,7 @@ function _omb_plugin_fasd_initialize {
     eval -- "$(fasd --init posix-alias bash-ccomp bash-ccomp-install)"
     _omb_util_add_prompt_command _omb_plugin_fasd_prompt_func
   else
-    echo 'fasd not found, plugin not activated.' >&2
+    _omb_util_print 'fasd not found, plugin not activated.' >&2
   fi
 }
 
