@@ -38,6 +38,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | chezmoi           | Dotfile management tool enabling management of user environment configuration.                                              |
 | dotnet            | This plugin provides completion and useful aliases for .NET Core CLI.                                                       |
 | fasd              | Utility easing filesystem navigation through shortcuts and abbreviated commands.                                            |
+| fzf               | A command-line fuzzy finder.                                                                                                |
 | gcloud            | Command-line tools for interacting with Google Cloud Platform (GCP).                                                        |
 | git               | Distributed version control system for managing the history of changes in software projects.                                |
 | goenv             | Tool for managing Go versions within a development environment.                                                             |
