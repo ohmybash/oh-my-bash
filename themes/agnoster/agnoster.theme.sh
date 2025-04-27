@@ -161,49 +161,53 @@ RIGHT_SEPARATOR=''
 LEFT_SUBSEG=''
 RIGHT_SUBSEG=''
 
-function text_effect {
-  case "$1" in
-  reset)      echo 0;;
-  bold)       echo 1;;
-  underline)  echo 4;;
+function _omb_theme_agnoster_text_effect {
+  REPLY=
+  case $1 in
+  reset)     REPLY=0 ;;
+  bold)      REPLY=1 ;;
+  underline) REPLY=4 ;;
   esac
 }
 
 # to add colors, see
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 # under the "256 (8-bit) Colors" section, and follow the example for orange below
-function fg_color {
-  case "$1" in
-  black)      echo 30;;
-  red)        echo 31;;
-  green)      echo 32;;
-  yellow)     echo 33;;
-  blue)       echo 34;;
-  magenta)    echo 35;;
-  cyan)       echo 36;;
-  white)      echo 37;;
-  orange)     echo 38\;5\;166;;
+function _omb_theme_agnoster_fg_color {
+  REPLY=
+  case $1 in
+  black)   REPLY=30 ;;
+  red)     REPLY=31 ;;
+  green)   REPLY=32 ;;
+  yellow)  REPLY=33 ;;
+  blue)    REPLY=34 ;;
+  magenta) REPLY=35 ;;
+  cyan)    REPLY=36 ;;
+  white)   REPLY=37 ;;
+  orange)  REPLY='38;5;166' ;;
   esac
 }
 
-function bg_color {
-  case "$1" in
-  black)      echo 40;;
-  red)        echo 41;;
-  green)      echo 42;;
-  yellow)     echo 43;;
-  blue)       echo 44;;
-  magenta)    echo 45;;
-  cyan)       echo 46;;
-  white)      echo 47;;
-  orange)     echo 48\;5\;166;;
-  esac;
+function _omb_theme_agnoster_bg_color {
+  REPLY=
+  case $1 in
+  black)   REPLY=40 ;;
+  red)     REPLY=41 ;;
+  green)   REPLY=42 ;;
+  yellow)  REPLY=43 ;;
+  blue)    REPLY=44 ;;
+  magenta) REPLY=45 ;;
+  cyan)    REPLY=46 ;;
+  white)   REPLY=47 ;;
+  orange)  REPLY='48;5;166' ;;
+  esac
 }
 
 # TIL: declare is global not local, so best use a different name
 # for codes (mycodes) as otherwise it'll clobber the original.
 # this changes from BASH v3 to BASH v4.
-function ansi {
+function _omb_theme_agnoster_ansi_r {
+  # this doesn't wrap code in \[ \]
   local seq
   local -a mycodes=("${!1}")
 
@@ -218,13 +222,25 @@ function ansi {
     seq="${seq}${mycodes[$i]}"
   done
   debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  echo -ne '\[\033['${seq}'m\]'
-  # PR="$PR\[\033[${seq}m\]"
+  REPLY='\e['${seq}'m'
 }
 
-function ansi_single {
-  echo -ne '\[\033['$1'm\]'
+function _omb_theme_agnoster_ansi {
+  _omb_theme_agnoster_ansi_r "$@"
+  REPLY='\['$REPLY'\]'
+  # PR=$PR'\['$REPLY'\]'
 }
+
+function _omb_theme_agnoster_ansi_single {
+  REPLY='\[\e['$1'm\]'
+}
+
+_omb_deprecate_defun_print 20000 text_effect _omb_theme_agnoster_text_effect
+_omb_deprecate_defun_print 20000 fg_color _omb_theme_agnoster_fg_color
+_omb_deprecate_defun_print 20000 bg_color _omb_theme_agnoster_bg_color
+_omb_deprecate_defun_put 20000 ansi _omb_theme_agnoster_ansi
+_omb_deprecate_defun_put 20000 ansi_r _omb_theme_agnoster_ansi_r
+_omb_deprecate_defun_put 20000 ansi_single _omb_theme_agnoster_ansi_single
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -457,26 +473,6 @@ function __command_rprompt {
     n=$(( $n - 10 ))
   done
   [ -z "$times" ] || printf "%${n}s$times\\r" ''
-}
-
-# this doesn't wrap code in \[ \]
-function ansi_r {
-  local seq
-  local -a mycodes2=("${!1}")
-
-  debug "ansi: ${!1} all: $* aka ${mycodes2[@]}"
-
-  seq=""
-  local i
-  for ((i = 0; i < ${#mycodes2[@]}; i++)); do
-    if [[ -n $seq ]]; then
-      seq="${seq};"
-    fi
-    seq="${seq}${mycodes2[$i]}"
-  done
-  debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  echo -ne '\033['${seq}'m'
-  # PR="$PR\[\033[${seq}m\]"
 }
 
 # Begin a segment on the right
