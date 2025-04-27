@@ -9,7 +9,3 @@ to the plugins array of your bashrc file:
 ```bash
 plugins=(... fzf)
 ```
-
-## Aliases
-
-None
