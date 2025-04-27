@@ -1,6 +1,6 @@
 ## jump plugin
 
-The jump plugin enables jump on bash
+The jump plugin enables jump on bash.
 
 To use it, install
 [jump)](https://github.com/gsamokovarov/jump?tab=readme-ov-file#installation)
