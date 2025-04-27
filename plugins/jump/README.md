@@ -9,7 +9,3 @@ and add jump to the plugins array of your bashrc file:
 ```bash
 plugins=(... jump)
 ```
-
-## Aliases
-
-None
