@@ -42,6 +42,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | git               | Distributed version control system for managing the history of changes in software projects.                                |
 | goenv             | Tool for managing Go versions within a development environment.                                                             |
 | golang            | The Go programming language, along with its tools and standard libraries.                                                   |
+| jump              | Jump helps you navigate faster by learning your habits.                                                                     |
 | kubectl           | Command-line tool for interacting with Kubernetes clusters.                                                                 |
 | npm               | Package manager for Node.js facilitating installation and management of project dependencies.                               |
 | nvm               | Node.js version manager allowing easy switching between different Node.js versions.                                         |
