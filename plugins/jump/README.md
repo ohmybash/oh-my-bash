@@ -1,4 +1,4 @@
-## jump plugin
+# jump plugin
 
 The jump plugin enables jump on bash.
 
