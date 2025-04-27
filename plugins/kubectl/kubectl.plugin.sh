@@ -77,7 +77,7 @@ alias kdeld='kubectl delete deployment'
 alias ksd='kubectl scale deployment'
 alias krsd='kubectl rollout status deployment'
 function kres {
-    kubectl set env $@ REFRESHED_AT=$(date +%Y%m%d%H%M%S)
+  kubectl set env $@ REFRESHED_AT=$(date +%Y%m%d%H%M%S)
 }
 
 # Rollout management.

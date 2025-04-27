@@ -16,18 +16,18 @@
 # [1] https://github.com/ohmybash/oh-my-bash/pull/332
 
 function _osh_plugin_tmux_autoattach_exit {
-	[ -z "$TMUX" ] && tmux -2u new -As0 && exit
+  [ -z "$TMUX" ] && tmux -2u new -As0 && exit
 }
 
 function _osh_plugin_tmux_autoattach_detach {
-	[ -z "$TMUX" ] && tmux -2u new -As0
+  [ -z "$TMUX" ] && tmux -2u new -As0
 }
 
 case "$OSH_PLUGIN_TMUX_AUTOATTACH_BEHAVIOR" in
-	"exit")
-		_osh_plugin_tmux_autoattach_exit
-		;;
-	"detach" | *)
-		_osh_plugin_tmux_autoattach_detach
-		;;
+"exit")
+  _osh_plugin_tmux_autoattach_exit
+  ;;
+"detach" | *)
+  _osh_plugin_tmux_autoattach_detach
+  ;;
 esac
