@@ -216,13 +216,13 @@ function _omb_theme_agnoster_ansi_r {
   seq=""
   local i
   for ((i = 0; i < ${#mycodes[@]}; i++)); do
-    if [[ -n $seq ]]; then
-      seq="${seq};"
+    if [[ $seq ]]; then
+      seq=$seq';'
     fi
-    seq="${seq}${mycodes[$i]}"
+    seq=$seq${mycodes[i]}
   done
-  debug "ansi debug:" '\\[\\033['${seq}'m\\]'
-  REPLY='\e['${seq}'m'
+  debug 'ansi debug: \\[\\033['"$seq"'m\\]'
+  REPLY='\e['$seq'm'
 }
 
 function _omb_theme_agnoster_ansi {
@@ -251,21 +251,27 @@ function prompt_segment {
 
   debug "Prompting $1 $2 $3"
 
-  # if commented out from kruton's original... I'm not clear
-  # if it did anything, but it messed up things like
-  # prompt_status - Erik 1/14/17
-
-  #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-  codes=("${codes[@]}" $(text_effect reset))
-  #    fi
-  if [[ -n $1 ]]; then
-    bg=$(bg_color $1)
-    codes=("${codes[@]}" $bg)
+  # > if commented out from kruton's original... I'm not clear if it did
+  # > anything, but it messed up things like prompt_status - Erik 1/14/17
+  #
+  # I think ( -z $2 && $2 != default ) has been a mistake of ( $2 && $2 !=
+  # default ) because ( -z $2 && $2 != default ) is equivalent to ( -z $2 ).  I
+  # fixed it, so we may turn this on again, but I keep it inside the comment
+  # because I'm not sure if there is any other side effect - Koichi 4/27/25
+  #
+  # See also the same code in the function "prompt_right_segment".
+  #
+  # if [[ ! $1 || ( $2 && $2 != default ) ]]; then
+  codes+=("$(text_effect reset)")
+  # fi
+  if [[ $1 ]]; then
+    bg=$(bg_color "$1")
+    codes+=("$bg")
     debug "Added $bg as background to codes"
   fi
-  if [[ -n $2 ]]; then
-    fg=$(fg_color $2)
-    codes=("${codes[@]}" $fg)
+  if [[ $2 ]]; then
+    fg=$(fg_color "$2")
+    codes+=("$fg")
     debug "Added $fg as foreground to codes"
   fi
 
@@ -273,27 +279,27 @@ function prompt_segment {
   # local -p codes
 
   if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-    local -a intermediate=($(fg_color $CURRENT_BG) $(bg_color $1))
-    debug "pre prompt " $(ansi intermediate[@])
-    PR="$PR $(ansi intermediate[@])$SEGMENT_SEPARATOR"
-    debug "post prompt " $(ansi codes[@])
-    PR="$PR$(ansi codes[@]) "
+    local -a intermediate=("$(fg_color "$CURRENT_BG")" "$(bg_color "$1")")
+    debug "pre prompt $(ansi 'intermediate[@]')"
+    PR="$PR $(ansi 'intermediate[@]')$SEGMENT_SEPARATOR"
+    debug "post prompt $(ansi 'codes[@]')"
+    PR="$PR$(ansi 'codes[@]') "
   else
     debug "no current BG, codes are (${codes[*]})"
-    PR="$PR$(ansi codes[@]) "
+    PR="$PR$(ansi 'codes[@]') "
   fi
   CURRENT_BG=$1
-  [[ -n $3 ]] && PR="$PR$3"
+  [[ $3 ]] && PR=$PR$3
 }
 
 # End the prompt, closing any open segments
 function prompt_end {
-  if [[ -n $CURRENT_BG ]]; then
-    local -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
-    PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
+  if [[ $CURRENT_BG ]]; then
+    local -a codes=("$(text_effect reset)" "$(fg_color "$CURRENT_BG")")
+    PR="$PR $(ansi 'codes[@]')$SEGMENT_SEPARATOR"
   fi
-  local -a reset=($(text_effect reset))
-  PR="$PR $(ansi reset[@])"
+  local -a reset=("$(text_effect reset)")
+  PR="$PR $(ansi 'reset[@]')"
   CURRENT_BG=''
 }
 
@@ -370,12 +376,12 @@ function prompt_histdt {
 
 function git_status_dirty {
   dirty=$(_omb_prompt_git status -s 2> /dev/null | tail -n 1)
-  [[ -n $dirty ]] && echo " ●"
+  [[ $dirty ]] && _omb_util_print " ●"
 }
 
 function git_stash_dirty {
   stash=$(_omb_prompt_git stash list 2> /dev/null | tail -n 1)
-  [[ -n $stash ]] && echo " ⚑"
+  [[ $stash ]] && _omb_util_print " ⚑"
 }
 
 # Git: branch/detached head, dirty status
@@ -445,11 +451,11 @@ function prompt_dir {
 function prompt_status {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="$(ansi_single $(fg_color red))✘"
-  [[ $UID -eq 0 ]] && symbols+="$(ansi_single $(fg_color yellow))⚡"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="$(ansi_single $(fg_color cyan))⚙"
+  ((RETVAL != 0)) && symbols+="$(ansi_single $(fg_color red))✘"
+  ((UID == 0)) && symbols+="$(ansi_single $(fg_color yellow))⚡"
+  (($(jobs -l | wc -l) > 0)) && symbols+="$(ansi_single $(fg_color cyan))⚙"
 
-  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  [[ $symbols ]] && prompt_segment black default "$symbols"
 }
 
 ######################################################################
@@ -467,12 +473,12 @@ function __command_rprompt {
   local times= n=$COLUMNS tz
   for tz in ZRH:Europe/Zurich PIT:US/Eastern \
                               MTV:US/Pacific TOK:Asia/Tokyo; do
-    [ $n -gt 40 ] || break
+    ((n > 40)) || break
     times="$times ${tz%%:*}\e[30;1m:\e[0;36;1m"
     times="$times$(TZ=${tz#*:} date +%H:%M)\e[0m"
-    n=$(( $n - 10 ))
+    n=$((n - 10))
   done
-  [ -z "$times" ] || printf "%${n}s$times\\r" ''
+  [[ ! $times ]] || printf '%*s%s\r' "$n" '' "$times"
 }
 
 # Begin a segment on the right
@@ -485,21 +491,17 @@ function prompt_right_segment {
   debug "Prompt right"
   debug "Prompting $1 $2 $3"
 
-  # if commented out from kruton's original... I'm not clear
-  # if it did anything, but it messed up things like
-  # prompt_status - Erik 1/14/17
-
-  #    if [[ -z $1 || ( -z $2 && $2 != default ) ]]; then
-  codes=("${codes[@]}" $(text_effect reset))
-  #    fi
-  if [[ -n $1 ]]; then
-    bg=$(bg_color $1)
-    codes=("${codes[@]}" $bg)
+  # if [[ ! $1 || ( $2 && $2 != default ) ]]; then
+  codes+=("$(text_effect reset)")
+  # fi
+  if [[ $1 ]]; then
+    bg=$(bg_color "$1")
+    codes+=("$bg")
     debug "Added $bg as background to codes"
   fi
-  if [[ -n $2 ]]; then
-    fg=$(fg_color $2)
-    codes=("${codes[@]}" $fg)
+  if [[ $2 ]]; then
+    fg=$(fg_color "$2")
+    codes+=("$fg")
     debug "Added $fg as foreground to codes"
   fi
 
@@ -510,18 +512,18 @@ function prompt_right_segment {
   # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
   #     $CURRENT_RBG=
   # fi
-  local -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
+  local -a intermediate2=("$(fg_color "$1")" "$(bg_color "$CURRENT_RBG")")
   # PRIGHT="$PRIGHT---"
-  debug "pre prompt " $(ansi_r intermediate2[@])
-  PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
-  debug "post prompt " $(ansi_r codes[@])
-  PRIGHT="$PRIGHT$(ansi_r codes[@]) "
+  debug "pre prompt $(ansi_r 'intermediate2[@]')"
+  PRIGHT="$PRIGHT$(ansi_r 'intermediate2[@]')$RIGHT_SEPARATOR"
+  debug "post prompt $(ansi_r 'codes[@]')"
+  PRIGHT="$PRIGHT$(ansi_r 'codes[@]') "
   # else
   #     debug "no current BG, codes are (${codes[*]})"
-  #     PRIGHT="$PRIGHT$(ansi codes[@]) "
+  #     PRIGHT="$PRIGHT$(ansi 'codes[@]') "
   # fi
   CURRENT_RBG=$1
-  [[ -n $3 ]] && PRIGHT="$PRIGHT$3"
+  [[ $3 ]] && PRIGHT=$PRIGHT$3
 }
 
 ######################################################################
@@ -574,7 +576,7 @@ function _omb_theme_PROMPT_COMMAND {
   local RETVAL=$?
   local PRIGHT=""
   local CURRENT_BG=NONE
-  local PR="$(ansi_single $(text_effect reset))"
+  local PR=$(ansi_single $(text_effect reset))
   build_prompt
 
   # uncomment below to use right prompt
