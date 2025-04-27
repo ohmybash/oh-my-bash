@@ -246,7 +246,7 @@ _omb_deprecate_defun_put 20000 ansi_single _omb_theme_agnoster_ansi_single
 # Takes two arguments, background and foreground. Both can be omitted,
 # rendering default background/foreground.
 function prompt_segment {
-  local bg fg
+  local REPLY
   local -a codes
 
   debug "Prompting $1 $2 $3"
@@ -262,31 +262,39 @@ function prompt_segment {
   # See also the same code in the function "prompt_right_segment".
   #
   # if [[ ! $1 || ( $2 && $2 != default ) ]]; then
-  codes+=("$(text_effect reset)")
+  _omb_theme_agnoster_text_effect reset
+  [[ $REPLY ]] && codes+=("$REPLY")
   # fi
   if [[ $1 ]]; then
-    bg=$(bg_color "$1")
-    codes+=("$bg")
-    debug "Added $bg as background to codes"
+    _omb_theme_agnoster_bg_color "$1"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as background to codes"
   fi
   if [[ $2 ]]; then
-    fg=$(fg_color "$2")
-    codes+=("$fg")
-    debug "Added $fg as foreground to codes"
+    _omb_theme_agnoster_fg_color "$2"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as foreground to codes"
   fi
 
   debug "Codes: "
   # local -p codes
 
   if [[ $CURRENT_BG != NONE && $1 != $CURRENT_BG ]]; then
-    local -a intermediate=("$(fg_color "$CURRENT_BG")" "$(bg_color "$1")")
-    debug "pre prompt $(ansi 'intermediate[@]')"
-    PR="$PR $(ansi 'intermediate[@]')$SEGMENT_SEPARATOR"
-    debug "post prompt $(ansi 'codes[@]')"
-    PR="$PR$(ansi 'codes[@]') "
+    local -a intermediate=()
+    _omb_theme_agnoster_fg_color "$CURRENT_BG"
+    [[ $REPLY ]] && intermediate+=("$REPLY")
+    _omb_theme_agnoster_bg_color "$1"
+    [[ $REPLY ]] && intermediate+=("$REPLY")
+    _omb_theme_agnoster_ansi 'intermediate[@]'
+    debug "pre prompt $REPLY"
+    PR="$PR $REPLY$SEGMENT_SEPARATOR"
+    _omb_theme_agnoster_ansi 'codes[@]'
+    debug "post prompt $REPLY"
+    PR="$PR$REPLY "
   else
     debug "no current BG, codes are (${codes[*]})"
-    PR="$PR$(ansi 'codes[@]') "
+    _omb_theme_agnoster_ansi 'codes[@]'
+    PR="$PR$REPLY "
   fi
   CURRENT_BG=$1
   [[ $3 ]] && PR=$PR$3
@@ -294,12 +302,20 @@ function prompt_segment {
 
 # End the prompt, closing any open segments
 function prompt_end {
+  local REPLY
   if [[ $CURRENT_BG ]]; then
-    local -a codes=("$(text_effect reset)" "$(fg_color "$CURRENT_BG")")
-    PR="$PR $(ansi 'codes[@]')$SEGMENT_SEPARATOR"
+    local -a codes=()
+    _omb_theme_agnoster_text_effect reset
+    [[ $REPLY ]] && codes+=("$REPLY")
+    _omb_theme_agnoster_fg_color "$CURRENT_BG"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    _omb_theme_agnoster_ansi 'codes[@]'
+    PR="$PR $REPLY$SEGMENT_SEPARATOR"
   fi
-  local -a reset=("$(text_effect reset)")
-  PR="$PR $(ansi 'reset[@]')"
+  _omb_theme_agnoster_text_effect reset
+  local -a reset=(${REPLY:+"$REPLY"})
+  _omb_theme_agnoster_ansi 'reset[@]'
+  PR="$PR $REPLY"
   CURRENT_BG=''
 }
 
@@ -449,11 +465,23 @@ function prompt_dir {
 # - am I root
 # - are there background jobs?
 function prompt_status {
-  local symbols
+  local symbols REPLY
   symbols=()
-  ((RETVAL != 0)) && symbols+="$(ansi_single $(fg_color red))✘"
-  ((UID == 0)) && symbols+="$(ansi_single $(fg_color yellow))⚡"
-  (($(jobs -l | wc -l) > 0)) && symbols+="$(ansi_single $(fg_color cyan))⚙"
+  if ((RETVAL != 0)); then
+    _omb_theme_agnoster_fg_color red
+    _omb_theme_agnoster_ansi_single "$REPLY"
+    symbols+=$REPLY'✘'
+  fi
+  if ((UID == 0)); then
+    _omb_theme_agnoster_fg_color yellow
+    _omb_theme_agnoster_ansi_single "$REPLY"
+    symbols+=$REPLY'⚡'
+  fi
+  if compgen -j &>/dev/null; then
+    _omb_theme_agnoster_fg_color cyan
+    _omb_theme_agnoster_ansi_single "$REPLY"
+    symbols+=$REPLY'⚙'
+  fi
 
   [[ $symbols ]] && prompt_segment black default "$symbols"
 }
@@ -485,24 +513,25 @@ function __command_rprompt {
 # Takes two arguments, background and foreground. Both can be omitted,
 # rendering default background/foreground.
 function prompt_right_segment {
-  local bg fg
+  local REPLY
   local -a codes
 
   debug "Prompt right"
   debug "Prompting $1 $2 $3"
 
   # if [[ ! $1 || ( $2 && $2 != default ) ]]; then
-  codes+=("$(text_effect reset)")
+  _omb_theme_agnoster_text_effect reset
+  [[ $REPLY ]] && codes+=("$REPLY")
   # fi
   if [[ $1 ]]; then
-    bg=$(bg_color "$1")
-    codes+=("$bg")
-    debug "Added $bg as background to codes"
+    _omb_theme_agnoster_bg_color "$1"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as background to codes"
   fi
   if [[ $2 ]]; then
-    fg=$(fg_color "$2")
-    codes+=("$fg")
-    debug "Added $fg as foreground to codes"
+    _omb_theme_agnoster_fg_color "$2"
+    [[ $REPLY ]] && codes+=("$REPLY")
+    debug "Added $REPLY as foreground to codes"
   fi
 
   debug "Right Codes: "
@@ -512,15 +541,22 @@ function prompt_right_segment {
   # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
   #     $CURRENT_RBG=
   # fi
-  local -a intermediate2=("$(fg_color "$1")" "$(bg_color "$CURRENT_RBG")")
+  local -a intermediate2=()
+  _omb_theme_agnoster_fg_color "$1"
+  [[ $REPLY ]] && intermediate2+=("$REPLY")
+  _omb_theme_agnoster_bg_color "$CURRENT_RBG"
+  [[ $REPLY ]] && intermediate2+=("$REPLY")
   # PRIGHT="$PRIGHT---"
-  debug "pre prompt $(ansi_r 'intermediate2[@]')"
-  PRIGHT="$PRIGHT$(ansi_r 'intermediate2[@]')$RIGHT_SEPARATOR"
-  debug "post prompt $(ansi_r 'codes[@]')"
-  PRIGHT="$PRIGHT$(ansi_r 'codes[@]') "
+  _omb_theme_agnoster_ansi_r 'intermediate2[@]'
+  debug "pre prompt $REPLY"
+  PRIGHT="$PRIGHT$REPLY$RIGHT_SEPARATOR"
+  _omb_theme_agnoster_ansi_r 'codes[@]'
+  debug "post prompt $REPLY"
+  PRIGHT="$PRIGHT$REPLY "
   # else
   #     debug "no current BG, codes are (${codes[*]})"
-  #     PRIGHT="$PRIGHT$(ansi 'codes[@]') "
+  #     _omb_theme_agnoster_ansi 'codes[@]'
+  #     PRIGHT="$PRIGHT$REPLY "
   # fi
   CURRENT_RBG=$1
   [[ $3 ]] && PRIGHT=$PRIGHT$3
@@ -576,7 +612,10 @@ function _omb_theme_PROMPT_COMMAND {
   local RETVAL=$?
   local PRIGHT=""
   local CURRENT_BG=NONE
-  local PR=$(ansi_single $(text_effect reset))
+  local REPLY
+  _omb_theme_agnoster_text_effect reset
+  _omb_theme_agnoster_ansi_single "$REPLY"
+  local PR=$REPLY
   build_prompt
 
   # uncomment below to use right prompt
