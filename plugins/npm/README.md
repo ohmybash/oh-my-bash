@@ -1,4 +1,4 @@
-## npm plugin
+# npm plugin
 
 The npm plugin provides completion as well as adding many useful aliases.
 
