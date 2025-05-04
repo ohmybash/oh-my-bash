@@ -147,57 +147,76 @@ function _omb_term_color_initialize {
     return 0
   fi
 
-  if _omb_util_binary_exists tput; then
-    _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
-    _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
-    _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
-    _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
-  else
-    _omb_term_colors=
-    _omb_term_bold=$'\e[1m'
-    _omb_term_underline=$'\e[4m'
-    _omb_term_reset=$'\e[0m'
-  fi
-  _omb_term_normal=$'\e[0m'
-  _omb_term_reset_color=$'\e[39m'
+  if [[ ${BLE_VERSION-} ]]; then
+    # Import terminfo cache of ble.sh (https://github.com/akinomyoga/ble.sh)
+    _omb_term_colors=$_ble_term_colors
+    _omb_term_bold=$_ble_term_bold
+    _omb_term_underline=$_ble_term_smul
+    _omb_term_reset=$_ble_term_sgr0
+    _omb_term_normal=$_ble_term_sgr0
+    _omb_term_reset_color=$'\e[39m'
 
-  # normal colors
-  if ((_omb_term_colors >= 8)); then
     local index
     for ((index = 0; index < 8; index++)); do
-      local fg=$(tput setaf "$index" 2>/dev/null || tput AF "$index" 2>/dev/null)
-      [[ $fg ]] || fg=$'\e[3'$index'm'
-      printf -v "_omb_term_${normal_colors[index]}" %s "$fg"
-      printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+      printf -v "_omb_term_${normal_colors[index]}" %s "${_ble_term_setaf[index]}"
+      printf -v "_omb_term_background_${normal_colors[index]}" %s "${_ble_term_setab[index]}"
+      printf -v "_omb_term_${bright_colors[index]}" %s "${_ble_term_setaf[index+8]}"
+      printf -v "_omb_term_background_${bright_colors[index]}" %s "${_ble_term_setab[index+8]}"
     done
-  else
-    local index
-    for ((index = 0; index < 8; index++)); do
-      printf -v "_omb_term_${normal_colors[index]}" '\e[3%sm' "$index"
-      printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
-    done
-  fi
 
-  # bright colors
-  if ((_omb_term_colors >= 16)); then
-    local index
-    for ((index = 0; index < 8; index++)); do
-      local fg=$(tput setaf $((index+8)) 2>/dev/null || tput AF $((index+8)) 2>/dev/null)
-      [[ $fg ]] || fg=$'\e[9'$index'm'
-      local refbg=_omb_term_background_${normal_colors[index]}
-      local bg=${!refbg}$'\e[10'$index'm'
-      printf -v "_omb_term_${bright_colors[index]}" %s "$fg"
-      printf -v "_omb_term_background_${bright_colors[index]}" %s "$bg"
-    done
   else
-    # copy normal colors to bright colors (with bold)
-    local index
-    for ((index = 0; index < 8; index++)); do
-      local reffg=_omb_term_${normal_colors[index]}
-      local refbg=_omb_term_background_${normal_colors[index]}
-      printf -v "_omb_term_${bright_colors[index]}" %s "$_omb_term_bold${!reffg}"
-      printf -v "_omb_term_background_${bright_colors[index]}" %s "$_omb_term_bold${!refbg}"
-    done
+    if [[ ${OMB_TERM_USE_TPUT-} != no ]] && _omb_util_binary_exists tput; then
+      _omb_term_colors=$(tput colors 2>/dev/null || tput Co 2>/dev/null)
+      _omb_term_bold=$(tput bold 2>/dev/null || tput md 2>/dev/null)
+      _omb_term_underline=$(tput smul 2>/dev/null || tput ul 2>/dev/null)
+      _omb_term_reset=$(tput sgr0 2>/dev/null || tput me 2>/dev/null)
+    else
+      _omb_term_colors=
+      _omb_term_bold=$'\e[1m'
+      _omb_term_underline=$'\e[4m'
+      _omb_term_reset=$'\e[0m'
+    fi
+    _omb_term_normal=$'\e[0m'
+    _omb_term_reset_color=$'\e[39m'
+
+    # normal colors
+    if ((_omb_term_colors >= 8)); then
+      local index
+      for ((index = 0; index < 8; index++)); do
+        local fg=$(tput setaf "$index" 2>/dev/null || tput AF "$index" 2>/dev/null)
+        [[ $fg ]] || fg=$'\e[3'$index'm'
+        printf -v "_omb_term_${normal_colors[index]}" %s "$fg"
+        printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+      done
+    else
+      local index
+      for ((index = 0; index < 8; index++)); do
+        printf -v "_omb_term_${normal_colors[index]}" '\e[3%sm' "$index"
+        printf -v "_omb_term_background_${normal_colors[index]}" '\e[4%sm' "$index"
+      done
+    fi
+
+    # bright colors
+    if ((_omb_term_colors >= 16)); then
+      local index
+      for ((index = 0; index < 8; index++)); do
+        local fg=$(tput setaf $((index+8)) 2>/dev/null || tput AF $((index+8)) 2>/dev/null)
+        [[ $fg ]] || fg=$'\e[9'$index'm'
+        local refbg=_omb_term_background_${normal_colors[index]}
+        local bg=${!refbg}$'\e[10'$index'm'
+        printf -v "_omb_term_${bright_colors[index]}" %s "$fg"
+        printf -v "_omb_term_background_${bright_colors[index]}" %s "$bg"
+      done
+    else
+      # copy normal colors to bright colors (with bold)
+      local index
+      for ((index = 0; index < 8; index++)); do
+        local reffg=_omb_term_${normal_colors[index]}
+        local refbg=_omb_term_background_${normal_colors[index]}
+        printf -v "_omb_term_${bright_colors[index]}" %s "$_omb_term_bold${!reffg}"
+        printf -v "_omb_term_background_${bright_colors[index]}" %s "$_omb_term_bold${!refbg}"
+      done
+    fi
   fi
 
   # index colors
@@ -437,10 +456,13 @@ function _omb_util_split_lines {
   return 0
 }
 
-## @fn _omb_util_array_remove array_name value
+## @fn _omb_util_array_contains array_name value
 function _omb_util_array_contains {
+  # When the array does not have any elements, we always fail.
+  eval "((\${#$1[@]}))" || return 1
+
   [[ $1 == ret ]] ||
-    eval "local -a ret=(\"\${$2[@]}\")"
+    eval "local -a ret=(\"\${$1[@]}\")"
   local value
   for value in "${ret[@]}"; do
     if [[ $value == "$2" ]]; then

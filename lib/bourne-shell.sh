@@ -87,7 +87,22 @@ _omb_util_alias_delayed ls
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 if _omb_util_binary_exists notify-send; then
-  _omb_util_alias alert='notify-send --urgency=low -i "$(if (($? == 0)); then _omb_util_print terminal; else _omb_util_print error; fi)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+  function _omb_alias_alert {
+    local status=$? type command
+    if ((status == 0)); then
+      type=terminal
+    else
+      type=error
+    fi
+
+    # get the command
+    command=$(history | command tail -n 1 | command sed -e 's/^[[:space:]]*[0-9]\{1,\}[[:space:]]*//;s/[;&|][[:space:]]*alert$//')
+
+    notify-send --urgency=low -i "$type" "$command"
+
+    return "$status"
+  }
+  _omb_util_alias alert='_omb_alias_alert "$@"'
 fi
 
 # Alias definitions.

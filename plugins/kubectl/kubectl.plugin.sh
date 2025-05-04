@@ -3,7 +3,9 @@
 alias k=kubectl
 
 # Execute a kubectl command against all namespaces
-alias kca='f(){ kubectl "$@" --all-namespaces;  unset -f f; }; f'
+function kca {
+  kubectl "$@" --all-namespaces
+}
 
 # Apply a YML file
 alias kaf='kubectl apply -f'
@@ -77,7 +79,7 @@ alias kdeld='kubectl delete deployment'
 alias ksd='kubectl scale deployment'
 alias krsd='kubectl rollout status deployment'
 function kres {
-    kubectl set env $@ REFRESHED_AT=$(date +%Y%m%d%H%M%S)
+  kubectl set env "$@" "REFRESHED_AT=$(date +%Y%m%d%H%M%S)"
 }
 
 # Rollout management.

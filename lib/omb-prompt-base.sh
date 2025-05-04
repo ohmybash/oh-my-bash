@@ -80,6 +80,7 @@ CHRUBY_THEME_PROMPT_SUFFIX='|'
 # OMB_PROMPT_CONDAENV_USE_BASENAME=true
 # OMB_PROMPT_PYTHON_VERSION_FORMAT=' |%s|'
 # OMB_PROMPT_SHOW_PYTHON_VENV=true
+OMB_PROMPT_SPACK_ENV_FORMAT='[%s] '
 
 # deprecate
 VIRTUALENV_THEME_PROMPT_PREFIX=' |'
@@ -487,7 +488,8 @@ _omb_deprecate_function 20000 ruby_version_prompt   _omb_prompt_print_ruby_env
 function _omb_prompt_get_virtualenv {
   virtualenv=
   [[ ${VIRTUAL_ENV-} ]] || return 1
-  _omb_prompt_format virtualenv "$(basename "$VIRTUAL_ENV")" OMB_PROMPT_VIRTUALENV:VIRTUALENV_THEME_PROMPT
+  virtualenv=${VIRTUAL_ENV_PROMPT:-$(basename "$VIRTUAL_ENV")}
+  _omb_prompt_format virtualenv "$virtualenv" OMB_PROMPT_VIRTUALENV:VIRTUALENV_THEME_PROMPT
 }
 
 ## @fn _omb_prompt_get_condaenv
@@ -536,6 +538,16 @@ function _omb_prompt_get_python_env {
   _omb_prompt_get_python_version
   python_env=$virtualenv$condaenv$python_version
   [[ $python_env ]]
+}
+
+## @fn _omb_prompt_get_spack_env
+##   @var[out] spack_env
+##   @exit
+function _omb_prompt_get_spack_env {
+  spack_env=
+  [[ ${OMB_PROMPT_SHOW_SPACK_ENV-} == true ]] || return 1
+  [[ ${SPACK_ENV-} ]] || return 1
+  _omb_prompt_format spack_env "$(basename "$SPACK_ENV")" OMB_PROMPT_SPACK_ENV
 }
 
 _omb_util_defun_print _omb_prompt_{print,get}_virtualenv virtualenv

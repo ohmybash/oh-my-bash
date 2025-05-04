@@ -52,6 +52,7 @@ function _omb_upgrade {
   printf "${BLUE}%s\n" "Hooray! Oh My Bash has been updated and/or is at the current version."
   printf "${BLUE}${BOLD}%s${NORMAL}\n" "To keep up on the latest news and updates, follow us on GitHub: https://github.com/ohmybash/oh-my-bash"
   if [[ $- == *i* ]]; then
+    local _omb_upgrade_reload_bashrc=1
     declare -f _omb_util_unload &>/dev/null && _omb_util_unload
     # shellcheck disable=SC1090
     source ~/.bashrc

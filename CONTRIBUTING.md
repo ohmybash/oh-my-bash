@@ -130,7 +130,10 @@ The theme needs to have exactly one image file.  The image size needs to be
 height ~290px and width 600..800px to make the theme gallery aligned and also
 to keep the repository size small. The filename should be `<theme
 name>-dark.png` or `<theme name>-light.png` depending on the dark or light
-background of the terminal used to make the image.
+background of the terminal used to make the image.  The image should be
+unscaled screen shot of a terminal.  If the terminal size is larger than the
+expected image size, the image should be clipped instead of being resized and
+downscaled.
 
 When you add a new theme, please also update
 [themes/THEMES.md](https://github.com/ohmybash/oh-my-bash/blob/master/themes/THEMES.md).
@@ -146,7 +149,7 @@ it is worth including in Oh My Bash, you will have to find testers to +1 your
 PR.
 
 When you add a new plugin, please also update
-[plugins/README.md](https://github.com/ohmybash/oh-my-bash/blob/master/plugins/README.md)
+[plugins/README.md](https://github.com/ohmybash/oh-my-bash/blob/master/plugins/README.md).
 
 ### Copyright and responsibility
 
@@ -189,6 +192,45 @@ squashed into a single commit unless the changes are properly separated into
 commits for respective purposes.  On the other hand, PRs including several
 minor fixes to the exiting codebase will not be squashed because each commit
 gives a separate fix to the exiting code.
+
+### Naming convention of functions and global variables
+
+Initially, we haven't cared about the naming convention very much, but we now
+try to improve it.  In particular, the new codes should follow this naming
+convention.  The contributions to improve old codes are also welcome, but we
+also need to keep the backward compatibility.  See [Discussion
+#280](https://github.com/ohmybash/oh-my-bash/discussions/280) for background.
+
+The functions/aliases that are supposed to be used as interactive commands can
+have arbitrary names including short ones.
+
+The functions that are used from the other functions have the names of the form
+`_omb_*`.
+
+* The functions defined by libraries has the form `_omb_${namespace}_${funcname}`
+* The functions defined by a specific plugin has the form `_omb_plugin_${plugin_name}_${funcname}`
+* The functions defined by a specific theme has the form `_omb_theme_${theme_name}_${funcname}`
+* Some important functions might have the name `_omb_${funcname}` directly put under `_omb` namespace.
+
+Public global variables that can be used to configure the behavior of
+oh-my-bash have the form `OMB_*`.
+
+* The settings for the main oh-my-bash behavior have the names of the form `OMB_${config^^}`
+* The settings for the detailed behavior have the names of the form `OMB_${namespace^^}_${config^^}`
+* The settings for a specific plugin has the form `OMB_PLUGIN_${plugin_name^^}_${config^^}`
+* The settings for a specific theme has the form `OMB_THEME_${theme_name^^}_${config^^}`
+
+Internal global variables put into global variables used by oh-my-bash has the
+form `_omb_*`.
+
+* The internal variables defined by libraries has the form `_omb_${namespace}_${varname}`
+* The internal variables used by a specific plugin has the form `_omb_plugin_${plugin_name}_${varname}`
+* The internal variables used by a specific theme has the form `_omb_theme_${theme_name}_${varname}`
+* Some important variables might have the name `_omb_${varname}` directly put under `_omb` namespace.
+
+There are no restrictions on the local variable names.  A prefix like
+`_omb_${namespace}_` is unnecessary because the namespace of the local
+variables is separated for each function call.
 
 ----
 
