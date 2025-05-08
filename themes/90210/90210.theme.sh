@@ -9,11 +9,16 @@ GIT_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓"
 GIT_THEME_PROMPT_PREFIX=" ${_omb_prompt_green}|"
 GIT_THEME_PROMPT_SUFFIX="${_omb_prompt_green}|"
 
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false}
+
 # Nicely formatted terminal prompt
 function _omb_theme_PROMPT_COMMAND(){
+  local python_venv
+  _omb_prompt_get_python_venv
+
   PS1="\n${_omb_prompt_bold_gray}[${_omb_prompt_navy}\@${_omb_prompt_bold_gray}]-"
   PS1+="${_omb_prompt_bold_gray}[${_omb_prompt_green}\u${_omb_prompt_olive}@${_omb_prompt_green}\h${_omb_prompt_bold_gray}]-"
-  PS1+="${_omb_prompt_bold_gray}[${_omb_prompt_purple}\w${_omb_prompt_bold_gray}]-"
+  PS1+="${_omb_prompt_bold_gray}[${_omb_prompt_purple}\w${_omb_prompt_bold_gray}]-${python_venv}"
   PS1+="$(scm_prompt_info)\n${_omb_prompt_reset_color}\$ "
 }
 
