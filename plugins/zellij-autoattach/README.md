@@ -18,25 +18,25 @@ This zellij plugin will automatically attach a zellij session to your shell sess
 **SSH**
 
 ```bash
-[ "$SSH_TTY" ] && plugins+=(zellij-autoattach)
+[[ "${SSH_TTY-}" ]] && plugins+=(zellij-autoattach)
 ```
 
 **Wayland**
 
 ```bash
-[ "$DISPLAY_WAYLAND" ] && plugins+=(zellij-autoattach)
+[ "${DISPLAY_WAYLAND-}" ] && plugins+=(zellij-autoattach)
 ```
 
 **X11**
 
 ```bash
-[ "$DISPLAY" ] && plugins+=(zellij-autoattach)
+[ "${DISPLAY-}" ] && plugins+=(zellij-autoattach)
 ```
 
 **Multiple**
 
 ```bash
-if [ "$DISPLAY" ] || [ "$SSH" ]; then
+if [ "{$DISPLAY-}" ] || [ "${SSH-}" ]; then
   plugins+=(zellij-autoattach)
 fi
 ```
