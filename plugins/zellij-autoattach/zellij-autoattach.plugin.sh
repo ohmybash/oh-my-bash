@@ -7,17 +7,17 @@
 # A zellij plugin that will automatically attach itself to a bash session.
 # This plugin is derived from tmux-autoattach.plugin.sh.
 
-[[ $OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR ]] || OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR="detach"
+[[ ${OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR-} ]] || OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR="detach"
 
 function _osh_plugin_zellij_autoattach_exit {
-  [[ -z ${ZELLIJ-} ]] && zellij attach --create default && exit
+  [[ ! ${ZELLIJ-} ]] && zellij attach --create default && exit
 }
 
 function _osh_plugin_zellij_autoattach_detach {
-  [[ -z ${ZELLIJ-} ]] && zellij attach --create default
+  [[ ! ${ZELLIJ-} ]] && zellij attach --create default
 }
 
-case $OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR in
+case ${OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR-} in
 'exit')
   _osh_plugin_zellij_autoattach_exit
   ;;
