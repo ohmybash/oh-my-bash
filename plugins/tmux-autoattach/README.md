@@ -24,19 +24,19 @@ This tmux plugin will automatically attach a tmux session to your shell session.
 **Wayland**
 
 ```bash
-[ ${DISPLAY_WAYLAND-} ] && plugins+=(tmux-autoattach)
+[[ ${DISPLAY_WAYLAND-} ]] && plugins+=(tmux-autoattach)
 ```
 
 **X11**
 
 ```bash
-[ ${DISPLAY-} ] && plugins+=(tmux-autoattach)
+[[ ${DISPLAY-} ]] && plugins+=(tmux-autoattach)
 ```
 
 **Multiple**
 
 ```bash
-if [ ${DISPLAY-} ] || [ ${SSH-} ]; then
+if [[ ${DISPLAY-} ]] || [[ ${SSH-} ]]; then
   plugins+=(tmux-autoattach)
 fi
 ```
