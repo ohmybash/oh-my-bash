@@ -17,7 +17,7 @@ function _osh_plugin_zellij_autoattach_detach {
   [[ ! ${ZELLIJ-} ]] && zellij attach --create default
 }
 
-case ${OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR-} in
+case $OSH_PLUGIN_ZELLIJ_AUTOATTACH_BEHAVIOR in
 'exit')
   _osh_plugin_zellij_autoattach_exit
   ;;
