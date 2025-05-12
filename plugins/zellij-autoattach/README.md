@@ -36,7 +36,7 @@ This zellij plugin will automatically attach a zellij session to your shell sess
 **Multiple**
 
 ```bash
-if [[ ${DISPLAY-} ]] || [[ ${SSH-} ]]; then
+if [[ ${DISPLAY-} || ${SSH-} ]]; then
   plugins+=(zellij-autoattach)
 fi
 ```

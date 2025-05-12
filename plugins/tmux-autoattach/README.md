@@ -36,7 +36,7 @@ This tmux plugin will automatically attach a tmux session to your shell session.
 **Multiple**
 
 ```bash
-if [[ ${DISPLAY-} ]] || [[ ${SSH-} ]]; then
+if [[ ${DISPLAY-} || ${SSH-} ]]; then
   plugins+=(tmux-autoattach)
 fi
 ```
