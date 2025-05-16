@@ -54,24 +54,22 @@ function _omb_theme_developer__read_ruby_version {
 ## @var[out] REPLY
 function _omb_theme_developer__readPyVersion {
   local val_py=$(python --version 2>/dev/null | cut -d ' ' -f 2)
-  local val_uv=$(uv --version 2>/dev/null | cut -d ' ' -f 2)
-  local val_venv=""
-
-  ## according some docs this env var just exist when a venv/uv venv is active
-  if [[ $VIRTUAL_ENV =~ [^/]+/[^/]+$ ]]; then
-    val_venv=" ($BASH_REMATCH)"
-  fi
 
   if _omb_util_command_exists conda; then
     local condav=$(conda env list | awk '$2 == "*" {print $1}')
     val_py="conda<$condav> $val_py"
-  else
-    if _omb_util_command_exists uv; then
-      val_py="uv($val_uv) $val_py$val_venv"
-    else
-      # if conda and uv is not installed use "py"
-      val_py="py $val_py"
+  elif _omb_util_command_exists uv; then
+    local val_uv=$(uv --version 2>/dev/null | cut -d ' ' -f 2)
+    local val_venv=""
+    ## according some docs this env var just exist when a venv/uv venv is active
+    if [[ $VIRTUAL_ENV =~ [^/]+/[^/]+$ ]]; then
+      val_venv=" ($BASH_REMATCH)"
     fi
+
+    val_py="uv($val_uv) $val_py$val_venv"
+  else
+    # if conda and uv is not installed use "py"
+    val_py="py $val_py"
   fi
   REPLY=$val_py
 }
@@ -116,7 +114,7 @@ function _omb_theme_developer__readCpuTemp_genericLinuxTemp {
     return 1
   fi
 
-  local temp_linux=$(< "$file")
+  local temp_linux=$(<"$file")
   local temp_in_c=$((temp_linux / 1000))
   REPLY=$temp_in_c
 }
