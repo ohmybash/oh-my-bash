@@ -58,8 +58,8 @@ function _omb_theme_developer__readPyVersion {
   local val_venv=""
 
   ## according some docs this env var just exist when a venv/uv venv is active
-  if [[ -n "$VIRTUAL_ENV" ]]; then
-    val_venv=" ($(echo "$VIRTUAL_ENV" | awk -F/ '{print $(NF-1)"/"$NF}'))"
+  if [[ $VIRTUAL_ENV =~ [^/]+/[^/]+$ ]]; then
+    val_venv=" ($BASH_REMATCH)"
   fi
 
   if _omb_util_command_exists conda; then
