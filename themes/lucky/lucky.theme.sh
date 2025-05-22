@@ -46,14 +46,14 @@ function git_prompt_minimal_info {
     fi
 
     # Output the git prompt
-    echo -e "${L_WHITE}on ${L_BLUE}git:${L_PURPLE}${SCM_BRANCH}${SCM_STATE}"
+    echo -e " ${L_WHITE}on ${L_BLUE}git:${L_PURPLE}${SCM_BRANCH}${SCM_STATE}"
   fi
 }
 
 function _omb_theme_PROMPT_COMMAND() {
   local python_venv
   _omb_prompt_get_python_venv
-  PS1="$python_venv${L_CYAN}\u ${L_WHITE}@ ${L_GREEN}\h ${L_WHITE}in ${L_BOLD_YELLOW}\w $(scm_prompt_info) ${L_WHITE}[$(clock_prompt)]\n${L_BOLD_RAD}\$ ${L_NORMAL}"
+  PS1="$python_venv${L_CYAN}\u ${L_WHITE}@ ${L_GREEN}\h ${L_WHITE}in ${L_BOLD_YELLOW}\w$(scm_prompt_info)${L_WHITE} [$(clock_prompt)]\n${L_BOLD_RAD}\$ ${L_NORMAL}"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
