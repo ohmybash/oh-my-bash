@@ -26,23 +26,23 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 
 ## Emerge Package Manager
 
-| Alias   | Command                                         | Description                                                                                                                       |
-| ------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `em`    | `sudo emerge`                                   | Emerge is the definitive command-line interface to the Portage system.                                                            |
-| `es`    | `sudo emerge --search`                          | Searches for matches of the supplied string in the ebuild repository.                                                             |
-| `esync` | `sudo emerge --sync`                            | Updates repositories, for which auto-sync, sync-type and sync-uri attributes are set in repos.conf.                               |
-| `eb`    | `sudo ebuild`                                   | An ebuild must be, at a minimum, a valid Portage package directory name without a version or category, such as portage or python. |
-| `er`    | `sudo emerge -c`                                | Cleans the system by removing packages that are not associated with explicitly merged packages.                                   |
-| `emfu`  | `sudo emerge --sync && sudo emerge -uDN @world` | Emerge update & upgrade system.                                                                                                   |
-| `eu`    | `sudo emerge -uDN @world`                       | Emerge upgrade system.                                                                                                            |
-| `ei`    | `sudo emerge --info`                            | Emerge display information.                                                                                                       |
-| `ep`    | `sudo emerge -p`                                | Emerge display what would have been installed.                                                                                    |
-| `e1`    | `sudo emerge -1`                                | Emerge merge without adding the packages to the world file.                                                                       |
-| `ecp`   | `sudo eclean-pkg -d`                            | Cleans binary packages.                                                                                                           |
-| `elip`  | `sudo eix-installed -a`                         | Lists all installed programs.                                                                                                     |
-| `ecd`   | `sudo eclean-dist -d`                           | Cleans repository source files.                                                                                                   |
-| `eq`    | `sudo equery`                                   | Package query tool.                                                                                                               |
-| `ers`   | `sudo emerge -c`                                | (Deprecated, retained for backward compatibility. Use `er` instead.)                                                              |
+| Alias   | Command                                          | Description                                                                                                                      |
+| ------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `em`    | `sudo emerge`                                    | Emerge is the definitive command-line interface to the Portage system.                                                           |
+| `es`    | `sudo emerge --search`                           | Searches for matches of the supplied string in the ebuild repository.                                                            |
+| `esync` | `sudo emerge --sync`                             | Updates repositories, for which auto-sync, sync-type and sync-uri attributes are set in repos.conf.                              |
+| `eb`    | `sudo ebuild`                                    | An ebuild must be, at a minimum, a valid Portage package directory name without a version or category, such as portage or python.|
+| `er`    | `sudo emerge -c`                                 | Cleans the system by removing packages that are not associated with explicitly merged packages.                                  |
+| `emfu`  | `sudo emerge --sync && sudo emerge -uDN @world`  | Emerge update & upgrade system.                                                                                                  |
+| `eu`    | `sudo emerge -uDN @world`                        | Emerge upgrade system.                                                                                                           |
+| `ei`    | `sudo emerge --info`                             | Emerge display information.                                                                                                      |
+| `ep`    | `sudo emerge -p`                                 | Emerge display what would have been installed.                                                                                   |
+| `e1`    | `sudo emerge -1`                                 | Emerge merge without adding the packages to the world file.                                                                      |
+| `ecp`   | `sudo eclean-pkg -d`                             | Cleans binary packages.                                                                                                          |
+| `elip`  | `sudo eix-installed -a`                          | Lists all installed programs.                                                                                                    |
+| `ecd`   | `sudo eclean-dist -d`                            | Cleans repository source files.                                                                                                  |
+| `eq`    | `sudo equery`                                    | Package query tool.                                                                                                              |
+| `ers`   | `sudo emerge -c`                                 | (Deprecated, retained for backward compatibility. Use `er` instead.)                                                             |
 
 ## Paludis Package Manager (`cave`)
 
@@ -74,19 +74,19 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 
 ## Nala Package Manager
 
-| Alias    | Command                   | Description                                                                                              |
-| -------- | ------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `nala`   | `sudo nala`               | Nala is a prettier front-end for libapt-pkg, doubles as --help.                                          |
-| `nalaf`  | `sudo nala fetch`         | Fetch fast mirrors to improve download speed.                                                            |
-| `nalau`  | `sudo nala update`        | Update the list of available packages.                                                                   |
-| `nalafu` | `sudo nala upgrade -y`    | The equivalent of apt update && apt full-upgrade --auto-remove.                                          |
-| `nalai`  | `sudo nala install -y`    | Takes multiple packages as arguments and will install all of them.                                       |
-| `nalar`  | `sudo nala remove -y`     | Remove or purge packages that are no longer needed.                                                      |
-| `nalaa`  | `sudo nala autoremove -y` | Automatically remove or purge any packages that are no longer needed.                                    |
-| `nalah`  | `sudo nala history`       | Nala history with no subcommands will show a summary of all transactions made.                           |
-| `nalal`  | `sudo nala list`          | List all packages or only packages based on the provided name, glob or regex. By default will only glob. |
-| `nalas`  | `sudo nala search`        | Search package names and descriptions using a word, regex or glob.                                       |
-| `nalav`  | `sudo nala show`          | Show information about a package such as the name, version, dependencies etc.                            |
+| Alias   | Command                   | Description                                                                                              |
+| ------- | ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `nala`  | `sudo nala`               | Nala is a prettier front-end for libapt-pkg, doubles as --help.                                          |
+| `nalaf` | `sudo nala fetch`         | Fetch fast mirrors to improve download speed.                                                            |
+| `nalau` | `sudo nala update`        | Update the list of available packages.                                                                   |
+| `nalafu`| `sudo nala upgrade -y`    | The equivalent of apt update && apt full-upgrade --auto-remove.                                          |
+| `nalai` | `sudo nala install -y`    | Takes multiple packages as arguments and will install all of them.                                       |
+| `nalar` | `sudo nala remove -y`     | Remove or purge packages that are no longer needed.                                                      |
+| `nalaa` | `sudo nala autoremove -y` | Automatically remove or purge any packages that are no longer needed.                                    |
+| `nalah` | `sudo nala history`       | Nala history with no subcommands will show a summary of all transactions made.                           |
+| `nalal` | `sudo nala list`          | List all packages or only packages based on the provided name, glob or regex. By default will only glob. |
+| `nalas` | `sudo nala search`        | Search package names and descriptions using a word, regex or glob.                                       |
+| `nalav` | `sudo nala show`          | Show information about a package such as the name, version, dependencies etc.                            |
 
 ## Snap Package Manager
 
