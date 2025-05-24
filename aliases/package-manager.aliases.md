@@ -10,6 +10,7 @@ You can find the details of each alias in the source
 - `apt` (Advanced Packaging Tool) ... `apt`, `aptfu`, `apti`, `apts`, `aptr`, `aptar`, `aptli`
 - `dpkg` (Debian Package) ... `dpkg`
 - `nala` (Nala APT Wrapper) ... `nala`, `nalaf`, `nalau`, `nalafu`, `nalai`, `nalar`, `nalaa`, `nalah`, `nalal`, `nalas`, `nalav`
+- `snap` (Snap Package Manager) ... `snap`, `snapfu`, `snapi`, `snaps`, `snapr`, `snapli`
 
 The command to use to call these package manager can be specified in the
 variable `OMB_ALIAS_PACKAGE_MANAGER_SUDO`.  By default, `sudo` is used when the
@@ -86,3 +87,14 @@ OMB_ALIAS_PACKAGE_MANAGER_SUDO=
 | `nalal` | `sudo nala list`          | List all packages or only packages based on the provided name, glob or regex. By default will only glob. |
 | `nalas` | `sudo nala search`        | Search package names and descriptions using a word, regex or glob.                                       |
 | `nalav` | `sudo nala show`          | Show information about a package such as the name, version, dependencies etc.                            |
+
+## Snap Package Manager
+
+| Alias    | Command                                | Description                                                                                                                                              |
+| -------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `snap`   | `sudo snap`                            | The snap command lets you install, configure, refresh and remove snaps. Snaps are packages that work across many different Linux distributions.          |
+| `snapfu` | `sudo snap refresh`                    | Update all installed snaps.                                                                                                                              |
+| `snapi`  | `sudo snap install`                    | Installs the named snaps.                                                                                                                                |
+| `snaps`  | `sudo snap find`                       | Queries the store for available packages.                                                                                                                |
+| `snapr`  | `sudo snap remove --terminate --purge` | Performs a full and clean remove. Remove the snap without saving a snapshot of its data. Remove all the snap revisions without the option `--revision=`. |
+| `snapli` | `sudo snap list --all`                 | List all installed snaps and revisions in the current system.                                                                                            |
