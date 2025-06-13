@@ -49,6 +49,16 @@ if _omb_util_binary_exists cave; then
   alias cli="${_omb_tmp_sudo}cave print-ids --matching '*/*::/'" # Cave List Installed
 fi
 
+# Snap Package manager - Snap
+if _omb_util_binary_exists snap; then
+  alias snap="${_omb_tmp_sudo}snap"
+  alias snapfu="${_omb_tmp_sudo}snap refresh" # Update all installed snaps
+  alias snapi="${_omb_tmp_sudo}snap install" # Installs the named snaps
+  alias snaps="${_omb_tmp_sudo}snap find" # Queries the store for available packages
+  alias snapr="${_omb_tmp_sudo}snap remove --terminate --purge" # Performs a full, clean and data remove
+  alias snapli="${_omb_tmp_sudo}snap list --all" # List all installed snaps and revisions in the current system
+fi
+
 # Advanced Packaging Tool - APT
 if _omb_util_binary_exists apt; then
   alias apt="${_omb_tmp_sudo}apt" # Advanced Packaging Tool
