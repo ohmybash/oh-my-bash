@@ -54,6 +54,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | sudo              | Utility for executing commands with superuser privileges on Unix and Unix-like systems.                                     |
 | tmux-autoattach   | Plugin related to session management in the tmux terminal multiplexer.                                                      |
 | vagrant           | Tool for creating and managing virtual development environments.                                                            |
+| virtualenvwrapper | A set of extensions to the virtualenv tool.                                                                                 |
 | xterm             | Terminal emulator for X Window systems providing a graphical user interface for accessing the command line.                 |
 | zellij-autoattach | Plugin related to session management in the zellij terminal multiplexer.                                                      |
 | zoxide            | Utility for quickly navigating the filesystem based on visited directory history.                                           |
