@@ -15,8 +15,6 @@
 
 function _omb_theme_PROMPT_COMMAND() {
 
-  local hostname="${_omb_prompt_bold_gray}\u@\h"
-
   # Obtenemos IP segun el sistema operativo
   local IP
   case $OSTYPE in
