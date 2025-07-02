@@ -18,10 +18,10 @@ function _omb_theme_PROMPT_COMMAND() {
   # Obtenemos IP segun el sistema operativo
   local IP
   case $OSTYPE in
-    Linux)
+    linux-gnu)
       IP=$(hostname -I | awk '{print $1}')
       ;;
-    Darwin)
+    darwin24)
       IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
       ;;
     *)
