@@ -19,7 +19,7 @@ function _omb_theme_PROMPT_COMMAND() {
 
   # Obtenemos IP segun el sistema operativo
   local IP
-  case "$(uname -s)" in
+  case $OSTYPE in
     Linux)
       IP=$(hostname -I | awk '{print $1}')
       ;;
