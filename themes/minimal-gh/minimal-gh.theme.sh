@@ -21,7 +21,7 @@ function _omb_theme_PROMPT_COMMAND() {
     linux-gnu)
       IP=$(hostname -I | awk '{print $1}')
       ;;
-    darwin24)
+    darwin*)
       IP=$(ifconfig en0 | awk '$1=="inet" {print $2}')
       ;;
     *)
