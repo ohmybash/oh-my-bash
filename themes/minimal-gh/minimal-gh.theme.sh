@@ -22,7 +22,7 @@ function _omb_theme_PROMPT_COMMAND() {
       IP=$(hostname -I | awk '{print $1}')
       ;;
     darwin24)
-      IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+      IP=$(ifconfig en0 | awk '$1=="inet" {print $2}')
       ;;
     *)
       IP="127.0.0.1"  # Default to localhost if OS is not recognized
