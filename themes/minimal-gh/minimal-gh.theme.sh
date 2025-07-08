@@ -15,13 +15,19 @@
 
 function _omb_theme_PROMPT_COMMAND() {
 
-	local TITLEBAR
-	case $TERM in
-	xterm* | screen)
-		TITLEBAR=$'\1\e]0;'$USER@${HOSTNAME%%.*}:${PWD/#$HOME/~}$'\e\\\2' ;;
-	*)
-		TITLEBAR= ;;
-	esac
+  # Obtenemos IP segun el sistema operativo
+  local IP
+  case $OSTYPE in
+    linux-gnu)
+      IP=$(hostname -I | awk '{print $1}')
+      ;;
+    darwin*)
+      IP=$(ifconfig en0 | awk '$1=="inet" {print $2}')
+      ;;
+    *)
+      IP="127.0.0.1"  # Default to localhost if OS is not recognized
+      ;;
+  esac
 
   local HORA=$(date +%H)
 	local MERIDIANO
@@ -31,7 +37,7 @@ function _omb_theme_PROMPT_COMMAND() {
 		MERIDIANO="am";
 	fi
 
-	PS1=$TITLEBAR"\n${_omb_prompt_gray}\T${MERIDIANO} ${_omb_prompt_green}\u ${_omb_prompt_olive}\${PWD} $(scm_prompt_info)\n${_omb_prompt_gray}\$ ${_omb_prompt_white}"
+	PS1="\n${_omb_prompt_gray}\T${MERIDIANO} ${_omb_prompt_green}\u@$IP ${_omb_prompt_gray}\h ${_omb_prompt_olive}\${PWD} $(scm_prompt_info)\n${_omb_prompt_gray}\$ ${_omb_prompt_white}"
 
 }
 
