@@ -24,7 +24,13 @@ function _omb_theme_PROMPT_COMMAND() {
       IP=$(hostname -I | awk '{print $1}')
       ;;
     Darwin)
-      IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+      interfaces=( $(ifconfig -l | tr ' ' '\n' | grep -E '^en[0-9]+$') )
+      for intf in "${interfaces[@]}"; do
+        IP=$(ifconfig "$intf" 2>/dev/null | awk '/inet / {print $2}')
+        if [[ -n $IP ]]; then
+          break
+        fi
+      done
       ;;
     *)
       IP="127.0.0.1"  # Default to localhost if OS is not recognized
