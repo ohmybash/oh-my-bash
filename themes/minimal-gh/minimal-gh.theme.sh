@@ -15,15 +15,13 @@
 
 function _omb_theme_PROMPT_COMMAND() {
 
-  local hostname="${_omb_prompt_bold_gray}\u@\h"
-
   # Obtenemos IP segun el sistema operativo
   local IP
-  case "$(uname -s)" in
-    Linux)
+  case $OSTYPE in
+    linux-gnu)
       IP=$(hostname -I | awk '{print $1}')
       ;;
-    Darwin)
+    darwin*)
       interfaces=( $(ifconfig -l | tr ' ' '\n' | grep -E '^en[0-9]+$') )
       for intf in "${interfaces[@]}"; do
         IP=$(ifconfig "$intf" 2>/dev/null | awk '/inet / {print $2}')
