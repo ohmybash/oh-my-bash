@@ -10,7 +10,11 @@ function wake() {
 
   if [[ -z "$1" || ! -f "$cfgfile" ]]; then
     echo "Usage: wake <device>"
-    echo "Available devices: $(ls "$cfgdir" | tr '\n' ' ')"
+   if [[ -d "$cfgdir" ]]; then
+     echo "Available devices: $(ls "$cfgdir" | tr '\n' ' ')"
+   else
+     echo "No devices configured. Create $cfgdir directory first."
+   fi
     return 1
   fi
 
@@ -22,6 +26,10 @@ function wake() {
   # Read the two fields: MAC and broadcast-IP
   local mac bcast
   read -r mac bcast < "$cfgfile"
+ if [[ -z "$mac" || -z "$bcast" ]]; then
+   echo "ERROR: Invalid config format in '$cfgfile'. Expected: <MAC> <broadcast-IP>" >&2
+   return 1
+ fi
 
   # Send magic-packet to the given broadcast address
   wakeonlan -i "$bcast" "$mac"
