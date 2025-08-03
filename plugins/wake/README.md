@@ -46,7 +46,7 @@ Available devices: server
 ```
 
 For more information regarding the configuration file format, check the
-wakeonlan man page. If your distirbution does not offer wakeonlan package just install it manually from the GitHub, here are the steps:
+wakeonlan man page. If your distribution does not offer wakeonlan package just install it manually from the GitHub, here are the steps:
 
 ```bash
 curl -RLOJ https://github.com/jpoliv/wakeonlan/raw/refs/heads/master/wakeonlan
