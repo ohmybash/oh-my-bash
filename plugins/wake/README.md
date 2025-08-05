@@ -36,7 +36,7 @@ The available device names will be autocompleted, so:
 wake <tab>
 ```
 
-...will suggest "server", along with any other configuration files that were
+...will suggest "server", along with any other configuration files that are
 placed in the `~/.wakeonlan` directory.
 
 You can also just type `wake` to show usage and list available devices:
