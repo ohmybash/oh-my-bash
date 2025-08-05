@@ -39,7 +39,7 @@ wake <tab>
 ...will suggest "server", along with any other configuration files that were
 placed in the `~/.wakeonlan` directory.
 
-You can also just type `wake` to list show usage and available devices:
+You can also just type `wake` to show usage and list available devices:
 ```
 Usage: wake <device>
 Available devices: server 
