@@ -1,7 +1,7 @@
 # wakeonlan
 
 This plugin provides a wrapper around the "wakeonlan" tool available from most
-distributions' package repositories, or from [the following website](https://github.com/jpoliv/wakeonlan).
+distributions' package repositories, or from [this website](https://github.com/jpoliv/wakeonlan).
 
 To use it, add `wake` to the plugins array in your bashrc file:
 
