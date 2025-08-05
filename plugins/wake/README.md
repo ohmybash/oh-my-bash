@@ -26,13 +26,13 @@ contents:
 
 To wake that device, use the following command:
 
-```console
+```bash
 wake server
 ```
 
 The available device names will be autocompleted, so:
 
-```console
+```bash
 wake <tab>
 ```
 
