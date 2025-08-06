@@ -4,13 +4,13 @@
 # Author: hoek from 0ut3r.space
 # Based on oh-my-zsh wakeonlan plugin @ commit 1d9eacb34f59f3bf82a9de0d7b474cb4c501e3fd
 
-function wake() {
-  local cfgdir="$HOME/.wakeonlan"
-  local cfgfile="$cfgdir/$1"
+function wake {
+  local cfgdir=~/.wakeonlan
+  local cfgfile=$cfgdir/$1
 
-  if [[ -z "$1" || ! -f "$cfgfile" ]]; then
-    _omb_util_print "Usage: wake <device>"
-    if [[ -d "$cfgdir" ]]; then
+  if [[ ! $1 || ! -f $cfgfile ]]; then
+    _omb_util_print 'Usage: wake <device>'
+    if [[ -d $cfgdir ]]; then
       local devices
       devices=$(ls "$cfgdir" 2>/dev/null | tr '\n' ' ')
       _omb_util_print "Available devices: $devices"
@@ -29,7 +29,7 @@ function wake() {
   local mac bcast
   read -r mac bcast < "$cfgfile"
 
-  if [[ -z "$mac" || -z "$bcast" ]]; then
+  if [[ ! $mac || ! $bcast ]]; then
     _omb_util_print "ERROR: Invalid config format in '$cfgfile'. Expected: <MAC> <broadcast-IP>" >&2
     return 1
   fi
@@ -37,10 +37,10 @@ function wake() {
   wakeonlan -i "$bcast" "$mac"
 }
 
-_wake_completion() {
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-  local cfgdir="$HOME/.wakeonlan"
-  [[ -d "$cfgdir" ]] || return 0
-  COMPREPLY=( $(compgen -W "$(ls "$cfgdir")" -- "$cur") )
+function _omb_plugin_wake_completion {
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  local cfgdir=~/.wakeonlan
+  [[ -d $cfgdir ]] || return 0
+  COMPREPLY=($(compgen -W '$(ls "$cfgdir")' -- "$cur"))
 }
-complete -F _wake_completion wake
+complete -F _omb_plugin_wake_completion wake
