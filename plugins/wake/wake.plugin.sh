@@ -2,7 +2,7 @@
 # oh-my-bash.module: wake-on-lan wrapper + autocompletion
 # wake.plugin.sh
 # Author: hoek from 0ut3r.space
-# Based on oh-my-zsh wake plugin @ commit 1d9eacb34f59f3bf82a9de0d7b474cb4c501e3fd
+# Based on oh-my-zsh wakeonlan plugin @ commit 1d9eacb34f59f3bf82a9de0d7b474cb4c501e3fd
 
 function wake() {
   local cfgdir="$HOME/.wakeonlan"
