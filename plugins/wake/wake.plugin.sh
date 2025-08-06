@@ -19,7 +19,7 @@ function wake() {
   fi
   
   if ! _omb_util_command_exists wakeonlan; then
-    _omb_util_print "ERROR: 'wakeonlan' not found. Install it (https://github.com/jpoliv/wakeonlan)." >&2
+    _omb_util_print "ERROR: 'wakeonlan' not found. Install it from https://github.com/jpoliv/wakeonlan." >&2
     return 1
   fi
 
