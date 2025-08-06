@@ -11,7 +11,6 @@ function wake() {
   if [[ -z "$1" || ! -f "$cfgfile" ]]; then
     _omb_util_print "Usage: wake <device>"
     if [[ -d "$cfgdir" ]]; then
-      # list device files by name
       local devices
       devices=$(ls "$cfgdir" 2>/dev/null | tr '\n' ' ')
       _omb_util_print "Available devices: $devices"
