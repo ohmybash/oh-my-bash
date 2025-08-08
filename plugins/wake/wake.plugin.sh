@@ -9,7 +9,7 @@ function wake {
   local cfgfile=$cfgdir/$1
 
   if [[ ! $1 || ! -f $cfgfile ]]; then
-    _omb_util_print 'Usage: wake <device>'
+    _omb_util_print 'Usage: wake <device>' >&2
     if [[ -d $cfgdir ]]; then
       local devices
       devices=$(ls "$cfgdir" 2>/dev/null | tr '\n' ' ')
