@@ -13,9 +13,9 @@ function wake {
     if [[ -d $cfgdir ]]; then
       local devices
       devices=$(ls "$cfgdir" 2>/dev/null | tr '\n' ' ')
-      _omb_util_print "Available devices: $devices"
+      _omb_util_print "Available devices: $devices" >&2
     else
-      _omb_util_print "No devices configured. Create $cfgdir directory first."
+      _omb_util_print "No devices configured. Create $cfgdir directory first." >&2
     fi
     return 1
   fi
