@@ -42,7 +42,7 @@ placed in the `~/.wakeonlan` directory.
 You can also just type `wake` to show usage and list available devices:
 ```
 Usage: wake <device>
-Available devices: server 
+Available devices: server
 ```
 
 For more information regarding the configuration file format, check the
