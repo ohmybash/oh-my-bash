@@ -23,4 +23,4 @@ Jump integrates with your shell and learns about your navigational habits by kee
 ## Usage
 
 See the [jump usage documentation](https://github.com/gsamokovarov/jump?tab=readme-ov-file#usage)
-for information on how to use jump
+for information on how to use jump.
