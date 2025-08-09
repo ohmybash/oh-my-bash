@@ -14,7 +14,7 @@ Jump integrates with your shell and learns about your navigational habits by kee
     plugins=(... jump)
     ```
 
-3. Enable the completions by adding it to the completions array of bashrc file:
+3. (Optional) Enable the completions by adding it to the completions array of bashrc file:
 
     ```bash
     completions=(... jump)
