@@ -2,6 +2,7 @@
 
 # Define this here so it can be used by all of the Powerline themes
 THEME_CHECK_SUDO=${THEME_CHECK_SUDO:=false}
+POWERLINE_PROMPT_NEWLINE=${POWERLINE_PROMPT_NEWLINE:=false}
 
 function _omb_theme_powerline_hex_to_rgb {
     local hex_color="$1"
@@ -198,8 +199,9 @@ function __powerline_prompt_command {
   [[ -n "${info}" ]] && __powerline_left_segment "${info}"
 
   [[ -n "${LEFT_PROMPT}" ]] && LEFT_PROMPT+="$(set_color ${LAST_SEGMENT_COLOR} -)${separator_char}${_omb_prompt_normal}"
+  [[ ${POWERLINE_PROMPT_NEWLINE-} == true ]] && END_PROMPT="\n" || END_PROMPT=" "
 
-  PS1="${LEFT_PROMPT} "
+  PS1="${LEFT_PROMPT}${END_PROMPT}"
 
   ## cleanup ##
   unset LAST_SEGMENT_COLOR \
