@@ -86,7 +86,7 @@ function ___brainy_prompt_user_info {
   local color=$_omb_prompt_bold_navy
   if [[ $THEME_SHOW_SUDO == true ]]; then
     if [[ $(sudo -n id -u 2>&1) == 0 ]]; then
-      color=$_omb_prompt_bold_brown
+      color=$_omb_prompt_bold_red
     fi
   fi
   local box="[|]"
@@ -115,12 +115,13 @@ function ___brainy_prompt_scm {
 
 function ___brainy_prompt_python {
   [[ $THEME_SHOW_PYTHON != true ]] && return
-  local color=$_omb_prompt_bold_olive
+  local color=$_omb_prompt_bold_brown
   local box="[|]"
-  local python_env
-  _omb_prompt_get_python_env || return 0
-  printf "%s|%s|%s|%s" "$color" "${python_env}" "$_omb_prompt_bold_navy" "$box"
+  [[ ${VIRTUAL_ENV-} ]] || return 0
+  local python_env=$(basename "$VIRTUAL_ENV")
+  printf "%s|%s|%s|%s" "$color" "${python_env}" "$_omb_prompt_bold_brown" "$box"
 }
+
 
 function ___brainy_prompt_ruby {
   [[ $THEME_SHOW_RUBY != true ]] && return
@@ -165,7 +166,7 @@ function ___brainy_prompt_battery {
 
 function ___brainy_prompt_exitcode {
   [[ $THEME_SHOW_EXITCODE != true ]] && return
-  local color=$_omb_prompt_bold_purple
+  local color=$_omb_prompt_bold_red
   ((exitcode != 0)) && printf "%s|%s" "$color" "$exitcode"
 }
 
@@ -248,7 +249,7 @@ export SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal
 THEME_SHOW_SUDO=${THEME_SHOW_SUDO:-"true"}
 THEME_SHOW_SCM=${THEME_SHOW_SCM:-"true"}
 THEME_SHOW_RUBY=${THEME_SHOW_RUBY:-"false"}
-THEME_SHOW_PYTHON=${THEME_SHOW_PYTHON:-"false"}
+THEME_SHOW_PYTHON=${THEME_SHOW_PYTHON:-"true"}
 THEME_SHOW_CLOCK=${THEME_SHOW_CLOCK:-"true"}
 THEME_SHOW_TODO=${THEME_SHOW_TODO:-"false"}
 THEME_SHOW_BATTERY=${THEME_SHOW_BATTERY:-"false"}
@@ -260,8 +261,8 @@ THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%H:%M:%S"}
 __BRAINY_PROMPT_CHAR_PS1=${THEME_PROMPT_CHAR_PS1:-">"}
 __BRAINY_PROMPT_CHAR_PS2=${THEME_PROMPT_CHAR_PS2:-"\\"}
 
-___BRAINY_TOP_LEFT=${___BRAINY_TOP_LEFT:-"user_info dir scm"}
-___BRAINY_TOP_RIGHT=${___BRAINY_TOP_RIGHT:-"python ruby todo clock battery"}
+___BRAINY_TOP_LEFT=${___BRAINY_TOP_LEFT:-"user_info dir scm python"}
+___BRAINY_TOP_RIGHT=${___BRAINY_TOP_RIGHT:-"ruby todo clock battery"}
 ___BRAINY_BOTTOM=${___BRAINY_BOTTOM:-"exitcode char"}
 
 ############
