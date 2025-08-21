@@ -114,7 +114,7 @@ function _omb_theme_developer__readCpuTemp_genericLinuxTemp {
     return 1
   fi
 
-  local temp_linux=$(<"$file")
+  local temp_linux=$(< "$file")
   local temp_in_c=$((temp_linux / 1000))
   REPLY=$temp_in_c
 }
