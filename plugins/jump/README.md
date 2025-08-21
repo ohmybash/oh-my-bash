@@ -2,7 +2,9 @@
 
 The jump plugin enables jump on bash.
 
-Jump integrates with your shell and learns about your navigational habits by keeping track of the directories you visit. It gives you the most visited directory for the shortest search term you type.
+Jump integrates with your shell and learns about your navigational habits by
+keeping track of the directories you visit. It gives you the most visited
+directory for the shortest search term you type.
 
 ## Installation
 
@@ -14,7 +16,8 @@ Jump integrates with your shell and learns about your navigational habits by kee
     plugins=(... jump)
     ```
 
-3. (Optional) Enable the completions by adding it to the completions array of bashrc file:
+3. (Optional) Enable the completions by adding it to the completions array of
+   bashrc file:
 
     ```bash
     completions=(... jump)
