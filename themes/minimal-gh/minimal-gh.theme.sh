@@ -19,15 +19,18 @@ function _omb_theme_PROMPT_COMMAND() {
   local IP
   case $OSTYPE in
     linux-gnu)
-      IP=$(hostname -I | awk '{print $1}')
+      # 2025-09-21 hostname is not a part of GNU/Linux.  In fact, Arch Linux
+      # does not include "hostname" by default.
+      # https://www.reddit.com/r/arch/comments/1nlv59f/bash_hostname_commend_not_found/
+      { IP=$(ip addr 2>/dev/null | awk '$1 == "inet" {sub(/\/.*/, "", $2); if ($2 == "127.0.0.1") next; print $2; exit}'); [[ $IP ]]; } ||
+        { IP=$(ip addr 2>/dev/null | awk '$1 == "inet6" {sub(/\/.*/, "", $2); if ($2 == "::1") next; print $2; exit}'); [[ $IP ]]; } ||
+        IP=$(hostname -I 2>/dev/null | awk '{print $1}')
       ;;
     darwin*)
       IP=$(ifconfig en0 | awk '$1=="inet" {print $2}')
       ;;
-    *)
-      IP="127.0.0.1"  # Default to localhost if OS is not recognized
-      ;;
   esac
+  [[ $IP ]] || IP="127.0.0.1"  # Default to localhost if OS is not recognized
 
   local HORA=$(date +%H)
 	local MERIDIANO
