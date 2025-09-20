@@ -39,7 +39,7 @@ function _omb_theme_PROMPT_COMMAND() {
     MERIDIANO="am";
   fi
 
-  PS1="\n${_omb_prompt_gray}\T${MERIDIANO} ${_omb_prompt_green}\u@$IP ${_omb_prompt_gray}\h ${_omb_prompt_olive}\${PWD} $(scm_prompt_info)\n${_omb_prompt_gray}\$ ${_omb_prompt_white}"
+  PS1="\n${_omb_prompt_gray}\T${MERIDIANO} ${_omb_prompt_green}\u@$IP ${_omb_prompt_gray}\h ${_omb_prompt_olive}\${PWD} $(scm_prompt_info)\n${_omb_prompt_gray}\$ ${_omb_prompt_normal}"
 }
 
 SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_brown}✗"
