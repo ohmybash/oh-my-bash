@@ -24,3 +24,8 @@ _terraform()
         return 0
 } &&
 complete -F _terraform terraform
+
+# If the terraform alias is defined, add completion for the alias
+if alias -p | grep -q "t='terraform'"; then
+    complete -F _terraform t
+fi
