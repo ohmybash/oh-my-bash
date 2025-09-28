@@ -30,7 +30,7 @@ function _dulcie_get_venv_name() {
 function _omb_theme_PROMPT_COMMAND {
   local venv_name=$(_dulcie_get_venv_name)
   local python_env_prompt=""
-  if [[ -n "$venv_name" ]]; then
+  if [[ -n "$venv_name" ]]; then[[ "$OMB_PROMPT_SHOW_PYTHON_VENV" = true && -n "$venv_name" ]]; then
     python_env_prompt="(${_omb_prompt_olive}${venv_name}${_omb_prompt_normal}) "
   fi
 
