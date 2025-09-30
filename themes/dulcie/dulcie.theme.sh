@@ -3,13 +3,20 @@
 # Simplistic one-liner theme to display source control management info beside
 # the ordinary Linux bash prompt.
 #
+# Demo:
+#
+# [ritola@localhost ~]$ cd .bash-it/themes/dulcie
+# [ritola@localhost |master ✓| dulcie]$ # This is single line mode
+# |bash-it|± master ✓|
+# [ritola@localhost dulcie]$ # In multi line, the SCM info is in the separate line
+#
 # Configuration. Change these by adding them in your .bash_profile
 
 DULCIE_COLOR=${DULCIE_COLOR:=1} # 0 = monochrome, 1 = colorful
 DULCIE_MULTILINE=${DULCIE_MULTILINE:=1} # 0 = Single line, 1 = SCM in separate line
 
 # Configuration for Python/Conda virtual environments
-OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true} # Keep this for consistency
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false} # Keep this for consistency
 
 function dulcie_color {
   echo -en "\[\e[38;5;${1}m\]"
@@ -19,23 +26,7 @@ function dulcie_background {
   echo -en "\[\e[48;5;${1}m\]"
 }
 
-function _dulcie_get_venv_name() {
-  if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-    echo "$CONDA_DEFAULT_ENV"
-  elif [[ -n "$VIRTUAL_ENV" ]]; then
-    basename "$VIRTUAL_ENV"
-  fi
-}
-
 function _omb_theme_PROMPT_COMMAND {
-  local venv_name=$(_dulcie_get_venv_name)
-  local python_env_prompt=""
-  if [[ -n "$venv_name" ]]; then[[ "$OMB_PROMPT_SHOW_PYTHON_VENV" = true && -n "$venv_name" ]]; then
-    python_env_prompt="(${_omb_prompt_olive}${venv_name}${_omb_prompt_normal}) "
-  fi
-
-
-
   color_user_root=$(dulcie_color 169)
   color_user_nonroot="${_omb_prompt_green}"
   color_host_local=$(dulcie_color 230)
@@ -45,6 +36,9 @@ function _omb_theme_PROMPT_COMMAND {
   background_scm=$(dulcie_background 238)
 
   SCM_THEME_ROOT_SUFFIX="|$(scm_char) "
+
+  local python_venv=
+  _omb_prompt_get_python_venv
 
   # Set colors
   if [ "${DULCIE_COLOR}" -eq "1" ]; then
@@ -92,7 +86,7 @@ function _omb_theme_PROMPT_COMMAND {
   _omb_util_function_exists __vte_osc7 && __vte_osc7
 
   if [[ "${DULCIE_MULTILINE}" -eq "1" ]]; then
-    PS1="${_omb_prompt_reset_color}[${python_env_prompt}${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
+    PS1="${_omb_prompt_reset_color}[${python_venv}${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
     if [[ "$(scm_prompt_info)" ]]; then
       SCM_THEME_PROMPT_PREFIX="${DULCIE_SCM_BACKGROUND}|${DULCIE_SCM_DIR_COLOR}"
       SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
@@ -101,8 +95,7 @@ function _omb_theme_PROMPT_COMMAND {
   else
     SCM_THEME_PROMPT_PREFIX=" |${DULCIE_SCM_DIR_COLOR}"
     SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
-    PS1="${_omb_prompt_reset_color}[${python_env_prompt}${DULCIE_USER}@${DULCIE_HOST} ${DULCIE_WORKINGDIR}$(scm_prompt_info)]"+PS1="${_omb_prompt_reset_color}[${python_env_prompt}${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}$(scm_prompt_info)]"
-
+    PS1="${_omb_prompt_reset_color}[${python_venv}${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}$(scm_prompt_info)]"
   fi
   PS1="${PS1}${DULCIE_PROMPTCHAR} "
 }
