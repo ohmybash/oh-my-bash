@@ -93,9 +93,9 @@ function _omb_theme_PROMPT_COMMAND {
       PS1="$(scm_prompt_info)\n${PS1}"
     fi
   else
-    SCM_THEME_PROMPT_PREFIX=" |${DULCIE_SCM_DIR_COLOR}"
+    SCM_THEME_PROMPT_PREFIX=" ${DULCIE_SCM_BACKGROUND}|${DULCIE_SCM_DIR_COLOR}"
     SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
-    PS1="${_omb_prompt_reset_color}[${python_venv}${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}$(scm_prompt_info)]"
+    PS1="${_omb_prompt_reset_color}[${python_venv}${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
   fi
   PS1="${PS1}${DULCIE_PROMPTCHAR} "
 }
