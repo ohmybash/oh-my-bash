@@ -200,6 +200,10 @@
 
 [![](pete/pete-dark.png)](pete/pete-dark.png)
 
+## `pino`
+
+[![](pino/pino-dark.png)](pino/pino-dark.png)
+
 ## `powerbash10k`
 
 [![](powerbash10k/powerbash10k-dark.png)](powerbash10k/powerbash10k-dark.png)
