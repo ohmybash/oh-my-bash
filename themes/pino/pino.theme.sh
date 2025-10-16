@@ -21,23 +21,36 @@ scm_prompt() {
 
 distrobox_instance() {
   if [[ -n ${DISTROBOX_NAME:-} ]]; then
-    printf '%s' "$DISTROBOX_NAME"
-    return
+    printf '%s' "${DISTROBOX_NAME}"
+    return 0
   fi
+
   if [[ -n ${DBX_CONTAINER_NAME:-} ]]; then
-    printf '%s' "$DBX_CONTAINER_NAME"
-    return
+    printf '%s' "${DBX_CONTAINER_NAME}"
+    return 0
   fi
 
   if [[ -r /run/.containerenv ]]; then
-    awk -F= '$1=="name"{gsub(/"/,"",$2); print $2}' /run/.containerenv 2>/dev/null && return
+    local container_name
+    container_name=$(awk -F= '$1=="name"{gsub(/"/,"",$2); print $2}' /run/.containerenv 2>/dev/null)
+
+    if [[ -n ${container_name} ]]; then
+      printf '%s' "${container_name}"
+      return 0
+    fi
   fi
 
   if [[ -f /.dockerenv ]]; then
-    hostname
-    return
+    local hostname_val
+    hostname_val=$(hostname 2>/dev/null)
+
+    if [[ -n ${hostname_val} ]]; then
+      printf '%s' "${hostname_val}"
+      return 0
+    fi
   fi
 
+  # Not in a container
   return 1
 }
 
@@ -110,12 +123,24 @@ _omb_theme_PROMPT_COMMAND() {
   local line_header="${icon_start}${seg_user}@${seg_host}:${venv_segment}${seg_path}\n"
 
   # Distrobox (optional)
-  local dbx_name=$(distrobox_instance 2>/dev/null)
+  local dbx_name=""
+  if dbx_name=$(distrobox_instance 2>/dev/null); then
+    :
+  else
+    dbx_name=""
+  fi
+
   local line_distrobox=""
-  if [[ -n $dbx_name ]]; then
-    local seg_distro=$(segment_distro "$dbx_name")
+  if [[ -n ${dbx_name} ]]; then
+    local seg_distro
+    seg_distro=$(segment_distro "${dbx_name}")
+
     line_distrobox="${icon_middle}${_omb_prompt_bold_purple}distrobox:${_omb_prompt_normal} ${_omb_prompt_bold_teal}${dbx_name}${_omb_prompt_normal}"
-    [[ -n $seg_distro ]] && line_distrobox+=" ${seg_distro}"
+
+    if [[ -n ${seg_distro} ]]; then
+      line_distrobox+=" ${seg_distro}"
+    fi
+
     line_distrobox+=$'\n'
   fi
 
@@ -123,7 +148,8 @@ _omb_theme_PROMPT_COMMAND() {
   local scm_char
   scm_char=$(scm_char)
   local line_vcs=""
-  if [[ $scm_char != "$SCM_NONE_CHAR" ]]; then
+
+  if [[ ${scm_char} != "${SCM_NONE_CHAR}" ]]; then
     line_vcs="${icon_middle}$(scm_prompt)\n"
   fi
 
