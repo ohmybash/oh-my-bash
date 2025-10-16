@@ -19,41 +19,6 @@ scm_prompt() {
   printf 'on %s' "$(scm_prompt_info)"
 }
 
-distrobox_instance() {
-  if [[ -n ${DISTROBOX_NAME:-} ]]; then
-    printf '%s' "${DISTROBOX_NAME}"
-    return 0
-  fi
-
-  if [[ -n ${DBX_CONTAINER_NAME:-} ]]; then
-    printf '%s' "${DBX_CONTAINER_NAME}"
-    return 0
-  fi
-
-  if [[ -r /run/.containerenv ]]; then
-    local container_name
-    container_name=$(awk -F= '$1=="name"{gsub(/"/,"",$2); print $2}' /run/.containerenv 2>/dev/null)
-
-    if [[ -n ${container_name} ]]; then
-      printf '%s' "${container_name}"
-      return 0
-    fi
-  fi
-
-  if [[ -f /.dockerenv ]]; then
-    local hostname_val
-    hostname_val=$(hostname 2>/dev/null)
-
-    if [[ -n ${hostname_val} ]]; then
-      printf '%s' "${hostname_val}"
-      return 0
-    fi
-  fi
-
-  # Not in a container
-  return 1
-}
-
 segment_distro() {
   local dbx_name="$1"
   [[ -r /etc/os-release ]] || return 0
@@ -123,25 +88,35 @@ _omb_theme_PROMPT_COMMAND() {
   local line_header="${icon_start}${seg_user}@${seg_host}:${venv_segment}${seg_path}\n"
 
   # Distrobox (optional)
-  local dbx_name=""
-  if dbx_name=$(distrobox_instance 2>/dev/null); then
-    :
-  else
-    dbx_name=""
+  local container_name=""
+  local detection_method=""
+
+  if [[ -n ${DISTROBOX_NAME:-} ]]; then
+    container_name="${DISTROBOX_NAME}"
+    detection_method="DISTROBOX_NAME"
+  elif [[ -n ${DBX_CONTAINER_NAME:-} ]]; then
+    container_name="${DBX_CONTAINER_NAME}"
+    detection_method="DBX_CONTAINER_NAME"
+  elif [[ -r /run/.containerenv ]]; then
+    container_name=$(awk -F= '$1=="name"{gsub(/"/,"",$2); print $2}' /run/.containerenv 2>/dev/null)
+    detection_method="containerenv"
+  elif [[ -f /.dockerenv ]]; then
+    container_name=$(hostname 2>/dev/null)
+    detection_method="dockerenv"
   fi
 
-  local line_distrobox=""
-  if [[ -n ${dbx_name} ]]; then
-    local seg_distro
-    seg_distro=$(segment_distro "${dbx_name}")
+  local line_container=""
+  if [[ -n ${container_name} ]]; then
+    local seg_distro=""
+    seg_distro=$(segment_distro "${container_name}")
 
-    line_distrobox="${icon_middle}${_omb_prompt_bold_purple}distrobox:${_omb_prompt_normal} ${_omb_prompt_bold_teal}${dbx_name}${_omb_prompt_normal}"
+    line_container="${icon_middle}${_omb_prompt_bold_purple}container:${_omb_prompt_normal} ${_omb_prompt_bold_teal}${container_name}${_omb_prompt_normal}"
 
     if [[ -n ${seg_distro} ]]; then
-      line_distrobox+=" ${seg_distro}"
+      line_container+=" ${seg_distro}"
     fi
 
-    line_distrobox+=$'\n'
+    line_container+=$'\n'
   fi
 
   # VCS/Git (optional)
@@ -155,8 +130,7 @@ _omb_theme_PROMPT_COMMAND() {
 
   # Prompt
   local line_prompt="${icon_end}${icon_prompt}"
-
-  PS1="${line_header}${line_distrobox}${line_vcs}${line_prompt}"
+  PS1="${line_header}${line_container}${line_vcs}${line_prompt}"
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
