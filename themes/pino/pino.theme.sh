@@ -46,7 +46,22 @@ segment_distro() {
   [[ -r /etc/os-release ]] || return 0
 
   local NAME VERSION_ID
-  . /etc/os-release
+
+  while IFS='=' read -r key value; do
+    value="${value#\"}"
+    value="${value%\"}"
+    value="${value#\'}"
+    value="${value%\'}"
+
+    case "${key}" in
+      NAME)
+        NAME="${value}"
+        ;;
+      VERSION_ID)
+        VERSION_ID="${value}"
+        ;;
+    esac
+  done < <(grep -E '^(NAME|VERSION_ID)=' /etc/os-release 2>/dev/null)
 
   local name="${NAME:-Linux}"
   local ver="${VERSION_ID:-}"
@@ -54,24 +69,28 @@ segment_distro() {
   name="${name%% *}"
 
   local dbx_norm name_norm ver_norm
-  dbx_norm=${dbx_name//[^[:alnum:]]/}; dbx_norm=${dbx_norm,,}
-  name_norm=${name//[^[:alnum:]]/};    name_norm=${name_norm,,}
-  ver_norm=${ver//[^[:alnum:]]/};      ver_norm=${ver_norm,,}
+  dbx_norm="${dbx_name//[^[:alnum:]]/}"
+  dbx_norm="${dbx_norm,,}"
+  name_norm="${name//[^[:alnum:]]/}"
+  name_norm="${name_norm,,}"
+  ver_norm="${ver//[^[:alnum:]]/}"
+  ver_norm="${ver_norm,,}"
 
   local out=""
-  if [[ -n $dbx_name && $dbx_norm == *"$name_norm"* ]]; then
-    if [[ -n $ver && $dbx_norm != *"$ver_norm"* ]]; then
+
+  if [[ -n ${dbx_name} && ${dbx_norm} == *"${name_norm}"* ]]; then
+    if [[ -n ${ver} && ${dbx_norm} != *"${ver_norm}"* ]]; then
       out="${_omb_prompt_bold_teal}${ver}${_omb_prompt_normal}"
     fi
   else
-    if [[ -n $ver ]]; then
+    if [[ -n ${ver} ]]; then
       out="${_omb_prompt_bold_teal}${name} ${ver}${_omb_prompt_normal}"
     else
       out="${_omb_prompt_bold_teal}${name}${_omb_prompt_normal}"
     fi
   fi
 
-  [[ -n $out ]] && printf '%s' "$out"
+  [[ -n ${out} ]] && printf '%s' "${out}"
 }
 
 # PROMPT OUTPUT ===============================================================
