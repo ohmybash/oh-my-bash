@@ -5,6 +5,9 @@ SCM_THEME_PROMPT_SUFFIX="${_omb_prompt_normal}"
 SCM_THEME_PROMPT_DIRTY=" ${_omb_prompt_bold_red}✗${_omb_prompt_normal}"
 SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_bold_green}✓${_omb_prompt_normal}"
 SCM_GIT_CHAR=""
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=true}
+OMB_PROMPT_VIRTUALENV_FORMAT=" ${_omb_prompt_bold_purple}(%s)${_omb_prompt_normal}"
+OMB_PROMPT_CONDAENV_FORMAT=" ${_omb_prompt_bold_purple}(%s)${_omb_prompt_normal}"
 
 # ICONS =======================================================================
 
@@ -77,14 +80,11 @@ _omb_theme_PROMPT_COMMAND() {
   local seg_user="${_omb_prompt_bold_navy}\u${_omb_prompt_normal}"
   local seg_host="${_omb_prompt_bold_olive}\h${_omb_prompt_normal}"
 
-  local venv_segment=""
-  if [[ -n ${VIRTUAL_ENV} ]]; then
-    venv_segment=" ${_omb_prompt_bold_purple}(venv)${_omb_prompt_normal}"
-  fi
+  local python_venv; _omb_prompt_get_python_venv
 
-  local seg_path="${_omb_prompt_bold_green}\w${_omb_prompt_normal}"
+  local seg_path=" ${_omb_prompt_bold_green}\w${_omb_prompt_normal}"
 
-  local left_side="${icon_start}${seg_user}@${seg_host}:${venv_segment}${seg_path}"
+  local left_side="${icon_start}${seg_user}@${seg_host}:${python_venv}${seg_path}"
 
   local save_cursor='\001\033[s\002'
   local move_right='\001\033[9999C\002'
