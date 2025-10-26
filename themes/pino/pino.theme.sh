@@ -84,8 +84,17 @@ _omb_theme_PROMPT_COMMAND() {
 
   local seg_path="${_omb_prompt_bold_green}\w${_omb_prompt_normal}"
 
+  local left_side="${icon_start}${seg_user}@${seg_host}:${venv_segment}${seg_path}"
+
+  local save_cursor='\001\033[s\002'
+  local move_right='\001\033[9999C\002'
+  local restore_cursor='\001\033[u\002'
+  local move_left_8='\001\033[8D\002'
+
+  local time_str="${_omb_prompt_bold_cyan}\t${_omb_prompt_normal}"
+
   # Headline
-  local line_header="${icon_start}${seg_user}@${seg_host}:${venv_segment}${seg_path}\n"
+  local line_header="${left_side}${save_cursor}${move_right}${move_left_8}${time_str}${restore_cursor}\n"
 
   # Distrobox (optional)
   local container_name=""
