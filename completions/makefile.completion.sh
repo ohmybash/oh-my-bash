@@ -138,7 +138,72 @@ _omb_completion_makefile_find_includes() {
      if test -z "$makefiles"
      then makefiles="*makefile"
      fi
-     command awk '/^include[[:space:]]/ {print $2;}' $makefiles 2>/dev/null
+
+     local f=""
+     for f in $makefiles
+     do
+          # Included files are relative to the entrypoints.
+          # We need to combine the path of the entrypoints with the include paths.
+          local cwd="$(pwd)"
+          local dir="$(cd "$(dirname $f)" && pwd || echo "$cwd")"
+          if test "$dir" = "$cwd"
+          then dir=""        # makefile is in current dir
+          else dir="$dir/"   # makefile is somewhere else, includes need to be prefixed
+          fi
+          command awk -v dir="$dir" '
+          /^include[[:space:]]/ {print dir $2;}
+          ' "$f"
+     done 2>/dev/null
+}
+
+_omb_completion_makefile_entrypoints() {
+     local cwd="$(pwd)"
+     local dir="$cwd"
+     local file="*makefile"
+     while test $# -gt 0
+     do
+          case "$1" in
+          (-f|--file)      file="$2"; shift;;
+          (-C|--directory) dir="$2";  shift;;
+          (--file=*)       file="${2#--file=}";;
+          (--directory=*)  dir="${2#--directory=}";;
+          esac
+          shift
+     done
+     shopt -u nullglob
+     shopt -s nocaseglob
+     if test "$dir" = "$cwd"
+     then echo "$file"        # makefile is in current dir
+     else echo "$dir/$file"   # makefile is somewhere else
+     fi
+}
+
+_omb_completion_makefile_files() {
+     local entrypoints="$(_omb_completion_makefile_entrypoints $COMP_LINE)"
+     local makefiles="$(_omb_completion_makefile_find_includes $entrypoints)"
+     shopt -u nullglob
+     shopt -s nocaseglob
+     # globber all files now
+     echo $entrypoints $makefiles
+}
+
+# Complete regular files when there are no matches in the Makefiles.
+# NOTE: This function is unused. We can use -o filenames and -o plusdirs
+#       to have the same effect.
+_omb_completion_makefile_comp_glob() {
+     local path="$1"
+     shopt -u nullglob
+     shopt -s nocaseglob
+     local f=""
+     for f in $path*
+     do
+          if test -d "$f"
+          then echo "$f/"    # dirs are completed with "/"
+          elif test -e "$f"
+          then echo "$f"     # files are completed with "/"
+          # else: invalid path
+          fi
+     done
 }
 
 # AWK command with args for colorized output and Makefile parsing.
@@ -154,10 +219,19 @@ _omb_completion_makefile_awk() {
      local pur=$_omb_term_purple
      local rst=$_omb_term_reset
      local query="${COMP_WORDS[COMP_CWORD]}"
+
+     local want_flag
+     case "$query" in
+     (-*) want_flag=1;;  # user is querying for a flag with '-' or '--'
+     (*)  ;;
+     esac
+
      command awk \
      -v red="$red" -v grn="$grn" -v blu="$blu" -v gry="$gry" -v cyn="$cyn" -v pur="$pur" -v rst="$rst" \
      -v TARGET="TARGET" -v VAR="VAR" -v FLAG="FLAG" -v OPT="OPT" \
+     -v word="$query" \
      -v query="^$query" \
+     -v want_flag="$want_flag" \
      -v exp_var='[a-zA-Z_][a-zA-Z0-9_]*' \
      -v exp_assign='^[a-zA-Z_][a-zA-Z0-9_]*[[:space:]]*[+:?]?=' \
      -v exp_export='^export[[:space:]]+[a-zA-Z_][a-zA-Z0-9_]*' \
@@ -237,6 +311,9 @@ _omb_completion_makefile_flags() {
 FLAG -h --help # Show extended usage info and exit.
 FLAG -B --always-make # Unconditionally make all targets.
 FLAG -n --dry-run # Don't actually run any recipe; just print them.
+FLAG -s --silent # Don't echo recipes.
+FLAG -t --touch # Touch targets instead of remaking them.
+OPT -j N, --jobs=N # Allow N jobs at once; infinite jobs with no arg.
 OPT -C DIR --directory=DIR # Change to DIR before doing anything.
 OPT -f FILE --file=FILE # Read FILE as a makefile.
 OPT -E STRING --eval=STRING # Evaluate STRING as a makefile statement.
@@ -255,10 +332,8 @@ OPT -E STRING --eval=STRING # Evaluate STRING as a makefile statement.
 _omb_completion_makefile_comp_details() {
      shopt -u nullglob
      shopt -s nocaseglob
-
-     local makefiles="*makefile"
-     makefiles="*makefile $(_omb_completion_makefile_find_includes $makefiles)"
-
+     local makefiles="$(_omb_completion_makefile_files)"
+     local mf
      for mf in $makefiles
      do
           echo "---- $mf ----"
@@ -275,27 +350,29 @@ _omb_completion_makefile_comp_list() {
      _omb_completion_makefile_awk '
      $1 == TARGET { print $2;}      # print only target names
      $1 == VAR    { print $2 "=";}  # print only variable names
-     $1 == FLAG   { print $2, $3;}  # print only flag names
-     $1 == OPT    { print $2, $4;}  # print only flag names
+     $1 == FLAG && want_flag { print $2;}      # print short flag
+     $1 == FLAG && want_flag { print $3;}      # print long flag
+     $1 == OPT  && want_flag { print $2;}      # print short option
+     $1 == OPT  && want_flag { print $4;}      # print long option
      '
 }
 
 # Get colored usage table for matching targets, vars, and flags.
 # The return format is:
 # ---- <section> ----
-# <target>                        <desc>
-# <var>=<value...>                <desc>
-# -<flag> [<arg>] -<long-flag>    <desc>
+# <target>                         <desc>
+# <var>=<value...>                 <desc>
+# -<flag> [<arg>] --<long-flag>    <desc>
 #
 # The output is formmated with the 'column' command as table.
 _omb_completion_makefile_comp_usage() {
      _omb_completion_makefile_comp_details |
      _omb_completion_makefile_awk '
-     $0 ~ exp_header            { print usage_header($0); }
-     $1 == TARGET && $2 ~ query { $1=""; print usage_target($2, $0) }
-     $1 == VAR    && $2 ~ query { $1=""; print usage_variable($2, $0) }
-     $1 == FLAG   && $2 ~ query { $1=""; print usage_flag($0) }
-     $1 == OPT    && $2 ~ query { $1=""; print usage_flag($0) }
+     $0 ~ exp_header                            { print usage_header($0); }
+     $1 == TARGET && $2 ~ query                 { $1=""; print usage_target($2, $0) }
+     $1 == VAR    && $2 ~ query                 { $1=""; print usage_variable($2, $0) }
+     $1 == FLAG   && ($2 ~ query || $3 ~ query) { $1=""; print usage_flag($0) }
+     $1 == OPT    && ($2 ~ query || $4 ~ query) { $1=""; print usage_flag($0) }
      ' | column -t -s $'\t'
 }
 
@@ -314,8 +391,9 @@ _omb_completion_makefile_debug=""  # set to non-empty to enable debug output
 # See top of file: completions/makefile.completion.sh for usage and description.
 _omb_completion_makefile() {
      # Get all Makefile targets with descriptions
-     local targets="$(_omb_completion_makefile_comp_list)"
+     local query="${COMP_WORDS[COMP_CWORD]}"
      local usage="$(_omb_completion_makefile_comp_usage)"
+     local targets="$(_omb_completion_makefile_comp_list)"
 
      # clear old values if too much time has passed
      local now="$(command date +%s)"
@@ -326,13 +404,12 @@ _omb_completion_makefile() {
 
      # get config, query, and prev. values
      local debug="$_omb_completion_makefile_debug"
-     local query="${COMP_WORDS[COMP_CWORD]}"
      local presses=$_omb_completion_makefile_tab_presses
      local prev_reply="$_omb_completion_makefile_last_reply"
 
      # build new completion reply
      # cannot use 'compgen' with case-insensitive matching, so use grep
-     COMPREPLY=($(echo "$targets" | command grep -iE "^$query" ))
+     COMPREPLY=($(echo "$targets" | command grep -iE "^$query"))
      local reply="${COMPREPLY[*]}"
      local num_matches=${#COMPREPLY[@]}
 
@@ -402,4 +479,25 @@ _omb_completion_makefile() {
      esac
 }
 
-complete -F _omb_completion_makefile make
+# What do the 'complete -o' options do?
+# See https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html for details.
+#
+# bashdefault   If the current completion specification yields no matches,
+#               fall back to performing the default Bash completions.
+# default       If the current completion specification yields no matches,
+#               fall back to performing Readline's default filename completion.
+# dirnames      If the current completion specification yields no matches,
+#               fall back to performing directory name completion.
+# filenames     Marks the generated results as filenames so Readline can apply special handling,
+#               such as adding a trailing slash to directory names.
+# fullquote     Forces Readline to quote all completed words,
+#               regardless of whether they are identified as filenames.
+# noquote       Instructs Readline not to quote completed words,
+#               which is generally used to suppress the default quoting behavior for filenames.
+# nosort        Prevents Readline from sorting the list of possible completions alphabetically.
+# nospace       Instructs Readline not to append a space after a successfully completed word
+#               on the command line.
+# plusdirs      After all other actions have generated a list of matches,
+#               it also includes and adds the results of directory name completion.
+
+complete -o nospace -o default -o plusdirs -F _omb_completion_makefile make
