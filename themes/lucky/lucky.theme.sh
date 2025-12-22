@@ -14,7 +14,7 @@ SCM_THEME_PROMPT_SUFFIX=$_omb_prompt_normal
 function _omb_theme_PROMPT_COMMAND() {
   local python_venv
   _omb_prompt_get_python_venv
-  PS1=$python_venv
+  PS1='\n'$python_venv
   PS1+=$_omb_prompt_teal'\u '$_omb_prompt_white'@ '$_omb_prompt_green'\h '
   PS1+=$_omb_prompt_white'in '$_omb_prompt_bold_olive'\w'
   PS1+=$(scm_prompt_info)
