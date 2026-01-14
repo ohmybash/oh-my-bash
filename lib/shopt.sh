@@ -13,7 +13,18 @@
 
 # Prevent file overwrite on stdout redirection
 # Use `>|` to force redirection to an existing file
-set -o noclobber
+#
+# Note: The noclobber option is designed for interactive use to prevent
+# accidental file overwrites by the user.  Scripts and non-interactive
+# environments (e.g., IDE environment readers) do not need this protection
+# and may actually break when noclobber is enabled.  For example, JetBrains
+# IDEs fail to load shell environment variables because their environment
+# reader uses `>` redirection to a temp file.  See Ref. [1] for details.
+#
+# [1] https://github.com/ohmybash/oh-my-bash/issues/453
+case $- in
+  *i*) set -o noclobber ;;
+esac
 
 # Update window size after every command
 shopt -s checkwinsize
