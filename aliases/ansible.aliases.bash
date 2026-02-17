@@ -2,7 +2,7 @@
 
 # used to be functions in previous ansible oh-my-bash plugin
 alias aver='ansible --version; ansible-community --version'
-#alias arinit='ansible-role-init'   # this alias can now be found in the ansible-dev plugin
+#alias arinit='ansible-role-init'   # this alias can now be found in the ansible-dev aliases
 
 # ansible-core
 alias a='ansible '
