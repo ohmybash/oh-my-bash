@@ -1,5 +1,6 @@
 #! bash oh-my-bash.module
 
+# molecule: https://docs.ansible.com/projects/molecule/
 alias mol='molecule '
 alias mhlp='molecule --help '
 alias mchk='molecule check '
