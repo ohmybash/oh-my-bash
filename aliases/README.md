@@ -14,12 +14,15 @@ where `<ALIASES_NAME>` should be related by the name of the module to activate.
 
 See the respective pages for details.
 
+- `ansible`
+- `ansible-dev`
 - `chmod`
 - [`debian`](debian.aliases.md)
 - [`docker`](docker.aliases.md)
 - [`general`](general.aliases.md)
 - `ls`
 - `misc`
+- `molecule`
 - [`package-manager`](package-manager.aliases.md)
 - [`terraform`](terraform.aliases.md)
 - [`cargo`](cargo.aliases.md)

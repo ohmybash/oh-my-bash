@@ -24,8 +24,7 @@ You may wish to control when or how plugins are activated. For instance, to ensu
 By leveraging these plugins, you can streamline your workflow and tackle coding challenges with greater efficiency.
 
 | Plugin            | Description                                                                                                                 |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| ansible           | Configuration management tool used to automate the provisioning, configuration, and management of computer systems.         |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | [asdf](asdf)      | [asdf](https://asdf-vm.com) is a tool version manager to allow installing different versions of Node.js, Ruby, Golang, etc. |
 | aws               | Tools for interacting with Amazon Web Services (AWS)                                                                        |
 | bash-preexec      | Tool allowing execution of commands before they are executed in Bash.                                                       |
@@ -56,5 +55,5 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | vagrant           | Tool for creating and managing virtual development environments.                                                            |
 | virtualenvwrapper | A set of extensions to the virtualenv tool.                                                                                 |
 | xterm             | Terminal emulator for X Window systems providing a graphical user interface for accessing the command line.                 |
-| zellij-autoattach | Plugin related to session management in the zellij terminal multiplexer.                                                      |
+| zellij-autoattach | Plugin related to session management in the zellij terminal multiplexer.                                                    |
 | zoxide            | Utility for quickly navigating the filesystem based on visited directory history.                                           |
