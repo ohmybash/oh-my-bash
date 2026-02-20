@@ -168,8 +168,14 @@ _omb_plugin_kube_ps1_symbol() {
 # ---------------------------------------------------------------------------
 _omb_plugin_kube_ps1_split_config() {
   local IFS="$1"
-  # word-split on IFS
+  # Disable globbing so unquoted $2 only word-splits on IFS and does not
+  # expand wildcards that may appear in KUBECONFIG paths.
+  local _glob_state=$-
+  set -f
+  # shellcheck disable=SC2086  # intentional word-splitting on IFS
   printf '%s\n' $2
+  # Restore globbing only if it was enabled before this call.
+  [[ $_glob_state == *f* ]] || set +f
 }
 
 _omb_plugin_kube_ps1_file_newer_than() {
@@ -229,9 +235,13 @@ _omb_plugin_kube_ps1_get_context_ns() {
 # ---------------------------------------------------------------------------
 # PS1 appender – injects the kube segment into PS1 after the theme sets it.
 # Registered lazily on first PROMPT_COMMAND run so it is always last.
+# Skips injection when PS1 already contains $(kube_ps1) literally, meaning
+# the user has chosen to embed it manually in their PS1 or theme.
 # ---------------------------------------------------------------------------
 _omb_plugin_kube_ps1_ps1_append() {
   [[ "${KUBE_PS1_ENABLED:-on}" == "off" ]] && return
+  # If the user already has $(kube_ps1) in their PS1, do not inject again.
+  [[ "${PS1}" == *'$(kube_ps1)'* ]] && return
   local seg
   seg="$(kube_ps1)" || return
   [[ -z "$seg" ]] && return

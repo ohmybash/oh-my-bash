@@ -34,15 +34,21 @@ Add `kube-ps1` to the `plugins` array in your `~/.bashrc`:
 plugins=(... kube-ps1)
 ```
 
-## Add to your prompt
+## How the segment appears in your prompt
 
-The plugin exposes a `kube_ps1` function that outputs the formatted context
-string.  Add it to your `PS1` (or to your theme's
-`_omb_theme_PROMPT_COMMAND`):
+Enabling the plugin is all that is required — no changes to `PS1` are needed.
+The plugin automatically prepends the kube segment to whatever `PS1` your
+active theme sets, on every command.
+
+If you prefer to control the exact position of the segment yourself (e.g.
+from a custom theme or a hand-crafted `PS1`), embed `$(kube_ps1)` literally:
 
 ```bash
 PS1='[\u@\h \W $(kube_ps1)]\$ '
 ```
+
+> **Note:** do not do both. When `$(kube_ps1)` is already present in `PS1`
+> literally, the automatic injection is skipped to prevent duplication.
 
 ## Commands
 
