@@ -52,6 +52,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | rbenv             | Tool for managing your app's Ruby environment.                                                                              |
 | sdkman            | Version and package manager for development tools such as Java, Kotlin, and Gradle.                                         |
 | sudo              | Utility for executing commands with superuser privileges on Unix and Unix-like systems.                                     |
+| tmux              | Aliases for tmux, the terminal multiplexer.                                                                                 |
 | tmux-autoattach   | Plugin related to session management in the tmux terminal multiplexer.                                                      |
 | vagrant           | Tool for creating and managing virtual development environments.                                                            |
 | virtualenvwrapper | A set of extensions to the virtualenv tool.                                                                                 |
