@@ -41,12 +41,12 @@ function __command_rprompt {
   local times= n=$COLUMNS tz
   for tz in ZRH:Europe/Zurich PIT:US/Eastern \
             MTV:US/Pacific TOK:Asia/Tokyo; do
-    [ $n -gt 40 ] || break
+    ((n > 40)) || break
     times="$times ${tz%%:*}\e[30;1m:\e[0;36;1m"
     times="$times$(TZ=${tz#*:} date +%H:%M:%S)\e[0m"
-    n=$(( $n - 10 ))
+    n=$((n - 10))
   done
-  [ -z "$times" ] || printf "%${n}s$times\\r" ''
+  [[ ! $times ]] || printf '%*s%s\r' "$n" '' "$times"
 }
 
 ######################################################################
@@ -75,7 +75,10 @@ function _omb_theme_PROMPT_COMMAND {
   local RETVAL=$?
   local PRIGHT=""
   local CURRENT_BG=NONE
-  local PR="$(ansi_single $(text_effect reset))"
+  local REPLY
+  _omb_theme_agnoster_text_effect reset
+  _omb_theme_agnoster_ansi_single "$REPLY"
+  local PR=$REPLY
   build_prompt
 
   PS1=""
