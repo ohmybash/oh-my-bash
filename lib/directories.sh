@@ -32,7 +32,7 @@ function _omb_directories_cd {
     _omb_cd_dirstack=("${DIRSTACK[@]/#~/$HOME}")
     OLDPWD=$oldpwd
   else
-    [[ ${_omb_cd_dirstack[0]} == "$PWD" ]] ||
+    [[ ${_omb_cd_dirstack[0]-} == "$PWD" ]] ||
       _omb_cd_dirstack=("$PWD" "${_omb_cd_dirstack[@]}")
     builtin cd "$@" &&
       _omb_cd_dirstack=("$PWD" "${_omb_cd_dirstack[@]}")
