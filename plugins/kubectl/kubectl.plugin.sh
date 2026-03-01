@@ -10,6 +10,9 @@ function kca {
 # Apply a YML file
 alias kaf='kubectl apply -f'
 
+# Apply a kustomization directory
+alias kapk='kubectl apply -k'
+
 # Drop into an interactive terminal on a container
 alias keti='kubectl exec -ti'
 
@@ -25,6 +28,7 @@ alias kcgc='kubectl config get-contexts'
 # General aliases
 alias kdel='kubectl delete'
 alias kdelf='kubectl delete -f'
+alias kdelk='kubectl delete -k'
 
 # Pod management.
 alias kgp='kubectl get pods'
