@@ -245,8 +245,13 @@ _omb_plugin_kube_ps1_ps1_append() {
   local seg
   seg="$(kube_ps1)" || return
   [[ -z "$seg" ]] && return
-  # Prepend the segment so it appears before the theme's own prompt text
-  PS1="${seg} ${PS1}"
+  # Prepend the segment so it appears before the theme's own prompt text.
+  # Skip the separator space if the segment already ends with a newline.
+  if [[ "${seg}" == *$'\n' ]]; then
+    PS1="${seg}${PS1}"
+  else
+    PS1="${seg} ${PS1}"
+  fi
 }
 
 # ---------------------------------------------------------------------------
