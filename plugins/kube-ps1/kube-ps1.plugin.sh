@@ -141,7 +141,7 @@ _omb_plugin_kube_ps1_symbol() {
       symbol=$'\xE2\x98\xB8'  # ☸ (UTF-8 bytes for bash < 4)
       ;;
     k8s)
-      symbol="$(_omb_plugin_kube_ps1_color_fg "${KUBE_PS1_SYMBOL_COLOR}")$'\Uf10fe'${reset_color}"
+      symbol="$(_omb_plugin_kube_ps1_color_fg "${KUBE_PS1_SYMBOL_COLOR}")$'\U000f10fe'${reset_color}"
       ;;
     oc)
       symbol="$(_omb_plugin_kube_ps1_color_fg red)$'\ue7b7'${reset_color}"
