@@ -215,13 +215,18 @@ function _bashmarks_compzsh_cmd_bm {
 # safe delete line from sdirs
 function _bashmarks_purge_line {
   if [[ -s $1 ]]; then
-    # safely create a temp file
-    t=$(mktemp -t bashmarks.XXXXXX) || exit 1
+    # safely create a temp file.  To atomically rewrite the target file with
+    # "mv", we create the temporary file in the same directory as the target of
+    # the symbolic link.
+    local dest tmpdir t
+    dest=$(_omb_util_readlink "$1" 2>/dev/null)
+    tmpdir=$(dirname -- "$dest")
+    t=$(mktemp "${tmpdir%/}/bashmarks.XXXXXX") || exit 1
     trap "/bin/rm -f -- '$t'" EXIT
 
     # purge line
-    sed "/$2/d" "$1" >| "$t"
-    /bin/mv "$t" "$1"
+    sed "/$2/d" "$1" >| "$t" &&
+      /bin/mv -f -- "$t" "$dest"
 
     # cleanup temp file
     /bin/rm -f -- "$t"
