@@ -379,8 +379,13 @@ kubeoff() {
 # ---------------------------------------------------------------------------
 kube_ps1() {
   [[ "${KUBE_PS1_ENABLED:-on}" == "off" ]] && return
-  [[ -z "${KUBE_PS1_CONTEXT:-}" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
-  [[ "${KUBE_PS1_CONTEXT:-}" == "N/A" ]] && [[ "${KUBE_PS1_HIDE_IF_NOCONTEXT}" == true ]] && return
+  # Normalise empty/absent context to "N/A", then let HIDE_IF_NOCONTEXT decide
+  # whether to show or hide the segment.  Without this, an empty context would
+  # always suppress the segment regardless of HIDE_IF_NOCONTEXT.
+  if [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]]; then
+    local KUBE_PS1_CONTEXT="${KUBE_PS1_CONTEXT:-N/A}"
+    [[ "${KUBE_PS1_CONTEXT}" == "N/A" ]] && [[ "${KUBE_PS1_HIDE_IF_NOCONTEXT}" == true ]] && return
+  fi
 
   local reset_color="${_KUBE_PS1_OPEN_ESC}${_KUBE_PS1_DEFAULT_FG}${_KUBE_PS1_CLOSE_ESC}"
   if [[ -n "${KUBE_PS1_BG_COLOR:-}" ]]; then
