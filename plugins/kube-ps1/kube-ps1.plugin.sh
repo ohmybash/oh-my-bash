@@ -262,6 +262,8 @@ _omb_plugin_kube_ps1_prompt_update() {
 
   # Lazy first-run: register ps1_append AFTER the theme has been added to
   # _omb_util_prompt_command, so it always executes last.
+  # _omb_util_prompt_command_hook uses an index loop, so the newly registered
+  # function is invoked in the same prompt-render cycle it is added.
   if [[ "${_omb_plugin_kube_ps1_initialized}" == false ]]; then
     _omb_plugin_kube_ps1_initialized=true
     _omb_util_add_prompt_command _omb_plugin_kube_ps1_ps1_append
