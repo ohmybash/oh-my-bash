@@ -343,7 +343,10 @@ kubeon() {
     -h|--help)
       _omb_plugin_kube_ps1_kubeon_usage ;;
     -g|--global)
-      rm -f -- "${_omb_plugin_kube_ps1_disable_path}"
+      if ! rm -f -- "${_omb_plugin_kube_ps1_disable_path}"; then
+        printf 'error: kubeon: failed to remove disable file: %s\n' "${_omb_plugin_kube_ps1_disable_path}" >&2
+        return 1
+      fi
       KUBE_PS1_ENABLED=on ;;
     "")
       KUBE_PS1_ENABLED=on ;;
@@ -359,8 +362,14 @@ kubeoff() {
     -h|--help)
       _omb_plugin_kube_ps1_kubeoff_usage ;;
     -g|--global)
-      mkdir -p -- "$(dirname "${_omb_plugin_kube_ps1_disable_path}")"
-      touch -- "${_omb_plugin_kube_ps1_disable_path}"
+      if ! mkdir -p -- "$(dirname "${_omb_plugin_kube_ps1_disable_path}")"; then
+        printf 'error: kubeoff: failed to create directory for disable file: %s\n' "$(dirname "${_omb_plugin_kube_ps1_disable_path}")" >&2
+        return 1
+      fi
+      if ! touch -- "${_omb_plugin_kube_ps1_disable_path}"; then
+        printf 'error: kubeoff: failed to create disable file: %s\n' "${_omb_plugin_kube_ps1_disable_path}" >&2
+        return 1
+      fi
       KUBE_PS1_ENABLED=off ;;
     "")
       KUBE_PS1_ENABLED=off ;;
