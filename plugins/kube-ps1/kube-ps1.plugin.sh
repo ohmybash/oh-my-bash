@@ -182,10 +182,10 @@ _omb_plugin_kube_ps1_file_newer_than() {
   local file="$1" check_time="$2" mtime
   if stat -c "%s" /dev/null &>/dev/null; then
     # GNU stat
-    mtime=$(stat -L -c %Y "${file}")
+    mtime=$(stat -L -c %Y "${file}" 2>/dev/null) || return 1
   else
     # BSD stat (macOS)
-    mtime=$(stat -L -f %m "${file}")
+    mtime=$(stat -L -f %m "${file}" 2>/dev/null) || return 1
   fi
   (( mtime > check_time ))
 }
