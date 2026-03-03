@@ -59,4 +59,4 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | xterm             | Terminal emulator for X Window systems providing a graphical user interface for accessing the command line.                 |
 | zellij-autoattach | Plugin related to session management in the zellij terminal multiplexer.                                                    |
 | zoxide            | Utility for quickly navigating the filesystem based on visited directory history.                                           |
-| gh                | Aliases and funtions for Github CLI                                                                                         |
+| gh                | Convenient aliases for GitHub CLI, providing shortcuts for managing repositories, PRs, issues, releases, and workflows.     |

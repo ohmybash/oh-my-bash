@@ -8,10 +8,8 @@
 # -------------------------------------------------------------------------------------------#
 
 
-# Check if gh is installed
 if ! _omb_util_command_exists gh; then
-  _omb_util_print "GitHub CLI (gh) is not installed. Please install it from https://cli.github.com/"
-  return 1
+  _omb_util_print "[oh-my-bash] GitHub CLI (gh) is not installed. Please install it from https://cli.github.com/" >&2
 fi
 
 # Functions
@@ -60,8 +58,6 @@ function gh-pr-list() {
 # Aliases
 
 # Core
-alias gh='gh'
-
 alias ghrv='gh repo view'                    # View repository
 alias ghrvw='gh repo view --web'              # View repository in browser
 alias ghrc='gh-repo-clone'                     # Clone repository (uses function)

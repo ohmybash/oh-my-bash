@@ -55,6 +55,6 @@ After installation, authenticate with `gh auth login`.
 |-------------------|--------------------------------------------------|-----------------------------------------------|
 | `gh-info`         | Displays `gh` version and authentication status | `gh-info`                                     |
 | `gh-pr-create`    | Creates a pull request with title and optional body, then opens in browser | `gh-pr-create "Title" "Description"` |
-| `gh-issue-list`   | Lsts issues; optional state filter (open/closed) | `gh-issue-list closed`                       |
+| `gh-issue-list`   | Lists issues; optional state filter (open/closed) | `gh-issue-list closed`                       |
 | `gh-repo-clone`   | Clones a repository in `owner/repo` format      | `gh-repo-clone octocat/Hello-World`           |
 | `gh-pr-list`      | Lists pull requests; optional state filter      | `gh-pr-list closed`                           |
