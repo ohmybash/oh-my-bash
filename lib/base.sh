@@ -57,9 +57,9 @@ function quiet {
 # shellcheck disable=SC2010
 function lsgrep { ls | grep "$*" ; }
 
-#   banish-cookies: redirect .adobe and .macromedia files to /dev/null
+#   banish_cookies: redirect .adobe and .macromedia files to /dev/null
 #   ------------------------------------------------------------
-function banish-cookies {
+function banish_cookies {
   rm -r ~/.macromedia ~/.adobe
   ln -s /dev/null ~/.adobe
   ln -s /dev/null ~/.macromedia
