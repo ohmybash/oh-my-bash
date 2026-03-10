@@ -1,27 +1,70 @@
 # npm plugin
 
-The npm plugin provides completion as well as adding many useful aliases.
+Add [oh-my-bash](https://ohmybash.github.io) integration for [npm](https://www.npmjs.com/), providing aliases for common npm workflows. Inspired by the [oh-my-zsh npm plugin](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/npm).
 
-To use it, add npm to the plugins array of your bashrc file:
+## Installation
 
-```bash
-plugins=(... npm)
+Enable the plugin by adding it to your oh-my-bash `plugins` definition in `~/.bashrc`.
+
+```sh
+plugins=(npm)
+```
+
+Optionally, enable npm tab completions:
+
+```sh
+completions=(npm)
 ```
 
 ## Aliases
 
-| Alias   | Command                      | Descripton                                                      |
-|:------  |:-----------------------------|:----------------------------------------------------------------|
-| `npmg`  | `npm i -g`                   | Install dependencies globally                                   |
-| `npmS`  | `npm i -S`                   | Install and save to dependencies in your package.json           |
-| `npmD`  | `npm i -D`                   | Install and save to dev-dependencies in your package.json       |
-| `npmE`  | `PATH="$(npm bin)":"$PATH"`  | Run command from node_modules folder based on current directory |
-| `npmO`  | `npm outdated`               | Check which npm modules are outdated                            |
-| `npmV`  | `npm -v`                     | Check package versions                                          |
-| `npmL`  | `npm list`                   | List installed packages                                         |
-| `npmL0` | `npm ls --depth=0`           | List top-level installed packages                               |
-| `npmst` | `npm start`                  | Run npm start                                                   |
-| `npmt`  | `npm test`                   | Run npm test                                                    |
-| `npmR`  | `npm run`                    | Run npm scripts                                                 |
-| `npmP`  | `npm publish`                | Run npm publish                                                 |
-| `npmI`  | `npm init`                   | Run npm init                                                    |
+### Install
+
+| Alias   | Command        | Description                                           |
+|---------|----------------|-------------------------------------------------------|
+| `npmg`  | `npm i -g`     | Install a package globally                            |
+| `npmS`  | `npm i -S`     | Install and save to `dependencies`                    |
+| `npmD`  | `npm i -D`     | Install and save to `devDependencies`                 |
+| `npmF`  | `npm i -f`     | Force-install, bypassing the cache                    |
+| `npmU`  | `npm update`   | Update all packages to their latest allowed versions  |
+
+### Init / Info / Search
+
+| Alias   | Command        | Description                         |
+|---------|----------------|-------------------------------------|
+| `npmI`  | `npm init`     | Initialise a new `package.json`     |
+| `npmi`  | `npm info`     | Show information about a package    |
+| `npmSe` | `npm search`   | Search the npm registry             |
+
+### Run scripts
+
+| Alias   | Command           | Description                    |
+|---------|-------------------|--------------------------------|
+| `npmst` | `npm start`       | Run the `start` script         |
+| `npmt`  | `npm test`        | Run the `test` script          |
+| `npmR`  | `npm run`         | Run an arbitrary script        |
+| `npmrd` | `npm run dev`     | Run the `dev` script           |
+| `npmrb` | `npm run build`   | Run the `build` script         |
+
+### Publish
+
+| Alias   | Command        | Description           |
+|---------|----------------|-----------------------|
+| `npmP`  | `npm publish`  | Publish the package   |
+
+### Inspect
+
+| Alias    | Command              | Description                               |
+|----------|----------------------|-------------------------------------------|
+| `npmO`   | `npm outdated`       | List outdated packages                    |
+| `npmV`   | `npm -v`             | Print the npm version                     |
+| `npmL`   | `npm list`           | List all installed packages               |
+| `npmL0`  | `npm ls --depth=0`   | List top-level installed packages only    |
+
+### Local binaries / npx
+
+| Alias   | Command                                          | Description                                  |
+|---------|--------------------------------------------------|----------------------------------------------|
+| `npmE`  | `PATH="$(npm prefix)/node_modules/.bin:$PATH"`   | Prepend local `node_modules/.bin` to `$PATH` |
+| `npmx`  | `npx`                                            | Shorthand for `npx`                          |
+
