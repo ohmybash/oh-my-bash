@@ -2,8 +2,6 @@
 # Description: Aliases and utilities for npm
 # Inspired by the oh-my-zsh npm plugin (https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/npm)
 
-_omb_module_require completion:npm
-
 if ! _omb_util_command_exists npm; then
   return
 fi
@@ -40,5 +38,4 @@ alias npmL0="npm ls --depth=0"
 alias npmE='PATH="$(npm prefix)/node_modules/.bin:$PATH"'
 
 # npx shortcuts
-alias npx='npx'
 alias npmx='npx'

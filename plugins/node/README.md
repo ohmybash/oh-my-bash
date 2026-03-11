@@ -36,7 +36,8 @@ Works with any Node.js version manager (nvm, mise, asdf, etc.) — it always ref
 Evaluate a JavaScript expression via `node -e` and pretty-print the result as JSON. Useful for quickly inspecting Node.js internals.
 
 ```bash
-node-json 'process.versions'   # print all runtime versions
-node-json 'process.env'        # print environment variables
-node-json 'os.cpus().length'   # requires: const os = require("os")
+node-json 'process.versions'            # print all runtime versions
+node-json 'process.env'                 # print environment variables
+node-json 'require("os").cpus()'        # print CPU info (using require)
+node-json 'require("os").cpus().length' # number of CPUs
 ```
