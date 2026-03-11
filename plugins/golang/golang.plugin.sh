@@ -2,11 +2,11 @@
 # Description: Aliases and utilities for Go development
 # Inspired by the oh-my-zsh golang plugin (https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/golang)
 
-_omb_module_require completion:go
-
 if ! _omb_util_command_exists go; then
   return
 fi
+
+_omb_module_require completion:go
 
 # Build
 alias gob='go build'
@@ -87,17 +87,35 @@ function _omb_plugin_golang_cd {
   fi
   local gopath
   gopath=$(go env GOPATH)
+  if [[ -z $gopath ]]; then
+    _omb_util_print 'gocd: GOPATH is not set or empty' >&2
+    return 1
+  fi
   cd "$gopath/src/$pkg" || return $?
 }
 alias gocd='_omb_plugin_golang_cd'
 
 # Run tests with a coverage report opened in the browser.
-# Usage: gocov [go test flags] (defaults to ./...)
+# Usage: gocov [-go-test-flags...] [packages] (defaults to ./...)
+# Flags (args starting with -) are passed to go test; remaining args are
+# treated as packages. If no packages are given, ./... is used as default.
 function _omb_plugin_golang_cov {
-  local coverfile
-  coverfile=$(mktemp /tmp/go-cover-XXXXXX.out)
-  go test -coverprofile="$coverfile" "${@:-./...}" || { rm -f "$coverfile"; return $?; }
+  local arg flag_args=() pkg_args=()
+  for arg in "$@"; do
+    if [[ $arg == -* ]]; then
+      flag_args+=("$arg")
+    else
+      pkg_args+=("$arg")
+    fi
+  done
+  [[ ${#pkg_args[@]} -eq 0 ]] && pkg_args=(./...)
+
+  local coverfile rc
+  coverfile=$(_omb_util_mktemp) || return 1
+  go test -coverprofile="$coverfile" "${flag_args[@]}" "${pkg_args[@]}" || { rm -f "$coverfile"; return $?; }
   go tool cover -html="$coverfile"
+  rc=$?
   rm -f "$coverfile"
+  return $rc
 }
 alias gocov='_omb_plugin_golang_cov'

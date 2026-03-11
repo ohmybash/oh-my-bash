@@ -10,11 +10,7 @@ Enable the plugin by adding it to your oh-my-bash `plugins` definition in `~/.ba
 plugins=(golang)
 ```
 
-Optionally, enable Go tab completions:
-
-```sh
-completions=(go)
-```
+> **Note:** Tab completion for Go commands is included automatically — no separate `completions=(go)` entry is needed.
 
 ## Aliases
 
@@ -109,17 +105,19 @@ completions=(go)
 
 ### `gocd <package>`
 
-Navigate to a package's source directory under `$GOPATH/src`.
+Navigate to a package's source directory under `$GOPATH/src`. Prints a clear error if `GOPATH` is not set.
 
 ```bash
 gocd github.com/some/package
 ```
 
-### `gocov [go test flags]`
+### `gocov [-flags...] [packages]`
 
-Run tests with a coverage report and open the result in your browser. Accepts the same flags as `go test`; defaults to `./...`.
+Run tests with a coverage report and open the result in your browser. Flags (arguments starting with `-`) are forwarded to `go test`; remaining arguments are treated as packages. If no packages are given, `./...` is used as the default.
 
 ```bash
-gocov              # test all packages + open coverage report
-gocov ./pkg/...    # test a specific subtree
+gocov                      # test ./... + open coverage report
+gocov ./pkg/...            # test a specific subtree
+gocov -run=TestFoo         # run a specific test across ./...
+gocov -run=TestFoo ./pkg/... # run a specific test in a subtree
 ```
