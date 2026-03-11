@@ -7,14 +7,12 @@ Add [oh-my-bash](https://ohmybash.github.io) integration with [Docker](https://w
 1. [Install Docker](https://docs.docker.com/get-docker/).
 
 2. Enable the plugin by adding it to your oh-my-bash `plugins` definition in `~/.bashrc`.
+
     ```sh
     plugins=(docker)
     ```
 
-3. Optionally, enable Docker tab completions by adding it to your `completions` definition:
-    ```sh
-    completions=(docker)
-    ```
+> **Note:** Tab completion for Docker commands is included automatically — no separate `completions=(docker)` entry is needed.
 
 ## Aliases
 

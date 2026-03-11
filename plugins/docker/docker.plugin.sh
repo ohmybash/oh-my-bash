@@ -2,11 +2,11 @@
 # Description: Aliases and utility functions for Docker
 # Inspired by the oh-my-zsh docker plugin (https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker)
 
-_omb_module_require completion:docker
-
 if ! _omb_util_command_exists docker; then
   return
 fi
+
+_omb_module_require completion:docker
 
 # Build
 alias dbl='docker build'
@@ -75,10 +75,13 @@ function _omb_plugin_docker_stop_all {
 }
 alias dsta='_omb_plugin_docker_stop_all'
 
-# Remove all stopped containers
+# Remove all stopped containers (created, paused, exited, dead)
 function _omb_plugin_docker_rm_stopped {
   local -a ids
-  ids=($(docker ps -aq --filter status=exited)) || return 1
+  ids=($(docker ps -aq --filter status=created \
+                          --filter status=paused \
+                          --filter status=exited \
+                          --filter status=dead)) || return 1
   if [[ ${#ids[@]} -eq 0 ]]; then
     _omb_util_print '[oh-my-bash] docker: no stopped containers to remove' >&2
     return 0
