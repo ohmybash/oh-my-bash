@@ -7,6 +7,7 @@ The fzf plugin enables [fzf](https://github.com/junegunn/fzf) key bindings and f
 ### Install fzf
 
 **Package manager / mise / asdf:**
+
 ```bash
 # Homebrew
 brew install fzf
@@ -16,6 +17,7 @@ mise use -g fzf
 ```
 
 **Git (official method):**
+
 ```bash
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --no-update-rc  # skip the ~/.bashrc modification, the plugin handles it
@@ -35,7 +37,7 @@ The plugin searches for fzf in the following locations, in order:
 
 1. Already in `$PATH` (package managers, mise, asdf, manual installs)
 2. `~/.fzf/bin` (git clone install)
-3. `~XDG_CONFIG_HOME/fzf/bin`
+3. `${XDG_CONFIG_HOME:-$HOME/.config}/fzf/bin`
 
 ## Key bindings
 

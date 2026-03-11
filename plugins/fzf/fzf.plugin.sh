@@ -27,11 +27,14 @@ if fzf --bash &>/dev/null; then
 else
   # Fallback for fzf < 0.46 git installs
   local _omb_plugin_fzf_base
-  _omb_plugin_fzf_base=$(command -v fzf)
-  _omb_plugin_fzf_base=${_omb_plugin_fzf_base%/bin/fzf}
-  [[ -s $_omb_plugin_fzf_base/shell/key-bindings.bash ]] &&
-    source "$_omb_plugin_fzf_base/shell/key-bindings.bash"
-  [[ $- == *i* && -s $_omb_plugin_fzf_base/shell/completion.bash ]] &&
-    source "$_omb_plugin_fzf_base/shell/completion.bash"
+  _omb_plugin_fzf_base=$(command -v fzf 2>/dev/null)
+  # Ensure we got a real filesystem path, not a function/alias name
+  if [[ -x $_omb_plugin_fzf_base ]]; then
+    _omb_plugin_fzf_base=${_omb_plugin_fzf_base%/bin/fzf}
+    [[ -s $_omb_plugin_fzf_base/shell/key-bindings.bash ]] &&
+      source "$_omb_plugin_fzf_base/shell/key-bindings.bash"
+    [[ $- == *i* && -s $_omb_plugin_fzf_base/shell/completion.bash ]] &&
+      source "$_omb_plugin_fzf_base/shell/completion.bash"
+  fi
   unset -v _omb_plugin_fzf_base
 fi
