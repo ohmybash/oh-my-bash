@@ -49,6 +49,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | nvm               | Node.js version manager allowing easy switching between different Node.js versions.                                         |
 | progress          | Insufficient information provided to give a precise description.                                                            |
 | pyenv             | Tool for managing multiple Python versions within a system.                                                                 |
+| [python](python)  | Aliases and utilities for Python development, including venv management and pip shortcuts.                                  |
 | rbenv             | Tool for managing your app's Ruby environment.                                                                              |
 | sdkman            | Version and package manager for development tools such as Java, Kotlin, and Gradle.                                         |
 | sudo              | Utility for executing commands with superuser privileges on Unix and Unix-like systems.                                     |
