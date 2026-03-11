@@ -34,6 +34,8 @@ OMB_PLUGIN_MISE_QUIET=true
 
 ## Aliases
 
+All aliases target the resolved mise binary, so they work regardless of whether mise is on `$PATH`.
+
 | Alias  | Command           | Description                              |
 |--------|-------------------|------------------------------------------|
 | `mi`   | `mise install`    | Install tool versions defined in config  |

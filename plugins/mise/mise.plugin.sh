@@ -22,11 +22,16 @@ if [[ -n $_omb_plugin_mise_bin ]]; then
     eval "$("$_omb_plugin_mise_bin" activate bash)"
   fi
 
-  alias mi='mise install'
-  alias mu='mise use'
-  alias mr='mise run'
-  alias mex='mise exec'
-  alias mls='mise ls'
-  alias mlsr='mise ls-remote'
+  # Use the resolved binary path in aliases so they work even when mise is
+  # not yet on $PATH (e.g. installed via MISE_INSTALL_PATH or ~/.local/bin).
+  local _omb_plugin_mise_bin_q
+  printf -v _omb_plugin_mise_bin_q '%q' "$_omb_plugin_mise_bin"
+  alias mi="$_omb_plugin_mise_bin_q install"
+  alias mu="$_omb_plugin_mise_bin_q use"
+  alias mr="$_omb_plugin_mise_bin_q run"
+  alias mex="$_omb_plugin_mise_bin_q exec"
+  alias mls="$_omb_plugin_mise_bin_q ls"
+  alias mlsr="$_omb_plugin_mise_bin_q ls-remote"
+  unset -v _omb_plugin_mise_bin_q
 fi
 unset _omb_plugin_mise_bin
