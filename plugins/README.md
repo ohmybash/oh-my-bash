@@ -42,7 +42,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | gcloud            | Command-line tools for interacting with Google Cloud Platform (GCP).                                                        |
 | git               | Distributed version control system for managing the history of changes in software projects.                                |
 | goenv             | Tool for managing Go versions within a development environment.                                                             |
-| golang            | The Go programming language, along with its tools and standard libraries.                                                   |
+| [golang](golang)  | Aliases and utilities for Go development, including build, test, mod, and coverage helpers.                                 |
 | jump              | Jump helps you navigate faster by learning your habits.                                                                     |
 | kubectl           | Command-line tool for interacting with Kubernetes clusters.                                                                 |
 | npm               | Package manager for Node.js facilitating installation and management of project dependencies.                               |
