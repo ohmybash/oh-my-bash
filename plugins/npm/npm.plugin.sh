@@ -1,45 +1,41 @@
 #! bash oh-my-bash.module
-# Install dependencies globally
-alias npmg="npm i -g "
+# Description: Aliases and utilities for npm
+# Inspired by the oh-my-zsh npm plugin (https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/npm)
 
-# npm package names are lowercase
-# Thus, we've used camelCase for the following aliases:
+if ! _omb_util_command_exists npm; then
+  return
+fi
 
-# Install and save to dependencies in your package.json
-# npms is used by https://www.npmjs.com/package/npms
-alias npmS="npm i -S "
+# Install
+alias npmg="npm i -g"
+alias npmS="npm i -S"
+alias npmD="npm i -D"
+alias npmF="npm i -f"
+alias npmU="npm update"
 
-# Install and save to dev-dependencies in your package.json
-# npmd is used by https://github.com/dominictarr/npmd
-alias npmD="npm i -D "
+# Init / Info / Search
+alias npmI="npm init"
+alias npmi="npm info"
+alias npmSe="npm search"
 
-# Execute command from node_modules folder based on current directory
-# i.e npmE gulp
-alias npmE='PATH="$(npm bin)":"$PATH"'
-
-# Check which npm modules are outdated
-alias npmO="npm outdated"
-
-# Check package versions
-alias npmV="npm -v"
-
-# List packages
-alias npmL="npm list"
-
-# List top-level installed packages
-alias npmL0="npm ls --depth=0"
-
-# Run npm start
+# Run scripts
 alias npmst="npm start"
-
-# Run npm test
 alias npmt="npm test"
-
-# Run npm scripts
 alias npmR="npm run"
+alias npmrd="npm run dev"
+alias npmrb="npm run build"
 
-# Run npm publish
+# Publish
 alias npmP="npm publish"
 
-# Run npm init
-alias npmI="npm init"
+# Inspect
+alias npmO="npm outdated"
+alias npmV="npm -v"
+alias npmL="npm list"
+alias npmL0="npm ls --depth=0"
+
+# Run a local binary from node_modules/.bin via npx
+alias npmE='PATH="$(npm prefix)/node_modules/.bin:$PATH"'
+
+# npx shortcuts
+alias npmx='npx'

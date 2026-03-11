@@ -45,7 +45,8 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | golang            | The Go programming language, along with its tools and standard libraries.                                                   |
 | jump              | Jump helps you navigate faster by learning your habits.                                                                     |
 | kubectl           | Command-line tool for interacting with Kubernetes clusters.                                                                 |
-| npm               | Package manager for Node.js facilitating installation and management of project dependencies.                               |
+| [node](node)      | Aliases and utilities for Node.js development, including API docs browser integration.                                      |
+| [npm](npm)        | Package manager for Node.js facilitating installation and management of project dependencies.                               |
 | nvm               | Node.js version manager allowing easy switching between different Node.js versions.                                         |
 | progress          | Insufficient information provided to give a precise description.                                                            |
 | pyenv             | Tool for managing multiple Python versions within a system.                                                                 |
