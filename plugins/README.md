@@ -36,6 +36,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | cargo             | Plugin to initialize CARGO_HOME and PATH for cargo                                                                          |
 | colored-man-pages | Adds a few colors to `man` pages.                                                                                           |
 | chezmoi           | Dotfile management tool enabling management of user environment configuration.                                              |
+| [docker](docker)  | Aliases and utility functions for [Docker](https://www.docker.com/).                                                        |
 | dotnet            | This plugin provides completion and useful aliases for .NET Core CLI.                                                       |
 | fasd              | Utility easing filesystem navigation through shortcuts and abbreviated commands.                                            |
 | fzf               | A command-line fuzzy finder.                                                                                                |
@@ -57,5 +58,5 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | vagrant           | Tool for creating and managing virtual development environments.                                                            |
 | virtualenvwrapper | A set of extensions to the virtualenv tool.                                                                                 |
 | xterm             | Terminal emulator for X Window systems providing a graphical user interface for accessing the command line.                 |
-| zellij-autoattach | Plugin related to session management in the zellij terminal multiplexer.                                                      |
+| zellij-autoattach | Plugin related to session management in the zellij terminal multiplexer.                                                    |
 | zoxide            | Utility for quickly navigating the filesystem based on visited directory history.                                           |
