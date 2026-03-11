@@ -102,10 +102,16 @@ function mkv {
 
 if [[ ${OMB_PLUGIN_PYTHON_AUTO_VRUN-} == true ]]; then
   function _omb_plugin_python_auto_vrun {
-    # Deactivate if we have left the project directory that owns the current venv
-    if [[ $(type -t deactivate) == function ]] && [[ -n ${VIRTUAL_ENV-} ]] &&
-       [[ $PWD != "${VIRTUAL_ENV%/*}"* ]]; then
-      deactivate > /dev/null 2>&1
+    # Deactivate if we have left the project directory that owns the current venv.
+    # Use an exact boundary check to avoid matching sibling dirs with the same prefix
+    # (e.g. /path/project2 when the venv belongs to /path/project).
+    if [[ $(type -t deactivate) == function ]] && [[ -n ${VIRTUAL_ENV-} ]]; then
+      local _omb_plugin_python_project_dir=${VIRTUAL_ENV%/*}
+      if [[ $PWD != "$_omb_plugin_python_project_dir" &&
+            $PWD != "$_omb_plugin_python_project_dir/"* ]]; then
+        deactivate > /dev/null 2>&1
+      fi
+      unset -v _omb_plugin_python_project_dir
     fi
 
     # Skip if this directory is already the active venv's home
@@ -122,12 +128,15 @@ if [[ ${OMB_PLUGIN_PYTHON_AUTO_VRUN-} == true ]]; then
     done
   }
 
-  function _omb_plugin_python_cd {
-    command cd "$@" || return $?
+  # Use PROMPT_COMMAND instead of aliasing cd so other plugins' cd hooks are not clobbered.
+  _omb_plugin_python_last_pwd=
+  function _omb_plugin_python_auto_vrun_hook {
+    [[ ${_omb_plugin_python_last_pwd-} == "$PWD" ]] && return 0
+    _omb_plugin_python_last_pwd=$PWD
     _omb_plugin_python_auto_vrun
   }
-  alias cd='_omb_plugin_python_cd'
+  _omb_util_add_prompt_command _omb_plugin_python_auto_vrun_hook
 
   # Run once for the shell's starting directory
-  _omb_plugin_python_auto_vrun
+  _omb_plugin_python_auto_vrun_hook
 fi
