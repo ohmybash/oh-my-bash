@@ -13,4 +13,10 @@ function _nix_indicator_update_prompt() {
 }
 
 # Append  to PROMPT_COMMAND 
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }_nix_indicator_update_prompt"
+if [[ -z "$PROMPT_COMMAND" ]]; then # Cheking if PROMPT_COMMAND variable exists.
+    PROMPT_COMMAND="_nix_indicator_update_prompt"
+elif [[ "$(declare -p PROMPT_COMMAND 2>/dev/null)" =~ "declare -a" ]]; then # Cheking existing PROMPT_COMMAND if it is a string.
+    PROMPT_COMMAND+=(_nix_indicator_update_prompt)
+else
+    PROMPT_COMMAND="${PROMPT_COMMAND}; _nix_indicator_update_prompt"
+fi
