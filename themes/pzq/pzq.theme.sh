@@ -48,7 +48,7 @@ function is_vim_shell {
 function mitsuhikos_lastcommandfailed {
   local status=$?
   if ((status != 0)); then
-    _omb_util_print " ${D_DEFAULT_COLOR}C:${D_CMDFAIL_COLOR}$code ${D_DEFAULT_COLOR}"
+    _omb_util_print " ${D_DEFAULT_COLOR}C:${D_CMDFAIL_COLOR}$status ${D_DEFAULT_COLOR}"
   fi
 }
 
