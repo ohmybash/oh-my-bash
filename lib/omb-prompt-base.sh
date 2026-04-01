@@ -121,7 +121,7 @@ function _omb_prompt_git_status_enabled {
 function _upfind() {
   local target current
   target="$1"
-  current="$(realpath --canonicalize-existing "$PWD")"
+  current="$(realpath "$PWD")"
 
   while [[ "$current" != "/" ]]; do
     if [[ -e "${current}/${target}" ]]; then
