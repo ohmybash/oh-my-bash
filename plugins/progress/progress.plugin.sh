@@ -49,7 +49,7 @@ function progress {
   fi
 
   if ((value < 0)); then
-    _omb_log_error "invalid value: value' (expect: 0-100)" >&2
+    _omb_log_error "invalid value: $value (expect: 0-100)" >&2
     return 2
   fi
 
