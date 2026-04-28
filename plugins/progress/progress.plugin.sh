@@ -14,8 +14,8 @@
 # shell script directly.  Then invoke the "progress" function to show a
 # progress bar.
 
-# In another way, you could import the source indirectly and then use
-# them. Nothing different.
+# Alternatively, you could import the source file indirectly and then use
+# those functions.  There is no difference in the usage.
 
 ################################################################################
 
@@ -49,7 +49,7 @@ function progress {
   fi
 
   if ((value < 0)); then
-    _omb_log_error "invalid value: value' (expect: 0-100)" >&2
+    _omb_log_error "invalid value: $value (expect: 0-100)" >&2
     return 2
   fi
 
