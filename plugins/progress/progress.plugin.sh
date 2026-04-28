@@ -14,8 +14,8 @@
 # shell script directly.  Then invoke the "progress" function to show a
 # progress bar.
 
-# In another way, you could import the source indirectly and then use
-# them. Nothing different.
+# Alternatively, you could import the source file indirectly and then use
+# those functions.  There is no difference in the usage.
 
 ################################################################################
 
