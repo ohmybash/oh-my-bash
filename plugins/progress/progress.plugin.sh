@@ -10,7 +10,7 @@
 
 ############################---Usage---#########################################
 
-# Copy below functions (delay and progress fuctions) into your shell script directly
+# Copy below functions (delay and progress functions) into your shell script directly
 # Then invoke progress function to show progress bar
 
 # In other way, you could import source indirectly then using. Nothing different
