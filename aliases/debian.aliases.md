@@ -4,7 +4,7 @@ Shorter aliases for most used Debian specific commands.
 To activate it, add `debian` to `aliases=(...)` in your `.bashrc` file:
 
 ```bash
-aliases=(... debian)`
+aliases=(... debian)
 ```
 
 ## Basic Commands
