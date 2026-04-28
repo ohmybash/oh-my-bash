@@ -3,8 +3,8 @@
 # Bail out early if non-interactive
 #
 # Note: We cannot produce any error messages here because, in some systems,
-# /etc/gdm3/Xsession sources ~/.profile and checks stderr.  If there is any
-# stderr outputs, it refuses to start the session.
+# /etc/gdm3/Xsession sources ~/.profile and checks stderr.  With any stderr
+# outputs, it refuses to start the session.
 case $- in
   *i*) ;;
     *) return;;
