@@ -1,10 +1,10 @@
 # Aliases `debian`
 
-Shorted aliases for most used Debian specific commands.
-To activate it, add `debian` to `aliases=(...)` in your `.bashrc` file:
+Shortened aliases for most-used Debian-specific commands.
+To activate these, add `debian` to `aliases=(...)` in your `.bashrc` file:
 
 ```bash
-aliases=(... debian)`
+aliases=(... debian)
 ```
 
 ## Basic Commands
@@ -22,7 +22,7 @@ aliases=(... debian)`
 | `apse` | `apt search`                          |
 | `apdl` | `apt-get download`                    |
 
-## APT Maintainance & Diagnostic Commands
+## APT Maintenance & Diagnostic Commands
 
 | Alias   | Command                                                |
 | ------- | ------------------------------------------------------ |

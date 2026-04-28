@@ -10,10 +10,12 @@
 
 ############################---Usage---#########################################
 
-# Copy below functions (delay and progress fuctions) into your shell script directly
-# Then invoke progress function to show progress bar
+# Copy the below functions (the "delay" and "progress" functions) into your
+# shell script directly.  Then invoke the "progress" function to show a
+# progress bar.
 
-# In other way, you could import source indirectly then using. Nothing different
+# In another way, you could import the source indirectly and then use
+# them. Nothing different.
 
 ################################################################################
 
