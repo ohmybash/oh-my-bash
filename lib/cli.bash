@@ -15,7 +15,7 @@ function _omb_cmd_pull {
   echo 'Not yet implemented'
 }
 function _omb_cmd_reload {
-  shopt -q login_shell && $BASH -l || $BASH
+  shopt -q login_shell && exec "$BASH" -l || exec "$BASH"
 }
 function _omb_cmd_theme {
   echo 'Not yet implemented'
