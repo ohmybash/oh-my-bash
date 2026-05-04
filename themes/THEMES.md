@@ -111,6 +111,10 @@
 
 [![](gallifrey/gallifrey-dark.png)](gallifrey/gallifrey-dark.png)
 
+## `garo`
+
+[![](garo/garo-dark.png)](garo/garo-dark.png)
+
 ## `half-life`
 
 [![](half-life/half-life.theme.png)](half-life/half-life.theme.png)
