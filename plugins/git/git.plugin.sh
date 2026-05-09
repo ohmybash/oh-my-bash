@@ -175,6 +175,8 @@ alias gca='command git commit --verbose --all'
 __git_complete gca _git_commit
 alias gcam='command git commit --all --message'
 __git_complete gcam _git_commit
+alias gcanm='command git commit --all --no-verify --message'
+__git_complete gcanm _git_commit
 alias gcan!='command git commit --verbose --all --no-edit --amend'
 __git_complete gcan! _git_commit
 alias gcans!='command git commit --verbose --all --signoff --no-edit --amend'
