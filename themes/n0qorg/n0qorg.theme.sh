@@ -6,7 +6,7 @@
 # for example:
 # ananas ~/Code/bash-it/themes (master*)»
 function _omb_theme_PROMPT_COMMAND() {
-    PS1="${_omb_prompt_bold_navy}[$(hostname)]${_omb_prompt_normal} \w${_omb_prompt_normal} ${_omb_prompt_bold_white}[$(git_prompt_info)]${_omb_prompt_normal}» "
+    PS1="${_omb_prompt_bold_navy}[$(hostname)]${_omb_prompt_normal} $THEME_PROMPT_WORKDIR${_omb_prompt_normal} ${_omb_prompt_bold_white}[$(git_prompt_info)]${_omb_prompt_normal}» "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND
