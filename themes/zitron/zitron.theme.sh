@@ -18,7 +18,7 @@ function _omb_theme_PROMPT_COMMAND() {
     # user:host:pwd git-branch(*)$
     # for example:
     # noqqe:deathstar:themes master*$
-    PS1="${no_color}\u:$(hostname)${_omb_prompt_normal}:${_omb_prompt_bold_olive}\W/${_omb_prompt_normal} $(git_prompt_info)${_omb_prompt_reset_color}$ "
+    PS1="${no_color}\u:$(hostname)${_omb_prompt_normal}:${_omb_prompt_bold_olive}$THEME_PROMPT_WORKDIR/${_omb_prompt_normal} $(git_prompt_info)${_omb_prompt_reset_color}$ "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

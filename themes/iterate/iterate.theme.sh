@@ -34,7 +34,7 @@ function git_prompt_info {
 
 LAST_PROMPT=""
 function _omb_theme_PROMPT_COMMAND() {
-    local new_PS1="${_omb_prompt_bold_teal}$(scm_char)${_omb_prompt_olive}$(_omb_prompt_print_ruby_env)${_omb_prompt_green}\w $(scm_prompt_info)"
+    local new_PS1="${_omb_prompt_bold_teal}$(scm_char)${_omb_prompt_olive}$(_omb_prompt_print_ruby_env)${_omb_prompt_green}$THEME_PROMPT_WORKDIR $(scm_prompt_info)"
     local new_prompt=$(PS1="$new_PS1" "$BASH" --norc -i </dev/null 2>&1 | sed -n '${s/^\(.*\)exit$/\1/p;}')
 
     if [ "$LAST_PROMPT" = "$new_prompt" ]; then
