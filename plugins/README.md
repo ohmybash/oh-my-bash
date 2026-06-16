@@ -36,6 +36,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | cargo             | Plugin to initialize CARGO_HOME and PATH for cargo                                                                          |
 | colored-man-pages | Adds a few colors to `man` pages.                                                                                           |
 | chezmoi           | Dotfile management tool enabling management of user environment configuration.                                              |
+| direnv            | Load and unload environments automatically when changing directory paths.                                                   |
 | dotnet            | This plugin provides completion and useful aliases for .NET Core CLI.                                                       |
 | fasd              | Utility easing filesystem navigation through shortcuts and abbreviated commands.                                            |
 | fzf               | A command-line fuzzy finder.                                                                                                |
