@@ -14,28 +14,54 @@
 # [2] https://github.com/microsoft/vscode-dev-containers
 # [3] https://github.com/microsoft/vscode-dev-containers/blob/172a918f40e31bd24da8e64135026ec9f26c91b0/containers/javascript-node/.devcontainer/library-scripts/common-debian.sh#L303-L320
 #
+function _omb_theme_vscode_prompt {
+    local exit_code=$?
+    local user
+    local branch=""
+    local git_status=""
 
-function _omb_theme_vscode_initialize {
-    local userpart='`export XIT=$? \
-        && [ ! -z "${GITHUB_USER}" ] && echo -n "\[\033[0;32m\]@${GITHUB_USER} " || echo -n "\[\033[0;32m\]\u " \
-        && [ "$XIT" -ne "0" ] && echo -n "\[\033[1;31m\]➜" || echo -n "\[\033[0m\]➜"`'
-    local gitbranch='`\
-        if [ "$(_omb_prompt_git config --get codespaces-theme.hide-status 2>/dev/null)" != 1 ]; then \
-            export BRANCH=$(_omb_prompt_git symbolic-ref --short HEAD 2>/dev/null || _omb_prompt_git rev-parse --short HEAD 2>/dev/null); \
-            if [ "${BRANCH}" != "" ]; then \
-                echo -n "\[\033[0;36m\](\[\033[1;31m\]${BRANCH}" \
-                && if _omb_prompt_git ls-files --error-unmatch -m --directory --no-empty-directory -o --exclude-standard ":/*" > /dev/null 2>&1; then \
-                        echo -n " \[\033[1;33m\]✗"; \
-                fi \
-                && echo -n "\[\033[0;36m\]) "; \
-            fi; \
-        fi`'
-    local lightblue='\[\033[1;34m\]'
-    local removecolor='\[\033[0m\]'
-    PS1="${userpart} ${lightblue}\w ${gitbranch}${removecolor}\$ "
-    unset -f _omb_theme_vscode_initialize
+    # User
+    if [ -n "${GITHUB_USER}" ]; then
+        user="@${GITHUB_USER}"
+    else
+        user="\u"
+    fi
+
+    # Git branch
+    if [ "$(_omb_prompt_git config --get codespaces-theme.hide-status 2>/dev/null)" != "1" ]; then
+        branch=$(
+            _omb_prompt_git symbolic-ref --short HEAD 2>/dev/null ||
+            _omb_prompt_git rev-parse --short HEAD 2>/dev/null
+        )
+
+        if [ -n "${branch}" ]; then
+            git_status="\[\033[0;36m\](\[\033[1;31m\]${branch}"
+
+            if _omb_prompt_git ls-files \
+                --error-unmatch \
+                -m \
+                --directory \
+                --no-empty-directory \
+                -o \
+                --exclude-standard \
+                ":/*" > /dev/null 2>&1; then
+                git_status+=" \[\033[1;33m\]✗"
+            fi
+
+            git_status+="\[\033[0;36m\]) "
+        fi
+    fi
+
+    # Prompt arrow
+    if [ "${exit_code}" -ne 0 ]; then
+        local arrow="\[\033[1;31m\]➜"
+    else
+        local arrow="\[\033[0m\]➜"
+    fi
+
+    PS1="\[\033[0;32m\]${user} ${arrow} \[\033[1;34m\]\w ${git_status}\[\033[0m\]\$ "
 }
-_omb_theme_vscode_initialize
 
-function _omb_theme_PROMPT_COMMAND { true; }
+PROMPT_COMMAND="_omb_theme_vscode_prompt${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+
 PROMPT_DIRTRIM=${PROMPT_DIRTRIM:-4}
