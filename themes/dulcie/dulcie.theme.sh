@@ -15,6 +15,9 @@
 DULCIE_COLOR=${DULCIE_COLOR:=1} # 0 = monochrome, 1 = colorful
 DULCIE_MULTILINE=${DULCIE_MULTILINE:=1} # 0 = Single line, 1 = SCM in separate line
 
+# Configuration for Python/Conda virtual environments
+OMB_PROMPT_SHOW_PYTHON_VENV=${OMB_PROMPT_SHOW_PYTHON_VENV:=false} # Keep this for consistency
+
 function dulcie_color {
   echo -en "\[\e[38;5;${1}m\]"
 }
@@ -33,6 +36,9 @@ function _omb_theme_PROMPT_COMMAND {
   background_scm=$(dulcie_background 238)
 
   SCM_THEME_ROOT_SUFFIX="|$(scm_char) "
+
+  local python_venv=
+  _omb_prompt_get_python_venv
 
   # Set colors
   if [ "${DULCIE_COLOR}" -eq "1" ]; then
@@ -79,9 +85,8 @@ function _omb_theme_PROMPT_COMMAND {
   # Open the new terminal in the same directory
   _omb_util_function_exists __vte_osc7 && __vte_osc7
 
-  PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
   if [[ "${DULCIE_MULTILINE}" -eq "1" ]]; then
-    PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
+    PS1="${_omb_prompt_reset_color}[${python_venv}${DULCIE_USER}@${DULCIE_HOST}${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
     if [[ "$(scm_prompt_info)" ]]; then
       SCM_THEME_PROMPT_PREFIX="${DULCIE_SCM_BACKGROUND}|${DULCIE_SCM_DIR_COLOR}"
       SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
@@ -90,7 +95,7 @@ function _omb_theme_PROMPT_COMMAND {
   else
     SCM_THEME_PROMPT_PREFIX=" ${DULCIE_SCM_BACKGROUND}|${DULCIE_SCM_DIR_COLOR}"
     SCM_THEME_PROMPT_SUFFIX="|${_omb_prompt_normal}"
-    PS1="${_omb_prompt_reset_color}[${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
+    PS1="${_omb_prompt_reset_color}[${python_venv}${DULCIE_USER}@${DULCIE_HOST}$(scm_prompt_info)${_omb_prompt_reset_color} ${DULCIE_WORKINGDIR}]"
   fi
   PS1="${PS1}${DULCIE_PROMPTCHAR} "
 }
