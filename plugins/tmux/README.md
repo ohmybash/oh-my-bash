@@ -14,7 +14,8 @@ plugins=(... tmux)
 | ---------- | -------------------------------------| ----------------------------------------------------------- |
 | `ta`       | `tmux attach -t`                     | Attach to a named tmux session                              |
 | `tad`      | `tmux attach -d -t`                  | Detach and attach to a named tmux session                   |
-| `tds`      | `_omb_plugin_tmux_directory_session` | Create or attach to a session named after current directory |
+| `tds`      | `_omb_plugin_tmux_directory_session` | Create or attach to a session named after current directory (optional suffix: `tds codex`) |
+| `tdss`     | `_omb_plugin_tmux_directory_session` | Create or attach to a session named after current directory with optional suffix (e.g., `tdss codex`) |
 | `tkss`     | `tmux kill-session -t`               | Terminate a named running tmux session                      |
 | `tksv`     | `tmux kill-server`                   | Terminate all running tmux sessions                         |
 | `tl`       | `tmux list-sessions`                 | List running tmux sessions                                  |
