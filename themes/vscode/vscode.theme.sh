@@ -32,7 +32,7 @@ function _omb_theme_vscode_initialize {
         fi`'
     local lightblue='\[\033[1;34m\]'
     local removecolor='\[\033[0m\]'
-    PS1="${userpart} ${lightblue}\w ${gitbranch}${removecolor}\$ "
+    PS1="${userpart} ${lightblue}$THEME_PROMPT_WORKDIR ${gitbranch}${removecolor}\$ "
     unset -f _omb_theme_vscode_initialize
 }
 _omb_theme_vscode_initialize

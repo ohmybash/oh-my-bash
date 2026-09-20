@@ -34,7 +34,7 @@ function __emperor_clock {
 }
 
 function _omb_theme_PROMPT_COMMAND() {
-    PS1="\n$(__emperor_clock)${_omb_prompt_purple}\h ${_omb_prompt_reset_color}in ${prompt_color}\w\n${_omb_prompt_bold_teal}$(scm_char)${_omb_prompt_green}$(scm_prompt_info) ${_omb_prompt_green}→${_omb_prompt_reset_color} "
+    PS1="\n$(__emperor_clock)${_omb_prompt_purple}\h ${_omb_prompt_reset_color}in ${prompt_color}$THEME_PROMPT_WORKDIR\n${_omb_prompt_bold_teal}$(scm_char)${_omb_prompt_green}$(scm_prompt_info) ${_omb_prompt_green}→${_omb_prompt_reset_color} "
 }
 
 THEME_CLOCK_FORMAT=${THEME_CLOCK_FORMAT:-"%H "}

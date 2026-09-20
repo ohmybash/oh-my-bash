@@ -16,7 +16,7 @@ case $TERM in
 esac
 
 function _omb_theme_PROMPT_COMMAND() {
-	PS1="${TITLEBAR}[\u@\h \W $(scm_prompt_info)]\$ "
+	PS1="${TITLEBAR}[\u@\h $THEME_PROMPT_WORKDIR $(scm_prompt_info)]\$ "
 }
 
 # scm theming

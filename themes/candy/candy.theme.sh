@@ -1,7 +1,7 @@
 #! bash oh-my-bash.module
 
 function _omb_theme_PROMPT_COMMAND() {
-    PS1="${_omb_prompt_green}\u@\h $(clock_prompt) ${_omb_prompt_reset_color}${_omb_prompt_white}\w${_omb_prompt_reset_color}$(scm_prompt_info)${_omb_prompt_navy} →${_omb_prompt_bold_navy} ${_omb_prompt_reset_color} ";
+    PS1="${_omb_prompt_green}\u@\h $(clock_prompt) ${_omb_prompt_reset_color}${_omb_prompt_white}$THEME_PROMPT_WORKDIR${_omb_prompt_reset_color}$(scm_prompt_info)${_omb_prompt_navy} →${_omb_prompt_bold_navy} ${_omb_prompt_reset_color} ";
 }
 
 THEME_CLOCK_COLOR=${THEME_CLOCK_COLOR:-"$_omb_prompt_navy"}

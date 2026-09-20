@@ -12,7 +12,7 @@
 #        source ~/.git-prompt.sh
 #    3a) Change your PS1 to call __git_ps1 as
 #        command-substitution:
-#        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+#        Bash: PS1='[\u@\h $THEME_PROMPT_WORKDIR$(__git_ps1 " (%s)")]\$ '
 #        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 #        the optional argument will be used as format string.
 #    3b) Alternatively, for a slightly faster prompt, __git_ps1 can

@@ -45,7 +45,7 @@ function _omb_theme_PROMPT_COMMAND {
   _omb_util_binary_exists t &&
     todo_count=[${_omb_prompt_teal}$(command t | wc -l | sed -e's/ *//')${_omb_prompt_reset_color}]
 
-  PS1="${TITLEBAR}${border_color}┌─$todo_count${_omb_prompt_normal}$(modern_scm_prompt)[${_omb_prompt_teal}\W${_omb_prompt_normal}]$(is_vim_shell)"
+  PS1="${TITLEBAR}${border_color}┌─$todo_count${_omb_prompt_normal}$(modern_scm_prompt)[${_omb_prompt_teal}$THEME_PROMPT_WORKDIR${_omb_prompt_normal}]$(is_vim_shell)"
   PS1+="\n${border_color}└─▪${_omb_prompt_normal} "
 }
 

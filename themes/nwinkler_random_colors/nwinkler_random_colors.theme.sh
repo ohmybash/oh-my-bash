@@ -99,7 +99,7 @@ function _omb_theme_PROMPT_COMMAND {
   history -a
   history -c
   history -r
-  PS1="($(clock_prompt)${_omb_prompt_reset_color}) $(scm_char) [${USERNAME_COLOR}\u${_omb_prompt_reset_color}@${HOSTNAME_COLOR}\H${_omb_prompt_reset_color}] ${PATH_COLOR}\w${_omb_prompt_reset_color}$(scm_prompt_info) ${_omb_prompt_reset_color}\n$(prompt_end) "
+  PS1="($(clock_prompt)${_omb_prompt_reset_color}) $(scm_char) [${USERNAME_COLOR}\u${_omb_prompt_reset_color}@${HOSTNAME_COLOR}\H${_omb_prompt_reset_color}] ${PATH_COLOR}$THEME_PROMPT_WORKDIR${_omb_prompt_reset_color}$(scm_prompt_info) ${_omb_prompt_reset_color}\n$(prompt_end) "
   PS2='> '
   PS4='+ '
 }
