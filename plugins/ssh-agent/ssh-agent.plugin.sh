@@ -29,22 +29,59 @@ function _omb_plugin_ssh_agent__is_alive {
   (($? != 2))
 }
 
+# Read SSH_AUTH_SOCK and SSH_AGENT_PID from ssh-agent's output (from stdin)
+# without executing it.
+function _omb_plugin_ssh_agent__load_env {
+  local line re='^(SSH_AUTH_SOCK|SSH_AGENT_PID)=([^;]*);'
+  while IFS= read -r line; do
+    [[ $line =~ $re ]] || continue
+    export "${BASH_REMATCH[1]}=${BASH_REMATCH[2]}"
+  done
+}
+
+# Load the environment file only if it is our own regular file.
+function _omb_plugin_ssh_agent__load_env_file {
+  local file=$_omb_plugin_ssh_agent_env
+  [[ -f $file && ! -L $file && -O $file ]] || return 1
+  _omb_plugin_ssh_agent__load_env < "$file"
+}
+
 function _omb_plugin_ssh_agent__start {
   # Reuse a reachable agent: a forwarded one, one started by the desktop
   # session, or the one shared through the environment file.
   _omb_plugin_ssh_agent__is_alive && return 0
+  _omb_plugin_ssh_agent__load_env_file && _omb_plugin_ssh_agent__is_alive && return 0
 
-  if [[ -f $_omb_plugin_ssh_agent_env ]]; then
-    source "$_omb_plugin_ssh_agent_env" >/dev/null
-    _omb_plugin_ssh_agent__is_alive && return 0
+  [[ -d $HOME/.ssh ]] || mkdir -m 700 "$HOME/.ssh" || return 1
+
+  # Serialize the agent creation among shells starting at the same time.  A
+  # lock left by a killed shell is taken over after about 5 seconds.
+  local lock=$_omb_plugin_ssh_agent_env.lock i
+  for ((i = 0; i < 50; i++)); do
+    mkdir "$lock" 2>/dev/null && break
+    sleep 0.1
+  done
+
+  local ret=0
+  if ! { _omb_plugin_ssh_agent__load_env_file && _omb_plugin_ssh_agent__is_alive; }; then
+    local -a args=(-s)
+    [[ ${OMB_PLUGIN_SSH_AGENT_LIFETIME-} ]] && args+=(-t "$OMB_PLUGIN_SSH_AGENT_LIFETIME")
+
+    local out tmp=$_omb_plugin_ssh_agent_env.$$
+    if out=$(ssh-agent "${args[@]}") &&
+      (umask 077 && command sed '/^echo/d' <<< "$out" >| "$tmp") &&
+      command mv -f "$tmp" "$_omb_plugin_ssh_agent_env"
+    then
+      _omb_plugin_ssh_agent__load_env <<< "$out"
+      _omb_plugin_ssh_agent__is_alive || ret=1
+    else
+      command rm -f "$tmp"
+      ret=1
+    fi
   fi
 
-  local -a args=(-s)
-  [[ ${OMB_PLUGIN_SSH_AGENT_LIFETIME-} ]] && args+=(-t "$OMB_PLUGIN_SSH_AGENT_LIFETIME")
-
-  [[ -d $HOME/.ssh ]] || mkdir -m 700 "$HOME/.ssh"
-  (umask 077 && ssh-agent "${args[@]}" | command sed '/^echo/d' >| "$_omb_plugin_ssh_agent_env")
-  source "$_omb_plugin_ssh_agent_env" >/dev/null
+  rmdir "$lock" 2>/dev/null
+  return "$ret"
 }
 
 function _omb_plugin_ssh_agent__add_identities {
@@ -77,5 +114,6 @@ function _omb_plugin_ssh_agent__add_identities {
   ssh-add "${args[@]}" "${files[@]}"
 }
 
-_omb_plugin_ssh_agent__start
-[[ ${OMB_PLUGIN_SSH_AGENT_LAZY-} == yes ]] || _omb_plugin_ssh_agent__add_identities
+if _omb_plugin_ssh_agent__start; then
+  [[ ${OMB_PLUGIN_SSH_AGENT_LAZY-} == yes ]] || _omb_plugin_ssh_agent__add_identities
+fi
