@@ -20,14 +20,16 @@ _omb_plugin_donottrack_set DISABLE_ERROR_REPORTING 1
 _omb_plugin_donottrack_set HOMEBREW_NO_ANALYTICS 1 # Homebrew
 _omb_plugin_donottrack_set YARN_ENABLE_TELEMETRY 0 # Yarn
 _omb_plugin_donottrack_set SCARF_ANALYTICS false
-_omb_plugin_donottrack_set VCPKG_DISABLE_METRICS 1 #vcpkg
+_omb_plugin_donottrack_set VCPKG_DISABLE_METRICS 1 # vcpkg
 
 # Web
 _omb_plugin_donottrack_set ANGULAR_CLI_ANALYTICS false
 _omb_plugin_donottrack_set APOLLO_TELEMETRY_DISABLED 1
 _omb_plugin_donottrack_set ASTRO_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set CYPRESS_CRASH_REPORTS 0 # Cypress
 _omb_plugin_donottrack_set EXPO_NO_TELEMETRY 1
 _omb_plugin_donottrack_set GATSBY_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set MEDUSA_DISABLE_TELEMETRY true # Medusa
 _omb_plugin_donottrack_set NEXT_TELEMETRY_DISABLED 1
 _omb_plugin_donottrack_set NG_CLI_ANALYTICS false # Angular (Legacy)
 _omb_plugin_donottrack_set NUXT_TELEMETRY_DISABLED 1
@@ -44,6 +46,8 @@ _omb_plugin_donottrack_set POWERSHELL_TELEMETRY_OPTOUT 1
 
 # Cloud
 _omb_plugin_donottrack_set AZURE_CORE_COLLECT_TELEMETRY 0
+_omb_plugin_donottrack_set AZURE_DEV_COLLECT_TELEMETRY no # Azure Developer CLI
+_omb_plugin_donottrack_set CDK_DISABLE_CLI_TELEMETRY true # AWS CDK
 _omb_plugin_donottrack_set CLOUDSDK_CORE_DISABLE_USAGE_REPORTING true
 _omb_plugin_donottrack_set FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT 1
 _omb_plugin_donottrack_set NETLIFY_TELEMETRY_DISABLED true
@@ -56,11 +60,15 @@ _omb_plugin_donottrack_set VERCEL_TELEMETRY_DISABLED 1
 _omb_plugin_donottrack_set WRANGLER_SEND_METRICS false
 
 # Data and Machine Learning
+_omb_plugin_donottrack_set AGENT_CANVAS_DISABLE_TELEMETRY 1 # OpenHands
+_omb_plugin_donottrack_set ANONYMIZED_TELEMETRY False # ChromaDB
 _omb_plugin_donottrack_set DBT_SEND_ANONYMOUS_USAGE_STATS False
-_omb_plugin_donottrack_set HF_HUB_DISABLE_TELEMETRY 1
+_omb_plugin_donottrack_set GEMINI_TELEMETRY_ENABLED false # Gemini CLI
+_omb_plugin_donottrack_set HF_HUB_DISABLE_TELEMETRY 1 # HuggingFace Hub
 _omb_plugin_donottrack_set INFLUXD_REPORTING_DISABLED true
 _omb_plugin_donottrack_set ITERATIVE_DO_NOT_TRACK 1
 _omb_plugin_donottrack_set KEDRO_DISABLE_TELEMETRY true
+_omb_plugin_donottrack_set LITELLM_TELEMETRY False # LiteLLM
 _omb_plugin_donottrack_set MEILI_NO_ANALYTICS true
 _omb_plugin_donottrack_set MELTANO_DISABLE_TRACKING True
 _omb_plugin_donottrack_set MSSQL_CLI_TELEMETRY_OPTOUT True
