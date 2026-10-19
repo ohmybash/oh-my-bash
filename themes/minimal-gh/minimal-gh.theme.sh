@@ -33,7 +33,7 @@ function _omb_theme_PROMPT_COMMAND() {
 
   local HORA=$(date +%H)
   local MERIDIANO
-  if ((10#$HORA > 12)); then
+  if ((10#$HORA >= 12)); then
     MERIDIANO="pm";
   else
     MERIDIANO="am";

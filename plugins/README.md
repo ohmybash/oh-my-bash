@@ -37,6 +37,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | colored-man-pages | Adds a few colors to `man` pages.                                                                                           |
 | chezmoi           | Dotfile management tool enabling management of user environment configuration.                                              |
 | direnv            | Load and unload environments automatically when changing directory paths.                                                   |
+| [donottrack](donottrack) | Sets the environment variables that opt out of CLI application telemetry.                                            |
 | dotnet            | This plugin provides completion and useful aliases for .NET Core CLI.                                                       |
 | fasd              | Utility easing filesystem navigation through shortcuts and abbreviated commands.                                            |
 | fzf               | A command-line fuzzy finder.                                                                                                |

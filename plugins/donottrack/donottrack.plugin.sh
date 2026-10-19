@@ -1,0 +1,90 @@
+#! bash oh-my-bash.module
+# @RobLoach 2026
+#
+# Do Not Track Plugin
+#
+# Opt out of the telemetry and usage reporting of various CLI applications by
+# exporting the environment variables they check.
+
+# Export the variable "$1" with the value "$2", keeping any existing value.
+function _omb_plugin_donottrack_set {
+  export "$1=${!1-$2}"
+}
+
+# Generic
+_omb_plugin_donottrack_set DO_NOT_TRACK 1
+_omb_plugin_donottrack_set DISABLE_TELEMETRY 1
+_omb_plugin_donottrack_set DISABLE_ERROR_REPORTING 1
+
+# Package Managers
+_omb_plugin_donottrack_set HOMEBREW_NO_ANALYTICS 1 # Homebrew
+_omb_plugin_donottrack_set YARN_ENABLE_TELEMETRY 0 # Yarn
+_omb_plugin_donottrack_set SCARF_ANALYTICS false
+_omb_plugin_donottrack_set VCPKG_DISABLE_METRICS 1 #vcpkg
+
+# Web
+_omb_plugin_donottrack_set ANGULAR_CLI_ANALYTICS false
+_omb_plugin_donottrack_set APOLLO_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set ASTRO_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set EXPO_NO_TELEMETRY 1
+_omb_plugin_donottrack_set GATSBY_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set NEXT_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set NG_CLI_ANALYTICS false # Angular (Legacy)
+_omb_plugin_donottrack_set NUXT_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set STORYBOOK_DISABLE_TELEMETRY 1
+_omb_plugin_donottrack_set STRAPI_TELEMETRY_DISABLED true
+_omb_plugin_donottrack_set TURBO_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set CHECKPOINT_DISABLE 1
+_omb_plugin_donottrack_set VAGRANT_CHECKPOINT_DISABLE 1
+
+# .NET and PowerShell
+_omb_plugin_donottrack_set DOTNET_CLI_TELEMETRY_OPTOUT 1
+_omb_plugin_donottrack_set DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT 1
+_omb_plugin_donottrack_set POWERSHELL_TELEMETRY_OPTOUT 1
+
+# Cloud
+_omb_plugin_donottrack_set AZURE_CORE_COLLECT_TELEMETRY 0
+_omb_plugin_donottrack_set CLOUDSDK_CORE_DISABLE_USAGE_REPORTING true
+_omb_plugin_donottrack_set FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT 1
+_omb_plugin_donottrack_set NETLIFY_TELEMETRY_DISABLED true
+_omb_plugin_donottrack_set SAM_CLI_TELEMETRY 0
+_omb_plugin_donottrack_set SF_DISABLE_TELEMETRY true
+_omb_plugin_donottrack_set SFDX_DISABLE_TELEMETRY true
+_omb_plugin_donottrack_set SLS_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set STRIPE_CLI_TELEMETRY_OPTOUT 1
+_omb_plugin_donottrack_set VERCEL_TELEMETRY_DISABLED 1
+_omb_plugin_donottrack_set WRANGLER_SEND_METRICS false
+
+# Data and Machine Learning
+_omb_plugin_donottrack_set DBT_SEND_ANONYMOUS_USAGE_STATS False
+_omb_plugin_donottrack_set HF_HUB_DISABLE_TELEMETRY 1
+_omb_plugin_donottrack_set INFLUXD_REPORTING_DISABLED true
+_omb_plugin_donottrack_set ITERATIVE_DO_NOT_TRACK 1
+_omb_plugin_donottrack_set KEDRO_DISABLE_TELEMETRY true
+_omb_plugin_donottrack_set MEILI_NO_ANALYTICS true
+_omb_plugin_donottrack_set MELTANO_DISABLE_TRACKING True
+_omb_plugin_donottrack_set MSSQL_CLI_TELEMETRY_OPTOUT True
+_omb_plugin_donottrack_set RASA_TELEMETRY_ENABLED false
+_omb_plugin_donottrack_set OTEL_SDK_DISABLED true
+
+# Misc
+_omb_plugin_donottrack_set CHEF_TELEMETRY_OPT_OUT 1
+_omb_plugin_donottrack_set CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 1 # Claude
+_omb_plugin_donottrack_set EARTHLY_DISABLE_ANALYTICS 1
+_omb_plugin_donottrack_set ET_NO_TELEMETRY 1 # EternalTerminal
+_omb_plugin_donottrack_set FASTLANE_OPT_OUT_USAGE YES
+_omb_plugin_donottrack_set FLUTTER_SUPPRESS_ANALYTICS true
+_omb_plugin_donottrack_set GLAB_SEND_TELEMETRY false # Gitlab
+_omb_plugin_donottrack_set GOTELEMETRY off # Go
+_omb_plugin_donottrack_set HASURA_GRAPHQL_ENABLE_TELEMETRY false # Hasura
+_omb_plugin_donottrack_set K6_NO_USAGE_REPORT true
+_omb_plugin_donottrack_set NUKE_TELEMETRY_OPTOUT 1
+_omb_plugin_donottrack_set PANTS_ANONYMOUS_TELEMETRY_ENABLED false
+_omb_plugin_donottrack_set SCOUT_DISABLE 1 # Telepresence
+_omb_plugin_donottrack_set SEMGREP_SEND_METRICS off
+_omb_plugin_donottrack_set SHOPIFY_CLI_NO_ANALYTICS 1
+_omb_plugin_donottrack_set SNYK_DISABLE_ANALYTICS 1
+_omb_plugin_donottrack_set STNOUPGRADE 1
+_omb_plugin_donottrack_set VSCODE_TELEMETRY_LEVEL off # Visual Studio Code
+
+unset -f _omb_plugin_donottrack_set
