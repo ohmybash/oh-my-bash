@@ -67,7 +67,7 @@ _omb_plugin_donottrack_set MSSQL_CLI_TELEMETRY_OPTOUT True
 _omb_plugin_donottrack_set RASA_TELEMETRY_ENABLED false
 _omb_plugin_donottrack_set OTEL_SDK_DISABLED true
 _omb_plugin_donottrack_set AGENT_CANVAS_DISABLE_TELEMETRY 1 # OpenHands
-_omb_plugin_donottrack_set HF_HUB_DISABLE_TELEMETRY 1 #HuggingFace Hub
+_omb_plugin_donottrack_set HF_HUB_DISABLE_TELEMETRY 1 # HuggingFace Hub
 
 # Misc
 _omb_plugin_donottrack_set CHEF_TELEMETRY_OPT_OUT 1
