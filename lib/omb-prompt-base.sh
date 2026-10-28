@@ -117,13 +117,29 @@ function _omb_prompt_git_status_enabled {
     awk '$2== "1" {hide_status = 1;} END { print hide_status; }') != "1" ]]
 }
 
+# https://github.com/sharkdp/fd/issues/1537#issuecomment-2071361869
+function _upfind() {
+  local target current
+  target="$1"
+  current="$(realpath "$PWD")"
+
+  while [[ "$current" != "/" ]]; do
+    if [[ -e "${current}/${target}" ]]; then
+      return
+    else
+      current="$(dirname "$current")"
+    fi
+  done
+  return 1
+}
+
+
+
 function scm {
   if [[ "$SCM_CHECK" = false ]]; then SCM=$SCM_NONE
-  elif [[ -f .git/HEAD ]]; then SCM=$SCM_GIT
-  elif _omb_util_binary_exists git && [[ -n "$(_omb_prompt_git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then SCM=$SCM_GIT
-  elif [[ -d .hg ]]; then SCM=$SCM_HG
-  elif _omb_util_binary_exists hg && [[ -n "$(command hg root 2> /dev/null)" ]]; then SCM=$SCM_HG
-  elif [[ -d .svn ]]; then SCM=$SCM_SVN
+    elif _upfind .git; then SCM=$SCM_GIT
+    elif _upfind .hg; then SCM=$SCM_HG
+    elif _upfind .svn; then SCM=$SCM_SVN
   else SCM=$SCM_NONE
   fi
 }
