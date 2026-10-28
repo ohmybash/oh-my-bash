@@ -347,8 +347,11 @@ _omb_util_unload_hook+=('PS1=$_omb_util_original_PS1')
 
 _omb_util_prompt_command=()
 function _omb_util_prompt_command_hook {
-  local status=$? lastarg=$_ hook
-  for hook in "${_omb_util_prompt_command[@]}"; do
+  local status=$? lastarg=$_ hook i
+  # Use an index loop so hooks registered mid-cycle (e.g. by earlier hooks) are
+  # picked up in the same prompt-render cycle rather than deferred to the next.
+  for ((i = 0; i < ${#_omb_util_prompt_command[@]}; i++)); do
+    hook=${_omb_util_prompt_command[i]}
     _omb_util_setexit "$status" "$lastarg"
     eval -- "$hook"
   done
