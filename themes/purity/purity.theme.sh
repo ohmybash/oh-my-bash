@@ -21,7 +21,7 @@ function _omb_theme_PROMPT_COMMAND {
   else
     local ret_status=${STATUS_THEME_PROMPT_BAD:-${OMB_THEME_PURITY_STATUS_BAD-}}
   fi
-  PS1="\n${_omb_prompt_navy}\w $(scm_prompt_info)\n${ret_status} "
+  PS1="\n${_omb_prompt_navy}$THEME_PROMPT_WORKDIR $(scm_prompt_info)\n${ret_status} "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

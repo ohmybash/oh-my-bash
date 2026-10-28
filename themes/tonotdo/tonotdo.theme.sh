@@ -7,7 +7,7 @@ SCM_THEME_PROMPT_CLEAN=" ${_omb_prompt_green}✓"
 SCM_GIT_SHOW_DETAILS="false"
 
 function _omb_theme_PROMPT_COMMAND() {
-  PS1="${_omb_prompt_olive}\u${_omb_prompt_normal}${_omb_prompt_teal}@\h${_omb_prompt_normal}${_omb_prompt_purple} ${_omb_prompt_normal}${_omb_prompt_green}\w${_omb_prompt_normal}$(scm_prompt_info)> "
+  PS1="${_omb_prompt_olive}\u${_omb_prompt_normal}${_omb_prompt_teal}@\h${_omb_prompt_normal}${_omb_prompt_purple} ${_omb_prompt_normal}${_omb_prompt_green}$THEME_PROMPT_WORKDIR${_omb_prompt_normal}$(scm_prompt_info)> "
 }
 
 _omb_util_add_prompt_command _omb_theme_PROMPT_COMMAND

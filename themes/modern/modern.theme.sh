@@ -44,7 +44,7 @@ function _omb_theme_PROMPT_COMMAND {
 
   PS1=$TITLEBAR
   PS1=$PS1$border_color'┌─'$_omb_prompt_normal
-  PS1=$PS1$(modern_scm_prompt)[$_omb_prompt_teal'\W'$_omb_prompt_normal][$(battery_charge)]$(is_vim_shell)$'\n'
+  PS1=$PS1$(modern_scm_prompt)[$_omb_prompt_teal'$THEME_PROMPT_WORKDIR'$_omb_prompt_normal][$(battery_charge)]$(is_vim_shell)$'\n'
   PS1=$PS1$border_color'└─▪'$_omb_prompt_normal' '
 }
 

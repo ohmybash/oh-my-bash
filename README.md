@@ -243,6 +243,28 @@ directory so that it will be loaded instead of the original one.
 
 ### Configuration
 
+#### Enable showing full path in prompt
+
+To show full path to the current working directory in shell prompt rather than just its basename,
+add the following line to `~/.bashrc`:
+
+```bash
+OMB_PROMPT_FULL_PATH=true
+```
+
+By default, OhMyBash trims the working directory path in shell prompt to just a few innermost components.
+To disable that, unset the `PROMPT_DIRTRIM` environment variable in your `~/.bashrc`:
+
+```bash
+unset PROMPT_DIRTRIM
+```
+
+or set it to a different value to change the limit:
+
+```bash
+PROMPT_DIRTRIM=4
+```
+
 #### Enable/disable python venv
 
 The python virtualenv/condaenv information in the prompt may be enabled by the following line in `~/.bashrc`.

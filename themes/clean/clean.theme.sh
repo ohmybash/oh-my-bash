@@ -14,7 +14,7 @@ function _omb_theme_PROMPT_COMMAND() {
 
     if [ "$(whoami)" = root ]; then no_color=$_omb_prompt_brown; else no_color=$_omb_prompt_white; fi
 
-    PS1="${no_color}\u${_omb_prompt_reset_color}:${_omb_prompt_navy}\W/${_omb_prompt_reset_color} \[\$(scm_prompt_info)\]$ "
+    PS1="${no_color}\u${_omb_prompt_reset_color}:${_omb_prompt_navy}$THEME_PROMPT_WORKDIR/${_omb_prompt_reset_color} \[\$(scm_prompt_info)\]$ "
     RPROMPT='[\t]'
 }
 
