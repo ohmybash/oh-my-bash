@@ -81,6 +81,7 @@ CHRUBY_THEME_PROMPT_SUFFIX='|'
 # OMB_PROMPT_PYTHON_VERSION_FORMAT=' |%s|'
 # OMB_PROMPT_SHOW_PYTHON_VENV=true
 OMB_PROMPT_SPACK_ENV_FORMAT='[%s] '
+OMB_PROMPT_DISTROBOX_FORMAT='[📦%s] '
 
 # deprecate
 VIRTUALENV_THEME_PROMPT_PREFIX=' |'
@@ -396,6 +397,17 @@ function hg_prompt_vars {
   else
     SCM_CHANGE=$(command hg summary 2> /dev/null | grep parent: | awk '{print $2}')
   fi
+}
+
+## @fn _omb_prompt_get_distrobox_container
+##   @var[out] distrobox_container
+##   @exit
+function _omb_prompt_get_distrobox_container {
+  distrobox_container=
+  [[ ${CONTAINER_ID-} ]] || return 1
+  distrobox_container=${CONTAINER_ID}
+  _omb_prompt_format distrobox_container "$distrobox_container" OMB_PROMPT_DISTROBOX:DISTROBOX_THEME_PROMPT
+  [[ $distrobox_container ]]
 }
 
 ## @fn _omb_prompt_get_rbfu
