@@ -40,6 +40,14 @@ You can change the format using the following variable:
 
 The time/date is printed by the `date` command, so refer to its man page to change the format.
 
+### New Line
+
+You can move the cursor to a new line after each command using the following variable:
+
+    POWERLINE_PROMPT_NEWLINE=true
+
+The prompt will receive a "\n" at the end. This is usefull if you navigate a lot to folders with extensive names.
+
 ### Segment Order
 
 The contents of the prompt can be "reordered", all the "segments" (every piece of information) can take any place. The currently available segments are:
