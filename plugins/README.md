@@ -39,6 +39,7 @@ By leveraging these plugins, you can streamline your workflow and tackle coding 
 | direnv            | Load and unload environments automatically when changing directory paths.                                                   |
 | [donottrack](donottrack) | Sets the environment variables that opt out of CLI application telemetry.                                            |
 | dotnet            | This plugin provides completion and useful aliases for .NET Core CLI.                                                       |
+| extract           | This plugin defines a function called `extract` that extracts the archive file you pass it, and it supports a wide variety of archive filetypes. |
 | fasd              | Utility easing filesystem navigation through shortcuts and abbreviated commands.                                            |
 | fzf               | A command-line fuzzy finder.                                                                                                |
 | gcloud            | Command-line tools for interacting with Google Cloud Platform (GCP).                                                        |
