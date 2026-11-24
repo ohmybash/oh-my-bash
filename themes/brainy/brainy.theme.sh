@@ -118,6 +118,10 @@ function ___brainy_prompt_python {
   local color=$_omb_prompt_bold_olive
   local box="[|]"
   local python_env
+  # Keep the Python label free of the delimiters used by Brainy's parser.
+  local OMB_PROMPT_VIRTUALENV_FORMAT='%s '
+  local OMB_PROMPT_CONDAENV_FORMAT='%s '
+  local OMB_PROMPT_PYTHON_VERSION_FORMAT='%s'
   _omb_prompt_get_python_env || return 0
   printf "%s|%s|%s|%s" "$color" "${python_env}" "$_omb_prompt_bold_navy" "$box"
 }
